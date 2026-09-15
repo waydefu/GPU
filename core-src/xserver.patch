@@ -1,0 +1,1342 @@
++++ ./Xext/shm.c
+@@ -193,6 +193,10 @@
+ 
+ #endif
+ 
++const DevPrivateKey ShmGetDevPrivateKeyRec(void) {
++    return shmPixmapPrivateKey;
++}
++
+ static Bool
+ ShmCloseScreen(ScreenPtr pScreen)
+ {
++++ ./Xext/shmint.h
+@@ -80,6 +80,8 @@
+ #define SHMDESC_IS_FD(shmdesc)  (0)
+ #endif
+ 
++extern const DevPrivateKey ShmGetDevPrivateKeyRec(void);
++
+ extern _X_EXPORT void
+  ShmRegisterFuncs(ScreenPtr pScreen, ShmFuncsPtr funcs);
+ 
++++ ./dix/dixutils.c
+@@ -506,18 +506,25 @@
+ 
+ WorkQueuePtr workQueue;
+ static WorkQueuePtr *workQueueLast = &workQueue;
++static pthread_spinlock_t workQueueLock;
++
++__attribute__((constructor)) static void workQueueLockInit (void) {
++    pthread_spin_init(&workQueueLock, FALSE);
++}
+ 
+ void
+ ClearWorkQueue(void)
+ {
+     WorkQueuePtr q, *p;
+ 
++    pthread_spin_lock(&workQueueLock);
+     p = &workQueue;
+     while ((q = *p)) {
+         *p = q->next;
+         free(q);
+     }
+     workQueueLast = p;
++    pthread_spin_unlock(&workQueueLock);
+ }
+ 
+ void
+@@ -525,6 +532,7 @@
+ {
+     WorkQueuePtr q, *p;
+ 
++    pthread_spin_lock(&workQueueLock);
+     p = &workQueue;
+     /*
+      * Scan the work queue once, calling each function.  Those
+@@ -533,16 +541,20 @@
+      * QueueWorkProc.
+      */
+     while ((q = *p)) {
++        pthread_spin_unlock(&workQueueLock);
+         if ((*q->function) (q->client, q->closure)) {
++            pthread_spin_lock(&workQueueLock);
+             /* remove q from the list */
+             *p = q->next;       /* don't fetch until after func called */
+             free(q);
+         }
+         else {
++            pthread_spin_lock(&workQueueLock);
+             p = &q->next;       /* don't fetch until after func called */
+         }
+     }
+     workQueueLast = p;
++    pthread_spin_unlock(&workQueueLock);
+ }
+ 
+ void
+@@ -550,6 +562,7 @@
+ {
+     WorkQueuePtr q, *p;
+ 
++    pthread_spin_lock(&workQueueLock);
+     p = &workQueue;
+     while ((q = *p)) {
+         if (q->client && q->client->clientGone) {
+@@ -563,6 +576,7 @@
+         }
+     }
+     workQueueLast = p;
++    pthread_spin_unlock(&workQueueLock);
+ }
+ 
+ Bool
+@@ -578,8 +592,10 @@
+     q->client = client;
+     q->closure = closure;
+     q->next = NULL;
++    pthread_spin_lock(&workQueueLock);
+     *workQueueLast = q;
+     workQueueLast = &q->next;
++    pthread_spin_unlock(&workQueueLock);
+     return TRUE;
+ }
+ 
++++ ./dix/enterleave.c
+@@ -1541,6 +1541,8 @@
+     }
+ }
+ 
++extern void DDXNotifyFocusChanged(void);
++
+ /**
+  * Figure out if focus events are necessary and send them to the
+  * appropriate windows.
+@@ -1551,6 +1553,9 @@
+ void
+ DoFocusEvents(DeviceIntPtr pDev, WindowPtr from, WindowPtr to, int mode)
+ {
++    if (from != to)
++        DDXNotifyFocusChanged();
++
+     if (!IsKeyboardDevice(pDev))
+         return;
+ 
++++ ./dix/main.c
+@@ -268,6 +268,7 @@
+         }
+ 
+         NotifyParentProcess();
++        ddxReady();
+ 
+         InputThreadInit();
+ 
+--- ./dix/dispatch.c
++++ ./dix/dispatch.c
+@@ -129,6 +129,9 @@ int ProcInitialConnection();
+ #include "xkbsrv.h"
+ #include "client.h"
+ #include "xfixesint.h"
++#include <string.h>
++
++extern void lorieGateATraceXRequest(int major, int minor, uint32_t clientSeq);
+ 
+ #ifdef XSERVER_DTRACE
+ #include "registry.h"
+@@ -534,6 +537,22 @@ Dispatch(void)
+                     if (ext)
+                         client->minorOp = ext->MinorOpcode(client);
+                 }
++                if (client->majorOp == 62 /* X_CopyArea */
++                    || client->majorOp == 70 /* X_PolyFillRectangle */
++                    || client->majorOp == 73 /* X_GetImage */) {
++                    lorieGateATraceXRequest(client->majorOp, client->minorOp,
++                                            client->sequence);
++                } else if (client->majorOp >= EXTENSION_BASE) {
++                    ExtensionEntry *gateAExt = GetExtensionEntry(client->majorOp);
++
++                    if (gateAExt && gateAExt->name
++                        && ((strcmp(gateAExt->name, "RENDER") == 0
++                             && client->minorOp == 8)
++                            || (strcmp(gateAExt->name, "Present") == 0
++                                && client->minorOp == 1)))
++                        lorieGateATraceXRequest(client->majorOp, client->minorOp,
++                                                client->sequence);
++                }
+ #ifdef XSERVER_DTRACE
+                 if (XSERVER_REQUEST_START_ENABLED())
+                     XSERVER_REQUEST_START(LookupMajorName(client->majorOp),
+ 
++++ ./dri3/dri3_request.c
+@@ -227,6 +227,35 @@
+     return Success;
+ }
+ 
++/* Lorie: not part of upstream DRI3. Implemented in lorie/InitOutput.c, which knows about
++ * LorieBuffer/AHardwareBuffer; this file stays free of Android-specific types. */
++extern int lorieSendAHardwareBufferForPixmap(PixmapPtr pixmap, int socketFd);
++
++static int
++proc_dri3_ahardwarebuffer_from_pixmap(ClientPtr client)
++{
++    REQUEST(xDRI3AHardwareBufferFromPixmapReq);
++    PixmapPtr pixmap;
++    int fd, rc;
++
++    SetReqFds(client, 1);
++    REQUEST_SIZE_MATCH(xDRI3AHardwareBufferFromPixmapReq);
++    rc = dixLookupResourceByType((void **) &pixmap, stuff->pixmap, RT_PIXMAP,
++                                 client, DixReadAccess);
++    if (rc != Success) {
++        client->errorValue = stuff->pixmap;
++        return rc;
++    }
++
++    fd = ReadFdFromClient(client);
++    if (fd < 0)
++        return BadValue;
++
++    rc = lorieSendAHardwareBufferForPixmap(pixmap, fd) ? Success : BadMatch;
++    close(fd);
++    return rc;
++}
++
+ static int
+ proc_dri3_buffer_from_pixmap(ClientPtr client)
+ {
+@@ -564,6 +593,7 @@
+     proc_dri3_get_supported_modifiers,  /* 6 */
+     proc_dri3_pixmap_from_buffers,      /* 7 */
+     proc_dri3_buffers_from_pixmap,      /* 8 */
++    [X_DRI3AHardwareBufferFromPixmap] = proc_dri3_ahardwarebuffer_from_pixmap, /* 200, Lorie */
+ };
+ 
+ int
+@@ -697,6 +727,17 @@
+     return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
+ }
+ 
++static int _X_COLD
++sproc_dri3_ahardwarebuffer_from_pixmap(ClientPtr client)
++{
++    REQUEST(xDRI3AHardwareBufferFromPixmapReq);
++    REQUEST_SIZE_MATCH(xDRI3AHardwareBufferFromPixmapReq);
++
++    swaps(&stuff->length);
++    swapl(&stuff->pixmap);
++    return (*proc_dri3_vector[stuff->dri3ReqType]) (client);
++}
++
+ int (*sproc_dri3_vector[DRI3NumberRequests]) (ClientPtr) = {
+     sproc_dri3_query_version,           /* 0 */
+     sproc_dri3_open,                    /* 1 */
+@@ -707,6 +748,7 @@
+     sproc_dri3_get_supported_modifiers, /* 6 */
+     sproc_dri3_pixmap_from_buffers,     /* 7 */
+     sproc_dri3_buffers_from_pixmap,     /* 8 */
++    [X_DRI3AHardwareBufferFromPixmap] = sproc_dri3_ahardwarebuffer_from_pixmap, /* 200, Lorie */
+ };
+ 
+ int _X_COLD
++++ ./include/os.h
+@@ -557,6 +557,8 @@
+ extern _X_EXPORT void
+ ddxGiveUp(enum ExitCode error);
+ extern _X_EXPORT void
++ddxReady(void);
++extern _X_EXPORT void
+ ddxInputThreadInit(void);
+ extern _X_EXPORT int
+ TimeSinceLastInputEvent(void);
++++ ./include/xkbfile.h
+@@ -79,6 +79,36 @@
+ 
+ /***====================================================================***/
+ 
++#define XkbInternAtom XXkbInternAtom
++#define XkbAtomText XXkbAtomText
++#define XkbStringText XXkbStringText
++#define XkbVModIndexText XXkbVModIndexText
++#define XkbVModMaskText XXkbVModMaskText
++#define XkbModMaskText XXkbModMaskText
++#define XkbModIndexText XXkbModIndexText
++#define XkbConfigText XXkbConfigText
++#define XkbKeysymText XXkbKeysymText
++#define XkbKeyNameText XXkbKeyNameText
++#define XkbSIMatchText XXkbSIMatchText
++#define XkbIMWhichStateMaskText XXkbIMWhichStateMaskText
++#define XkbControlsMaskText XXkbControlsMaskText
++#define XkbGeomFPText XXkbGeomFPText
++#define XkbDoodadTypeText XXkbDoodadTypeText
++#define XkbActionTypeText XXkbActionTypeText
++#define XkbActionText XXkbActionText
++#define XkbBehaviorText XXkbBehaviorText
++#define XkbIndentText XXkbIndentText
++#define XkbWriteXKBKeycodes XXkbWriteXKBKeycodes
++#define XkbWriteXKBKeyTypes XXkbWriteXKBKeyTypes
++#define XkbWriteXKBCompatMap XXkbWriteXKBCompatMap
++#define XkbWriteXKBSymbols XXkbWriteXKBSymbols
++#define XkbWriteXKBGeometry XXkbWriteXKBGeometry
++#define XkbWriteXKBKeymapForNames XXkbWriteXKBKeymapForNames
++#define XkbFindKeycodeByName XXkbFindKeycodeByName
++#define XkbConvertGetByNameComponents XXkbConvertGetByNameComponents
++#define XkbNameMatchesPattern XXkbNameMatchesPattern
++#define _XkbKSCheckCase _XXkbKSCheckCase
++
+ _XFUNCPROTOBEGIN
+ 
+ extern _X_EXPORT char *XkbIndentText(unsigned   /* size */
++++ ./os/osinit.c
+@@ -170,13 +170,11 @@
+ #endif
+ 
+     if (!been_here) {
+-#if !defined(WIN32) || defined(__CYGWIN__)
++#if !defined(WIN32) || defined(__CYGWIN__) || !defined(__ANDROID__)
+         struct sigaction act, oact;
+         int i;
+ 
+-        int siglist[] = { SIGSEGV, SIGQUIT, SIGILL, SIGFPE, SIGBUS,
+-            SIGABRT,
+-            SIGSYS,
++        int siglist[] = { SIGQUIT, SIGILL, SIGFPE,
+             SIGXCPU,
+             SIGXFSZ,
+ #ifdef SIGEMT
++++ ./os/utils.c
+@@ -214,6 +214,8 @@
+ {
+ #if defined(WIN32) && !defined(__CYGWIN__)
+     return signal(sig, handler);
++#elif defined(__ANDROID__)
++    return SIG_DFL;
+ #else
+     struct sigaction act, oact;
+ 
+@@ -234,7 +236,7 @@
+  * server at a time.  This keeps the servers from stomping on each other
+  * if the user forgets to give them different display numbers.
+  */
+-#define LOCK_DIR "/tmp"
++#define LOCK_DIR (getenv("TMPDIR") ?: "/tmp")
+ #define LOCK_TMP_PREFIX "/.tX"
+ #define LOCK_PREFIX "/.X"
+ #define LOCK_SUFFIX "-lock"
+@@ -326,7 +328,7 @@
+     i = 0;
+     haslock = 0;
+     while ((!haslock) && (i++ < 3)) {
+-        haslock = (link(tmp, LockFile) == 0);
++        haslock = (rename(tmp, LockFile) == 0);
+         if (haslock) {
+             /*
+              * We're done.
+@@ -1421,12 +1423,45 @@
+     int pid;
+ } *pidlist;
+ 
++#include <fcntl.h>
++#include <android/log.h>
++
++extern char* xkbcomp_argv[];
++extern int xkbcomp_argc;
++int xkbcomp_main(int argc, char *argv[]);
++
++static int xkbcomp_output_fd = -1;
++
++/* xkbcomp complains about every keysym missing from the xorgproto it was built with, and
++ * the client never sees those keys anyway, so only a failed keymap reaches the terminal. */
++static void
++ReportXkbcompOutput(Bool failed)
++{
++    static char output[65536];
++    int cap = sizeof(output) - 1, len = 0, r;
++
++    if (xkbcomp_output_fd < 0)
++        return;
++
++    while (len < cap && (r = read(xkbcomp_output_fd, output + len, cap - len)) > 0)
++        len += r;
++    output[len] = 0;
++    close(xkbcomp_output_fd);
++    xkbcomp_output_fd = -1;
++
++    if (failed)
++        fputs(output, stderr);
++    else
++        for (char *line = strtok(output, "\n"); line; line = strtok(NULL, "\n"))
++            __android_log_write(ANDROID_LOG_DEBUG, "xkbcomp", line);
++}
++
+ void *
+ Popen(const char *command, const char *type)
+ {
+     struct pid *cur;
+     FILE *iop;
+-    int pdes[2], pid;
++    int pdes[2], odes[2] = { -1, -1 }, pid;
+ 
+     if (command == NULL || type == NULL)
+         return NULL;
+@@ -1442,6 +1477,10 @@
+         return NULL;
+     }
+ 
++    if (pipe(odes) == 0)
++        /* Nothing drains this one until xkbcomp is done, so a full pipe must not block it. */
++        fcntl(odes[1], F_SETFL, O_NONBLOCK);
++
+     /* Ignore the smart scheduler while this is going on */
+ #ifdef HAVE_SETITIMER
+     if (SmartSchedulePause() < 0) {
+@@ -1457,6 +1496,8 @@
+     case -1:                   /* error */
+         close(pdes[0]);
+         close(pdes[1]);
++        close(odes[0]);
++        close(odes[1]);
+         free(cur);
+ #ifdef HAVE_SETITIMER
+         if (SmartScheduleEnable() < 0)
+@@ -1484,14 +1525,29 @@
+             }
+             close(pdes[1]);
+         }
+-        execl("/bin/sh", "sh", "-c", command, (char *) NULL);
+-        _exit(127);
++
++        if (odes[1] >= 0) {
++            close(odes[0]);
++            dup2(odes[1], 1);
++            dup2(odes[1], 2);
++            close(odes[1]);
++        }
++
++        for(int j=1; j<= SIGUNUSED; j++)
++            signal(j, SIG_DFL);
++
++        _exit(xkbcomp_main(xkbcomp_argc, xkbcomp_argv));
+     }
+ 
+     /* Avoid EINTR during stdio calls */
+     OsBlockSignals();
+ 
+     /* parent */
++    if (odes[1] >= 0) {
++        close(odes[1]);
++        xkbcomp_output_fd = odes[0];
++    }
++
+     if (*type == 'r') {
+         iop = fdopen(pdes[0], type);
+         close(pdes[1]);
+@@ -1628,6 +1684,8 @@
+         pid = waitpid(cur->pid, &pstat, 0);
+     } while (pid == -1 && errno == EINTR);
+ 
++    ReportXkbcompOutput(pid == -1 || !WIFEXITED(pstat) || WEXITSTATUS(pstat) != 0);
++
+     if (last == NULL)
+         pidlist = cur->next;
+     else
++++ ./present/present.h
+@@ -93,6 +93,9 @@
+                                   uint64_t target_msc,
+                                   PixmapPtr pixmap,
+                                   Bool sync_flip);
++
++typedef void (*present_after_flip_ptr) (RRCrtcPtr crtc, uint64_t event_id, uint64_t ust, uint64_t target_msc, PixmapPtr pixmap);
++
+ /* Flip pixmap for window, return false if it didn't happen.
+  *
+  * Like present_flip_ptr, additionally with:
+@@ -134,6 +137,7 @@
+     uint32_t                            capabilities;
+     present_check_flip_ptr              check_flip;
+     present_flip_ptr                    flip;
++    present_after_flip_ptr              after_flip;
+     present_unflip_ptr                  unflip;
+     present_check_flip2_ptr             check_flip2;
+ 
++++ ./present/present_execute.c
+@@ -21,6 +21,7 @@
+  */
+ 
+ #include "present_priv.h"
++#include "dix.h"
+ 
+ /*
+  * Called when the wait fence is triggered; just gets the current msc/ust and
+@@ -34,5 +35,7 @@
+     ScreenPtr               screen = vblank->screen;
+     present_screen_priv_ptr screen_priv = present_screen_priv(screen);
+-
++    /* lorie: disarm, or miSyncTriggerFence()'s restart-scan re-fires this callback. */
++    present_fence_set_callback(vblank->wait_fence, NULL, NULL);
++
+     screen_priv->re_execute(vblank);
+ }
+@@ -67,6 +70,14 @@
+     WindowPtr                   window = vblank->window;
+     ScreenPtr                   screen = window->drawable.pScreen;
+     present_screen_priv_ptr screen_priv = present_screen_priv(screen);
++    /* lorie: screen_x/screen_y is dst's own (0,0) in screen coords; window.xy minus that gives the
++     * window's offset within dst, whether dst is root, itself, or an inherited redirected ancestor. */
++    PixmapPtr                   gpuCopyDst = screen->GetWindowPixmap(window);
++    int16_t                     gpuCopyXOff = (int16_t) (vblank->x_off + window->drawable.x - gpuCopyDst->screen_x);
++    int16_t                     gpuCopyYOff = (int16_t) (vblank->y_off + window->drawable.y - gpuCopyDst->screen_y);
++    /* lorie: renderer can be connected but still unable to ever finish a pending GPU copy
++     * (e.g. activity backgrounded, no surface) - completedSerial won't advance either way. */
++    Bool                         gpuCopyStalled = !lorieConnectionAlive() || !lorieRendererAvailable();
+ 
+     /* If present_flip failed, we may have to requeue for the next MSC */
+     if (vblank->exec_msc == crtc_msc + 1 &&
+@@ -79,12 +96,69 @@
+         return;
+     }
+ 
+-    present_copy_region(&window->drawable, vblank->pixmap, vblank->update, vblank->x_off, vblank->y_off);
++    /* lorie: a GPU copy was already scheduled; poll for completion instead of blocking. */
++    if (vblank->gpu_copy_pending && !lorieGpuCopyIsDone(vblank->gpu_copy_serial) &&
++        !gpuCopyStalled &&
++        Success == screen_priv->queue_vblank(screen, window, vblank->crtc, vblank->event_id, crtc_msc + 1)) {
++        vblank->queued = TRUE;
++        return;
++    }
++
++    if (vblank->gpu_copy_pending) {
++        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
++        vblank->gpu_copy_pending = FALSE;
++        if (gpuCopyStalled && !lorieGpuCopyIsDone(vblank->gpu_copy_serial)) {
++            /* lorie: the renderer never actually finished this copy - tell the client it was
++             * skipped instead of falsely reporting it as presented. */
++            present_vblank_scrap(vblank);
++            screen_priv->flush(window);
++            return;
++        }
++    } else if (lorieTryScheduleGpuCopy(vblank->pixmap, gpuCopyDst, vblank->update, gpuCopyXOff, gpuCopyYOff,
++                                        &vblank->gpu_copy_serial, &vblank->gpu_copy_dst_buffer)) {
++        ClientPtr gateAClient = GetCurrentClient();
++        uint32_t gateAClientSeq = gateAClient ? gateAClient->sequence : 0;
++        /* lorie: our GPU blit writes the destination pixmap directly, bypassing the normal GC
++         * ops that Damage tracking hooks into, so report it manually - same drawable and region
++         * present_scmd.c's flip success path already uses, so this also reaches Composite's
++         * per-window damage for redirected windows, not just lorie's own root damage. */
++        RegionPtr damage = vblank->update ? vblank->update : &window->clipList;
++        lorieGateATraceXCallback(4u, vblank->gpu_copy_serial, gateAClientSeq);
++        if (vblank->update)
++            RegionIntersect(damage, damage, &window->clipList);
++        DamageDamageRegion(&window->drawable, damage);
++
++        /* lorie: copy offloaded to the renderer's GPU context. The region was already
++         * consumed (copied into the shared command queue), so free it like
++         * present_copy_region would have. */
++        if (vblank->update) {
++            RegionDestroy(vblank->update);
++            vblank->update = NULL;
++        }
++        if (!lorieGateAPresentRequeueShouldFail() &&
++            Success == screen_priv->queue_vblank(screen, window, vblank->crtc, vblank->event_id, crtc_msc + 1)) {
++            vblank->gpu_copy_pending = TRUE;
++            vblank->queued = TRUE;
++            return;
++        }
++        /* Post-schedule requeue failed (OOM or R6 one-shot). Keep pending
++         * refs until GPU completion is proven, then ACK. Timeout or renderer
++         * loss fail-stops without releasing ownership. */
++        lorieGateATracePresentRequeueFailed(
++            vblank->gpu_copy_serial, lorieGateAPixmapBufferId(gpuCopyDst));
++        lorieGpuCopyWaitForPresentOrFatal(vblank->gpu_copy_serial);
++        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
++        lorieGateATracePresentAckAfterCompleted(
++            vblank->gpu_copy_serial, lorieGateAPixmapBufferId(gpuCopyDst));
++    } else {
++        present_copy_region(&window->drawable, vblank->pixmap, vblank->update, vblank->x_off, vblank->y_off);
++
++        /* present_copy_region sticks the region into a scratch GC,
++         * which is then freed, freeing the region
++         */
++        vblank->update = NULL;
++    }
+ 
+-    /* present_copy_region sticks the region into a scratch GC,
+-     * which is then freed, freeing the region
+-     */
+-    vblank->update = NULL;
+     screen_priv->flush(window);
+ 
+     present_pixmap_idle(vblank->pixmap, vblank->window, vblank->serial, vblank->idle_fence);
++++ ./present/present_priv.h
+@@ -24,6 +24,7 @@
+ #define _PRESENT_PRIV_H_
+ 
+ #include "dix-config.h"
++#include <stdbool.h>
+ #include <X11/X.h>
+ #include "scrnintstr.h"
+ #include "misc.h"
+@@ -90,8 +91,38 @@
+     Bool                abort_flip;     /* aborting this flip */
+     PresentFlipReason   reason;         /* reason for which flip is not possible */
+     Bool                has_suboptimal; /* whether client can support SuboptimalCopy mode */
++
++    /* lorie: set when present_execute_copy offloaded the copy to the renderer's GPU context;
++     * the vblank stays queued until the copy is acknowledged done. */
++    Bool                gpu_copy_pending;
++    uint64_t            gpu_copy_serial;
++    void                *gpu_copy_dst_buffer; /* opaque LorieBuffer*, held for lorieGpuCopyAck */
+ };
+ 
++/* lorie: hooks implemented in lorie/InitOutput.c, used by present_execute_copy() to offload the
++ * pixmap->dst copy (dst being whatever GetWindowPixmap(window) is - root, or a Composite-redirected
++ * window's own backing pixmap) to the renderer's GPU context instead of a CPU CopyArea. */
++extern Bool lorieTryScheduleGpuCopy(PixmapPtr pixmap, PixmapPtr dst, RegionPtr update, int16_t x_off, int16_t y_off,
++                                     uint64_t *out_serial, void **out_dst_buffer);
++extern Bool lorieGpuCopyIsDone(uint64_t serial);
++extern void lorieGpuCopyAck(PixmapPtr pixmap, void *dst_buffer);
++extern void lorieGpuCopyWaitForPresentOrFatal(uint64_t serial);
++extern uint64_t lorieGateAPixmapBufferId(PixmapPtr pixmap);
++extern void lorieGateATraceXCallback(uint32_t xop, uint64_t gpuSerial, uint32_t clientSeq);
++extern int lorieGateAPresentRequeueShouldFail(void);
++extern void lorieGateATracePresentEarlyAck(uint64_t gpuSerial, uint64_t dstId);
++extern void lorieGateATracePresentRequeueFailed(uint64_t gpuSerial, uint64_t dstId);
++extern void lorieGateATracePresentAckAfterCompleted(uint64_t gpuSerial, uint64_t dstId);
++/* lorie: implemented in lorie/cmdentrypoint.c. Avoids waiting forever on a GPU copy that a dead renderer will never finish. */
++extern bool lorieConnectionAlive(void);
++/* lorie: implemented in lorie/InitOutput.c. Renderer can be connected but still unable to
++ * draw (e.g. activity backgrounded, no surface) - same "give up on this GPU copy" cases as
++ * lorieConnectionAlive() need to check this too. */
++extern bool lorieRendererAvailable(void);
++
++/* lorie: implemented in present_scmd.c; re-executes any vblank whose GPU copy has finished. */
++extern void lorieRecheckGpuCopies(void);
++
+ typedef struct present_screen_priv present_screen_priv_rec, *present_screen_priv_ptr;
+ typedef struct present_window_priv present_window_priv_rec, *present_window_priv_ptr;
+ 
+--- ./present/present_scmd.c
++++ ./present/present_scmd.c
+@@ -254,0 +255,15 @@ present_flip_try_ready(ScreenPtr screen)
++/* lorie: called when the renderer notifies that a GPU copy batch finished, or that it just lost
++ * its surface, instead of waiting for the next vblank poll. _safe iteration since
++ * present_re_execute() may destroy the vblank. */
++void
++lorieRecheckGpuCopies(void)
++{
++    present_vblank_ptr vblank, tmp;
++    Bool gpuCopyStalled = !lorieConnectionAlive() || !lorieRendererAvailable();
++
++    xorg_list_for_each_entry_safe(vblank, tmp, &present_exec_queue, event_queue) {
++        if (vblank->gpu_copy_pending && (lorieGpuCopyIsDone(vblank->gpu_copy_serial) || gpuCopyStalled))
++            present_re_execute(vblank);
++    }
++}
++
+@@ -599,6 +614,8 @@
+                     damage = &window->clipList;
+ 
+                 DamageDamageRegion(&vblank->window->drawable, damage);
++
++                screen_priv->info->after_flip(vblank->crtc, vblank->event_id, ust, vblank->target_msc, vblank->pixmap);
+                 return;
+             }
+ 
++++ ./present/present_vblank.c
+@@ -188,6 +188,14 @@
+                   vblank->pixmap->drawable.id, vblank->window->drawable.id,
+                   vblank->crtc));
+ 
++    /* lorie: an offloaded copy into vblank->pixmap may still be in flight - ack it now, while
++     * the pixmap is still valid, or the extra buffer references lorieTryScheduleGpuCopy took
++     * leak forever. */
++    if (vblank->gpu_copy_pending) {
++        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
++        vblank->gpu_copy_pending = FALSE;
++    }
++
+     present_pixmap_idle(vblank->pixmap, vblank->window, vblank->serial, vblank->idle_fence);
+     present_fence_destroy(vblank->idle_fence);
+     dixDestroyPixmap(vblank->pixmap, vblank->pixmap->drawable.id);
+@@ -200,6 +208,13 @@
+ void
+ present_vblank_destroy(present_vblank_ptr vblank)
+ {
++    /* lorie: same as in present_vblank_scrap() - must run before vblank->pixmap is dropped below,
++     * for the destroy paths that reach a still-pending vblank without going through scrap first. */
++    if (vblank->gpu_copy_pending) {
++        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
++        vblank->gpu_copy_pending = FALSE;
++    }
++
+     /* Remove vblank from window and screen lists */
+     xorg_list_del(&vblank->window_list);
+     /* Also make sure vblank is removed from event queue (wnmd) */
++++ ./xkb/ddxLoad.c
+@@ -56,6 +56,9 @@
+ #define PATHSEPARATOR "/"
+ #endif
+ 
++char* xkbcomp_argv[16] = {0};
++int xkbcomp_argc = 0;
++
+ static unsigned
+ LoadXKM(unsigned want, unsigned need, const char *keymap, XkbDescPtr *xkbRtrn);
+ 
+@@ -152,6 +155,25 @@
+                  xkm_output_dir, keymap) == -1)
+         buf = NULL;
+ 
++    char buf2[256];
++    char buf3[256];
++    sprintf(buf2, "-R%s", XkbBaseDirectory);
++    sprintf(buf3, "%s%s.xkm", xkm_output_dir, keymap);
++    xkbcomp_argv[0] = "xkbcomp";
++    xkbcomp_argv[1] = "-w";
++    xkbcomp_argv[2] = "1";
++    xkbcomp_argv[3] = buf2;
++    xkbcomp_argv[4] = "-xkm";
++    xkbcomp_argv[5] = (char*) xkmfile;
++    xkbcomp_argv[6] = "-em1";
++    xkbcomp_argv[7] = PRE_ERROR_MSG;
++    xkbcomp_argv[8] = "-emp";
++    xkbcomp_argv[9] = ERROR_PREFIX;
++    xkbcomp_argv[10] = "-eml";
++    xkbcomp_argv[11] = POST_ERROR_MSG1;
++    xkbcomp_argv[12] = buf3;
++    xkbcomp_argc = 13;
++
+     free(xkbbasedirflag);
+ 
+     if (!buf) {
+--- ./exa/exa.c	2026-09-08 02:23:16.101993613 +0800
++++ ./exa/exa.c	2026-09-08 02:23:16.101993613 +0800
+@@ -36,6 +36,7 @@
+ 
+ #include "exa_priv.h"
+ #include "exa.h"
++#include <stdio.h>
+ 
+ DevPrivateKeyRec exaScreenPrivateKeyRec;
+ 
+@@ -288,6 +289,13 @@
+     ExaPixmapPriv(pPixmap);
+     Bool has_gpu_copy, ret;
+     int i;
++    int pa_called = 0;
++    int pa_ret = -1;
++    int nested = 0;
++    const char *skip = "none";
++    void *dev_ptr_before = NULL;
++    int devKind_before = 0;
++    char msg[768];
+ 
+     if (!(pExaScr->info->flags & EXA_OFFSCREEN_PIXMAPS))
+         return FALSE;
+@@ -299,6 +307,21 @@
+     for (i = 0; i < EXA_NUM_PREPARE_INDICES; i++) {
+         if (pExaScr->access[i].pixmap == pPixmap) {
+             pExaScr->access[i].count++;
++            nested = 1;
++            skip = "nested";
++            snprintf(msg, sizeof(msg),
++                     "Sprep pix=%p index=%d has_gpu_copy=%d fb_ptr=%p sys_ptr=%p sys_pitch=%d fb_pitch=%d "
++                     "dev_ptr_before=%p devKind_before=%d PrepareAccess_called=0 PrepareAccess_ret=%d "
++                     "dev_ptr_after=%p devKind_after=%d width=%d height=%d bpp=%d nested=1 skip=%s",
++                     (void *) pPixmap, index, (int) exaPixmapHasGpuCopy(pPixmap),
++                     (void *) pExaPixmap->fb_ptr, (void *) pExaPixmap->sys_ptr,
++                     pExaPixmap->sys_pitch, pExaPixmap->fb_pitch,
++                     pPixmap->devPrivate.ptr, pPixmap->devKind,
++                     (int) pExaScr->access[i].retval,
++                     pPixmap->devPrivate.ptr, pPixmap->devKind,
++                     pPixmap->drawable.width, pPixmap->drawable.height,
++                     pPixmap->drawable.bitsPerPixel, skip);
++            p2a2_emit(msg);
+             return pExaScr->access[i].retval;
+         }
+     }
+@@ -330,13 +353,30 @@
+     pExaScr->access[index].pixmap = pPixmap;
+     pExaScr->access[index].count = 1;
+ 
+-    if (!has_gpu_copy)
++    dev_ptr_before = pPixmap->devPrivate.ptr;
++    devKind_before = pPixmap->devKind;
++    snprintf(msg, sizeof(msg),
++             "Sprep-pre pix=%p index=%d has_gpu_copy=%d fb_ptr=%p sys_ptr=%p sys_pitch=%d fb_pitch=%d "
++             "dev_ptr_before=%p devKind_before=%d width=%d height=%d bpp=%d",
++             (void *) pPixmap, index, (int) has_gpu_copy,
++             (void *) pExaPixmap->fb_ptr, (void *) pExaPixmap->sys_ptr,
++             pExaPixmap->sys_pitch, pExaPixmap->fb_pitch,
++             dev_ptr_before, devKind_before,
++             pPixmap->drawable.width, pPixmap->drawable.height,
++             pPixmap->drawable.bitsPerPixel);
++    p2a2_emit(msg);
++
++    if (!has_gpu_copy) {
++        skip = "no_gpu_copy";
+         goto out;
++    }
+ 
+     exaWaitSync(pScreen);
+ 
+-    if (pExaScr->info->PrepareAccess == NULL)
++    if (pExaScr->info->PrepareAccess == NULL) {
++        skip = "null_hook";
+         goto out;
++    }
+ 
+     if (index >= EXA_PREPARE_AUX_DEST &&
+         !(pExaScr->info->flags & EXA_SUPPORTS_PREPARE_AUX)) {
+@@ -344,22 +384,39 @@
+             FatalError("Unsupported AUX indices used on a pinned pixmap.\n");
+         exaMoveOutPixmap(pPixmap);
+         ret = FALSE;
++        skip = "aux_moveout";
+         goto out;
+     }
+ 
++    pa_called = 1;
+     if (!(*pExaScr->info->PrepareAccess) (pPixmap, index)) {
++        pa_ret = 0;
+         if (pExaPixmap->score == EXA_PIXMAP_SCORE_PINNED &&
+             !(pExaScr->info->flags & EXA_MIXED_PIXMAPS))
+             FatalError("Driver failed PrepareAccess on a pinned pixmap.\n");
+         exaMoveOutPixmap(pPixmap);
+         ret = FALSE;
++        skip = "hook_false";
+         goto out;
+     }
++    pa_ret = 1;
+ 
+     ret = TRUE;
+ 
+  out:
+     pExaScr->access[index].retval = ret;
++    snprintf(msg, sizeof(msg),
++             "Sprep pix=%p index=%d has_gpu_copy=%d fb_ptr=%p sys_ptr=%p sys_pitch=%d fb_pitch=%d "
++             "dev_ptr_before=%p devKind_before=%d PrepareAccess_called=%d PrepareAccess_ret=%d "
++             "dev_ptr_after=%p devKind_after=%d width=%d height=%d bpp=%d nested=%d skip=%s ret=%d",
++             (void *) pPixmap, index, (int) has_gpu_copy,
++             (void *) pExaPixmap->fb_ptr, (void *) pExaPixmap->sys_ptr,
++             pExaPixmap->sys_pitch, pExaPixmap->fb_pitch,
++             dev_ptr_before, devKind_before, pa_called, pa_ret,
++             pPixmap->devPrivate.ptr, pPixmap->devKind,
++             pPixmap->drawable.width, pPixmap->drawable.height,
++             pPixmap->drawable.bitsPerPixel, nested, skip, (int) ret);
++    p2a2_emit(msg);
+     return ret;
+ }
+ 
+--- ./fb/fbpict.c	2026-09-08 02:23:16.117993613 +0800
++++ ./fb/fbpict.c	2026-09-08 02:23:16.117993613 +0800
+@@ -34,6 +34,9 @@
+ #include "picturestr.h"
+ #include "mipict.h"
+ #include "fbpict.h"
++#include <stdio.h>
++
++static const char *p2a2_fb_role = "?";
+ 
+ void
+ fbComposite(CARD8 op,
+@@ -54,9 +57,13 @@
+     if (pMask)
+         miCompositeSourceValidate(pMask);
+ 
++    p2a2_fb_role = "src";
+     src = image_from_pict(pSrc, FALSE, &src_xoff, &src_yoff);
++    p2a2_fb_role = "mask";
+     mask = image_from_pict(pMask, FALSE, &msk_xoff, &msk_yoff);
++    p2a2_fb_role = "dst";
+     dest = image_from_pict(pDst, TRUE, &dst_xoff, &dst_yoff);
++    p2a2_fb_role = "?";
+ 
+     if (src && dest && !(pMask && !mask)) {
+         pixman_image_composite(op, src, mask, dest,
+@@ -290,6 +297,19 @@
+     fbGetDrawablePixmap(pict->pDrawable, pixmap, *xoff, *yoff);
+     fbGetPixmapBitsData(pixmap, bits, stride, bpp);
+ 
++    {
++        char msg[512];
++        int rowstride_bytes = stride * (int) sizeof(FbStride);
++
++        snprintf(msg, sizeof(msg),
++                 "Sfb role=%s bits=%p devKind=%d width=%d height=%d bpp=%d rowstride_bytes=%d "
++                 "stride_words=%d xoff=%d yoff=%d pix=%p",
++                 p2a2_fb_role, (void *) bits, pixmap->devKind,
++                 pixmap->drawable.width, pixmap->drawable.height, bpp,
++                 rowstride_bytes, stride, *xoff, *yoff, (void *) pixmap);
++        p2a2_emit(msg);
++    }
++
+     image = pixman_image_create_bits((pixman_format_code_t) pict->format,
+                                      pixmap->drawable.width,
+                                      pixmap->drawable.height, (uint32_t *) bits,
+--- ./os/osinit.c	2026-09-08 02:23:16.129993613 +0800
++++ ./os/osinit.c	2026-09-08 02:23:16.129993613 +0800
+@@ -56,6 +56,9 @@
+ #include <X11/Xos.h>
+ #include <signal.h>
+ #include <errno.h>
++#ifdef __ANDROID__
++#include <android/log.h>
++#endif
+ #ifdef HAVE_DLFCN_H
+ #include <dlfcn.h>
+ #endif
+@@ -132,6 +135,19 @@
+     }
+ 
+     /* log, cleanup, and abort */
++#ifdef __ANDROID__
++    {
++        char msg[256];
++#ifdef SA_SIGINFO
++        snprintf(msg, sizeof(msg),
++                 "Ssig Caught signal %d si_code=%d si_addr=%p",
++                 signo, sip ? sip->si_code : -1, sip ? sip->si_addr : NULL);
++#else
++        snprintf(msg, sizeof(msg), "Ssig Caught signal %d", signo);
++#endif
++        p2a2_emit(msg);
++    }
++#endif
+     xorg_backtrace();
+ 
+ #ifdef SA_SIGINFO
+@@ -187,10 +203,10 @@
+         sigemptyset(&act.sa_mask);
+ #ifdef SA_SIGINFO
+         act.sa_sigaction = OsSigHandler;
+-        act.sa_flags = SA_SIGINFO;
++        act.sa_flags = SA_SIGINFO | SA_ONSTACK;
+ #else
+         act.sa_handler = OsSigHandler;
+-        act.sa_flags = 0;
++        act.sa_flags = SA_ONSTACK;
+ #endif
+         for (i = 0; siglist[i] != 0; i++) {
+             if (sigaction(siglist[i], &act, &oact)) {
+--- ./os/backtrace.c	2026-09-08 02:23:16.141993613 +0800
++++ ./os/backtrace.c	2026-09-08 02:23:16.145993613 +0800
+@@ -318,12 +318,64 @@
+ 
+ #else
+ 
++#ifdef __ANDROID__
++#include <unwind.h>
++#include <dlfcn.h>
++#include <stdio.h>
++#include <android/log.h>
++
++struct p2a2_unw {
++    int n;
++};
++
++static _Unwind_Reason_Code
++p2a2_unw_cb(struct _Unwind_Context *ctx, void *arg)
++{
++    struct p2a2_unw *s = (struct p2a2_unw *) arg;
++    uintptr_t ip = _Unwind_GetIP(ctx);
++    Dl_info info;
++    const char *fname = "?";
++    const char *sname = "?";
++    uintptr_t off = 0;
++    char msg[512];
++
++    if (dladdr((void *) ip, &info)) {
++        if (info.dli_fname && info.dli_fname[0])
++            fname = info.dli_fname;
++        if (info.dli_sname) {
++            sname = info.dli_sname;
++            off = ip - (uintptr_t) info.dli_saddr;
++        }
++        else if (info.dli_fbase)
++            off = ip - (uintptr_t) info.dli_fbase;
++    }
++    snprintf(msg, sizeof(msg), "Sbt %u: %s (%s+0x%x) [%p]",
++             s->n, fname, sname, (int) off, (void *) ip);
++    p2a2_emit(msg);
++    ErrorFSigSafe("%u: %s (%s+0x%x) [%p]\n", s->n, fname, sname, (int) off,
++                  (void *) ip);
++    s->n++;
++    return s->n >= 64 ? _URC_END_OF_STACK : _URC_NO_REASON;
++}
++
++void
++xorg_backtrace(void)
++{
++    struct p2a2_unw s = { 0 };
++
++    p2a2_emit("Sbt Backtrace:");
++    ErrorFSigSafe("\nBacktrace:\n");
++    _Unwind_Backtrace(p2a2_unw_cb, &s);
++}
++
++#else
+ /* Default fallback if we can't find any way to get a backtrace */
+ void
+ xorg_backtrace(void)
+ {
+     return;
+ }
++#endif /* __ANDROID__ */
+ 
+ #endif
+ #endif
+--- ./miext/damage/damage.c	2026-09-08 03:22:57.141992247 +0800
++++ ./miext/damage/damage.c	2026-09-08 03:22:57.249992247 +0800
+@@ -25,6 +25,7 @@
+ #endif
+ 
+ #include <stdlib.h>
++#include <stdio.h>
+ 
+ #include    <X11/X.h>
+ #include    "scrnintstr.h"
+@@ -50,6 +51,10 @@
+     real->mem = priv->mem; \
+ }
+ 
++#ifdef __ANDROID__
++static int p2a3_damage_depth;
++#endif
++
+ #define BOX_SAME(a,b) \
+     ((a)->x1 == (b)->x1 && \
+      (a)->y1 == (b)->y1 && \
+@@ -488,6 +493,25 @@
+     PictureScreenPtr ps = GetPictureScreen(pScreen);
+ 
+     damageScrPriv(pScreen);
++#ifdef __ANDROID__
++    p2a3_damage_depth++;
++    {
++        char msg[768];
++
++        snprintf(msg, sizeof(msg),
++                 "D0 damageComposite ENTER depth=%d op=%u pSrc=%p pMask=%p pDst=%p "
++                 "srcDraw=%p maskDraw=%p dstDraw=%p current=%p saved=%p "
++                 "saved_is_self=%d",
++                 p2a3_damage_depth, (unsigned) op, (void *) pSrc, (void *) pMask,
++                 (void *) pDst,
++                 pSrc ? (void *) pSrc->pDrawable : NULL,
++                 pMask ? (void *) pMask->pDrawable : NULL,
++                 pDst ? (void *) pDst->pDrawable : NULL,
++                 (void *) ps->Composite, (void *) pScrPriv->Composite,
++                 pScrPriv->Composite == damageComposite);
++        p2a2_emit(msg);
++    }
++#endif
+ 
+     if (checkPictureDamage(pDst)) {
+         BoxRec box;
+@@ -509,14 +533,52 @@
+         miCompositeSourceValidate(pSrc);
+     if (pMask && pMask->pDrawable && WindowDrawable(pMask->pDrawable->type))
+         miCompositeSourceValidate(pMask);
++#ifdef __ANDROID__
++    {
++        char msg[256];
++
++        snprintf(msg, sizeof(msg),
++                 "D1 BEFORE_UNWRAP depth=%d current=%p saved=%p",
++                 p2a3_damage_depth, (void *) ps->Composite,
++                 (void *) pScrPriv->Composite);
++        p2a2_emit(msg);
++    }
++#endif
+     unwrap(pScrPriv, ps, Composite);
++#ifdef __ANDROID__
++    {
++        char msg[256];
++
++        snprintf(msg, sizeof(msg),
++                 "D2 AFTER_UNWRAP/BEFORE_CALL depth=%d current=%p saved=%p callee=%p callee_is_self=%d",
++                 p2a3_damage_depth, (void *) ps->Composite,
++                 (void *) pScrPriv->Composite, (void *) ps->Composite,
++                 ps->Composite == damageComposite);
++        p2a2_emit(msg);
++    }
++#endif
+     (*ps->Composite) (op,
+                       pSrc,
+                       pMask,
+                       pDst,
+                       xSrc, ySrc, xMask, yMask, xDst, yDst, width, height);
++#ifdef __ANDROID__
++    {
++        char msg[256];
++
++        snprintf(msg, sizeof(msg),
++                 "D3 AFTER_CALL depth=%d current=%p saved=%p",
++                 p2a3_damage_depth, (void *) ps->Composite,
++                 (void *) pScrPriv->Composite);
++        p2a2_emit(msg);
++    }
++#endif
+     damageRegionProcessPending(pDst->pDrawable);
+     wrap(pScrPriv, ps, Composite, damageComposite);
++#ifdef __ANDROID__
++    if (p2a3_damage_depth > 0)
++        p2a3_damage_depth--;
++#endif
+ }
+ 
+ static void
+--- ./exa/exa_unaccel.c	2026-09-08 03:22:57.149992247 +0800
++++ ./exa/exa_unaccel.c	2026-09-08 03:22:57.249992247 +0800
+@@ -23,6 +23,7 @@
+ 
+ #include "exa_priv.h"
+ 
++#include <stdio.h>
+ #include "mipict.h"
+ 
+ /*
+@@ -598,6 +599,34 @@
+ {
+     ScreenPtr pScreen = pDst->pDrawable->pScreen;
+     PictureScreenPtr ps = GetPictureScreen(pScreen);
++#ifdef __ANDROID__
++    {
++        char msg[768];
++        DrawablePtr sd = pSrc && pSrc->pDrawable ? pSrc->pDrawable : NULL;
++        DrawablePtr md = pMask && pMask->pDrawable ? pMask->pDrawable : NULL;
++        DrawablePtr dd = pDst && pDst->pDrawable ? pDst->pDrawable : NULL;
++        PixmapPtr sp = (sd && sd->type == DRAWABLE_PIXMAP) ? (PixmapPtr) sd : NULL;
++        PixmapPtr mp = (md && md->type == DRAWABLE_PIXMAP) ? (PixmapPtr) md : NULL;
++        PixmapPtr dp = (dd && dd->type == DRAWABLE_PIXMAP) ? (PixmapPtr) dd : NULL;
++
++        snprintf(msg, sizeof(msg),
++                 "E0u EXA_UNACCEL_ENTER op=%u pSrc=%p pMask=%p pDst=%p xywh=%d,%d,%u,%u "
++                 "srcDraw=%p maskDraw=%p dstDraw=%p srcPix=%p maskPix=%p dstPix=%p "
++                 "src_ptr=%p src_kind=%d mask_ptr=%p mask_kind=%d dst_ptr=%p dst_kind=%d "
++                 "src_whbpp=%d,%d,%d dst_whbpp=%d,%d,%d mask_whbpp=%d,%d,%d",
++                 (unsigned) op, (void *) pSrc, (void *) pMask, (void *) pDst,
++                 (int) xDst, (int) yDst, (unsigned) width, (unsigned) height,
++                 (void *) sd, (void *) md, (void *) dd,
++                 (void *) sp, (void *) mp, (void *) dp,
++                 sp ? sp->devPrivate.ptr : NULL, sp ? sp->devKind : -1,
++                 mp ? mp->devPrivate.ptr : NULL, mp ? mp->devKind : -1,
++                 dp ? dp->devPrivate.ptr : NULL, dp ? dp->devKind : -1,
++                 sd ? sd->width : -1, sd ? sd->height : -1, sd ? sd->bitsPerPixel : -1,
++                 dd ? dd->width : -1, dd ? dd->height : -1, dd ? dd->bitsPerPixel : -1,
++                 md ? md->width : -1, md ? md->height : -1, md ? md->bitsPerPixel : -1);
++        p2a2_emit(msg);
++    }
++#endif
+ 
+     EXA_PRE_FALLBACK(pScreen);
+ 
+@@ -631,7 +660,38 @@
+             exaPrepareAccess(pMask->pDrawable, EXA_PREPARE_MASK);
+     }
+ 
++#ifdef __ANDROID__
++    {
++        char msg[768];
++        DrawablePtr sd = pSrc && pSrc->pDrawable ? pSrc->pDrawable : NULL;
++        DrawablePtr md = pMask && pMask->pDrawable ? pMask->pDrawable : NULL;
++        DrawablePtr dd = pDst && pDst->pDrawable ? pDst->pDrawable : NULL;
++        PixmapPtr sp = (sd && sd->type == DRAWABLE_PIXMAP) ? (PixmapPtr) sd : NULL;
++        PixmapPtr mp = (md && md->type == DRAWABLE_PIXMAP) ? (PixmapPtr) md : NULL;
++        PixmapPtr dp = (dd && dd->type == DRAWABLE_PIXMAP) ? (PixmapPtr) dd : NULL;
++
++        snprintf(msg, sizeof(msg),
++                 "E1 PRE_SWAP op=%u src_ptr=%p src_kind=%d mask_ptr=%p mask_kind=%d "
++                 "dst_ptr=%p dst_kind=%d current=%p saved=%p",
++                 (unsigned) op,
++                 sp ? sp->devPrivate.ptr : NULL, sp ? sp->devKind : -1,
++                 mp ? mp->devPrivate.ptr : NULL, mp ? mp->devKind : -1,
++                 dp ? dp->devPrivate.ptr : NULL, dp ? dp->devKind : -1,
++                 (void *) ps->Composite, (void *) pExaScr->SavedComposite);
++        p2a2_emit(msg);
++    }
++#endif
+     swap(pExaScr, ps, Composite);
++#ifdef __ANDROID__
++    {
++        char msg[256];
++
++        snprintf(msg, sizeof(msg),
++                 "E1 PRE_FB_COMPOSITE callee=%p saved=%p",
++                 (void *) ps->Composite, (void *) pExaScr->SavedComposite);
++        p2a2_emit(msg);
++    }
++#endif
+     ps->Composite(op,
+                   pSrc,
+                   pMask,
+--- ./exa/exa_render.c	2026-09-08 03:22:57.153992247 +0800
++++ ./exa/exa_render.c	2026-09-08 03:22:57.249992247 +0800
+@@ -27,6 +27,7 @@
+ #endif
+ 
+ #include <stdlib.h>
++#include <stdio.h>
+ 
+ #include "exa_priv.h"
+ 
+@@ -880,6 +881,22 @@
+     Bool saveSrcRepeat = pSrc->repeat;
+     Bool saveMaskRepeat = pMask ? pMask->repeat : 0;
+     RegionRec region;
++#ifdef __ANDROID__
++    {
++        char msg[512];
++
++        snprintf(msg, sizeof(msg),
++                 "E0 EXA_COMPOSITE_ENTER op=%u pSrc=%p pMask=%p pDst=%p xywh=%d,%d,%u,%u "
++                 "srcDraw=%p maskDraw=%p dstDraw=%p swappedOut=%d",
++                 (unsigned) op, (void *) pSrc, (void *) pMask, (void *) pDst,
++                 (int) xDst, (int) yDst, (unsigned) width, (unsigned) height,
++                 pSrc ? (void *) pSrc->pDrawable : NULL,
++                 pMask ? (void *) pMask->pDrawable : NULL,
++                 pDst ? (void *) pDst->pDrawable : NULL,
++                 pExaScr->swappedOut);
++        p2a2_emit(msg);
++    }
++#endif
+ 
+     if (pExaScr->swappedOut)
+         goto fallback;
+--- ./Xext/shm.c
++++ ./Xext/shm.c
+@@ -1220,8 +1220,10 @@
+ #ifdef HAVE_MEMFD_CREATE
++#if !defined(__ANDROID__) || __ANDROID_API__ >= 30
+     fd = memfd_create("xorg", MFD_CLOEXEC|MFD_ALLOW_SEALING);
+     if (fd != -1) {
+         fcntl(fd, F_ADD_SEALS, F_SEAL_SHRINK);
+         DebugF ("Using memfd_create\n");
+         return fd;
+     }
++#endif /* Android build target <30: bionic hides the declaration; fall through */
+ #endif
+--- ./Xext/xf86bigfont.c
++++ ./Xext/xf86bigfont.c
+@@ -722,7 +722,8 @@
+-#if !defined(CSRG_BASED) && !defined(__CYGWIN__)
++#if !defined(CSRG_BASED) && !defined(__CYGWIN__) && \
++    (!defined(__ANDROID__) || defined(SHMLBA))
+         pagesize = SHMLBA;
+ #else
+ #ifdef _SC_PAGESIZE
+         pagesize = sysconf(_SC_PAGESIZE);
+ #else
+         pagesize = getpagesize();
+--- ./present/present_execute.c
++++ ./present/present_execute.c
+@@ -94,6 +94,3 @@
+-    if (vblank->gpu_copy_pending && !lorieGpuCopyIsDone(vblank->gpu_copy_serial) &&
+-        !gpuCopyStalled &&
+-        Success == screen_priv->queue_vblank(screen, window, vblank->crtc, vblank->event_id, crtc_msc + 1)) {
+-        vblank->queued = TRUE;
+-        return;
+-    }
++    if (vblank->gpu_copy_pending) {
++        uint64_t gpuCopySerial = vblank->gpu_copy_serial;
++        uint64_t gpuCopyDstId = lorieGateAPixmapBufferId(gpuCopyDst);
+@@ -101,9 +98,19 @@
+-    if (vblank->gpu_copy_pending) {
+-        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
+-        vblank->gpu_copy_pending = FALSE;
+-        if (gpuCopyStalled && !lorieGpuCopyIsDone(vblank->gpu_copy_serial)) {
+-            /* lorie: the renderer never actually finished this copy - tell the client it was
+-             * skipped instead of falsely reporting it as presented. */
+-            present_vblank_scrap(vblank);
+-            screen_priv->flush(window);
+-            return;
++        if (!lorieGpuCopyIsDone(gpuCopySerial)) {
++            if (!gpuCopyStalled &&
++                Success == screen_priv->queue_vblank(screen, window, vblank->crtc,
++                                                     vblank->event_id, crtc_msc + 1)) {
++                vblank->queued = TRUE;
++                return;
++            }
++            if (!gpuCopyStalled) {
++                /* Natural queue_vblank failure after a prior schedule follows
++                 * the same completion-before-ACK contract as the R6 one-shot. */
++                lorieGateATracePresentRequeueFailed(gpuCopySerial, gpuCopyDstId);
++                present_gpu_copy_retire_or_fatal(vblank);
++                lorieGateATracePresentAckAfterCompleted(gpuCopySerial, gpuCopyDstId);
++            } else {
++                /* The helper fail-stops if completion is still uncertain. */
++                present_gpu_copy_retire_or_fatal(vblank);
++            }
++        } else {
++            present_gpu_copy_retire_or_fatal(vblank);
+@@ -113,2 +120,9 @@
+-        ClientPtr gateAClient = GetCurrentClient();
+-        uint32_t gateAClientSeq = gateAClient ? gateAClient->sequence : 0;
++        uint64_t gpuCopySerial;
++        uint64_t gpuCopyDstId;
++        ClientPtr gateAClient;
++        uint32_t gateAClientSeq;
++        vblank->gpu_copy_pending = TRUE;
++        gpuCopySerial = vblank->gpu_copy_serial;
++        gpuCopyDstId = lorieGateAPixmapBufferId(gpuCopyDst);
++        gateAClient = GetCurrentClient();
++        gateAClientSeq = gateAClient ? gateAClient->sequence : 0;
+@@ -120 +134 @@
+-        lorieGateATraceXCallback(4u, vblank->gpu_copy_serial, gateAClientSeq);
++        lorieGateATraceXCallback(4u, gpuCopySerial, gateAClientSeq);
+@@ -134 +147,0 @@
+-            vblank->gpu_copy_pending = TRUE;
+@@ -141,6 +154,3 @@
+-        lorieGateATracePresentRequeueFailed(
+-            vblank->gpu_copy_serial, lorieGateAPixmapBufferId(gpuCopyDst));
+-        lorieGpuCopyWaitForPresentOrFatal(vblank->gpu_copy_serial);
+-        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
+-        lorieGateATracePresentAckAfterCompleted(
+-            vblank->gpu_copy_serial, lorieGateAPixmapBufferId(gpuCopyDst));
++        lorieGateATracePresentRequeueFailed(gpuCopySerial, gpuCopyDstId);
++        present_gpu_copy_retire_or_fatal(vblank);
++        lorieGateATracePresentAckAfterCompleted(gpuCopySerial, gpuCopyDstId);
+--- ./present/present_priv.h
++++ ./present/present_priv.h
+@@ -109,0 +110 @@
++void present_gpu_copy_retire_or_fatal(present_vblank_ptr vblank);
+--- ./present/present_vblank.c
++++ ./present/present_vblank.c
+@@ -183,0 +184,20 @@
++present_gpu_copy_retire_or_fatal(present_vblank_ptr vblank)
++{
++    uint64_t serial;
++
++    if (!vblank)
++        FatalError("Present GPU-copy retirement received NULL vblank");
++    if (!vblank->gpu_copy_pending)
++        return;
++
++    serial = vblank->gpu_copy_serial;
++    if (serial == 0 || !lorieGpuCopyIsDone(serial))
++        lorieGpuCopyWaitForPresentOrFatal(serial);
++
++    lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
++    vblank->gpu_copy_pending = FALSE;
++    vblank->gpu_copy_dst_buffer = NULL;
++    vblank->gpu_copy_serial = 0;
++}
++
++void
+@@ -191,7 +211 @@
+-    /* lorie: an offloaded copy into vblank->pixmap may still be in flight - ack it now, while
+-     * the pixmap is still valid, or the extra buffer references lorieTryScheduleGpuCopy took
+-     * leak forever. */
+-    if (vblank->gpu_copy_pending) {
+-        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
+-        vblank->gpu_copy_pending = FALSE;
+-    }
++    present_gpu_copy_retire_or_fatal(vblank);
+@@ -211,6 +225 @@
+-    /* lorie: same as in present_vblank_scrap() - must run before vblank->pixmap is dropped below,
+-     * for the destroy paths that reach a still-pending vblank without going through scrap first. */
+-    if (vblank->gpu_copy_pending) {
+-        lorieGpuCopyAck(vblank->pixmap, vblank->gpu_copy_dst_buffer);
+-        vblank->gpu_copy_pending = FALSE;
+-    }
++    present_gpu_copy_retire_or_fatal(vblank);
