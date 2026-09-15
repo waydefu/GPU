@@ -1,12 +1,17 @@
 # Gate A / GPU加速 — 後續規劃包（2026-09-15 22:00 UTC+8）
 
+> **SUPERSEDED for current runtime.** Live authority is `HANDOFF.md` (2026-09-16):
+> device `0f1e546` / CI **34999213228** / **R6 PASS** / Production Gate A BLOCKED /
+> STOP BEFORE R7. Keep this 20260915 planner text as a historical planning
+> snapshot. Do not treat its “未 CI／未裝機／NOT YET VERIFIED” sentences as current.
+
 給尚未進入工作樹的規劃者。這不是 R6 PASS，也不是授權開 R7。
 
 ```text
 裝置 APK: 95e6f96（experimental only）
-Writer:   src/f8-ahb-gatea-r6-retire @ 95e6f96
+Writer:   src/f8-ahb-gatea-r6-retire @ 0f1e546
            branch fix/gatea-r6-present-retirement-20260915
-           未提交；host 測試綠；關帳未完成
+           本機已 commit；R6 NOT YET VERIFIED；未 CI／未裝機
 Production Gate A: BLOCKED
 R7: STOP / source-blocked
 Stable :1 / HDMI: 未碰

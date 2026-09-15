@@ -14,17 +14,22 @@ per-worktree.
 3. Current A1 implementation handoff:
    `evidence/session/gate-a-a1/p2-r3-xpump-implementation/HANDOFF-NEXT-AGENT-20260914.md`.
 4. Current Gate A runtime authority:
-   `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`.
+   `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
 5. Current post-R3 root-cause and implementation-decision document:
    `evidence/session/gate-a-a1/p2-r3-xpump-design/GATE-A-P2-R3-XPUMP-DESIGN-20260914.md`.
 6. Current R6 design-complete + D2 COMPLETED root-cause + **D2 HOLD**:
    `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-DESIGN-20260915.md`,
    `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-D2-COMPLETED-ROOT-CAUSE-20260915.md`,
    and `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-D2-HOLD-20260915.md`.
-7. R6 review skill (parent folder, not inside a worktree). Worktree workspaces
-   do not auto-discover it; read it before R6 judge/design/C:
+7. R6 skills (parent folder, not inside a worktree). Worktree workspaces
+   do not auto-discover them; read before R6 judge / C / CI / runtime:
    `/root/projects/GPU加速/.cursor/skills/gate-a-r6-design-review/SKILL.md`
-   and `references/R6-D2-REVIEW-20260915.md`.
+   (review),
+   `/root/projects/GPU加速/.cursor/skills/gate-a-r6-runtime-qualification/SKILL.md`
+   (CI / install / D1–D2 / verdict),
+   `/root/projects/GPU加速/.cursor/skills/gate-a-r6-present-retirement-implementation/SKILL.md`
+   (frozen helper contract; implementation complete),
+   and `gate-a-r6-runtime-qualification/references/RELATED-SKILLS.md`.
    Portable gate-design skill: `~/.agents/skills/evidence-first-gate-test-design/SKILL.md`
    (do not copy to `~/.cursor/skills/`).
 8. Then read the relevant historical `evidence/session/<area>/GATE-*.md` only as needed.
@@ -44,8 +49,8 @@ per-worktree.
 - R4 PASS (X 29807, 1514/1514 fail=0 maxΔ=0 Xnz=0, N=8 publish=consume=lookup=draw=fence=completed=success=ack).
 - R5 FAIL (X 14858 hang after serial 819 RELOCK_DST; checkpoints 1/16/64/256 pixel PASS; 1024/4096 not reached). Authorized bounded rerun FAIL REPRODUCED (X 31265 hang after serial 1283 RELOCK_DST; 1/16/64/256/1024 pixel PASS; 4096 not reached). R5 root cause is PROVEN (AF_UNIX tiny-record backpressure + lock-across-write cycle).
 - Bounded correction is COMMITTED `37d8393` on `fix/gatea-r5-backpressure-20260915` (worktree `src/f8-ahb-gatea-r5-fix`) and pushed to fork; GitHub CI run **34918397208** PASS; artifact QUALIFIED (APK SHA256 `31ec7037...`, Build ID `cc8cee05...`).
-- APK INSTALLED on experimental only (`1.03.01-95e6f96-15.09.26` CI **34944171114**). Historical **R6-D1 PASS** on frozen `9369553` (`r6-d1-retry5` X 16168). New-APK D2-INFLIGHT 5 cells kept (COMPLETED serial S PROVEN; GPU < CPU dispatch physical race analyzed). D2-OOM not run. KEEP CI FAIL **34943831800**. Do not silent-retry `runtime-95e6f96` inflight cells or `9369553` D2.
-- Do not silent-retry PROTO=0. Do not second-retry R5 on `d9b7f60`. Do not start R7–R10, Stable, HDMI, Production enable, PR, merge, origin push, or force without a new explicit authorization. Do not silent-retry R6-D1. R7 remains source-blocked (`TERMUX_X11_GATEA_TEST_FAULT` absent).
+- APK INSTALLED on experimental only (`1.03.01-0f1e546-15.09.26` CI **34999213228**, SHA256 `2bc4c8ba…0851`, Build ID `263bee5f…2ecf`). Historical **R6-D1 PASS** on frozen `9369553` and historical D2-INFLIGHT 5 cells on `95e6f96` stay FAIL files. Current-candidate **R6-D1 PASS** X 29152 / **R6-D2-INFLIGHT PASS** X 31369 QUIESCENT-ADMIT / **R6-D2-OOM PASS** X 2638 (event 33 executed). KEEP CI FAIL **34943831800**. R6 retirement **COMMITTED+INSTALLED** `0f1e54699d0b11a781f2c044fbc77505f8a53bd8` on `src/f8-ahb-gatea-r6-retire` — **R6 PASS**. Production Gate A BLOCKED. Do not silent-retry `runtime-95e6f96` inflight cells or `9369553` D2.
+- Do not silent-retry PROTO=0. Do not second-retry R5 on `d9b7f60`. Do not start R7–R10, Stable, HDMI, Production enable, PR, merge, origin push, or force without a new explicit authorization. Do not silent-retry R6-D1 historical cells. R7 remains source-blocked (`TERMUX_X11_GATEA_TEST_FAULT` absent).
 - Never rerun R3 on `88e3f17`, `8479997`, `6c7ee6f`, or `98b0011`.
 
 ## ART JIT 偶發當機分類與處置規則（0x4800xxxx / dalvik-jit 類）
@@ -70,7 +75,7 @@ per-worktree.
 ## Redlines
 
 - Stable display `:1` (daily driver, `com.termux.x11`) is NEVER touched. Experimental APKs only in `com.waydefu.x11gpu`.
-- Closed gates stay closed: P0 / P1 / P2-A / P2-B.1 / P2-B.2 (R3 PASS). Do not reopen them as P2-B.3. Current work is Gate A P2 runtime (device `95e6f96` / D2 Physical Race Analyzed / D2-OOM not run); Production Gate A stays BLOCKED.
+- Closed gates stay closed: P0 / P1 / P2-A / P2-B.1 / P2-B.2 (R3 PASS). Do not reopen them as P2-B.3. Current work is Gate A P2 runtime (device `0f1e546` / R6 PASS / STOP BEFORE R7); Production Gate A stays BLOCKED.
 - Predicate stays narrow: mask / two-pass / transform / bilinear / repeat / componentAlpha remain software.
 - No PR. No `±1 UNORM counts as PASS`. Kill/install safety exactly as HANDOFF.md "Runtime" says.
 
