@@ -12,6 +12,16 @@ paths:
 
 # Gate A R6 Present Retirement — Cursor Luna Writer
 
+**STATUS: IMPLEMENTATION COMPLETE** on `0f1e546`. Do not re-implement this
+helper. Do not open a second writer session against this worktree for the
+same contract. Later CI / install / D1 / D2 / verdict work uses
+`../gate-a-r6-runtime-qualification/SKILL.md`. Review uses
+`../gate-a-r6-design-review/SKILL.md`. Related index:
+`../gate-a-r6-runtime-qualification/references/RELATED-SKILLS.md`.
+
+If a new Present ownership defect appears, stop for a **new** grant. This
+skill remains the frozen helper/oracle contract, not an open task.
+
 Use this skill only for one Cursor Luna session acting as the sole writer in an
 already-created linked worktree. The architecture below is frozen: implement it,
 test it, and stop at an uncommitted diff. Do not redesign ownership, weaken a
@@ -54,7 +64,7 @@ Read before writing:
 1. `AGENTS.md`
 2. `HANDOFF.md`
 3. `TEST-MATRIX.md`
-4. `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`
+4. The newest `HANDOFF-NEXT-AGENT-*.md` named by current `HANDOFF.md`
 5. `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-DESIGN-20260915.md`
 6. `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-D2-HOLD-20260915.md`
 7. The implementation plan named above

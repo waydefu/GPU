@@ -1,6 +1,10 @@
 # GPU 加速專案進度
 
 > 快照時間：2026-09-15 22:00（UTC+8）  
+> **SUPERSEDED for current runtime.** Live authority is `HANDOFF.md` (2026-09-16):
+> experimental `1.03.01-0f1e546-15.09.26` / R6 PASS / STOP BEFORE R7.
+> This file remains a 20260915 snapshot. Do not rewrite its body into PASS.
+
 > 規劃入口：`PLANNER-BRIEF-20260915.md`  
 > Runtime 梯子權威仍是 `HANDOFF.md`（尚未寫入未提交 retirement 樹）。
 

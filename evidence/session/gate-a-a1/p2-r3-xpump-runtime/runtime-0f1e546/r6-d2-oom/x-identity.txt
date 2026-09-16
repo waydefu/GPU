@@ -1,0 +1,2 @@
+x3_pid=2638
+termux-x11gpu com.waydefu.x11gpu :3                                                                                  /system/bin/app_process64
