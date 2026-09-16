@@ -1,14 +1,15 @@
-# GPU Research Handoff — 2026-09-16 B-2 **PASS** on `7549e36`; R7 **NOT STARTED**; CASE_LOOP repair **DEVICE-VALIDATED**
+# GPU Research Handoff — 2026-09-17 `fdfb1ce` INSTALLED; R7-04 **PASS**; R7 overall **IN PROGRESS**; B-2 remains PASS
 
-> Device experimental is **`7549e36`** on `com.waydefu.x11gpu` only
-> (CI **35084701124**). Repair-validation **CASE_LOOP_REPAIR_VALIDATED** remains
+> Device experimental is **`fdfb1ce`** on `com.waydefu.x11gpu` only
+> (CI **35103216566**). Repair-validation **CASE_LOOP_REPAIR_VALIDATED** remains
 > frozen (X 19887; not B-2). B-2 requalification-01 is frozen **INVALID** (no TLS).
 > B-2 requalification-02 is **B2_REQUALIFICATION_PASS** (X 32228; oracle 1514/1514;
 > stress 100/100/1000; timeout=0; fatal=0; timeout→Done=0; pixels exact).
 > Do **not** overwrite `b2-requalification-01` or `b2-requalification-02`.
 > Historical `feeaa56` stall-obs-01 **CASE_LOOP** remains frozen. CASE_LOOP hardened
-> SHA **`7549e3667ec03b8b5e50d2e5befe03065840bbd9`** on `src/f8-ahb-gatea-case-loop`
-> (parent `0d72332`). Initial `327b028` is **SUPERSEDED**. Frozen R6 worktree
+> SHA **`7549e36`** remains DEVICE-VALIDATED (superseded on device by `fdfb1ce`).
+> Worktree `src/f8-ahb-gatea-case-loop` HEAD **`fdfb1ce`** (parent `7549e36`).
+> Initial `327b028` is **SUPERSEDED**. Frozen R6 worktree
 > `src/f8-ahb-gatea-r6-retire` HEAD **`0f1e54699d0b11a781f2c044fbc77505f8a53bd8`**
 > — **do not mutate**. Historical **R6 PASS** on `0f1e546` remains last qualified R6.
 > EXA Composite timeout repair remains **COMMITTED**
@@ -17,10 +18,13 @@
 > `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`,
 > `runtime-27d8d1b/stall-obs-01`, `runtime-7549e36/repair-validation-01`,
 > `runtime-7549e36/b2-requalification-01`, or historical `0d72332`/`a7528bd` cells.
-> R7 **support artifact** `a7528bd` exists; R7 **qualification cells were never
-> started**. Canonical next-agent brief:
+> R7 **support artifact** `a7528bd` exists. Historical R7 qualification-01 is
+> **BLOCKED** (r7-04 FAIL `halt_mismatch`; remaining cells NOT RUN; **do not overwrite**).
+> Fatal-propagation repair **`fdfb1ce`** is INSTALLED. R7-04 requalification-01
+> **R7_04_REQUALIFICATION_PASS** (X 9891). R7 overall **IN PROGRESS / NOT YET PASS**.
+> Canonical next-agent brief:
 > `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
-> Stable `:1` PID **16485** untouched. HDMI untouched. Stop before R8.
+> Stable `:1` PID **24999** untouched. HDMI untouched. Stop before R8.
 > Production Gate A **BLOCKED**.
 
 ```
@@ -132,7 +136,10 @@ GATE A P2 R6-D2-INFLIGHT PASS / 0f1e546 (X 31369; QUIESCENT-ADMIT)
 GATE A P2 R6-D2-OOM PASS / 0f1e546 (X 2638; event 33 executed; ACK after cover)
 GATE A P2 R6 PASS / 0f1e546
 R7 SUPPORT ARTIFACT COMMITTED / a7528bd (termux-x11 fork CI; NOT qualification)
-B-2 PASS / 7549e36 requalification-02 (R7 QUALIFICATION NOT STARTED)
+B-2 PASS / 7549e36 requalification-02
+R7 QUALIFICATION-01 BLOCKED / r7-04 halt_mismatch (remaining cells NOT RUN)
+R7 FATAL-PROPAGATION REPAIR / fdfb1ce CI 35103216566 ARTIFACT QUALIFIED / INSTALLED
+R7-04 REQUALIFICATION-01 / R7_04_REQUALIFICATION_PASS (fdfb1ce X 9891; R7 overall IN PROGRESS)
 NOTIFY STALL DIAGNOSTIC INSTALLED / 1f85b80 (stall-obs-01 STALL_NOT_OBSERVED; NOT B-2; superseded on device)
 NOTIFY FN DIAGNOSTIC INSTALLED then superseded / feeaa56 (stall-obs-01 CASE_LOOP serial 86; NOT B-2; frozen)
 CASE_LOOP SOURCE FIX / 327b028 SUPERSEDED; hardened 7549e36 CI 35084701124 QUALIFIED INSTALLED
@@ -144,7 +151,7 @@ PRODUCTION GATE A BLOCKED
 
 Do not reopen P0/P1/P2-A/P2-B.1/P2-B.2. Do not treat ±1 UNORM as PASS. Do not open a `termux/termux-x11` origin PR. Docs-only PRs on `waydefu/GPU` are records, not qualification. Do not touch stable `:1`. Do not leave XFCE/xfwm running on experimental `:3` as a daily session; the R3 bounded window already passed and was stopped.
 
-## Current Gate A P2 runtime (2026-09-16 device 7549e36 INSTALLED; CASE_LOOP repair-validation VALIDATED; B-2 PASS; R7 qualification NOT STARTED)
+## Current Gate A P2 runtime (2026-09-17 device fdfb1ce INSTALLED; B-2 PASS; R7-04 PASS; R7 overall IN PROGRESS)
 
 Next-agent brief:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
@@ -155,16 +162,16 @@ Prior `88e3f17` R3 FAIL remains historical:
 
 | | |
 |---|---|
-| Worktree (installed source) | Device **`7549e36`**; CASE_LOOP worktree `src/f8-ahb-gatea-case-loop` HEAD **`7549e3667ec03b8b5e50d2e5befe03065840bbd9`** (`327b028` **SUPERSEDED**, parent `0d72332`); repair-validation **CASE_LOOP_REPAIR_VALIDATED**; B-2 **PASS** (`runtime-7549e36/b2-requalification-02/`); `b2-requalification-01` INVALID frozen; historical notify-fn `feeaa56` **superseded on device**; R7 **support** worktree `a7528bd` (not installed; qualification **not started**); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
+| Worktree (installed source) | Device **`fdfb1ce`** INSTALLED on `fix/gatea-r7-fatal-propagation-20260916` (parent `7549e36`); CASE_LOOP repair **DEVICE-VALIDATED** (historical); B-2 **PASS** (`runtime-7549e36/b2-requalification-02/`); `b2-requalification-01` INVALID frozen; historical notify-fn `feeaa56` **superseded on device**; historical R7 **BLOCKED** (`runtime-7549e36/r7-qualification-01/r7-04/` X 31122 halt_mismatch, frozen); R7-04 requal **PASS** (`runtime-fdfb1ce/r7-04-requalification-01/` X 9891); R7 **support** worktree `a7528bd` (not installed); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
 | R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6-retire` branch `fix/gatea-r6-present-retirement-20260915` HEAD **`0f1e546`** (fork in sync; origin ABSENT) |
 | Historical R6 source | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` HEAD **`95e6f96`** clean; do not overwrite its cells |
 | Control | `/root/projects/GPU加速/src/f8-ahb-gatea-a1` HEAD **`88e3f17`** clean |
-| Installed APK | `com.waydefu.x11gpu` `1.03.01-7549e36-16.09.26` CI **35084701124** |
-| APK SHA256 | `45500894023208963b3b1cd51fb7f3aa61807a25e1d70b322f7a7fdad7e14bc3` MATCH on-device |
-| Build ID | `4c5b7b86c18ec4e9bb14720c4615a25c1d6a8f81` MATCH |
-| lastUpdateTime | 2026-09-16 19:03:48 |
-| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **16485** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
-| Last ADB | `192.168.1.101:46061` live-fetched `_adb-tls-connect._tcp.local.` (`adb-51c6f1fe-ZtRPH4`) |
+| Installed APK | `com.waydefu.x11gpu` `1.03.01-fdfb1ce-16.09.26` CI **35103216566** |
+| APK SHA256 | `5313fc9a7e3e87907fd42ece330124362ab7284d41fbf6e4b492eb12ffd4915c` MATCH on-device |
+| Build ID | `1d6bf3cd0eb06d12804e690679211ee7f34f998e` MATCH |
+| lastUpdateTime | 2026-09-17 00:54:07 |
+| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **24999** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
+| Last ADB | `10.191.48.13:41361` live-fetched `_adb-tls-connect._tcp.local.` (`adb-51c6f1fe-ZtRPH4`) |
 | R1 unset | PASS (X 19391; 1514/1514; stress 100/100/1000; GATEA_EVENT=0) |
 | R1 PROTO=0 first | FAIL SIGSEGV X PID **21639** (`si_addr=0`, Uctx PC `0x4800229c` in `dalvik-jit-code-cache`) OBSERVED |
 | R1 PROTO=0 rerun | PASS X PID **27435**; 1514/1514; stress 100/100/1000; GATEA_EVENT=0; **21639 NON-REPRODUCED** |
@@ -203,7 +210,7 @@ Prior `88e3f17` R3 FAIL remains historical:
 | R6-D2-INFLIGHT `0f1e546` | **PASS** first attempt X PID **31369**; **QUIESCENT-ADMIT**; cover T=S=7; later Composite + second lifecycle serial 9; event 31=0 event 32=0. Cell `runtime-0f1e546/r6-d2-inflight/`. |
 | R6-D2-OOM `0f1e546` | **PASS** first attempt X PID **2638**; env armed **and** event 33 serial 7 executed; COMPLETED seq=56 then ACK event 34 seq=57; event 32=0; later SUCCESS serial 8. Cell `runtime-0f1e546/r6-d2-oom/`. |
 | R6 | **PASS** design-complete three cells on `0f1e546`. Timeout/loss/scrap/destroy/CloseScreen-with-pending remain SOURCE-PROVEN not DEVICE-PROVEN. |
-| R7 support artifact source | **COMMITTED** `a7528bd` on `src/f8-ahb-gatea-r7` (events 35/36). This is a **support artifact**, not an R7 qualification result. Frozen R6 tree untouched. Host verifiers PASS. **R7 cells NOT STARTED.** |
+| R7 support artifact source | **COMMITTED** `a7528bd` on `src/f8-ahb-gatea-r7` (events 35/36). This is a **support artifact**, not an R7 qualification PASS. Frozen R6 tree untouched. Host verifiers PASS. **R7 qualification-01 BLOCKED** on installed `7549e36`. |
 | Artifact B termux-x11 CI | **PASS** fork `debug_build.yml` run **35007764673** exact headSha `a7528bd`. Artifact QUALIFIED. SHA256 `c29b1c68…4c2c` Build ID `aa1d23e7…3b9c`. This is **not** a `waydefu/GPU` PR status check and **not** R7 qualification. |
 | Artifact B historical install | **DONE then superseded.** Experimental-only `runtime-a7528bd/r0/`; SHA/Build ID MATCH at that time. **Not R7 qualification.** Current installed experimental is `feeaa56`. |
 | B-2 R1 unset on `a7528bd` | **FAIL** X PID **17192**; oracle 1514/1514; stress 100/100 PASS; 1000 **ok=999 fail=1 alive=1**; event 35=0; SUMMARY `x-close-screen` counters 0. Cell `runtime-a7528bd/r1-unset-oracle/`. Do not silent-retry. **Authoritative historical FAIL.** **Not R7.** |
@@ -217,9 +224,12 @@ Prior `88e3f17` R3 FAIL remains historical:
 | CASE_LOOP repair-validation | **CASE_LOOP_REPAIR_VALIDATED** X PID **19887**; `p_b2_stress 1000` ok=1000 fail=0 alive=1 RC=0; Gcomp 1000/1000/1000; RECT→Done max 22 ms; timeout=0; fatal=0; timeout→Done=0; pixels exact; Stable PID **14604** UNTOUCHED. Cell `runtime-7549e36/repair-validation-01/`. Packet `runtime-7549e36/GATE-A-P2-CASE-LOOP-REPAIR-VALIDATION-20260916.md`. **Not B-2.** Do **not** retry. |
 | B-2 requalification-01 on `7549e36` | **B2_REQUALIFICATION_INVALID** (no live ADB TLS; stages NOT RUN). Cell `runtime-7549e36/b2-requalification-01/` **frozen**. Packet `runtime-7549e36/GATE-A-P2-B2-REQUALIFICATION-01-20260916.md`. Do **not** overwrite. |
 | B-2 requalification-02 on `7549e36` | **B2_REQUALIFICATION_PASS** X PID **32228**; Activity **10703**; `NO_GATEA_ENV`; provenance MATCH; oracle 1514/1514 fail=0 maxΔ=0 ±1=0 Xnz=0; stress100 `ok=100 fail=0 alive=1`; mixed100 `mixed=1 ok=100 fail=0 alive=1`; stress1000 `ok=1000 fail=0 n=1000 alive=1`; Gcomp 2715/2715/2715; RECT→Done max 0.111 s ≥2000=0; timeout=0; fatal=0; timeout→Done=0; pixels exact; Stable PID **16485** UNTOUCHED; `NO_X3_RESIDUE`. Cell `runtime-7549e36/b2-requalification-02/`. Packet `runtime-7549e36/GATE-A-P2-B2-REQUALIFICATION-02-20260916.md`. **Not R7.** Do **not** overwrite. |
+| R7 qualification-01 on `7549e36` | **R7_QUALIFICATION_BLOCKED**. Cell `r7-04` `fbo-incomplete` X PID **31122**; env exact PROTO=1 TELEMETRY=1 TEST_FAULT=fbo-incomplete TEST_ARM=1; event 35 once seq=31 serial=5 src=4 dst=2 after LOOKUP_OK; renderer halt `r-gatea-DIRECT_LOOKUP_FAIL` reason=2; last halt `x-direct-not-success` reason=4; judge `halt_mismatch`; Gcomp Done=0; event 32=0; timeout→Done=0; no signal; Stable **16485** UNCHANGED; `NO_X3_RESIDUE`. Remaining mandatory cells **NOT RUN** (fail-fast). Packet `runtime-7549e36/GATE-A-P2-R7-QUALIFICATION-01-20260916.md`. Do **not** retry this cell. Do **not** overwrite `r7-qualification-01`. Frozen judge still FAILs this evidence. |
+| R7 fatal-propagation repair | **COMMITTED+CI+INSTALLED** `fdfb1ce` parent `7549e36` CI **35103216566**. APK `1.03.01-fdfb1ce-16.09.26` SHA256 `5313fc9a…915c` Build ID `1d6bf3cd…998e` signer continuity PASS. Packets `p2-r7-design/GATE-A-P2-R7-FATAL-PROPAGATION-REPAIR-20260916.md` and `p2-r7-fatal-propagation-ci-35103216566/`. |
+| R7-04 requalification-01 on `fdfb1ce` | **R7_04_REQUALIFICATION_PASS** X PID **9891**; Activity **23139** TID 8877; env EXACT_R7_04_ENV; event 35 once seq=45 serial=9 src=4 dst=2 after LOOKUP_OK; last halt `r-gatea-DIRECT_LOOKUP_FAIL` reason=2; `x-direct-not-success reason=4`=0; preserve dump `x-observe-fatal`; judge `R7_PASS fbo-incomplete`; Gcomp Done=0; event 32=0; timeout→Done=0; Stable **24999** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-fdfb1ce/r7-04-requalification-01/`. Packet `runtime-fdfb1ce/GATE-A-P2-R7-04-REQUALIFICATION-01-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. Do **not** start R7-05 without a new grant. |
 | Renderer blocking audit | Historical `27d8d1b` read-only packet remains; SWAP/NEXT_FENCE as 2 s blocker **FALSIFIED** on `feeaa56` stall-obs-01. Remaining was infinite `cond_wait` + lost wakeup / no Choreographer during `lorieGpuCopyWait`. |
-| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **closed without merge**. `#4` **OPEN** (`feeaa56` CASE_LOOP + hardened `7549e36` not installed). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
-| Next | B-2 is **PASS** on `7549e36` (`b2-requalification-02`). Next legal step is a **separately authorized R7 qualification**. Do **not** start R7 from this lock. Do **not** overwrite `b2-requalification-01`/`02` or retry `repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`, `runtime-27d8d1b/stall-obs-01`, `runtime-0d72332/r1-unset-oracle`, or `runtime-a7528bd/r1-unset-oracle`. Stop before R8. Production Gate A remains BLOCKED. |
+| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **closed without merge**. `#4` **closed without merge** (stale CASE_LOOP snapshot). `#5` **MERGED** (`6c83338`, B-2 PASS `7549e36`). `#6` **OPEN** ([PR](https://github.com/waydefu/GPU/pull/6), `fdfb1ce` R7-04 PASS continuation kit; not merged; not qualification). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
+| Next | R7-04 **PASS** on `fdfb1ce`. R7 overall **IN PROGRESS**. B-2 remains **PASS**. Historical R7-04 FAIL on `7549e36` remains frozen. Next legal step is a **separately authorized** R7-05 `post-draw-gl` on installed `fdfb1ce`. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry historical `r7-qualification-01`. Do **not** overwrite `b2-requalification-01`/`02` or `r7-qualification-01`. Do **not** retry `repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`, `runtime-27d8d1b/stall-obs-01`, `runtime-0d72332/r1-unset-oracle`, or `runtime-a7528bd/r1-unset-oracle`. Stop before R8. Production Gate A remains BLOCKED. |
 
 ## Runtime (S3 qualification snapshot; B3a current state is recorded below)
 
@@ -437,9 +447,9 @@ authorized.
 
 ## Next (when resuming)
 
-Current next (2026-09-16, **device `7549e36` INSTALLED; CASE_LOOP repair-validation VALIDATED; B-2 PASS; R7 NOT STARTED**):
-Next legal step is a **separately authorized R7 qualification** on `7549e36`. Do **not** start R7 from this packet. Do **not** overwrite `runtime-7549e36/b2-requalification-01` or `b2-requalification-02`. Do **not** retry `runtime-7549e36/repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
-Do **not** start R7 cells. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
+Current next (2026-09-17, **device `fdfb1ce` INSTALLED; B-2 PASS; R7-04 PASS; R7 overall IN PROGRESS**):
+Separately authorized R7-05 `post-draw-gl` on **`fdfb1ce`**. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry `runtime-7549e36/r7-qualification-01`. Do **not** overwrite `runtime-7549e36/b2-requalification-01` or `b2-requalification-02`. Do **not** retry `runtime-7549e36/repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
+Do **not** start R8. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
 Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
 Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1. Do **not** start R8. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
 `d9b7f60`. Do **not** retry R3 on `88e3f17`, `8479997`, `6c7ee6f`, or

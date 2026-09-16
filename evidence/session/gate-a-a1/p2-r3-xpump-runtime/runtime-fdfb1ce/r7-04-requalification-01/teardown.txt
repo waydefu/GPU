@@ -1,0 +1,3 @@
+===process residue only===
+STABLE 24999
+NO_X3_RESIDUE

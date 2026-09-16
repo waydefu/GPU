@@ -1,0 +1,1 @@
+x3_pid=31122 cell=r7-04 fault=fbo-incomplete arm=1 proto=1 telemetry=1

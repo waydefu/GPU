@@ -1,23 +1,39 @@
-# 這份手機副本是什麼
+# waydefu/GPU — POCO F8 Ultra Termux:X11 研究紀錄與接續包
 
-完整專案在 workstation `/root/projects/GPU加速`。
-這裡只放 **Markdown + 核心 C／judge／技能**，方便請人規劃後續。
+完整 runtime 權威樹在工作站 `/root/projects/GPU加速`。
+這裡是 GitHub 上可把專案交給下一手的切面：**Markdown + 凍結 judge + R7 證據 + harness + 修復 core-src + skills**。
 
-**先讀狀態交接：** `STATUS-HANDOFF-20260916.md`
+本倉庫 **沒有** GitHub status checks。Docs PR 綠燈 ≠ 裝置 qualification。
+`termux-x11` fork artifact CI 是 **另一個倉庫**。
 
-然後：`HANDOFF.md` →
-`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md` →
-`evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`。
+## 先讀
 
-Docs PR（本倉庫 **沒有 status checks**）：
-- [PR #1](https://github.com/waydefu/GPU/pull/1) 歷史 R6 PASS `0f1e546` — **已 merge**
-- [PR #2](https://github.com/waydefu/GPU/pull/2) 歷史 B-2 RCA（已被 #3 包含）— **不 merge 關閉**
-- [PR #3](https://github.com/waydefu/GPU/pull/3) 歷史 stall-obs `27d8d1b` **STALL_NOT_OBSERVED** — **已 merge**
-- [PR #4](https://github.com/waydefu/GPU/pull/4) 過期 CASE_LOOP 快照（`7549e36` 尚未安裝）— **不 merge 關閉**
-- 本快照分支 `b2-pass-7549e36-20260916`：**B-2 PASS** on installed `7549e36`
+1. **[`STATUS-HANDOFF-20260917.md`](STATUS-HANDOFF-20260917.md)** ← 入口
+2. [`CONTINUATION.md`](CONTINUATION.md) — 怎麼接；R7-05 命令（**未授權，禁止從本 PR 執行**）
+3. [`WORKTREE-MAP.md`](WORKTREE-MAP.md) — source SHA / 遠端
+4. [`HANDOFF.md`](HANDOFF.md) — 完整 ledger
+5. [`ADB-CONNECT.md`](ADB-CONNECT.md)
 
-`termux-x11` fork artifact CI PASS ≠ 本倉庫 PR 綠燈 ≠ R7 qualification。
+## 鎖定（2026-09-17）
 
-不含：完整 git worktree、xserver submodule、APK、ELF、logcat dump、`.gradle`／build。
+| 項目 | 狀態 |
+|---|---|
+| R6 | PASS / 凍結 `0f1e546` |
+| RCA-1 | FIXED / DEVICE-PROVEN |
+| CASE_LOOP | DEVICE-VALIDATED `7549e36` |
+| B-2 | PASS（`b2-requalification-02`） |
+| 歷史 R7-04 `7549e36` | 有效 FAIL `halt_mismatch` 凍結 |
+| 新 R7-04 `fdfb1ce` | **PASS**（X 9891） |
+| R7 overall | **IN PROGRESS / NOT YET PASS** |
+| Production Gate A | BLOCKED |
+| 裝置 experimental | `1.03.01-fdfb1ce-16.09.26` CI **35103216566** |
 
-**B-2 = PASS** on `7549e36`（`b2-requalification-02`，X 32228）。R7 qualification **未開始**。Production Gate A **仍 BLOCKED**。
+## Docs PR 圖
+
+見 [`evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`](evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md)。
+
+歷史：[#1](https://github.com/waydefu/GPU/pull/1) R6 PASS **merged**；[#3](https://github.com/waydefu/GPU/pull/3) stall-obs **merged**；[#5](https://github.com/waydefu/GPU/pull/5) B-2 PASS **merged**；[#2](https://github.com/waydefu/GPU/pull/2)/[#4](https://github.com/waydefu/GPU/pull/4) 不 merge 關閉。
+本快照：[PR #6](https://github.com/waydefu/GPU/pull/6) `fdfb1ce` R7-04 PASS 接續包（未 merge）。
+
+不含：完整 git worktree、xserver submodule、APK、unstripped ELF、B-2 大 logcat、`.gradle`。
+APK 從 [termux-x11 CI 35103216566](https://github.com/waydefu/termux-x11/actions/runs/35103216566) 下載，SHA256 必須是 `5313fc9a7e3e87907fd42ece330124362ab7284d41fbf6e4b492eb12ffd4915c`。

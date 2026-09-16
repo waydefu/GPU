@@ -1,0 +1,5 @@
+python3 /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r7-design/judge-r7.py fbo-incomplete logcat-follow.txt --ring gatea-ring.txt --summary gatea-summary.txt --x-alive 0 --exit-signal 0
+# result:
+R7_PASS fbo-incomplete
+# judge SHA256 fba3c10f83fc3309151ca62d12dbe9dda4aabde2a040a131dcab116f0bd4cc17 unmodified
+# historical 7549e36 r7-04 still: R7_FAIL halt_mismatch what=x-direct-not-success reason=4

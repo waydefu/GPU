@@ -1,0 +1,18 @@
+handoff-kit SHA256
+
+=== included binaries ===
+b424a6340aac9140114ef70b4eb80cdbaa17cf8762b730963b865cd947cd8c13  evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_r3_single_direct
+3417abbf0855c10bfd2328e87f33518c2f7f59c42529ba157a847d3019f5b5ca  evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b3a_hold
+fec8f46d25614732b136dda03aa7ffaa309d373d4b285591d7322ba040bcba86  evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_r6_d2_present
+fba3c10f83fc3309151ca62d12dbe9dda4aabde2a040a131dcab116f0bd4cc17  evidence/session/gate-a-a1/p2-r7-design/judge-r7.py
+dbc6f254abd61f41bf34684853ab60ab370e0a04e00d68b37d50a672fc27adb4  evidence/session/gate-a-a1/p2-r7-design/test-judge-r7.py
+
+=== r7-04 new follow ===
+62eb67753d1790a14c12186866b3cd2aee8b6c6b2ecf1ca8fab2ee361793fa11  evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01/logcat-follow.txt
+=== historical r7-04 follow ===
+0d73d2b3d6ae303396b32d639f9dfb1343f7df6a845829d60b020d4012259587  evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt
+
+=== excluded (workstation / CI only) ===
+fdfb1ce APK 5313fc9a7e3e87907fd42ece330124362ab7284d41fbf6e4b492eb12ffd4915c
+fdfb1ce logcat-dump-unfiltered cb4c54e15dae1cab295d94a9694e05344a4871e271a56c9be0a7c2308b8980bf
+hist r7-04 logcat-dump-unfiltered e9de54d74f7af81054631ab611d037bdf416b87364ec6031547b5b7fec20065c

@@ -1,0 +1,47 @@
+===GATEA_EVENT===
+09-16 20:51:44.374 31122 31589 I gatea-telemetry: GATEA_EVENT seq=0 role=1 event=30 generation=1 serial=0 src=1 dst=0
+09-16 20:51:44.374 31122 31589 I gatea-telemetry: GATEA_EVENT seq=1 role=1 event=30 generation=1 serial=1 src=1 dst=0
+09-16 20:51:44.475 16922 30832 I gatea-telemetry: GATEA_EVENT seq=2 role=2 event=14 generation=1 serial=1 src=0 dst=4
+09-16 20:51:44.476 31122 31589 I gatea-telemetry: GATEA_EVENT seq=3 role=1 event=30 generation=1 serial=0 src=2 dst=0
+09-16 20:51:44.476 31122 31589 I gatea-telemetry: GATEA_EVENT seq=4 role=1 event=30 generation=1 serial=2 src=2 dst=0
+09-16 20:51:44.489 16922 30832 I gatea-telemetry: GATEA_EVENT seq=5 role=2 event=14 generation=1 serial=2 src=0 dst=4
+09-16 20:51:44.490 31122 31589 I gatea-telemetry: GATEA_EVENT seq=6 role=1 event=30 generation=1 serial=0 src=5 dst=0
+09-16 20:51:44.494 31122 31589 I gatea-telemetry: GATEA_EVENT seq=7 role=1 event=30 generation=1 serial=0 src=1 dst=0
+09-16 20:51:44.494 31122 31589 I gatea-telemetry: GATEA_EVENT seq=8 role=1 event=30 generation=1 serial=3 src=1 dst=0
+09-16 20:51:44.595 16922 30832 I gatea-telemetry: GATEA_EVENT seq=9 role=2 event=14 generation=1 serial=3 src=4 dst=5
+09-16 20:51:44.596 31122 31589 I gatea-telemetry: GATEA_EVENT seq=10 role=1 event=30 generation=1 serial=0 src=2 dst=0
+09-16 20:51:44.596 31122 31589 I gatea-telemetry: GATEA_EVENT seq=11 role=1 event=30 generation=1 serial=4 src=2 dst=0
+09-16 20:51:44.605 16922 30832 I gatea-telemetry: GATEA_EVENT seq=12 role=2 event=14 generation=1 serial=4 src=0 dst=5
+09-16 20:51:44.605 31122 31589 I gatea-telemetry: GATEA_EVENT seq=13 role=1 event=30 generation=1 serial=0 src=5 dst=0
+09-16 20:51:52.140 31122 31589 I gatea-telemetry: GATEA_EVENT seq=14 role=1 event=30 generation=1 serial=0 src=5 dst=7
+09-16 20:51:52.141 31122 31589 I gatea-telemetry: GATEA_EVENT seq=15 role=1 event=30 generation=1 serial=0 src=5 dst=7
+09-16 20:51:52.142 31122 31589 I gatea-telemetry: GATEA_EVENT seq=16 role=1 event=30 generation=1 serial=0 src=5 dst=8
+09-16 20:51:52.143 31122 31589 I gatea-telemetry: GATEA_EVENT seq=17 role=1 event=30 generation=1 serial=0 src=5 dst=8
+09-16 20:51:52.143 31122 31589 I gatea-telemetry: GATEA_EVENT seq=18 role=1 event=29 generation=1 serial=0 src=592705486856 dst=12
+09-16 20:51:52.145 31122 31589 I gatea-telemetry: GATEA_EVENT seq=19 role=1 event=30 generation=1 serial=0 src=3 dst=12
+09-16 20:51:52.150 16922 30832 I gatea-telemetry: GATEA_EVENT seq=20 role=2 event=1 generation=1 serial=0 src=6 dst=0
+09-16 20:51:52.151 31122 31589 I gatea-telemetry: GATEA_EVENT seq=21 role=1 event=1 generation=1 serial=0 src=6 dst=0
+09-16 20:51:52.151 16922 30832 I gatea-telemetry: GATEA_EVENT seq=22 role=2 event=1 generation=1 serial=0 src=7 dst=0
+09-16 20:51:52.151 31122 31589 I gatea-telemetry: GATEA_EVENT seq=23 role=1 event=1 generation=1 serial=0 src=7 dst=0
+09-16 20:51:52.151 31122 31589 I gatea-telemetry: GATEA_EVENT seq=24 role=1 event=2 generation=1 serial=0 src=6 dst=7
+09-16 20:51:52.151 31122 31589 I gatea-telemetry: GATEA_EVENT seq=25 role=1 event=3 generation=1 serial=0 src=6 dst=7
+09-16 20:51:52.151 31122 31589 I gatea-telemetry: GATEA_EVENT seq=26 role=1 event=4 generation=1 serial=0 src=6 dst=7
+09-16 20:51:52.152 31122 31589 I gatea-telemetry: GATEA_EVENT seq=27 role=1 event=5 generation=1 serial=0 src=6 dst=7
+09-16 20:51:52.152 31122 31589 I gatea-telemetry: GATEA_EVENT seq=28 role=1 event=6 generation=1 serial=5 src=6 dst=7
+09-16 20:51:52.152 16922 30832 I gatea-telemetry: GATEA_EVENT seq=29 role=2 event=7 generation=1 serial=5 src=6 dst=7
+09-16 20:51:52.152 16922 30832 I gatea-telemetry: GATEA_EVENT seq=30 role=2 event=8 generation=1 serial=5 src=6 dst=7
+09-16 20:51:52.152 16922 30832 I gatea-telemetry: GATEA_EVENT seq=31 role=2 event=35 generation=1 serial=5 src=4 dst=2
+09-16 20:51:52.152 16922 30832 I gatea-telemetry: GATEA_EVENT seq=32 role=2 event=16 generation=1 serial=5 src=6 dst=7
+09-16 20:51:52.155 31122 31589 I gatea-telemetry: GATEA_EVENT seq=33 role=1 event=16 generation=1 serial=5 src=6 dst=7
+===FAULT_HALT===
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt:09-16 20:51:52.152 16922 30832 I gatea-a1: GATEA_SUMMARY where=r-gatea-DIRECT_LOOKUP_FAIL nonce=17327496153471568839 generation=1 nextSequence=33 overflow=0 firstFailed=0 generationFatal=2 fatalReason=2 c0=1 c1=1 c2=1 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=2 c13=0 c14=2 c15=0 c16=2 c17=0 c18=2 c19=2 c20=1 c21=0 c22=0 c23=0 c24=1 c25=0 c26=0 c27=0
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt:09-16 20:51:52.152 16922 30832 F gatea-a1: GATEA_FATAL_HALT what=r-gatea-DIRECT_LOOKUP_FAIL reason=2
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt:09-16 20:51:52.155 31122 31589 I gatea-a1: GATEA_SUMMARY where=x-direct-not-success nonce=17327496153471568839 generation=1 nextSequence=34 overflow=0 firstFailed=0 generationFatal=2 fatalReason=2 c0=1 c1=1 c2=1 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=2 c13=0 c14=2 c15=0 c16=2 c17=0 c18=2 c19=2 c20=1 c21=0 c22=0 c23=0 c24=2 c25=0 c26=0 c27=0
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt:09-16 20:51:52.156 31122 31589 F gatea-a1: GATEA_FATAL_HALT what=x-direct-not-success reason=4
+===Gcomp===
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt:09-16 20:51:52.155 31122 31589 I gatea-a1: GATEA_SUMMARY where=x-direct-not-success nonce=17327496153471568839 generation=1 nextSequence=34 overflow=0 firstFailed=0 generationFatal=2 fatalReason=2 c0=1 c1=1 c2=1 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=2 c13=0 c14=2 c15=0 c16=2 c17=0 c18=2 c19=2 c20=1 c21=0 c22=0 c23=0 c24=2 c25=0 c26=0 c27=0
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-follow.txt:09-16 20:51:52.156 31122 31589 F gatea-a1: GATEA_FATAL_HALT what=x-direct-not-success reason=4
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-dump-unfiltered.txt:09-16 20:51:52.155 31122 31589 I gatea-a1: GATEA_SUMMARY where=x-direct-not-success nonce=17327496153471568839 generation=1 nextSequence=34 overflow=0 firstFailed=0 generationFatal=2 fatalReason=2 c0=1 c1=1 c2=1 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=2 c13=0 c14=2 c15=0 c16=2 c17=0 c18=2 c19=2 c20=1 c21=0 c22=0 c23=0 c24=2 c25=0 c26=0 c27=0
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04/logcat-dump-unfiltered.txt:09-16 20:51:52.156 31122 31589 F gatea-a1: GATEA_FATAL_HALT what=x-direct-not-success reason=4
+===signal===
+NONE

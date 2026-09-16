@@ -1,0 +1,5 @@
+# Captured device/CI logs keep original whitespace.
+evidence/**/*.txt -whitespace
+evidence/**/*.out -whitespace
+evidence/**/*.log -whitespace
+evidence/**/*.json -whitespace

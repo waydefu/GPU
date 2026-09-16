@@ -1,0 +1,4 @@
+ts=2026-09-17T00:53:53+08:00
+mdns_service=_adb-tls-connect._tcp.local.
+address=10.191.48.13 port=41361 name=adb-51c6f1fe-ZtRPH4._adb-tls-connect._tcp.local.
+adb5038_pid=2776

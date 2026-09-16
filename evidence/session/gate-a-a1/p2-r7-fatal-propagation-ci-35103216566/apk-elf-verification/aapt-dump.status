@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "/usr/bin/aapt",
+    "dump",
+    "badging",
+    "/root/projects/GPU\u52a0\u901f/evidence/session/gate-a-a1/p2-r7-fatal-propagation-ci-35103216566/apk/termux-x11-universal-debug.apk"
+  ],
+  "returncode": 0
+}

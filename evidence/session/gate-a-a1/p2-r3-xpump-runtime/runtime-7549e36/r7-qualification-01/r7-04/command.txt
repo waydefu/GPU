@@ -1,0 +1,7 @@
+SERIAL=192.168.1.101:46061
+CELL_ID=r7-04
+FAULT=fbo-incomplete
+FIXTURE=direct
+WAIT_S=12
+script=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/run-r7-one-cell.sh
+executions=1

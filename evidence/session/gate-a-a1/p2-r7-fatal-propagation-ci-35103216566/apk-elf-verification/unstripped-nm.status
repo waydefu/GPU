@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "nm",
+    "-a",
+    "-C",
+    "/root/projects/GPU\u52a0\u901f/evidence/session/gate-a-a1/p2-r7-fatal-propagation-ci-35103216566/unstripped/01x55434/obj/arm64-v8a/libXlorie.so"
+  ],
+  "returncode": 0
+}

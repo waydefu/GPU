@@ -1,0 +1,6 @@
+halt_count=1
+halts_chrono=[('r-gatea-DIRECT_LOOKUP_FAIL', '2')]
+final_halt=('r-gatea-DIRECT_LOOKUP_FAIL', '2')
+x_direct_not_success_reason4=0
+x_direct_not_success_any=0
+x_observe_fatal_dump=2

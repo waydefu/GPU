@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/usr/bin/apksigner",
+    "verify",
+    "--verbose",
+    "--print-certs",
+    "/tmp/r7fp-fdfb1ce-termux-x11-universal-debug.apk"
+  ],
+  "returncode": 0
+}

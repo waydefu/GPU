@@ -1,0 +1,7 @@
+__pycache__/
+*.apk
+*.so
+.cache/
+.serena/
+.gradle/
+*.pyc

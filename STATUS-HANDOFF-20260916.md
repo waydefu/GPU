@@ -1,5 +1,8 @@
 # 狀態交接 — 2026-09-16 20:16（UTC+8）
 
+> **已過期。** 現行入口是 [`STATUS-HANDOFF-20260917.md`](STATUS-HANDOFF-20260917.md)
+> （`fdfb1ce` INSTALLED、R7-04 PASS、R7 overall IN PROGRESS）。本檔保留作 B-2 PASS 當日快照。
+
 這是狀態快照，不是開工手冊，也不是授權。
 倉庫：https://github.com/waydefu/GPU（docs 紀錄；**沒有** PR status checks）
 工作站：`/root/projects/GPU加速`
