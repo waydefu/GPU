@@ -1,0 +1,8 @@
+ts=2026-09-16T10:04:47+08:00
+head=a7528bd25b89d0408bc15002e10bccefaeef3028
+ci=35007764673
+serial=10.191.48.13:43399
+harness=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b2_stress
+3e79b5cf875f5d7d05a25634983a44d9acfe67dfb885bf11f19b2cdb70e43c56  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b2_stress
+opaque=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b2_stress.opaque-20260916
+d020d4531e004f4051b19b6b5ae9c1e92b7352aadfbd82891c4f18d3cc3504f9  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b2_stress.opaque-20260916

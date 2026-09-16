@@ -1,6 +1,6 @@
 # TEST-MATRIX.md — POCO F8 Ultra Termux:X11 GPU 研究
 
-權威現況：`HANDOFF.md`（Gate A P2 **裝置**為 `95e6f96` CI **34944171114**。歷史 **R6-D1 PASS** 在凍結 `9369553`。新 APK D2-INFLIGHT 5 格皆保留（COMPLETED serial S PROVEN；GPU 執行 <0.5ms 快於 Xorg CPU 解碼 2.5ms，物理競爭根因已定性）。D2-OOM 未跑。KEEP CI FAIL **34943831800**。R7 STOP。Production Gate A BLOCKED。）。
+權威現況：`HANDOFF.md`（裝置 experimental 為 `a7528bd` CI **35007764673**。歷史 **R6 PASS** 在凍結 `0f1e546`。R7 Artifact B 已 commit／CI／install。B-2 R1 unset **FAIL**（stress 999/1000，權威格 `r1-unset-oracle/`）。diagnostic-01 DID NOT REPRODUCE。diagnostic-02 **RCA IDENTIFIED**。EXA Composite timeout 修復在 `src/f8-ahb-gatea-exa-timeout`（未授權裝置重跑）。R7 cells 未開。Stop before R8。Production Gate A BLOCKED。）。
 文件對齊查驗（2026-09-08 15:33 CST）：`git ls-remote`、[PR #1095](https://github.com/termux/termux-x11/pull/1095)、[PR #1114](https://github.com/termux/termux-x11/pull/1114) 頁面與表內 SHA 一致；兩個 PR 目前仍為 open，尚未 merge。P2-B.2 / Stable 基線數值未在 2026-09-14 重測；裝置 PID／experimental 版號以 `HANDOFF.md` 當日 snapshot 為準。
 
 ## Control build（Phase 1A，官方 CI）
@@ -62,7 +62,7 @@
 | XFCE compositor on | — | bounded isolated qualification 已 PASS；未列入目前 daily session，不留在 experimental `:3` 常駐。 | bounded PASS / daily not qualified |
 | XRender histogram | — | 舊 probe dump 未收集；P2-A 已由 A.3/A.4 關閉，不再以 histogram 作 blocker。 | historical |
 | GPU Composite | — | P2-B.2 narrow Over：ARGB→XRGB、無 mask/transform/repeat/componentAlpha、nearest，R3 oracle exact RGB；其餘 cases 仍 software。 | **P2-B.2 PASS (R3)** |
-| Gate A P2 runtime（experimental `:3` only） | 禁裝／禁碰 | 裝置 `95e6f96`。D2 5 格皆保留。COMPLETED serial S PROVEN。物理競爭分析已歸檔。D2-OOM 未跑。 | **OPEN**（待 oracle 裁決或 D2-OOM）；Production Gate A **BLOCKED** |
+| Gate A P2 runtime（experimental `:3` only） | 禁裝／禁碰 | 裝置 `a7528bd`（R7 APK INSTALLED）。B-2 R1 **FAIL**（權威）。diagnostic-01 DID NOT REPRODUCE。diagnostic-02 RCA IDENTIFIED。EXA timeout 修復 local-only。歷史 R6 PASS 在 `0f1e546`。歷史 `95e6f96` D2 5 格保留。 | **R6 PASS**（歷史）；R7 **BLOCKED**；Production Gate A **BLOCKED**；**STOP BEFORE R8** |
 | 10～30 min 穩定性＋CPU/RAM | | | |
 | glxinfo bare | llvmpipe（預期） | | | |
 | f8-gpu glxinfo | Adreno 840 yes | | | |

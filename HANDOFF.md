@@ -1,17 +1,21 @@
-# GPU Research Handoff — 2026-09-15 Gate A P2 R6 `95e6f96` INSTALLED; D2 Physical Race Analyzed
+# GPU Research Handoff — 2026-09-16 Gate A P2 R7 **BLOCKED** (B-2 R1 FAIL on `a7528bd`)
 
-> Experimental is **`95e6f96`** on `com.waydefu.x11gpu` only (CI **34944171114**).
-> **R6-D1 PASS** remains historical on frozen `9369553`. New-APK D2-INFLIGHT
-> 5 consecutive cells executed (all kept). Root cause: GPU execution (<0.5ms)
-> is physically faster than Xorg CPU dispatch (2.5ms); COMPLETED serial S is
-> **PROVEN** across all runs. D2-OOM **NOT RUN**. KEEP CI FAIL **34943831800**.
+> Device experimental is **`a7528bd`** on `com.waydefu.x11gpu` only
+> (CI **35007764673**). Frozen R6 worktree `src/f8-ahb-gatea-r6-retire` HEAD
+> **`0f1e54699d0b11a781f2c044fbc77505f8a53bd8`** still clean vs fork — **do not mutate**.
+> Historical **R6 PASS** on `0f1e546` remains the last qualified R6 runtime.
+> R7 Artifact B is **COMMITTED+CI+INSTALLED**
+> `a7528bd25b89d0408bc15002e10bccefaeef3028`. Host PASS; CI PASS; install PASS.
+> B-2 R1 unset first attempt **FAIL** (stress 999/1000). Diagnostic-01
+> **DID NOT REPRODUCE**. Diagnostic-02 **RCA IDENTIFIED**. EXA Composite
+> timeout repair is **local dirty** on
+> `src/f8-ahb-gatea-exa-timeout` /
+> `fix/gatea-exa-composite-timeout-20260916` (uncommitted). Device run
+> **not authorized**. R7 cells **not started**.
 > Canonical next-agent brief:
-> `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`.
-> R6 runtime:
-> `evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-95e6f96/GATE-A-P2-R6-RUNTIME-20260915.md`.
-> Physical race analysis packet:
-> `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-D2-INFLIGHT-PHYSICAL-RACE-ANALYSIS-20260915.md`.
-> Stable `:1` PID **1004** untouched. HDMI untouched. Production Gate A BLOCKED.
+> `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
+> Stable `:1` PID **17922** untouched. HDMI untouched. Stop before R8.
+> Production Gate A **BLOCKED**.
 
 ```
 P0 CLOSED
@@ -115,29 +119,38 @@ GATE A P2 R6 WAIT-OR-FATAL INSTALLED / 95e6f96
 GATE A P2 R6-D2-INFLIGHT FAIL / 95e6f96 (COMPLETED serial 6 PROVEN; reject overlap NOT CONSTRUCTED)
 GATE A P2 R6-D2-INFLIGHT retry1-4 FAIL REPRODUCED / 95e6f96 (X 24492/7952/13797/19332; GPU < CPU dispatch; COMPLETED PROVEN)
 GATE A P2 R6-D2-INFLIGHT PHYSICAL RACE ANALYZED / 95e6f96 (5 cells kept; native code 100% sound)
+GATE A P2 R6 RETIREMENT CI PASS / 0f1e546 / ARTIFACT QUALIFIED
+GATE A P2 R6 RETIREMENT INSTALLED / 0f1e546
+GATE A P2 R6-D1 PASS / 0f1e546 (X 29152; first attempt)
+GATE A P2 R6-D2-INFLIGHT PASS / 0f1e546 (X 31369; QUIESCENT-ADMIT)
+GATE A P2 R6-D2-OOM PASS / 0f1e546 (X 2638; event 33 executed; ACK after cover)
+GATE A P2 R6 PASS / 0f1e546
 PRODUCTION GATE A BLOCKED
 ```
 
 Do not reopen P0/P1/P2-A/P2-B.1/P2-B.2. Do not treat ±1 UNORM as PASS. Do not open a PR. Do not touch stable `:1`. Do not leave XFCE/xfwm running on experimental `:3` as a daily session; the R3 bounded window already passed and was stopped.
 
-## Current Gate A P2 runtime (2026-09-15 device 95e6f96; D2 Physical Race Analyzed)
+## Current Gate A P2 runtime (2026-09-16 device a7528bd INSTALLED; B-2 R1 FAIL; R7 BLOCKED)
 
 Next-agent brief:
+`evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
+Prior `95e6f96` D2 physical-race brief remains historical:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`.
 Prior `88e3f17` R3 FAIL remains historical:
 `evidence/session/gate-a-a1/p2-r3-terminal-runtime/HANDOFF-NEXT-AGENT-20260914.md`.
 
 | | |
 |---|---|
-| Worktree (installed source) | Device **`95e6f96`**; worktree HEAD **`95e6f9602b0146ee190870f84a34aad822ef666f`**; rollback `src/f8-ahb-gatea-r5-fix` `37d8393` clean |
-| R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` branch `qualification/gatea-r6-20260915` HEAD **`95e6f96`** (fork in sync) |
+| Worktree (installed source) | Device **`a7528bd`**; R7 worktree HEAD **`a7528bd25b89d0408bc15002e10bccefaeef3028`**; frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
+| R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6-retire` branch `fix/gatea-r6-present-retirement-20260915` HEAD **`0f1e546`** (fork in sync; origin ABSENT) |
+| Historical R6 source | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` HEAD **`95e6f96`** clean; do not overwrite its cells |
 | Control | `/root/projects/GPU加速/src/f8-ahb-gatea-a1` HEAD **`88e3f17`** clean |
-| Installed APK | `com.waydefu.x11gpu` `1.03.01-95e6f96-15.09.26` CI **34944171114** |
-| APK SHA256 | `60c36b4f59c38d13db6fe6c366e6f115a720ec1d6946d057b3ec41551b12f628` MATCH on-device |
-| Build ID | `1188e1cabf3b78285e7e5fbedcf64f0b5e7d44f9` MATCH |
-| lastUpdateTime | 2026-09-15 16:17:14 |
-| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **1004** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
-| Last ADB | `10.193.235.219:33349` live-fetched `_adb-tls-connect._tcp.local.` |
+| Installed APK | `com.waydefu.x11gpu` `1.03.01-a7528bd-15.09.26` CI **35007764673** |
+| APK SHA256 | `c29b1c68df613d40d8bfd93b44887ffd389419d8ca5f36661d1a48b3f03f4c2c` MATCH on-device |
+| Build ID | `aa1d23e7fc88048f40c450ca5bacf0506cb93b9c` MATCH |
+| lastUpdateTime | 2026-09-16 02:40:28 |
+| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **17922** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
+| Last ADB | `10.191.48.13:43399` live-fetched `_adb-tls-connect._tcp.local.` |
 | R1 unset | PASS (X 19391; 1514/1514; stress 100/100/1000; GATEA_EVENT=0) |
 | R1 PROTO=0 first | FAIL SIGSEGV X PID **21639** (`si_addr=0`, Uctx PC `0x4800229c` in `dalvik-jit-code-cache`) OBSERVED |
 | R1 PROTO=0 rerun | PASS X PID **27435**; 1514/1514; stress 100/100/1000; GATEA_EVENT=0; **21639 NON-REPRODUCED** |
@@ -152,7 +165,7 @@ Prior `88e3f17` R3 FAIL remains historical:
 | R5 PASS | **PASS** (user 2026-09-15): hang FALSIFIED, 4096 exact ×2. Follow-logcat ack-drop not blocking. `runtime-37d8393/GATE-A-P2-R5-PASS-20260915.md`. |
 | R6 bounded | **PASS** X PID **11495**; A+B exact `got0=00804000`; N_publish=2 counters match; no fatal. CLIENT_OK only. `runtime-37d8393/r6-cross-op/`. |
 | R6 design | **COMPLETE** 2026-09-15. Events 29–32, D1 queued + D2 Present in-flight/OOM cells. `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-DESIGN-20260915.md`. |
-| R6 source | **COMMITTED** wait-or-fatal **`95e6f96`** (includes `54ff35b` COMPLETED telemetry). Device APK **is** `95e6f96`. |
+| R6 source | **COMMITTED** wait-or-fatal **`95e6f96`** (includes `54ff35b` COMPLETED telemetry). Historical installed APK; superseded on device by `0f1e546`. |
 | R6 CI | **PASS** run **34944171114** after KEEP FAIL **34943831800**. Artifact QUALIFIED. Historical `9369553` CI **34926730189** remains frozen. |
 | R6 install | **DONE** experimental only. SHA/Build ID MATCH. `runtime-95e6f96/r0/`. Historical `runtime-9369553/r0/` frozen. |
 | R6-D1 | **FAIL** X PID **24748**; schedule not constructed. Cell `runtime-9369553/r6-d1/` **kept**. |
@@ -168,8 +181,22 @@ Prior `88e3f17` R3 FAIL remains historical:
 | R6-D2-INFLIGHT `95e6f96` | **FAIL** X PID **21317**; Present-before-Composite **PROVEN**; COMPLETED serial 6 **PROVEN**; event 31 **ABSENT** (GPU terminal during Composite). Cell `runtime-95e6f96/r6-d2-inflight/` **kept**. |
 | R6-D2-INFLIGHT `95e6f96` retry1-4 | **FAIL REPRODUCED** across 4 variants (X 24492/7952/13797/19332; pipelined, warm AHB, 8×8 to 1024×1024); event 31 **ABSENT** (GPU execution <0.5ms vs Xorg CPU dispatch 2.5ms). All 5 cells **kept**. |
 | R6-D2-INFLIGHT root cause | **PROVEN**: Adreno 830 GPU finishes before Xorg single-threaded dispatch reaches `gateADirectTryPrepare()`. COMPLETED event 14 is 100% reliable. Direct composite admission under quiescent queue is correct and safe. Analysis: `p2-r6-design/GATE-A-P2-R6-D2-INFLIGHT-PHYSICAL-RACE-ANALYSIS-20260915.md`. |
-| R6-D2-OOM | **NOT RUN**. C keeps pending + `lorieGpuCopyWaitForPresentOrFatal`; events 33/34. |
-| Next | Options: (A) Update inflight oracle to accept admit-when-quiescent, (B) Run D2-OOM fault injection, or (C) STOP. Do **not** start R7. |
+| R6-D2-OOM | **NOT RUN** on `95e6f96`. |
+| R6 retirement source | **COMMITTED** `0f1e546` on `src/f8-ahb-gatea-r6-retire`. Present ACK centralized in `present_gpu_copy_retire_or_fatal`. Patch Present hunks normalized. |
+| R6 retirement CI | **PASS** run **34999213228** `workflow_dispatch` exact headSha `0f1e546`. Artifact QUALIFIED. |
+| R6 retirement install | **DONE** experimental only. SHA/Build ID MATCH. `runtime-0f1e546/r0/`. |
+| R6-D1 `0f1e546` | **PASS** first attempt X PID **29152**; CLIENT_OK; pixels 64 exact `got0=00804000`; Present CALLBACK xop=4 serial 9 after Composite SUCCESS. Cell `runtime-0f1e546/r6-d1/`. |
+| R6-D2-INFLIGHT `0f1e546` | **PASS** first attempt X PID **31369**; **QUIESCENT-ADMIT**; cover T=S=7; later Composite + second lifecycle serial 9; event 31=0 event 32=0. Cell `runtime-0f1e546/r6-d2-inflight/`. |
+| R6-D2-OOM `0f1e546` | **PASS** first attempt X PID **2638**; env armed **and** event 33 serial 7 executed; COMPLETED seq=56 then ACK event 34 seq=57; event 32=0; later SUCCESS serial 8. Cell `runtime-0f1e546/r6-d2-oom/`. |
+| R6 | **PASS** design-complete three cells on `0f1e546`. Timeout/loss/scrap/destroy/CloseScreen-with-pending remain SOURCE-PROVEN not DEVICE-PROVEN. |
+| R7 Artifact B source | **COMMITTED** `a7528bd` on `src/f8-ahb-gatea-r7`. Events 35/36, shared-state fault tail, SUMMARY/ring dump, present retire trace. Frozen R6 tree untouched. Host verifiers PASS. |
+| R7 CI | **PASS** run **35007764673** `workflow_dispatch` exact headSha `a7528bd`. Artifact QUALIFIED. SHA256 `c29b1c68…4c2c` Build ID `aa1d23e7…3b9c`. |
+| R7 install | **DONE** experimental only. SHA/Build ID MATCH. Stable PID **17922** UNTOUCHED. `runtime-a7528bd/r0/`. |
+| R7 B-2 R1 unset | **FAIL** first attempt X PID **17192**; oracle 1514/1514; stress 100/100 PASS; 1000 **ok=999 fail=1 alive=1**; event 35=0; SUMMARY `x-close-screen` counters 0. Cell `runtime-a7528bd/r1-unset-oracle/`. Do not silent-retry. **Authoritative FAIL unchanged.** |
+| R7 B-2 R1 diagnostic-01 | **DID NOT REPRODUCE** X PID **29184**; diagnostic `p_b2_stress` 1000 **ok=1000 fail=0 alive=1** exit 0; no `B2_DIAG_FAIL`; EXA timeout count **0**; Gcomp Done **1000**; SF `fromDequeueTime: 1709ms` once (frame 2). Cell `runtime-a7528bd/r1-unset-diagnostic-01/`. Do **not** overwrite. Not a B-2 PASS. |
+| R7 B-2 R1 diagnostic-02 | **RCA IDENTIFIED** X PID **10903**; `ok=997 fail=3 n=1000 alive=1`; 3× `B2_DIAG_FAIL` `PIXEL_RGB_MISMATCH` (`got==dst`); 3× `EXA GPU composite wait timeout` serial 206/488/941 then same-ms `Gcomp Done`; Probe enter 202/484/937; RECT→timeout 2001–2002 ms. Cell `runtime-a7528bd/r1-unset-diagnostic-02/`. Do **not** overwrite. Not a B-2 PASS. Not R7. |
+| EXA Composite timeout repair | **READY FOR B-2 REQUALIFICATION — DEVICE RUN NOT AUTHORIZED**. Worktree `src/f8-ahb-gatea-exa-timeout` branch `fix/gatea-exa-composite-timeout-20260916` HEAD still `a7528bd` + dirty `InitOutput.c` + untracked `scripts/verify_exa_composite_wait.py`. Wait-false → `gateAXFatal("x-exa-composite-wait", TIMEOUT)`. Verifier RED on `a7528bd` / GREEN on repair. Do **not** mutate frozen R6. Do **not** start R7. |
+| Next | Device B-2 requalification of this repair requires **new explicit authorization** (build/install APK, then R1-unset). Do **not** silent-retry `r1-unset-oracle`. Do **not** overwrite diagnostic-01/02. Do **not** start R7. Stop before R8. Production Gate A remains BLOCKED. |
 
 ## Runtime (S3 qualification snapshot; B3a current state is recorded below)
 
@@ -387,16 +414,15 @@ authorized.
 
 ## Next (when resuming)
 
-Current next (2026-09-15, **device `95e6f96` / D2 Physical Race Analyzed**):
-experimental holds `1.03.01-95e6f96-15.09.26`. COMPLETED serial S is
-PROVEN across 5 consecutive runs. Reason-1 reject cannot be constructed
-because GPU copy (<0.5ms) completes before Xorg single-threaded dispatch (2.5ms)
-reaches `gateADirectTryPrepare()`. Native code is 100% sound and exact.
-Do **not** start R7/R8. Do **not** second-retry R5 on `d9b7f60`. Do **not**
-retry R3 on `88e3f17`, `8479997`, `6c7ee6f`, or `98b0011`. Stable PID **1004**.
-Production Gate A BLOCKED.
-Authority: `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`.
-Analysis: `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-D2-INFLIGHT-PHYSICAL-RACE-ANALYSIS-20260915.md`.
+Current next (2026-09-16, **device `a7528bd` INSTALLED; B-2 R1 FAIL; EXA timeout repair local-only**):
+Do **not** start R7 cells. Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
+Do **not** overwrite diagnostic-01/02. B-2 requalification of
+`src/f8-ahb-gatea-exa-timeout` requires **new explicit authorization**
+(build/install; no silent device run). Do **not** start R8. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
+`d9b7f60`. Do **not** retry R3 on `88e3f17`, `8479997`, `6c7ee6f`, or
+`98b0011`. Do **not** silent-retry historical R6 cells. Production Gate A
+BLOCKED.
+Authority: `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
 
 1. Keep P0/P1/P2-A/P2-B.1/P2-B.2 closed and keep the Over predicate narrow.
 2. Gate A/D 2026-09-11 architecture review is superseded for Gate A's byte/import

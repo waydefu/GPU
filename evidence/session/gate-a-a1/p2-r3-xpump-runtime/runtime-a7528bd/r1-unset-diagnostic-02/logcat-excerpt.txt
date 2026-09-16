@@ -1,0 +1,62 @@
+===== timeout serial=206 =====
+09-16 10:05:00.124 10903 11167 I LorieNative: Gcomp RECT src=0,0 dst=0,0 17x17
+09-16 10:05:02.126 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=206 scheduled=1
+09-16 10:05:02.126 10903 11167 I LorieNative: Gcomp Done
+09-16 10:05:02.129 10903 11167 I LorieNative: Probe RETURN depth=1 enter=202 return=202
+09-16 10:05:02.130 10903 11167 I LorieNative: D3 AFTER_CALL depth=1 current=0x7ad6301728 saved=0x7ad6301728
+09-16 10:05:02.131 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623250 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=68 dev_ptr_before=0x0 devKind_before=256 width=17 height=17 bpp=32
+09-16 10:05:02.131 10903 11167 I LorieNative: Sprep pix=0xb400007c65623250 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=68 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0x7debd1a000 devKind_after=256 width=17 height=17 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:02.133 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+09-16 10:05:02.133 10903 11167 I LorieNative: Sprep pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007b3562b640 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+09-16 10:05:02.134 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623250 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 width=32 height=32 bpp=32
+09-16 10:05:02.134 10903 11167 I LorieNative: Sprep pix=0xb400007c65623250 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007ca5621170 devKind_after=128 width=32 height=32 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:02.135 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+09-16 10:05:02.135 10903 11167 I LorieNative: Sprep pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007b3562b640 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+09-16 10:05:02.136 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65622fb0 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 width=32 height=32 bpp=32
+09-16 10:05:02.137 10903 11167 I LorieNative: Sprep pix=0xb400007c65622fb0 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007ca5622180 devKind_after=128 width=32 height=32 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:02.138 10903 11167 I LorieNative: D0 damageComposite ENTER depth=1 op=3 pSrc=0xb400007c25628700 pMask=0x0 pDst=0xb400007c256297e0 srcDraw=0xb400007c65623250 maskDraw=0x0 dstDraw=0xb400007c65622fb0 current=0x7ad64a6994 saved=0x7ad6301728 saved_is_self=0
+09-16 10:05:02.138 10903 11167 I LorieNative: D1 BEFORE_UNWRAP depth=1 current=0x7ad64a6994 saved=0x7ad6301728
+09-16 10:05:02.138 10903 11167 I LorieNative: D2 AFTER_UNWRAP/BEFORE_CALL depth=1 current=0x7ad6301728 saved=0x7ad6301728 callee=0x7ad6301728 callee_is_self=0
+09-16 10:05:02.139 10903 11167 I LorieNative: Probe ENTER depth=1 max=1 enter=203 return=202 saved=0x7ad6545258
+
+===== timeout serial=488 =====
+09-16 10:05:06.796 10903 11167 I LorieNative: Gcomp RECT src=0,0 dst=0,0 17x17
+09-16 10:05:08.797 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=488 scheduled=1
+09-16 10:05:08.798 10903 11167 I LorieNative: Gcomp Done
+09-16 10:05:08.801 10903 11167 I LorieNative: Probe RETURN depth=1 enter=484 return=484
+09-16 10:05:08.801 10903 11167 I LorieNative: D3 AFTER_CALL depth=1 current=0x7ad6301728 saved=0x7ad6301728
+09-16 10:05:08.802 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623250 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=68 dev_ptr_before=0x0 devKind_before=256 width=17 height=17 bpp=32
+09-16 10:05:08.802 10903 11167 I LorieNative: Sprep pix=0xb400007c65623250 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=68 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0x7debd1a000 devKind_after=256 width=17 height=17 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:08.804 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+09-16 10:05:08.804 10903 11167 I LorieNative: Sprep pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007b3562b640 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+09-16 10:05:08.805 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623250 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 width=32 height=32 bpp=32
+09-16 10:05:08.805 10903 11167 I LorieNative: Sprep pix=0xb400007c65623250 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007ca5622180 devKind_after=128 width=32 height=32 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:08.805 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+09-16 10:05:08.806 10903 11167 I LorieNative: Sprep pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007b3562b640 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+09-16 10:05:08.807 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65622fb0 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 width=32 height=32 bpp=32
+09-16 10:05:08.807 10903 11167 I LorieNative: Sprep pix=0xb400007c65622fb0 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=128 fb_pitch=128 dev_ptr_before=0x0 devKind_before=128 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007ca5620160 devKind_after=128 width=32 height=32 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:08.808 10903 11167 I LorieNative: D0 damageComposite ENTER depth=1 op=3 pSrc=0xb400007c25628700 pMask=0x0 pDst=0xb400007c256297e0 srcDraw=0xb400007c65623250 maskDraw=0x0 dstDraw=0xb400007c65622fb0 current=0x7ad64a6994 saved=0x7ad6301728 saved_is_self=0
+09-16 10:05:08.808 10903 11167 I LorieNative: D1 BEFORE_UNWRAP depth=1 current=0x7ad64a6994 saved=0x7ad6301728
+09-16 10:05:08.808 10903 11167 I LorieNative: D2 AFTER_UNWRAP/BEFORE_CALL depth=1 current=0x7ad6301728 saved=0x7ad6301728 callee=0x7ad6301728 callee_is_self=0
+09-16 10:05:08.809 10903 11167 I LorieNative: Probe ENTER depth=1 max=1 enter=485 return=484 saved=0x7ad6545258
+
+===== timeout serial=941 =====
+09-16 10:05:16.362 10903 11167 I LorieNative: Gcomp RECT src=0,0 dst=0,0 1x1
+09-16 10:05:18.363 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=941 scheduled=1
+09-16 10:05:18.363 10903 11167 I LorieNative: Gcomp Done
+09-16 10:05:18.364 10903 11167 I LorieNative: Probe RETURN depth=1 enter=937 return=937
+09-16 10:05:18.364 10903 11167 I LorieNative: D3 AFTER_CALL depth=1 current=0x7ad6301728 saved=0x7ad6301728
+09-16 10:05:18.365 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65622fb0 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=4 dev_ptr_before=0x0 devKind_before=256 width=1 height=1 bpp=32
+09-16 10:05:18.365 10903 11167 I LorieNative: Sprep pix=0xb400007c65622fb0 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=4 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0x7debd1d000 devKind_after=256 width=1 height=1 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:18.366 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+09-16 10:05:18.366 10903 11167 I LorieNative: Sprep pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007b3562b640 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+09-16 10:05:18.367 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65622fb0 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=8 fb_pitch=8 dev_ptr_before=0x0 devKind_before=8 width=2 height=2 bpp=32
+09-16 10:05:18.367 10903 11167 I LorieNative: Sprep pix=0xb400007c65622fb0 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=8 fb_pitch=8 dev_ptr_before=0x0 devKind_before=8 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007c85634570 devKind_after=8 width=2 height=2 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:18.367 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+09-16 10:05:18.367 10903 11167 I LorieNative: Sprep pix=0xb400007c65623410 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007b3562b640 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+09-16 10:05:18.368 10903 11167 I LorieNative: Sprep-pre pix=0xb400007c65623250 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=8 fb_pitch=8 dev_ptr_before=0x0 devKind_before=8 width=2 height=2 bpp=32
+09-16 10:05:18.368 10903 11167 I LorieNative: Sprep pix=0xb400007c65623250 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=8 fb_pitch=8 dev_ptr_before=0x0 devKind_before=8 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb400007c856344d0 devKind_after=8 width=2 height=2 bpp=32 nested=0 skip=none ret=1
+09-16 10:05:18.369 10903 11167 I LorieNative: D0 damageComposite ENTER depth=1 op=3 pSrc=0xb400007c256297e0 pMask=0x0 pDst=0xb400007c25628700 srcDraw=0xb400007c65622fb0 maskDraw=0x0 dstDraw=0xb400007c65623250 current=0x7ad64a6994 saved=0x7ad6301728 saved_is_self=0
+09-16 10:05:18.369 10903 11167 I LorieNative: D1 BEFORE_UNWRAP depth=1 current=0x7ad64a6994 saved=0x7ad6301728
+09-16 10:05:18.369 10903 11167 I LorieNative: D2 AFTER_UNWRAP/BEFORE_CALL depth=1 current=0x7ad6301728 saved=0x7ad6301728 callee=0x7ad6301728 callee_is_self=0
+09-16 10:05:18.369 10903 11167 I LorieNative: Probe ENTER depth=1 max=1 enter=938 return=937 saved=0x7ad6545258

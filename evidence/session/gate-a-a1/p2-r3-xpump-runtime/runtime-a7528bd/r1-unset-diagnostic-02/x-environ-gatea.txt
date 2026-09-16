@@ -1,0 +1,2 @@
+===GATEA_ENV===
+NO_GATEA_ENV

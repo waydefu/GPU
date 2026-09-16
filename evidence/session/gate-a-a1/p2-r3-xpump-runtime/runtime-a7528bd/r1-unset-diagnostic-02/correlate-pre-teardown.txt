@@ -1,0 +1,21 @@
+===B2_DIAG_FAIL===
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-a7528bd/r1-unset-diagnostic-02/x1000.out:B2_DIAG_FAIL iteration=201 start_mono_ns=39654300949664 fail_mono_ns=39656318271642 stage=PIXEL_RGB_MISMATCH w=17 h=17 alpha=127 mixed=0 sc=0x00ff00 dc=0xffffff src_px=0x7f007f00 dst_px=0x00ffffff put_src_err=NA put_dst_err=NA composite_err=NA getimage_reply=1 getimage_err=NA expected=0x0080ff80 got=0x00ffffff rgb_expected=0x80ff80 rgb_got=0xffffff x_expected=0x00 x_got=0x00 conn_err=0 sequence=4036
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-a7528bd/r1-unset-diagnostic-02/x1000.out:B2_DIAG_FAIL iteration=483 start_mono_ns=39660973536536 fail_mono_ns=39662989499869 stage=PIXEL_RGB_MISMATCH w=17 h=17 alpha=254 mixed=0 sc=0xffffff dc=0x123456 src_px=0xfefefefe dst_px=0x00123456 put_src_err=NA put_dst_err=NA composite_err=NA getimage_reply=1 getimage_err=NA expected=0x00fefefe got=0x00123456 rgb_expected=0xfefefe rgb_got=0x123456 x_expected=0x00 x_got=0x00 conn_err=0 sequence=9676
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-a7528bd/r1-unset-diagnostic-02/x1000.out:B2_DIAG_FAIL iteration=936 start_mono_ns=39670539505022 fail_mono_ns=39672552266115 stage=PIXEL_RGB_MISMATCH w=1 h=1 alpha=127 mixed=0 sc=0x00ff00 dc=0xffffff src_px=0x7f007f00 dst_px=0x00ffffff put_src_err=NA put_dst_err=NA composite_err=NA getimage_reply=1 getimage_err=NA expected=0x0080ff80 got=0x00ffffff rgb_expected=0x80ff80 rgb_got=0xffffff x_expected=0x00 x_got=0x00 conn_err=0 sequence=18736
+===SUMMARY===
+STRESS mixed=0 ok=997 fail=3 n=1000 alive=1
+===GATEA_EVENT===
+0
+0
+NONE
+===timeout===
+09-16 10:05:02.126 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=206 scheduled=1
+09-16 10:05:08.797 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=488 scheduled=1
+09-16 10:05:18.363 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=941 scheduled=1
+===SF delayed===
+09-16 10:04:56.839  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 2, fromDequeueTime: 1758ms, fromPostTime: 0ms
+09-16 10:05:02.263  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 176, fromDequeueTime: 2167ms, fromPostTime: 5ms
+09-16 10:05:08.937  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 417, fromDequeueTime: 2151ms, fromPostTime: 7ms
+09-16 10:05:18.490  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 778, fromDequeueTime: 2138ms, fromPostTime: 6ms
+===fatal===
+NONE
