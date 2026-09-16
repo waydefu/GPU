@@ -1,54 +1,60 @@
-# Gate A P2 stall-phase diagnostic — 2026-09-16 `27d8d1b` INSTALLED; stall-obs **STALL_NOT_OBSERVED**
+# Gate A P2 B-2 — 2026-09-16 `7549e36` **B2_REQUALIFICATION_PASS**; R7 **NOT STARTED**
 
 ```
 STATUS: R6 PASS on frozen 0f1e546 remains historical
-        Repair 0d72332 COMMITTED+CI; superseded on device by 27d8d1b
-        B-2 R1 unset FAIL (serial 2370) + rerun1 FAIL REPRODUCED (serial 1810)
-        stall RCA NARROWED BUT NOT PROVEN (consume delay after S-1)
-        stall-phase diagnostic 27d8d1b CI 35056388284 INSTALLED
-        stall-obs-01 STALL_NOT_OBSERVED (1000/1000; timeout=0; CASE_A/B/C NOT CLASSIFIED)
-        not B-2; do not retry stall-obs-01
-        timeout→Done ABSENT on 0d72332 fail-stop cells (repair held)
-        historical a7528bd B-2 FAIL / diagnostic-02 RCA FROZEN
-        R7 support artifact a7528bd exists
+        Repair 0d72332 COMMITTED+CI; RCA-1 timeout→Done FIXED / DEVICE-PROVEN
+        Historical B-2 FAIL on 0d72332 (serial 2370 / rerun1 1810) FROZEN
+        CASE_LOOP DEVICE-PROVEN on feeaa56 stall-obs-01 (frozen)
+        327b028 SUPERSEDED; device SHA 7549e36
+        8 ms CLOCK_MONOTONIC idle recheck; EXA 2000 unchanged
+        fork CI 35084701124 QUALIFIED INSTALLED
+        repair-validation CASE_LOOP_REPAIR_VALIDATED (frozen; not B-2)
+        b2-requalification-01 INVALID frozen (no TLS then)
+        b2-requalification-02 B2_REQUALIFICATION_PASS (X 32228)
+        B-2 = PASS on 7549e36
         R7 qualification cells NOT STARTED
         R8–R10 NOT AUTHORIZED
-DEVICE HEAD: 27d8d1b4fcfc5456bac8720d36110eeeb7cbc9d3
-DIAGNOSTIC CI: 35056388284
-DIAGNOSTIC APK: 1.03.01-27d8d1b-16.09.26 INSTALLED experimental only
-APK SHA256: 142b6e1fc6856c87c8dac0a006dd13a97c963bd480f8c2ac548d88325c0a45b0
-Build ID: e8d859dd25120e21d5be13f72ffc0a7dcf385e2c
+DEVICE HEAD: 7549e3667ec03b8b5e50d2e5befe03065840bbd9 INSTALLED
+CASE_LOOP WT: src/f8-ahb-gatea-case-loop HEAD 7549e36
+CASE_LOOP CI: 35084701124 QUALIFIED / INSTALLED
+APK: 1.03.01-7549e36-16.09.26 INSTALLED
+APK SHA256: 45500894023208963b3b1cd51fb7f3aa61807a25e1d70b322f7a7fdad7e14bc3
+Build ID: 4c5b7b86c18ec4e9bb14720c4615a25c1d6a8f81
+lastUpdateTime: 2026-09-16 19:03:48
 R7 WORKTREE: src/f8-ahb-gatea-r7 HEAD a7528bd (historical, not installed)
-STALL DIAG WORKTREE: src/f8-ahb-gatea-stall-diag HEAD 27d8d1b
 R6 WORKTREE: src/f8-ahb-gatea-r6-retire HEAD 0f1e546 (UNCHANGED)
-Stable :1: PID 17922 UNTOUCHED
-HDMI: UNTOUCHED
+Stable :1: PID 16485 UNTOUCHED
+HDMI: UNTOUCHED observe-only
+Last ADB: 192.168.1.101:46061 live-fetched _adb-tls-connect._tcp.local. adb-51c6f1fe-ZtRPH4
 Production Gate A: BLOCKED
 ```
 
+B-2 PASS packet:
+`evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/GATE-A-P2-B2-REQUALIFICATION-02-20260916.md`.
+
+Repair-validation remains frozen:
+`runtime-7549e36/GATE-A-P2-CASE-LOOP-REPAIR-VALIDATION-20260916.md`.
+
+INVALID TLS cell remains frozen:
+`runtime-7549e36/GATE-A-P2-B2-REQUALIFICATION-01-20260916.md`.
+
 R6 runtime brief remains:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
-Do not rewrite it. Do not silent-retry its cells.
+Do not rewrite it.
 
 ## Summary
 
-1. Device is `27d8d1b` experimental-only. Stable PID **17922** untouched.
-2. Observe-only `STALL_PHASE` markers live on device. Install cell
-   `runtime-27d8d1b/r0/`.
-3. One authorized observation **STALL_NOT_OBSERVED** X PID **16420**:
-   stress 1000/1000, EXA timeout 0, SWAP max 1.468 ms, NEXT_FENCE max
-   4.806 ms, 3712 markers. Packet
-   `runtime-27d8d1b/GATE-A-P2-STALL-OBS-01-20260916.md`.
-4. CASE_A / CASE_B / CASE_C **not classified** (no 2s wait this cell).
-   This does **not** falsify `0d72332` fail-stop cells.
-5. B-2 remains BLOCKED. R7 **qualification** not started (support artifact
-   `a7528bd` only). Timeout 2000 unchanged.
-6. waydefu/GPU docs: `#1` and `#3` **MERGED**; `#2` closed without merge.
-   Map `WAYDEFU-GPU-PR-MAP-20260916.md`. No status checks on that repo.
-   Docs merge is not qualification.
+1. Valid B-2 on `7549e36`: X **32228**, `NO_GATEA_ENV`, provenance MATCH.
+2. Oracle 1514/1514 exact; stress100 100/100; mixed100 100/100 mixed=1; stress1000 1000/1000.
+3. Timeout=0 fatal=0 timeout→Done=0 pixels exact. RECT→Done max 0.111 s.
+4. Verdict **B2_REQUALIFICATION_PASS**. B-2 = PASS.
+5. R7 **NOT STARTED**. Production Gate A **BLOCKED**.
 
 ## Next
 
-Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2.
-Do **not** start R7 qualification. Do **not** change 2000 ms. Do **not** mutate frozen R6.
-Further stall observation requires **new explicit authorization**.
+Prepare a **separate R7 qualification authorization** on `7549e36`.
+Do **not** start R7 from this packet.
+Do **not** overwrite `b2-requalification-01` or `b2-requalification-02`.
+Do **not** retry repair-validation-01 or historical stall-obs / 0d72332 / a7528bd cells.
+Do **not** install `327b028`. Do **not** change 2000 ms. Do **not** mutate frozen R6.
+Do **not** merge waydefu/GPU PR #4 from this packet (docs may be updated later).
