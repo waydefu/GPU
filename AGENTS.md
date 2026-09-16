@@ -4,7 +4,9 @@ Project root `/root/projects/GPU加速` is a plain folder holding Git worktrees
 (`src/f8-ahb` experimental, `src/f8-ahb-debug` instrumented, `src/upstream` control,
 Gate A frozen control `src/f8-ahb-gatea-a1`, active A1 implementation
 `src/f8-ahb-gatea-xpump`, R5 installed `src/f8-ahb-gatea-r5-fix`, R6 source
-`src/f8-ahb-gatea-r6`) plus research docs. It is itself NOT a Git repo — work
+`src/f8-ahb-gatea-r6-retire`, R7 source `src/f8-ahb-gatea-r7`, EXA Composite
+timeout repair `src/f8-ahb-gatea-exa-timeout`, stall-phase diagnostic
+`src/f8-ahb-gatea-stall-diag`) plus research docs. It is itself NOT a Git repo — work
 per-worktree.
 
 ## Entry order (every task)
@@ -14,7 +16,10 @@ per-worktree.
 3. Current A1 implementation handoff:
    `evidence/session/gate-a-a1/p2-r3-xpump-implementation/HANDOFF-NEXT-AGENT-20260914.md`.
 4. Current Gate A runtime authority:
-   `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
+   `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`
+   (R7 source) and
+   `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`
+   (frozen R6 device packet — do not rewrite).
 5. Current post-R3 root-cause and implementation-decision document:
    `evidence/session/gate-a-a1/p2-r3-xpump-design/GATE-A-P2-R3-XPUMP-DESIGN-20260914.md`.
 6. Current R6 design-complete + D2 COMPLETED root-cause + **D2 HOLD**:
@@ -49,8 +54,8 @@ per-worktree.
 - R4 PASS (X 29807, 1514/1514 fail=0 maxΔ=0 Xnz=0, N=8 publish=consume=lookup=draw=fence=completed=success=ack).
 - R5 FAIL (X 14858 hang after serial 819 RELOCK_DST; checkpoints 1/16/64/256 pixel PASS; 1024/4096 not reached). Authorized bounded rerun FAIL REPRODUCED (X 31265 hang after serial 1283 RELOCK_DST; 1/16/64/256/1024 pixel PASS; 4096 not reached). R5 root cause is PROVEN (AF_UNIX tiny-record backpressure + lock-across-write cycle).
 - Bounded correction is COMMITTED `37d8393` on `fix/gatea-r5-backpressure-20260915` (worktree `src/f8-ahb-gatea-r5-fix`) and pushed to fork; GitHub CI run **34918397208** PASS; artifact QUALIFIED (APK SHA256 `31ec7037...`, Build ID `cc8cee05...`).
-- APK INSTALLED on experimental only (`1.03.01-0f1e546-15.09.26` CI **34999213228**, SHA256 `2bc4c8ba…0851`, Build ID `263bee5f…2ecf`). Historical **R6-D1 PASS** on frozen `9369553` and historical D2-INFLIGHT 5 cells on `95e6f96` stay FAIL files. Current-candidate **R6-D1 PASS** X 29152 / **R6-D2-INFLIGHT PASS** X 31369 QUIESCENT-ADMIT / **R6-D2-OOM PASS** X 2638 (event 33 executed). KEEP CI FAIL **34943831800**. R6 retirement **COMMITTED+INSTALLED** `0f1e54699d0b11a781f2c044fbc77505f8a53bd8` on `src/f8-ahb-gatea-r6-retire` — **R6 PASS**. Production Gate A BLOCKED. Do not silent-retry `runtime-95e6f96` inflight cells or `9369553` D2.
-- Do not silent-retry PROTO=0. Do not second-retry R5 on `d9b7f60`. Do not start R7–R10, Stable, HDMI, Production enable, PR, merge, origin push, or force without a new explicit authorization. Do not silent-retry R6-D1 historical cells. R7 remains source-blocked (`TERMUX_X11_GATEA_TEST_FAULT` absent).
+- APK INSTALLED on experimental only (`1.03.01-27d8d1b-16.09.26` CI **35056388284**, SHA256 `142b6e1f…45b0`, Build ID `e8d859dd…5e2c`). One stall observation **STALL_NOT_OBSERVED** (X 16420; 1000/1000; timeout=0; CASE_A/B/C NOT CLASSIFIED; **not B-2**). Do **not** retry `runtime-27d8d1b/stall-obs-01`. Historical **R6 PASS** APK `1.03.01-0f1e546-15.09.26` CI **34999213228** is no longer installed. Frozen R6 worktree remains `0f1e546`. B-2 R1 unset **FAIL** on `0d72332` (X 11212; stress 650/1000; timeout serial 2370 fail-stop). Historical `a7528bd` FAIL frozen. R7 cells not started. Production Gate A BLOCKED. Do not silent-retry `runtime-0d72332/r1-unset-oracle`, `runtime-a7528bd/r1-unset-oracle`, `runtime-95e6f96` inflight cells, or `9369553` D2.
+- Do not silent-retry PROTO=0. Do not second-retry R5 on `d9b7f60`. Experimental is `27d8d1b` INSTALLED; stall-obs-01 **STALL_NOT_OBSERVED** (do not retry). B-2 remains **BLOCKED** from `0d72332` fail-stop (serial 2370 / rerun1 1810, no timeout→Done); historical `a7528bd` FAIL / diagnostic-02 RCA frozen. Do not start R7 cells. Do not start R8–R10, Stable, HDMI, Production enable, origin PR/merge, origin push, or force without a new explicit authorization. Do not silent-retry R6-D1 historical cells. Do not silent-retry `runtime-0d72332/r1-unset-oracle` or `runtime-a7528bd/r1-unset-oracle`.
 - Never rerun R3 on `88e3f17`, `8479997`, `6c7ee6f`, or `98b0011`.
 
 ## ART JIT 偶發當機分類與處置規則（0x4800xxxx / dalvik-jit 類）
@@ -75,9 +80,9 @@ per-worktree.
 ## Redlines
 
 - Stable display `:1` (daily driver, `com.termux.x11`) is NEVER touched. Experimental APKs only in `com.waydefu.x11gpu`.
-- Closed gates stay closed: P0 / P1 / P2-A / P2-B.1 / P2-B.2 (R3 PASS). Do not reopen them as P2-B.3. Current work is Gate A P2 runtime (device `0f1e546` / R6 PASS / STOP BEFORE R7); Production Gate A stays BLOCKED.
+- Closed gates stay closed: P0 / P1 / P2-A / P2-B.1 / P2-B.2 (R3 PASS). Do not reopen them as P2-B.3. Current work is Gate A P2 stall-phase on device `27d8d1b` INSTALLED / stall-obs-01 **STALL_NOT_OBSERVED** / B-2 **BLOCKED** (`0d72332` fail-stop) / R7 qualification **NOT STARTED** (support artifact `a7528bd` exists only); Production Gate A stays BLOCKED. Stop before R8.
 - Predicate stays narrow: mask / two-pass / transform / bilinear / repeat / componentAlpha remain software.
-- No PR. No `±1 UNORM counts as PASS`. Kill/install safety exactly as HANDOFF.md "Runtime" says.
+- No `termux/termux-x11` origin PR. Docs-only `waydefu/GPU` PRs are records, not qualification. No `±1 UNORM counts as PASS`. Kill/install safety exactly as HANDOFF.md "Runtime" says.
 
 ## Done means
 

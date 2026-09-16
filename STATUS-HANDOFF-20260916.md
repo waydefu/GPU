@@ -1,61 +1,76 @@
-# 狀態交接 — 2026-09-16（UTC+8）R6 PASS `0f1e546`
+# 狀態交接 — 2026-09-16 13:55（UTC+8）
 
-這是狀態快照，不是開工手冊。
-倉庫：https://github.com/waydefu/GPU
+這是狀態快照，不是開工手冊，也不是授權。
+倉庫：https://github.com/waydefu/GPU（docs 紀錄；**沒有** PR status checks）
 工作站：`/root/projects/GPU加速`
-程式碼遠端：https://github.com/waydefu/termux-x11 分支 `fix/gatea-r6-present-retirement-20260915`
+程式碼遠端：https://github.com/waydefu/termux-x11（fork artifact CI ≠ 本倉庫 PR）
 
 ```text
-裝置 APK: 0f1e546 / com.waydefu.x11gpu / experimental only
-version:  1.03.01-0f1e546-15.09.26
-CI:       34999213228
-APK SHA256: 2bc4c8ba2b6a11928a3a6b76e04fcd9acf0bacfe11f88afd0a698c8c81b10851
-Build ID: 263bee5f7d41087b0bd7fa180d47fdafd12b2ecf
-Source:   src/f8-ahb-gatea-r6-retire HEAD 0f1e54699d0b11a781f2c044fbc77505f8a53bd8
-          branch fix/gatea-r6-present-retirement-20260915（fork 已推；origin 無此分支）
-R6: PASS（D1 / D2-INFLIGHT QUIESCENT-ADMIT / D2-OOM，皆首次）
+R6:       PASS（凍結 0f1e546 / CI 34999213228；歷史資格，裝置已換走）
+B-2:      BLOCKED（權威 FAIL = 0d72332 serial 2370 + rerun1 1810 fail-stop）
+stall-obs-01: STALL_NOT_OBSERVED（27d8d1b；1000/1000；timeout=0）
+              這不是 B-2 PASS，也不能推翻 0d72332 fail-stop
+R7 support artifact: a7528bd COMMITTED + termux-x11 CI 35007764673 QUALIFIED
+R7 qualification: NOT STARTED（沒有任何 R7 cell）
 Production Gate A: BLOCKED
-R7–R10 / Gate H: 未跑（R7 已另授權，不在本快照寫碼）
-Stable :1 / HDMI: 未碰
+裝置 APK: 27d8d1b / 1.03.01-27d8d1b-16.09.26 / CI 35056388284
+          com.waydefu.x11gpu / experimental only
+Stable :1 PID 17922 / HDMI: 未碰
+timeout:  2000 ms 未改
 ```
 
-先讀 `HANDOFF.md`。規劃歷史見 `PLANNER-BRIEF-20260915.md`（已 SUPERSEDED）。
-R6／R7–R10／Gate H 計畫書：`GATE-A-R6檢查與R7-R10-GateH計畫書-20260915.md`。
+先讀本檔。細節見 `HANDOFF.md`、
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`、
+`evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`。
+
+`main` 已合併 [PR #1](https://github.com/waydefu/GPU/pull/1)（R6 PASS 證據）與 [PR #3](https://github.com/waydefu/GPU/pull/3)（現況；含 #2）。
+[PR #2](https://github.com/waydefu/GPU/pull/2) **不 merge 關閉**。歷史 `5580e73` 過期。
 
 ---
 
 ## 現在停在哪
 
-Gate A P2 裝置資格：**R1–R6 PASS**。Production Gate A 仍 BLOCKED。
-歷史 `9369553` D1 與 `95e6f96` D2 五格保持原檔，不可 silent-retry、不可覆寫。
+裝置 experimental 是 stall-phase diagnostic `27d8d1b`。一次授權 observation **沒有**出現 >2 s EXA Composite wait。這**不是** B-2 PASS。B-2 仍 BLOCKED。R7 **資格格未開**（只有 support artifact）。
 
-termux-x11 fork 的 qualified source 是 `0f1e546`。不要把誤開的 fork PR 當成要 merge 進 origin 的路徑。
+不准 retry `stall-obs-01`。不准開 B-2 矩陣。不准改 timeout。不准開 R7 qualification。
 
 ---
 
-## 已完成
+## 已完成（只記狀態）
 
-- R3 self-wait：`d9b7f60` PASS
-- R5 backpressure：`37d8393` PASS
-- R6 retirement：`0f1e546` COMMITTED + CI **34999213228** + experimental INSTALLED
-- R6-D1 X 29152 first-attempt PASS
-- R6-D2-INFLIGHT X 31369 first-attempt PASS，分支 QUIESCENT-ADMIT
-- R6-D2-OOM X 2638 first-attempt PASS（env armed 且 event 33 執行）
-- Present ACK 集中在 `present_gpu_copy_retire_or_fatal`
+- 凍結 R6 `0f1e546` 三格 PASS（歷史資格）。
+- Artifact B `a7528bd` 源碼 + fork CI；B-2 在其上 FAIL；**不是 R7 qualification**。
+- EXA Composite wait-false fail-stop `0d72332`：B-2 FAIL REPRODUCED（serial 2370 / 1810）。
+- stall-obs-01 **STALL_NOT_OBSERVED**。
+- waydefu/GPU docs：`#1`+#3 已 merge；`#2` 不 merge 關閉。本倉庫仍 **無 status checks**。
 
-## 還沒做（不是本 PR 的工作）
+---
 
-- R7 `TERMUX_X11_GATEA_TEST_FAULT` Artifact B（另開 worktree）
-- R8–R10、Gate H、Production enable
-- timeout／renderer-loss／scrap／destroy／CloseScreen 的裝置格仍多為 SOURCE-PROVEN
-- 不准 merge 進 `termux/termux-x11` origin、不准碰 Stable／HDMI
+## 還沒做
+
+- 下一次 stall observation（需新授權；本格禁止 retry）。
+- B-2 重資格（仍 BLOCKED）。
+- R7 qualification cells。
+
+**後面沒開、現在也不該開**
+
+- R7 裝置 qualification、R8–R10、Gate H、Production enable、termux-x11 origin PR／merge。
+
+---
 
 ## 工作樹快照
 
 | 路徑 | HEAD | 角色 | 狀態 |
 |---|---|---|---|
-| `src/f8-ahb-gatea-a1` | `88e3f17` | 凍結 control | 乾淨 |
-| `src/f8-ahb-gatea-xpump` | `d9b7f60` | R3 X-pump | 乾淨 |
-| `src/f8-ahb-gatea-r5-fix` | `37d8393` | R5 回滾點 | 乾淨 |
-| `src/f8-ahb-gatea-r6` | `95e6f96` | 歷史 R6 source | 乾淨；不要改 |
-| `src/f8-ahb-gatea-r6-retire` | `0f1e546` | R6 qualified source | 乾淨 vs fork |
+| `src/f8-ahb-gatea-r6-retire` | `0f1e546` | 凍結 R6 | 乾淨；不要改 |
+| `src/f8-ahb-gatea-exa-timeout` | `0d72332` | timeout 修復源 | 不再是裝置 APK |
+| `src/f8-ahb-gatea-stall-diag` | `27d8d1b` | 已安裝標記源 | 觀察完成 |
+| `src/f8-ahb-gatea-r7` | `a7528bd` | R7 **support** artifact | 未安裝；qualification 未開 |
+
+---
+
+## 紅線（狀態，不是步驟）
+
+Stable `:1`、HDMI、termux-x11 origin、merge、force、production enable 都沒動。
+不准 `±1 UNORM` 當 PASS。不准 silent-retry `r1-unset-oracle`／`stall-obs-01`。
+不准把 stall-obs 1000/1000 當成 B-2 PASS。不准把「R7 support CI PASS」或「GPU PR 開著」當成 R7 已開始。不准現在開 R7 qualification。

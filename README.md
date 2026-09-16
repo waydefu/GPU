@@ -1,15 +1,21 @@
-# 這份副本是什麼
+# 這份手機副本是什麼
 
 完整專案在 workstation `/root/projects/GPU加速`。
-這裡只放 **Markdown + 核心 C／judge／技能**，方便規劃與交接。
+這裡只放 **Markdown + 核心 C／judge／技能**，方便請人規劃後續。
 
-**現況：R6 PASS `0f1e546`。** 先讀 `STATUS-HANDOFF-20260916.md`，再讀 `HANDOFF.md`。
+**先讀狀態交接：** `STATUS-HANDOFF-20260916.md`
 
-程式碼在 fork `waydefu/termux-x11` 分支 `fix/gatea-r6-present-retirement-20260915`，exact SHA `0f1e54699d0b11a781f2c044fbc77505f8a53bd8`。本倉庫不是 termux-x11 源碼遠端。
+然後：`HANDOFF.md` →
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md` →
+`evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`。
 
-規劃歷史（已 SUPERSEDED）：`PLANNER-BRIEF-20260915.md`
-R6 檢查與 R7–R10／Gate H 計畫書：`GATE-A-R6檢查與R7-R10-GateH計畫書-20260915.md`
+Docs PR（本倉庫 **沒有 status checks**）：
+- [PR #1](https://github.com/waydefu/GPU/pull/1) 歷史 R6 PASS `0f1e546` — **已 merge**
+- [PR #2](https://github.com/waydefu/GPU/pull/2) 歷史 B-2 RCA（已被 #3 包含）— **不 merge 關閉**
+- [PR #3](https://github.com/waydefu/GPU/pull/3) 目前 stall-obs 快照（含 #2 + #1 獨有 R6 證據）— **已 merge**
 
-不含：完整 git worktree、xserver submodule、APK、ELF、logcat、`.gradle`／build。
+`termux-x11` fork artifact CI PASS ≠ 本倉庫 PR 綠燈 ≠ R7 qualification。
 
-Production Gate A 仍 BLOCKED。R7+ 不在本快照授權。
+不含：完整 git worktree、xserver submodule、APK、ELF、logcat dump、`.gradle`／build。
+
+不是 B-2 PASS。不是授權 retry stall-obs-01。R7 support artifact 存在；R7 qualification **未開始**。

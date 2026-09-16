@@ -1,0 +1,1 @@
+role=stall-obs-not-b2-not-r7 p_b2_stress_sha256=3e79b5cf875f5d7d05a25634983a44d9acfe67dfb885bf11f19b2cdb70e43c56

@@ -1,0 +1,14 @@
+timeout_count=3
+gcomp_prepare=1000
+gcomp_done=1000
+gatea_event=0
+fatal=0
+===ALL TIMEOUTS===
+8812:09-16 10:05:02.126 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=206 scheduled=1
+19142:09-16 10:05:08.797 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=488 scheduled=1
+36514:09-16 10:05:18.363 10903 11167 E LorieNative: EXA GPU composite wait timeout serial=941 scheduled=1
+===ALL SF waydefu===
+1374:09-16 10:04:56.839  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 2, fromDequeueTime: 1758ms, fromPostTime: 0ms
+8865:09-16 10:05:02.263  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 176, fromDequeueTime: 2167ms, fromPostTime: 5ms
+19183:09-16 10:05:08.937  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 417, fromDequeueTime: 2151ms, fromPostTime: 7ms
+36591:09-16 10:05:18.490  2196  2196 W Layer   : SF-BufferCheck: setBuffer delayed, layer: 1ca05ba SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#8646, frameNumber: 778, fromDequeueTime: 2138ms, fromPostTime: 6ms

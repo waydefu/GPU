@@ -1,0 +1,5 @@
+cmd=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b2_stress 1000
+start_iso=2026-09-16T10:04:56+08:00
+start_wall_ns=1789524296809127948
+end_iso=2026-09-16T10:05:19+08:00
+end_wall_ns=1789524319925938564
