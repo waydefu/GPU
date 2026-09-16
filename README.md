@@ -13,10 +13,10 @@ Docs PR（本倉庫 **沒有 status checks**）：
 - [PR #1](https://github.com/waydefu/GPU/pull/1) 歷史 R6 PASS `0f1e546` — **已 merge**
 - [PR #2](https://github.com/waydefu/GPU/pull/2) 歷史 B-2 RCA（已被 #3 包含）— **不 merge 關閉**
 - [PR #3](https://github.com/waydefu/GPU/pull/3) 歷史 stall-obs `27d8d1b` **STALL_NOT_OBSERVED** — **已 merge**
-- [PR #4](https://github.com/waydefu/GPU/pull/4) 目前快照：`feeaa56` **CASE_LOOP** + source `327b028` **未安裝**
+- [PR #4](https://github.com/waydefu/GPU/pull/4) 目前快照：`feeaa56` **CASE_LOOP** + hardened `7549e36` **未安裝**
 
 `termux-x11` fork artifact CI PASS ≠ 本倉庫 PR 綠燈 ≠ R7 qualification。
 
 不含：完整 git worktree、xserver submodule、APK、ELF、logcat dump、`.gradle`／build。
 
-不是 B-2 PASS。不是授權 retry stall-obs-01。不是授權安裝 `327b028`。R7 support artifact 存在；R7 qualification **未開始**。
+不是 B-2 PASS。不是授權 retry stall-obs-01。不是授權安裝 `7549e36`。R7 support artifact 存在；R7 qualification **未開始**。

@@ -1,6 +1,6 @@
-/* Excerpt of CASE_LOOP wakeup policy from 327b028.
+/* Excerpt of CASE_LOOP wakeup policy from 7549e36.
  * Not a buildable unit. Device still has observational feeaa56; this SHA is
- * not installed. EXA 2000 ms budget is unchanged. */
+ * not installed. EXA 2000 ms budget is unchanged. Clock is CLOCK_MONOTONIC. */
 #define LORIE_GATEA_FENCE_TIMEOUT_NS 2000000000ull
 #define LORIE_RENDERER_FRAME_WAIT_NS 8000000L
 
@@ -14,10 +14,11 @@ void Renderer::waitWhileIdle(bool *waitingForBuffers) {
             break;
         if (state && state->waitForNextFrame) {
             struct timespec deadline;
-            /* Default pthread cond clock is CLOCK_REALTIME; keep it so X's
-             * process-shared signal still matches. 8 ms is short enough that a
-             * wall-clock step is not a 2000 ms stall. */
-            clock_gettime(CLOCK_REALTIME, &deadline);
+            /* stateCond is initialized CLOCK_MONOTONIC. Signal does not use
+             * the clock; X can keep signaling. Do not fall back to unbounded
+             * wait if the deadline cannot be formed. */
+            if (clock_gettime(CLOCK_MONOTONIC, &deadline) != 0)
+                abort();
             deadline.tv_nsec += LORIE_RENDERER_FRAME_WAIT_NS;
             if (deadline.tv_nsec >= 1000000000L) {
                 deadline.tv_sec++;

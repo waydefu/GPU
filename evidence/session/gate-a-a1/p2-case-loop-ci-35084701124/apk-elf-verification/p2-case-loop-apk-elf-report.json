@@ -1,0 +1,111 @@
+{
+  "apk_path": "/root/projects/GPU\u52a0\u901f/evidence/session/gate-a-a1/p2-case-loop-ci-35084701124/apk/termux-x11-universal-debug.apk",
+  "apk_bytes": 15299506,
+  "apk_sha256": "45500894023208963b3b1cd51fb7f3aa61807a25e1d70b322f7a7fdad7e14bc3",
+  "head": "7549e3667ec03b8b5e50d2e5befe03065840bbd9",
+  "ci_run": 35084701124,
+  "github_zip_digest_is_not_apk_sha256": "3f7318b7964132d7e3017f3b5025ecaa80b465259ce62921d37ea35ffa2022b8",
+  "ci": {
+    "conclusion": "success",
+    "databaseId": 35084701124,
+    "displayTitle": "Build",
+    "event": "workflow_dispatch",
+    "headBranch": "fix/gatea-case-loop-wakeup-20260916",
+    "headSha": "7549e3667ec03b8b5e50d2e5befe03065840bbd9",
+    "number": 52,
+    "status": "completed",
+    "url": "https://github.com/waydefu/termux-x11/actions/runs/35084701124",
+    "workflowName": "Build"
+  },
+  "testzip": null,
+  "member_count": 493,
+  "libxlories": [
+    "lib/arm64-v8a/libXlorie.so",
+    "lib/armeabi-v7a/libXlorie.so",
+    "lib/x86/libXlorie.so",
+    "lib/x86_64/libXlorie.so"
+  ],
+  "stored_count": 259,
+  "stored_mod4_failures": 0,
+  "embedded_sha256": "d6e0f995207bd90dada3f9c57572e1d08ddcf1a7ad10150ae5ec9f0223a9bccb",
+  "abis": [
+    "lib/arm64-v8a/libXlorie.so",
+    "lib/armeabi-v7a/libXlorie.so",
+    "lib/x86/libXlorie.so",
+    "lib/x86_64/libXlorie.so"
+  ],
+  "unstripped_path": "/root/projects/GPU\u52a0\u901f/evidence/session/gate-a-a1/p2-case-loop-ci-35084701124/unstripped/01x55434/obj/arm64-v8a/libXlorie.so",
+  "build_ids": {
+    "embedded": "4c5b7b86c18ec4e9bb14720c4615a25c1d6a8f81",
+    "unstripped": "4c5b7b86c18ec4e9bb14720c4615a25c1d6a8f81"
+  },
+  "build_id_equal": true,
+  "strings": {
+    "embedded": {
+      "required": {
+        "x-exa-composite-wait": true,
+        "EXA GPU composite wait timeout": true,
+        "TERMUX_X11_GATEA_TEST_FAULT": true,
+        "GATEA_SUMMARY": true,
+        "x-present-copy-wait": true,
+        "TERMUX_X11_GATEA_R6_PRESENT_REQUEUE_FAIL": true,
+        "GATEA_FATAL_HALT": true
+      },
+      "forbidden_absent": {
+        "direct-to-legacy": true,
+        "CPU fallback as PASS": true,
+        "COND_WAIT_ENTER": true,
+        "COND_WAIT_EXIT": true
+      },
+      "diagnostic_absent_as_expected": {
+        "STALL_PHASE phase=": true,
+        "NOTIFY_ENTER": true,
+        "NOTIFY_EXIT": true
+      }
+    },
+    "unstripped": {
+      "required": {
+        "x-exa-composite-wait": true,
+        "EXA GPU composite wait timeout": true,
+        "TERMUX_X11_GATEA_TEST_FAULT": true,
+        "GATEA_SUMMARY": true,
+        "x-present-copy-wait": true,
+        "TERMUX_X11_GATEA_R6_PRESENT_REQUEUE_FAIL": true,
+        "GATEA_FATAL_HALT": true
+      },
+      "forbidden_absent": {
+        "direct-to-legacy": true,
+        "CPU fallback as PASS": true,
+        "COND_WAIT_ENTER": true,
+        "COND_WAIT_EXIT": true
+      },
+      "diagnostic_absent_as_expected": {
+        "STALL_PHASE phase=": true,
+        "NOTIFY_ENTER": true,
+        "NOTIFY_EXIT": true
+      }
+    }
+  },
+  "nm": {
+    "present_gpu_copy_retire_or_fatal": true
+  },
+  "nm_optional": {
+    "Renderer::waitWhileIdle": true
+  },
+  "wait_timeout_still_2000": true,
+  "no_3000_workaround": true,
+  "helper_kept": true,
+  "frame_wait_8ms": true,
+  "fence_timeout_unchanged": true,
+  "idle_sticky_recheck": true,
+  "idle_monotonic": true,
+  "idle_no_realtime": true,
+  "init_monotonic_pshared": true,
+  "egl_forever_next_buffer": true,
+  "test_env_default_off": true,
+  "package": "com.waydefu.x11gpu",
+  "versionCode": "15",
+  "versionName": "1.03.01-7549e36-16.09.26",
+  "apksigner_rc": 0,
+  "signer_sha256": "b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1"
+}
