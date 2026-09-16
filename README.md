@@ -9,10 +9,10 @@
 `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md` →
 `evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`。
 
-Docs PR（皆 **未 merge**；本倉庫 **沒有 status checks**）：
-- [PR #1](https://github.com/waydefu/GPU/pull/1) 歷史 R6 PASS `0f1e546`
-- [PR #2](https://github.com/waydefu/GPU/pull/2) 歷史 B-2 RCA（已被 #3 包含）
-- [PR #3](https://github.com/waydefu/GPU/pull/3) 目前 stall-obs 快照（含 #2）
+Docs PR（本倉庫 **沒有 status checks**）：
+- [PR #1](https://github.com/waydefu/GPU/pull/1) 歷史 R6 PASS `0f1e546` — **已 merge**
+- [PR #2](https://github.com/waydefu/GPU/pull/2) 歷史 B-2 RCA（已被 #3 包含）— **不 merge 關閉**
+- [PR #3](https://github.com/waydefu/GPU/pull/3) 目前 stall-obs 快照（含 #2 + #1 獨有 R6 證據）— **已 merge**
 
 `termux-x11` fork artifact CI PASS ≠ 本倉庫 PR 綠燈 ≠ R7 qualification。
 
