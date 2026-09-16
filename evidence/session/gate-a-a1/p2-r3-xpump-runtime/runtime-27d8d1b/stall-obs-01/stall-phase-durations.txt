@@ -1,0 +1,39 @@
+# STALL_PHASE interval stats — stall-obs-01 (not a CASE_A/B verdict)
+
+source=logcat-follow.txt parsed_events=3712
+phase_counts SWAP_ENTER=928 SWAP_EXIT=928 NEXT_FENCE_ENTER=928 NEXT_FENCE_EXIT=928
+pairs SWAP=928 NEXT_FENCE=928 (contiguous ENTER→EXIT; no unmatched ENTER)
+renderer_tid=16188 (Activity LorieNative pid 20203)
+x_pid=16420 Gcomp_tid=16676
+completedSerial==readIndex==writeIndex at every marker (max lag 0)
+max_serial_at_marker=1004
+SWAP_EXIT result=1 (EGL_TRUE) ×928
+NEXT_FENCE_EXIT result=12534 (EGL_CONDITION_SATISFIED 0x30F6) ×928
+
+SWAP_ENTER→EXIT
+  min_ns=90573 med_ns=266641 max_ns=1467865 max_ms=1.468
+  gt1ms=2 gt10ms=0 gt100ms=0 gt500ms=0 gt2000ms=0
+  top_ms=1.468@cs=58 1.152@cs=4
+
+NEXT_FENCE_ENTER→EXIT (eglClientWaitSync EGL_FOREVER, next-buffer)
+  min_ns=11407 med_ns=411484 max_ns=4805677 max_ms=4.806
+  gt1ms=23 gt10ms=0 gt100ms=0 gt500ms=0 gt2000ms=0
+  top_ms=4.806@cs=853 3.223@cs=329
+
+SWAP_EXIT→NEXT_FENCE_ENTER
+  max_ms=1.958 gt10ms=0
+
+NEXT_FENCE_EXIT→next SWAP_ENTER (redrawLocked loop gap; not wrapped EGL)
+  n=927 min_ms=10.484 med_ms=17.458 max_ms=1103.092
+  gt100ms=9 gt500ms=1 gt2000ms=0
+  top_ms=1103.092 cs=4→5 (startup, before first Gcomp 13:14:45.750)
+  next=148.416@24→25 141.686@32→33 (all <2s)
+
+EXA timeout count=0
+Gcomp Done=1000
+gateAXFatal / x-exa-composite-wait = NONE
+fromDequeueTime matches in unfiltered dump=0 (SurfaceFlinger string not present in this dump)
+timeout 2000 ms UNCHANGED
+CASE_A/CASE_B/CASE_C NOT CLASSIFIED (no EXA wait timeout this cell)
+verdict=STALL_NOT_OBSERVED
+not_b2=1

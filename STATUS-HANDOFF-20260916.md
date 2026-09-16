@@ -1,58 +1,57 @@
-# 狀態交接 — 2026-09-16 10:42（UTC+8）
+# 狀態交接 — 2026-09-16 13:22（UTC+8）stall-obs **STALL_NOT_OBSERVED**
 
 這是狀態快照，不是開工手冊，也不是授權。
 倉庫：https://github.com/waydefu/GPU
 工作站：`/root/projects/GPU加速`
 
 ```text
-裝置 APK: a7528bd / 1.03.01-a7528bd-15.09.26 / CI 35007764673
+裝置 APK: 27d8d1b / 1.03.01-27d8d1b-16.09.26 / CI 35056388284
+          SHA256 142b6e1f…45b0  Build ID e8d859dd…5e2c
           com.waydefu.x11gpu / experimental only
 凍結 R6:  0f1e546 PASS（src/f8-ahb-gatea-r6-retire，勿改）
-B-2:      BLOCKED（權威 FAIL = runtime-a7528bd/r1-unset-oracle/ 999/1000）
+stall-obs-01: STALL_NOT_OBSERVED（X 16420；1000/1000；timeout=0）
+              SWAP max 1.468 ms / NEXT_FENCE max 4.806 ms
+              CASE_A/B/C NOT CLASSIFIED
+B-2:      BLOCKED（權威 FAIL 仍是 0d72332 serial 2370 + rerun1 1810）
 R7:       NOT STARTED
 Production Gate A: BLOCKED
 Stable :1 PID 17922 / HDMI: 未碰
-EXA Composite timeout 修復: 本機 worktree，未授權裝置重跑
-本倉庫不是 termux-x11 源碼遠端，也不授權開 R7
+timeout:  2000 ms 未改
+本倉庫不是 termux-x11 源碼遠端，也不授權開 R7 / B-2 / retry
 ```
 
 先讀本檔。細節見 `HANDOFF.md`、
 `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`、
-`evidence/session/gate-a-a1/p2-r7-design/GATE-A-P2-EXA-COMPOSITE-TIMEOUT-REPAIR-20260916.md`。
+`evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-27d8d1b/GATE-A-P2-STALL-OBS-01-20260916.md`。
 
-歷史 R6 PASS 快照另見尚未合併的 [PR #1](https://github.com/waydefu/GPU/pull/1)（`r6-pass-0f1e546`）。
+歷史快照：
+- [PR #1](https://github.com/waydefu/GPU/pull/1) R6 PASS `0f1e546`
+- [PR #2](https://github.com/waydefu/GPU/pull/2) B-2 RCA + EXA timeout 修復摘錄（當時裝置仍是 `a7528bd`）
 
 ---
 
 ## 現在停在哪
 
-裝置 experimental 是 Artifact B `a7528bd`。B-2 R1-unset 第一次資格 **FAIL**（stress 999/1000）。
-diagnostic-01 未重現（1000/1000）。diagnostic-02 **RCA IDENTIFIED**：3× `PIXEL_RGB_MISMATCH`（`got == dst_px`）綁定 3× EXA Composite wait-timeout 後仍 `Gcomp Done`。
+裝置 experimental 是 stall-phase diagnostic `27d8d1b`。一次授權 observation **沒有**出現 >2 s EXA Composite wait。標記有活（3712 筆），兩段被包住的 EGL 都很快。這**不是** B-2 PASS，也**不能**推翻 `0d72332` fail-stop。
 
-修復在隔離 worktree `src/f8-ahb-gatea-exa-timeout` / `fix/gatea-exa-composite-timeout-20260916`：
-wait-false → `gateAXFatal("x-exa-composite-wait", TIMEOUT)`。Host verifier RED→GREEN。
-**未 commit 到 termux-x11 fork、未 CI、未裝機、未授權 B-2 重跑。** R7 未開始。
-
-本倉庫只放 Markdown + 核心 patch／judge，不含 APK、logcat dump、完整 worktree。
+不准 retry `runtime-27d8d1b/stall-obs-01`。不准開 B-2 矩陣。不准改 timeout。不准開 R7。
 
 ---
 
 ## 已完成（只記狀態）
 
 - 凍結 R6 `0f1e546` 三格 PASS（歷史資格）。
-- Artifact B commit／fork CI **35007764673**／只裝 experimental。
-- B-2 R1-unset 權威 FAIL 已保存，不可 silent-retry。
-- diagnostic-02 證明 timeout→Done→GetImage 舊 dest。
-- EXA Composite Done 的 fail-stop 補丁已在隔離 worktree 通過 host 靜態測試。
+- EXA Composite wait-false fail-stop 已 commit `0d72332`、CI、曾裝機；B-2 在該 APK **FAIL REPRODUCED**。
+- stall-phase 標記 APK `27d8d1b` CI **35056388284** QUALIFIED 後已裝 experimental。
+- stall-obs-01 **STALL_NOT_OBSERVED**；Stable PID 17922 未動。
 
 ---
 
 ## 還沒做
 
-- 修復 lineage 的 commit／fork push／CI／只裝 experimental（需另授權）。
-- 新 APK 上的 B-2 重資格（不可覆寫 `r1-unset-oracle/`）。
+- 下一次 stall observation（需新授權；本格禁止 retry）。
+- B-2 重資格（仍 BLOCKED）。
 - R7 cells。
-- DoneSolid／DoneCopy 同型 wait-false→ack（FINDING，未修）。
 
 **後面沒開、現在也不該開**
 
@@ -65,13 +64,14 @@ wait-false → `gateAXFatal("x-exa-composite-wait", TIMEOUT)`。Host verifier RE
 | 路徑 | HEAD | 角色 | 狀態 |
 |---|---|---|---|
 | `src/f8-ahb-gatea-r6-retire` | `0f1e546` | 凍結 R6 | 乾淨；不要改 |
-| `src/f8-ahb-gatea-r7` | `a7528bd` | 已安裝源 | 乾淨；不要就地改 |
-| `src/f8-ahb-gatea-exa-timeout` | `a7528bd` + 未提交 | Composite timeout 修復 | 髒 `InitOutput.c` |
+| `src/f8-ahb-gatea-exa-timeout` | `0d72332` | timeout 修復源 | 不再是裝置 APK |
+| `src/f8-ahb-gatea-stall-diag` | `27d8d1b` | 已安裝標記源 | 觀察完成 |
+| `src/f8-ahb-gatea-r7` | `a7528bd` | 歷史 Artifact B | 未安裝 |
 
 ---
 
 ## 紅線（狀態，不是步驟）
 
 Stable `:1`、HDMI、termux-x11 origin、merge、force、production enable 都沒動。
-不准 `±1 UNORM` 當 PASS。不准 silent-retry `r1-unset-oracle`。
-不准把 diagnostic 1000/1000 或本修復 host 綠當成 B-2 PASS。不准現在開 R7。
+不准 `±1 UNORM` 當 PASS。不准 silent-retry `r1-unset-oracle`／`stall-obs-01`。
+不准把本格 1000/1000 當成 B-2 PASS。不准現在開 R7。

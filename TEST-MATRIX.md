@@ -1,6 +1,6 @@
 # TEST-MATRIX.md — POCO F8 Ultra Termux:X11 GPU 研究
 
-權威現況：`HANDOFF.md`（裝置 experimental 為 `a7528bd` CI **35007764673**。歷史 **R6 PASS** 在凍結 `0f1e546`。R7 Artifact B 已 commit／CI／install。B-2 R1 unset **FAIL**（stress 999/1000，權威格 `r1-unset-oracle/`）。diagnostic-01 DID NOT REPRODUCE。diagnostic-02 **RCA IDENTIFIED**。EXA Composite timeout 修復在 `src/f8-ahb-gatea-exa-timeout`（未授權裝置重跑）。R7 cells 未開。Stop before R8。Production Gate A BLOCKED。）。
+權威現況：`HANDOFF.md`（裝置 experimental 為 `27d8d1b` CI **35056388284**。stall-obs-01 **STALL_NOT_OBSERVED**（非 B-2）。歷史 **R6 PASS** 在凍結 `0f1e546`。B-2 R1 unset 在 `0d72332` **FAIL**（serial 2370）且授權重測 **FAIL REPRODUCED**（serial 1810）。歷史 `a7528bd` FAIL／diagnostic-02 凍結。R7 cells 未開。Stop before R8。Production Gate A BLOCKED。）。
 文件對齊查驗（2026-09-08 15:33 CST）：`git ls-remote`、[PR #1095](https://github.com/termux/termux-x11/pull/1095)、[PR #1114](https://github.com/termux/termux-x11/pull/1114) 頁面與表內 SHA 一致；兩個 PR 目前仍為 open，尚未 merge。P2-B.2 / Stable 基線數值未在 2026-09-14 重測；裝置 PID／experimental 版號以 `HANDOFF.md` 當日 snapshot 為準。
 
 ## Control build（Phase 1A，官方 CI）
@@ -62,7 +62,7 @@
 | XFCE compositor on | — | bounded isolated qualification 已 PASS；未列入目前 daily session，不留在 experimental `:3` 常駐。 | bounded PASS / daily not qualified |
 | XRender histogram | — | 舊 probe dump 未收集；P2-A 已由 A.3/A.4 關閉，不再以 histogram 作 blocker。 | historical |
 | GPU Composite | — | P2-B.2 narrow Over：ARGB→XRGB、無 mask/transform/repeat/componentAlpha、nearest，R3 oracle exact RGB；其餘 cases 仍 software。 | **P2-B.2 PASS (R3)** |
-| Gate A P2 runtime（experimental `:3` only） | 禁裝／禁碰 | 裝置 `a7528bd`（R7 APK INSTALLED）。B-2 R1 **FAIL**（權威）。diagnostic-01 DID NOT REPRODUCE。diagnostic-02 RCA IDENTIFIED。EXA timeout 修復 local-only。歷史 R6 PASS 在 `0f1e546`。歷史 `95e6f96` D2 5 格保留。 | **R6 PASS**（歷史）；R7 **BLOCKED**；Production Gate A **BLOCKED**；**STOP BEFORE R8** |
+| Gate A P2 runtime（experimental `:3` only） | 禁裝／禁碰 | 裝置 `27d8d1b`（stall-phase INSTALLED；obs-01 **STALL_NOT_OBSERVED**，非 B-2）。B-2 在 `0d72332` **FAIL**（timeout fail-stop serial 2370）。歷史 `a7528bd` FAIL／RCA 凍結。歷史 R6 PASS 在 `0f1e546`。 | **R6 PASS**（歷史）；B-2 **BLOCKED**；R7 **NOT STARTED**；Production Gate A **BLOCKED**；**STOP BEFORE R8** |
 | 10～30 min 穩定性＋CPU/RAM | | | |
 | glxinfo bare | llvmpipe（預期） | | | |
 | f8-gpu glxinfo | Adreno 840 yes | | | |

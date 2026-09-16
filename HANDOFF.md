@@ -1,17 +1,18 @@
-# GPU Research Handoff — 2026-09-16 Gate A P2 R7 **BLOCKED** (B-2 R1 FAIL on `a7528bd`)
+# GPU Research Handoff — 2026-09-16 Gate A P2 R7 **BLOCKED** (stall-obs **STALL_NOT_OBSERVED** on `27d8d1b`)
 
-> Device experimental is **`a7528bd`** on `com.waydefu.x11gpu` only
-> (CI **35007764673**). Frozen R6 worktree `src/f8-ahb-gatea-r6-retire` HEAD
+> Device experimental is **`27d8d1b`** on `com.waydefu.x11gpu` only
+> (CI **35056388284**). Frozen R6 worktree `src/f8-ahb-gatea-r6-retire` HEAD
 > **`0f1e54699d0b11a781f2c044fbc77505f8a53bd8`** still clean vs fork — **do not mutate**.
 > Historical **R6 PASS** on `0f1e546` remains the last qualified R6 runtime.
-> R7 Artifact B is **COMMITTED+CI+INSTALLED**
-> `a7528bd25b89d0408bc15002e10bccefaeef3028`. Host PASS; CI PASS; install PASS.
-> B-2 R1 unset first attempt **FAIL** (stress 999/1000). Diagnostic-01
-> **DID NOT REPRODUCE**. Diagnostic-02 **RCA IDENTIFIED**. EXA Composite
-> timeout repair is **local dirty** on
-> `src/f8-ahb-gatea-exa-timeout` /
-> `fix/gatea-exa-composite-timeout-20260916` (uncommitted). Device run
-> **not authorized**. R7 cells **not started**.
+> EXA Composite timeout repair remains **COMMITTED**
+> `0d72332c0e591b2137262d06d7dcab704be49383` (source worktree; no longer the
+> installed APK). B-2 R1 unset on `0d72332` **FAIL** (serial 2370) + authorized
+> rerun **FAIL REPRODUCED** (serial 1810); **no timeout→Done**. Stall RCA
+> **NARROWED BUT NOT PROVEN**. Stall-phase diagnostic **`27d8d1b` INSTALLED**;
+> one observation **STALL_NOT_OBSERVED** (stress 1000/1000, timeout=0; SWAP max
+> 1.468 ms / NEXT_FENCE max 4.806 ms; CASE_A/B/C **NOT CLASSIFIED**). **Not B-2.**
+> Do **not** retry `runtime-27d8d1b/stall-obs-01`. Historical `a7528bd` B-2 FAIL
+> / diagnostic-02 RCA remain frozen. R7 cells **not started**.
 > Canonical next-agent brief:
 > `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
 > Stable `:1` PID **17922** untouched. HDMI untouched. Stop before R8.
@@ -130,7 +131,7 @@ PRODUCTION GATE A BLOCKED
 
 Do not reopen P0/P1/P2-A/P2-B.1/P2-B.2. Do not treat ±1 UNORM as PASS. Do not open a PR. Do not touch stable `:1`. Do not leave XFCE/xfwm running on experimental `:3` as a daily session; the R3 bounded window already passed and was stopped.
 
-## Current Gate A P2 runtime (2026-09-16 device a7528bd INSTALLED; B-2 R1 FAIL; R7 BLOCKED)
+## Current Gate A P2 runtime (2026-09-16 device 27d8d1b INSTALLED; stall-obs STALL_NOT_OBSERVED; B-2 BLOCKED; R7 BLOCKED)
 
 Next-agent brief:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
@@ -141,14 +142,14 @@ Prior `88e3f17` R3 FAIL remains historical:
 
 | | |
 |---|---|
-| Worktree (installed source) | Device **`a7528bd`**; R7 worktree HEAD **`a7528bd25b89d0408bc15002e10bccefaeef3028`**; frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
+| Worktree (installed source) | Device **`27d8d1b`**; stall-diag `src/f8-ahb-gatea-stall-diag` HEAD **`27d8d1b4fcfc5456bac8720d36110eeeb7cbc9d3`**; repair source still `0d72332`; historical R7 `a7528bd`; frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
 | R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6-retire` branch `fix/gatea-r6-present-retirement-20260915` HEAD **`0f1e546`** (fork in sync; origin ABSENT) |
 | Historical R6 source | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` HEAD **`95e6f96`** clean; do not overwrite its cells |
 | Control | `/root/projects/GPU加速/src/f8-ahb-gatea-a1` HEAD **`88e3f17`** clean |
-| Installed APK | `com.waydefu.x11gpu` `1.03.01-a7528bd-15.09.26` CI **35007764673** |
-| APK SHA256 | `c29b1c68df613d40d8bfd93b44887ffd389419d8ca5f36661d1a48b3f03f4c2c` MATCH on-device |
-| Build ID | `aa1d23e7fc88048f40c450ca5bacf0506cb93b9c` MATCH |
-| lastUpdateTime | 2026-09-16 02:40:28 |
+| Installed APK | `com.waydefu.x11gpu` `1.03.01-27d8d1b-16.09.26` CI **35056388284** |
+| APK SHA256 | `142b6e1fc6856c87c8dac0a006dd13a97c963bd480f8c2ac548d88325c0a45b0` MATCH on-device |
+| Build ID | `e8d859dd25120e21d5be13f72ffc0a7dcf385e2c` MATCH |
+| lastUpdateTime | 2026-09-16 13:13:30 |
 | Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **17922** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
 | Last ADB | `10.191.48.13:43399` live-fetched `_adb-tls-connect._tcp.local.` |
 | R1 unset | PASS (X 19391; 1514/1514; stress 100/100/1000; GATEA_EVENT=0) |
@@ -195,8 +196,9 @@ Prior `88e3f17` R3 FAIL remains historical:
 | R7 B-2 R1 unset | **FAIL** first attempt X PID **17192**; oracle 1514/1514; stress 100/100 PASS; 1000 **ok=999 fail=1 alive=1**; event 35=0; SUMMARY `x-close-screen` counters 0. Cell `runtime-a7528bd/r1-unset-oracle/`. Do not silent-retry. **Authoritative FAIL unchanged.** |
 | R7 B-2 R1 diagnostic-01 | **DID NOT REPRODUCE** X PID **29184**; diagnostic `p_b2_stress` 1000 **ok=1000 fail=0 alive=1** exit 0; no `B2_DIAG_FAIL`; EXA timeout count **0**; Gcomp Done **1000**; SF `fromDequeueTime: 1709ms` once (frame 2). Cell `runtime-a7528bd/r1-unset-diagnostic-01/`. Do **not** overwrite. Not a B-2 PASS. |
 | R7 B-2 R1 diagnostic-02 | **RCA IDENTIFIED** X PID **10903**; `ok=997 fail=3 n=1000 alive=1`; 3× `B2_DIAG_FAIL` `PIXEL_RGB_MISMATCH` (`got==dst`); 3× `EXA GPU composite wait timeout` serial 206/488/941 then same-ms `Gcomp Done`; Probe enter 202/484/937; RECT→timeout 2001–2002 ms. Cell `runtime-a7528bd/r1-unset-diagnostic-02/`. Do **not** overwrite. Not a B-2 PASS. Not R7. |
-| EXA Composite timeout repair | **READY FOR B-2 REQUALIFICATION — DEVICE RUN NOT AUTHORIZED**. Worktree `src/f8-ahb-gatea-exa-timeout` branch `fix/gatea-exa-composite-timeout-20260916` HEAD still `a7528bd` + dirty `InitOutput.c` + untracked `scripts/verify_exa_composite_wait.py`. Wait-false → `gateAXFatal("x-exa-composite-wait", TIMEOUT)`. Verifier RED on `a7528bd` / GREEN on repair. Do **not** mutate frozen R6. Do **not** start R7. |
-| Next | Device B-2 requalification of this repair requires **new explicit authorization** (build/install APK, then R1-unset). Do **not** silent-retry `r1-unset-oracle`. Do **not** overwrite diagnostic-01/02. Do **not** start R7. Stop before R8. Production Gate A remains BLOCKED. |
+| EXA Composite timeout repair | **COMMITTED+CI** `0d72332` CI **35049545631**; **superseded on device** by `27d8d1b`. B-2 R1 unset **FAIL** X PID **11212** serial **2370**; authorized rerun1 **FAIL REPRODUCED** X PID **8172** serial **1810** (`ok=90 fail=910 alive=0`); both fail-stop `x-exa-composite-wait` reason=4; **no timeout→Done**. Cells `runtime-0d72332/r1-unset-oracle/` and `r1-unset-oracle-rerun1/`. Historical `runtime-a7528bd/` frozen. Do **not** silent-retry. Do **not** start R7. |
+| Stall-phase diagnostic | **INSTALLED** `27d8d1b` CI **35056388284**. Cell `runtime-27d8d1b/r0/`. Observation **STALL_NOT_OBSERVED** X PID **16420**; stress 1000/1000 timeout=0; `STALL_PHASE` 3712; SWAP max 1.468 ms; NEXT_FENCE max 4.806 ms; CASE_A/B/C **NOT CLASSIFIED**. Packet `runtime-27d8d1b/GATE-A-P2-STALL-OBS-01-20260916.md`. **Not B-2.** Do **not** retry `stall-obs-01`. |
+| Next | Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2 matrix. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1` or `runtime-a7528bd/r1-unset-oracle`. Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1 or R7. Stop before R8. Production Gate A remains BLOCKED. |
 
 ## Runtime (S3 qualification snapshot; B3a current state is recorded below)
 
@@ -414,11 +416,11 @@ authorized.
 
 ## Next (when resuming)
 
-Current next (2026-09-16, **device `a7528bd` INSTALLED; B-2 R1 FAIL; EXA timeout repair local-only**):
-Do **not** start R7 cells. Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
-Do **not** overwrite diagnostic-01/02. B-2 requalification of
-`src/f8-ahb-gatea-exa-timeout` requires **new explicit authorization**
-(build/install; no silent device run). Do **not** start R8. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
+Current next (2026-09-16, **device `27d8d1b` INSTALLED; stall-obs-01 STALL_NOT_OBSERVED**):
+Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2 matrix.
+Do **not** start R7 cells. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
+Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
+Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1. Do **not** start R8. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
 `d9b7f60`. Do **not** retry R3 on `88e3f17`, `8479997`, `6c7ee6f`, or
 `98b0011`. Do **not** silent-retry historical R6 cells. Production Gate A
 BLOCKED.

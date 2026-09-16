@@ -1,22 +1,24 @@
-# Gate A P2 R7 Artifact B handoff — 2026-09-16 `a7528bd` INSTALLED; B-2 R1 FAIL; R7 **BLOCKED**
+# Gate A P2 stall-phase diagnostic — 2026-09-16 `27d8d1b` INSTALLED; stall-obs **STALL_NOT_OBSERVED**
 
 ```
 STATUS: R6 PASS on frozen 0f1e546 remains historical
-        Artifact B COMMITTED+CI+INSTALLED a7528bd
-        B-2 R1 unset FAIL (stress 999/1000) AUTHORITATIVE
-        diagnostic-01 DID NOT REPRODUCE
-        diagnostic-02 RCA IDENTIFIED (997/1000, timeout→Done→stale GetImage)
-        EXA Composite timeout repair READY (local dirty, no device)
+        Repair 0d72332 COMMITTED+CI; superseded on device by 27d8d1b
+        B-2 R1 unset FAIL (serial 2370) + rerun1 FAIL REPRODUCED (serial 1810)
+        stall RCA NARROWED BUT NOT PROVEN (consume delay after S-1)
+        stall-phase diagnostic 27d8d1b CI 35056388284 INSTALLED
+        stall-obs-01 STALL_NOT_OBSERVED (1000/1000; timeout=0; CASE_A/B/C NOT CLASSIFIED)
+        not B-2; do not retry stall-obs-01
+        timeout→Done ABSENT on 0d72332 fail-stop cells (repair held)
+        historical a7528bd B-2 FAIL / diagnostic-02 RCA FROZEN
         R7 cells NOT STARTED
         R8–R10 NOT AUTHORIZED
-DEVICE HEAD: a7528bd25b89d0408bc15002e10bccefaeef3028
-R7 CI (installed): 35007764673
-APK INSTALLED experimental only: 1.03.01-a7528bd-15.09.26
-APK SHA256: c29b1c68df613d40d8bfd93b44887ffd389419d8ca5f36661d1a48b3f03f4c2c
-Build ID: aa1d23e7fc88048f40c450ca5bacf0506cb93b9c
-R7 WORKTREE: src/f8-ahb-gatea-r7
-R7 BRANCH: qualification/gatea-r7-20260916
-R7 HEAD: a7528bd25b89d0408bc15002e10bccefaeef3028
+DEVICE HEAD: 27d8d1b4fcfc5456bac8720d36110eeeb7cbc9d3
+DIAGNOSTIC CI: 35056388284
+DIAGNOSTIC APK: 1.03.01-27d8d1b-16.09.26 INSTALLED experimental only
+APK SHA256: 142b6e1fc6856c87c8dac0a006dd13a97c963bd480f8c2ac548d88325c0a45b0
+Build ID: e8d859dd25120e21d5be13f72ffc0a7dcf385e2c
+R7 WORKTREE: src/f8-ahb-gatea-r7 HEAD a7528bd (historical, not installed)
+STALL DIAG WORKTREE: src/f8-ahb-gatea-stall-diag HEAD 27d8d1b
 R6 WORKTREE: src/f8-ahb-gatea-r6-retire HEAD 0f1e546 (UNCHANGED)
 Stable :1: PID 17922 UNTOUCHED
 HDMI: UNTOUCHED
@@ -27,38 +29,21 @@ R6 runtime brief remains:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
 Do not rewrite it. Do not silent-retry its cells.
 
-B-0 freeze:
-`GATE-A-P2-R7-R10-SUPPORT-DESIGN-20260916.md`.
-
 ## Summary
 
-1. Artifact B is implemented on a new lineage from frozen R6 `0f1e546`.
-2. Host + fork CI **35007764673** PASS; experimental install PASS
-   (`1.03.01-a7528bd-15.09.26`, SHA256 `c29b1c68…4c2c`, Build ID `aa1d23e7…3b9c`).
-4. Device experimental is `a7528bd`. Frozen R6 worktree is unchanged.
-5. Renderer does not getenv `TERMUX_X11_GATEA_TEST_FAULT`. Event 32 stays unused.
-6. B-2 R1 unset first attempt **FAIL**: oracle 1514/1514; stress 1000 `fail=1`.
-   Event 35=0. SUMMARY on close with all counters 0. Root cause NOT PROVEN.
-   Cell `runtime-a7528bd/r1-unset-oracle/` remains authoritative.
-7. Authorized diagnostic-01 on X PID **29184**: `ok=1000 fail=0`; no
-   `B2_DIAG_FAIL`; EXA timeout count 0; Gcomp Done 1000. Verdict:
-   **DIAGNOSTIC REPRODUCTION DID NOT REPRODUCE**. Not a B-2 PASS.
-   Cell `runtime-a7528bd/r1-unset-diagnostic-01/`.
-8. Authorized diagnostic-02 on X PID **10903**: `ok=997 fail=3`; 3×
-   `B2_DIAG_FAIL PIXEL_RGB_MISMATCH` (`got==dst`); 3× EXA wait-timeout
-   then same-ms `Gcomp Done`. Verdict: **RCA IDENTIFIED**.
-   Cell `runtime-a7528bd/r1-unset-diagnostic-02/`. Not a B-2 PASS. Not R7.
-9. EXA Composite timeout repair on `src/f8-ahb-gatea-exa-timeout`
-   branch `fix/gatea-exa-composite-timeout-20260916`: wait-false now
-   `gateAXFatal("x-exa-composite-wait", LORIE_GATEA_FAIL_TIMEOUT)`.
-   Host verifier RED on `a7528bd`, GREEN on the repair. Uncommitted.
-   Device run **not authorized**. Frozen R6 untouched. Installed APK
-   remains `a7528bd`.
+1. Device is `27d8d1b` experimental-only. Stable PID **17922** untouched.
+2. Observe-only `STALL_PHASE` markers live on device. Install cell
+   `runtime-27d8d1b/r0/`.
+3. One authorized observation **STALL_NOT_OBSERVED** X PID **16420**:
+   stress 1000/1000, EXA timeout 0, SWAP max 1.468 ms, NEXT_FENCE max
+   4.806 ms, 3712 markers. Packet
+   `runtime-27d8d1b/GATE-A-P2-STALL-OBS-01-20260916.md`.
+4. CASE_A / CASE_B / CASE_C **not classified** (no 2s wait this cell).
+   This does **not** falsify `0d72332` fail-stop cells.
+5. B-2 remains BLOCKED. R7 not started. Timeout 2000 unchanged.
 
 ## Next
 
-Do **not** start R7 cells. Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
-Do **not** overwrite `r1-unset-diagnostic-01/` or `r1-unset-diagnostic-02/`.
-Do **not** start R8. B-2 remains BLOCKED; R7 = NOT STARTED.
-B-2 requalification of the EXA timeout repair requires **new explicit
-authorization** (build/install APK). Do not mutate frozen R6.
+Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2.
+Do **not** start R7. Do **not** change 2000 ms. Do **not** mutate frozen R6.
+Further stall observation requires **new explicit authorization**.
