@@ -10,7 +10,8 @@ STATUS: R6 PASS on frozen 0f1e546 remains historical
         not B-2; do not retry stall-obs-01
         timeout→Done ABSENT on 0d72332 fail-stop cells (repair held)
         historical a7528bd B-2 FAIL / diagnostic-02 RCA FROZEN
-        R7 cells NOT STARTED
+        R7 support artifact a7528bd exists
+        R7 qualification cells NOT STARTED
         R8–R10 NOT AUTHORIZED
 DEVICE HEAD: 27d8d1b4fcfc5456bac8720d36110eeeb7cbc9d3
 DIAGNOSTIC CI: 35056388284
@@ -40,10 +41,13 @@ Do not rewrite it. Do not silent-retry its cells.
    `runtime-27d8d1b/GATE-A-P2-STALL-OBS-01-20260916.md`.
 4. CASE_A / CASE_B / CASE_C **not classified** (no 2s wait this cell).
    This does **not** falsify `0d72332` fail-stop cells.
-5. B-2 remains BLOCKED. R7 not started. Timeout 2000 unchanged.
+5. B-2 remains BLOCKED. R7 **qualification** not started (support artifact
+   `a7528bd` only). Timeout 2000 unchanged.
+6. waydefu/GPU docs PRs: map
+   `WAYDEFU-GPU-PR-MAP-20260916.md`. No status checks on that repo.
 
 ## Next
 
 Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2.
-Do **not** start R7. Do **not** change 2000 ms. Do **not** mutate frozen R6.
+Do **not** start R7 qualification. Do **not** change 2000 ms. Do **not** mutate frozen R6.
 Further stall observation requires **new explicit authorization**.
