@@ -1,0 +1,6 @@
+cell_id=r7-04
+fault=fbo-incomplete
+arm=1
+fixture=direct
+wait_s=12
+expect_version=1.03.01-7549e36-16.09.26

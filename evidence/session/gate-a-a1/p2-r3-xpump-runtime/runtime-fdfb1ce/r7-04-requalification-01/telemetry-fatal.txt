@@ -1,0 +1,56 @@
+===GATEA_EVENT===
+09-17 00:54:38.413  9891 11104 I gatea-telemetry: GATEA_EVENT seq=0 role=1 event=30 generation=1 serial=0 src=1 dst=0
+09-17 00:54:38.414  9891 11104 I gatea-telemetry: GATEA_EVENT seq=1 role=1 event=30 generation=1 serial=1 src=1 dst=0
+09-17 00:54:38.515 23139  8877 I gatea-telemetry: GATEA_EVENT seq=2 role=2 event=14 generation=1 serial=1 src=0 dst=4
+09-17 00:54:38.519  9891 11104 I gatea-telemetry: GATEA_EVENT seq=3 role=1 event=30 generation=1 serial=0 src=2 dst=0
+09-17 00:54:38.519  9891 11104 I gatea-telemetry: GATEA_EVENT seq=4 role=1 event=30 generation=1 serial=2 src=2 dst=0
+09-17 00:54:38.529 23139  8877 I gatea-telemetry: GATEA_EVENT seq=5 role=2 event=14 generation=1 serial=2 src=0 dst=4
+09-17 00:54:38.529  9891 11104 I gatea-telemetry: GATEA_EVENT seq=6 role=1 event=30 generation=1 serial=0 src=5 dst=0
+09-17 00:54:38.535  9891 11104 I gatea-telemetry: GATEA_EVENT seq=7 role=1 event=30 generation=1 serial=0 src=1 dst=0
+09-17 00:54:38.536  9891 11104 I gatea-telemetry: GATEA_EVENT seq=8 role=1 event=30 generation=1 serial=3 src=1 dst=0
+09-17 00:54:38.639 23139  8877 I gatea-telemetry: GATEA_EVENT seq=9 role=2 event=14 generation=1 serial=3 src=4 dst=5
+09-17 00:54:38.640  9891 11104 I gatea-telemetry: GATEA_EVENT seq=10 role=1 event=30 generation=1 serial=0 src=2 dst=0
+09-17 00:54:38.640  9891 11104 I gatea-telemetry: GATEA_EVENT seq=11 role=1 event=30 generation=1 serial=4 src=2 dst=0
+09-17 00:54:38.649 23139  8877 I gatea-telemetry: GATEA_EVENT seq=12 role=2 event=14 generation=1 serial=4 src=0 dst=5
+09-17 00:54:38.649  9891 11104 I gatea-telemetry: GATEA_EVENT seq=13 role=1 event=30 generation=1 serial=0 src=5 dst=0
+09-17 00:54:43.435  9891 11104 I gatea-telemetry: GATEA_EVENT seq=14 role=1 event=30 generation=1 serial=0 src=1 dst=0
+09-17 00:54:43.435  9891 11104 I gatea-telemetry: GATEA_EVENT seq=15 role=1 event=30 generation=1 serial=5 src=1 dst=0
+09-17 00:54:43.544 23139  8877 I gatea-telemetry: GATEA_EVENT seq=16 role=2 event=14 generation=1 serial=5 src=5 dst=6
+09-17 00:54:43.549  9891 11104 I gatea-telemetry: GATEA_EVENT seq=17 role=1 event=30 generation=1 serial=0 src=2 dst=0
+09-17 00:54:43.549  9891 11104 I gatea-telemetry: GATEA_EVENT seq=18 role=1 event=30 generation=1 serial=6 src=2 dst=0
+09-17 00:54:43.551 23139  8877 I gatea-telemetry: GATEA_EVENT seq=19 role=2 event=14 generation=1 serial=6 src=0 dst=6
+09-17 00:54:43.553  9891 11104 I gatea-telemetry: GATEA_EVENT seq=20 role=1 event=30 generation=1 serial=0 src=5 dst=0
+09-17 00:54:43.574  9891 11104 I gatea-telemetry: GATEA_EVENT seq=21 role=1 event=30 generation=1 serial=0 src=1 dst=0
+09-17 00:54:43.574  9891 11104 I gatea-telemetry: GATEA_EVENT seq=22 role=1 event=30 generation=1 serial=7 src=1 dst=0
+09-17 00:54:43.676 23139  8877 I gatea-telemetry: GATEA_EVENT seq=23 role=2 event=14 generation=1 serial=7 src=6 dst=7
+09-17 00:54:43.692  9891 11104 I gatea-telemetry: GATEA_EVENT seq=24 role=1 event=30 generation=1 serial=0 src=2 dst=0
+09-17 00:54:43.694  9891 11104 I gatea-telemetry: GATEA_EVENT seq=25 role=1 event=30 generation=1 serial=8 src=2 dst=0
+09-17 00:54:43.695 23139  8877 I gatea-telemetry: GATEA_EVENT seq=26 role=2 event=14 generation=1 serial=8 src=0 dst=7
+09-17 00:54:43.695  9891 11104 I gatea-telemetry: GATEA_EVENT seq=27 role=1 event=30 generation=1 serial=0 src=5 dst=0
+09-17 00:54:46.181  9891 11104 I gatea-telemetry: GATEA_EVENT seq=28 role=1 event=30 generation=1 serial=0 src=5 dst=7
+09-17 00:54:46.184  9891 11104 I gatea-telemetry: GATEA_EVENT seq=29 role=1 event=30 generation=1 serial=0 src=5 dst=7
+09-17 00:54:46.196  9891 11104 I gatea-telemetry: GATEA_EVENT seq=30 role=1 event=30 generation=1 serial=0 src=5 dst=8
+09-17 00:54:46.204  9891 11104 I gatea-telemetry: GATEA_EVENT seq=31 role=1 event=30 generation=1 serial=0 src=5 dst=8
+09-17 00:54:46.205  9891 11104 I gatea-telemetry: GATEA_EVENT seq=32 role=1 event=29 generation=1 serial=0 src=592705486856 dst=12
+09-17 00:54:46.212  9891 11104 I gatea-telemetry: GATEA_EVENT seq=33 role=1 event=30 generation=1 serial=0 src=3 dst=12
+09-17 00:54:46.230 23139  8877 I gatea-telemetry: GATEA_EVENT seq=34 role=2 event=1 generation=1 serial=0 src=8 dst=0
+09-17 00:54:46.230  9891 11104 I gatea-telemetry: GATEA_EVENT seq=35 role=1 event=1 generation=1 serial=0 src=8 dst=0
+09-17 00:54:46.231 23139  8877 I gatea-telemetry: GATEA_EVENT seq=36 role=2 event=1 generation=1 serial=0 src=9 dst=0
+09-17 00:54:46.232  9891 11104 I gatea-telemetry: GATEA_EVENT seq=37 role=1 event=1 generation=1 serial=0 src=9 dst=0
+09-17 00:54:46.232  9891 11104 I gatea-telemetry: GATEA_EVENT seq=38 role=1 event=2 generation=1 serial=0 src=8 dst=9
+09-17 00:54:46.232  9891 11104 I gatea-telemetry: GATEA_EVENT seq=39 role=1 event=3 generation=1 serial=0 src=8 dst=9
+09-17 00:54:46.233  9891 11104 I gatea-telemetry: GATEA_EVENT seq=40 role=1 event=4 generation=1 serial=0 src=8 dst=9
+09-17 00:54:46.233  9891 11104 I gatea-telemetry: GATEA_EVENT seq=41 role=1 event=5 generation=1 serial=0 src=8 dst=9
+09-17 00:54:46.233  9891 11104 I gatea-telemetry: GATEA_EVENT seq=42 role=1 event=6 generation=1 serial=9 src=8 dst=9
+09-17 00:54:46.233 23139  8877 I gatea-telemetry: GATEA_EVENT seq=43 role=2 event=7 generation=1 serial=9 src=8 dst=9
+09-17 00:54:46.233 23139  8877 I gatea-telemetry: GATEA_EVENT seq=44 role=2 event=8 generation=1 serial=9 src=8 dst=9
+09-17 00:54:46.233 23139  8877 I gatea-telemetry: GATEA_EVENT seq=45 role=2 event=35 generation=1 serial=9 src=4 dst=2
+09-17 00:54:46.233 23139  8877 I gatea-telemetry: GATEA_EVENT seq=46 role=2 event=16 generation=1 serial=9 src=8 dst=9
+===FAULT_HALT===
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01/logcat-follow.txt:09-17 00:54:46.233 23139  8877 I gatea-a1: GATEA_SUMMARY where=r-gatea-DIRECT_LOOKUP_FAIL nonce=12298421049840117982 generation=1 nextSequence=47 overflow=0 firstFailed=0 generationFatal=2 fatalReason=2 c0=1 c1=1 c2=1 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=2 c13=0 c14=2 c15=0 c16=2 c17=0 c18=2 c19=2 c20=1 c21=0 c22=0 c23=0 c24=1 c25=0 c26=0 c27=0
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01/logcat-follow.txt:09-17 00:54:46.233 23139  8877 F gatea-a1: GATEA_FATAL_HALT what=r-gatea-DIRECT_LOOKUP_FAIL reason=2
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01/logcat-follow.txt:09-17 00:54:46.233  9891 11104 I gatea-a1: GATEA_SUMMARY where=x-observe-fatal nonce=12298421049840117982 generation=1 nextSequence=47 overflow=0 firstFailed=0 generationFatal=2 fatalReason=2 c0=1 c1=1 c2=1 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=2 c13=0 c14=2 c15=0 c16=2 c17=0 c18=2 c19=2 c20=1 c21=0 c22=0 c23=0 c24=1 c25=0 c26=0 c27=0
+===Gcomp===
+NONE
+===signal===
+NONE

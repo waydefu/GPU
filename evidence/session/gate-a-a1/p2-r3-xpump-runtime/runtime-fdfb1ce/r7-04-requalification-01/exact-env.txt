@@ -1,0 +1,10 @@
+EXACT_R7_04_ENV
+TERMUX_X11_GATEA_PROTO=1
+TERMUX_X11_GATEA_TELEMETRY=1
+TERMUX_X11_GATEA_TEST_FAULT=fbo-incomplete
+TERMUX_X11_GATEA_TEST_ARM=1
+other_gatea_vars=0
+r6_oom_absent=1
+present_requeue_absent=1
+other_r7_selectors_absent=1
+source=/proc/9891/environ

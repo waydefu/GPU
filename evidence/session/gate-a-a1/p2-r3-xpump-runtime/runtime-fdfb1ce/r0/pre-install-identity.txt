@@ -1,0 +1,29 @@
+ts=2026-09-17T00:54:03+08:00
+serial=10.191.48.13:41361
+head=fdfb1ce44b429897eda17c43bf33fbd37afe67f3
+ci=35103216566
+parent=7549e3667ec03b8b5e50d2e5befe03065840bbd9
+role=r7-04-fatal-propagation-requal-install-not-b2-not-r7-05
+25102PCBEG
+myron
+16
+36
+===stable pre===
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-11b82d9-06.09.26
+    lastUpdateTime=2026-09-07 22:55:03
+===experimental pre===
+    pkg=Package{a2bbe84 com.waydefu.x11gpu}
+    codePath=/data/app/~~hQFylN5b9fgr5_esoGg09g==/com.waydefu.x11gpu-MDMhXEfMeRMMnwM3TlS6VA==
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-7549e36-16.09.26
+    lastUpdateTime=2026-09-16 19:03:48
+===hdmi observe===
+    mDisplayId=0
+  mDisplayId=0
+  mDisplayId=0
+  mDisplayId=: 0
+  mDisplayId= 0
+  mDisplayId=0
+  mDisplayId=0
+  mDisplayId=0

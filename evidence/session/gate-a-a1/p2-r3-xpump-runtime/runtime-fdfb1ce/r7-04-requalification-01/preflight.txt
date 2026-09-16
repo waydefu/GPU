@@ -1,0 +1,6 @@
+cell_id=r7-04-requalification-01
+fault=fbo-incomplete
+arm=1
+fixture=direct
+wait_s=12
+expect_version=1.03.01-fdfb1ce-16.09.26

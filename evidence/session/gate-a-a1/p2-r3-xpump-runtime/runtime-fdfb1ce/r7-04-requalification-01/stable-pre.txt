@@ -1,0 +1,2 @@
+stable_pre_pid=24999
+stable_pre_cmd=termux-x11 com.termux.x11 :1 -legacy-drawing                                                                                                  

@@ -1,0 +1,7 @@
+fault=fbo-incomplete
+event35_count=2
+halts=[('r-gatea-DIRECT_LOOKUP_FAIL', '2'), ('x-direct-not-success', '4'), ('r-gatea-DIRECT_LOOKUP_FAIL', '2'), ('x-direct-not-success', '4')]
+gcomp_done=0
+exa_timeout=0
+timeout_to_done_loose=0
+fixture_pass=False

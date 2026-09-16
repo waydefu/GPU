@@ -1,0 +1,33 @@
+===fixture hashes===
+e7bf002edba7275ae2a801c2149e28c4c5b669ad4db941291d910a5f59dcc722  /root/projects/GPU加速/patches/p_b3a_hold.c
+bfaa869d683f4e9175d1e388e0843e81ef18a405cc7e1625fa7a0c2c40d878c4  /root/projects/GPU加速/patches/p_b2_oracle.c
+795f3940518188fc837cddf41fda38a62c3a7a38cb1a3dd19752f4a797b98604  /root/projects/GPU加速/patches/p_b2_stress.c
+3417abbf0855c10bfd2328e87f33518c2f7f59c42529ba157a847d3019f5b5ca  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b3a_hold
+19154bf222b3c1e8c033bad2101bcd7e2f56fb23e486c4d8b6be651ca7eec726  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p-b2-oracle
+d020d4531e004f4051b19b6b5ae9c1e92b7352aadfbd82891c4f18d3cc3504f9  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_b2_stress
+c472ea999009c9b7caef267e484576d2d5cae0b8b02008283d01520dfbb7f0c3  /root/projects/GPU加速/patches/p_r2_imported_ahb.c
+c472ea999009c9b7caef267e484576d2d5cae0b8b02008283d01520dfbb7f0c3  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_r2_imported_ahb.c
+6b90e3a285e85149ed793a5a554c5f253d9146ba24101387f2ecf954eb7bfab1  /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r1-diag-runtime/fixtures/p_r2_imported_ahb
+
+===p_r2_imported_ahb compile (Termux/Bionic, 2026-09-14)===
+--target=aarch64-linux-android26 -O2 -Wall -Wextra -lxcb -lxcb-dri3 -lxcb-render -landroid
+interpreter /system/bin/linker64; NEEDED libandroid.so libc.so (not libc.so.6)
+modifier 1255 AHARDWAREBUFFER_SOCKET_FD; not 1274/LINEAR raw-FD
+Runtime must be app_process (untrusted_app_27 / gralloc), not PRoot ELF and not run-as:
+  clang -shared -fPIC -DR2_JNI -o libr2ahb.so p_r2_imported_ahb.c … -landroid
+  javac R2AhbHelp.java && d8 --output . R2AhbHelp.class
+  LD_LIBRARY_PATH=<xcb-only dir> app_process -Xnoimage-dex2oat <dir> R2AhbHelp
+Helper: /data/data/com.termux/files/home/r2-ahb-helper/
+
+===p_b2_stress diagnostic rebuild (host-only, 2026-09-16)===
+Opaque binary that produced runtime-a7528bd/r1-unset-oracle stress1000 FAIL is preserved:
+d020d4531e004f4051b19b6b5ae9c1e92b7352aadfbd82891c4f18d3cc3504f9  fixtures/p_b2_stress.opaque-20260916
+795f3940518188fc837cddf41fda38a62c3a7a38cb1a3dd19752f4a797b98604  patches/p_b2_stress.c (pre-diag source)
+
+New diagnostic source + host ELF (does not enter APK):
+de75acfe19bafae80a9c1005517a2bc3fbcb7c115ac974df9866b00c9bb22b90  /root/projects/GPU加速/patches/p_b2_stress.c
+173317b706b720423191757712c9a232d3bb7a014e556fee175fd3b0ade2a52a  /root/projects/GPU加速/patches/p_b2_stress_diag.h
+3e79b5cf875f5d7d05a25634983a44d9acfe67dfb885bf11f19b2cdb70e43c56  fixtures/p_b2_stress
+cc -O2 -Wall -Wextra -Werror -o fixtures/p_b2_stress patches/p_b2_stress.c -lxcb -lxcb-render
+Do not overwrite runtime-a7528bd/r1-unset-oracle/. Device reproduction needs separate authorization
+(cell runtime-a7528bd/r1-unset-diagnostic-01/).

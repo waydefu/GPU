@@ -1,6 +1,6 @@
 # TEST-MATRIX.md — POCO F8 Ultra Termux:X11 GPU 研究
 
-權威現況：`HANDOFF.md`（裝置 experimental 為 `7549e36` CI **35084701124**。CASE_LOOP repair-validation **CASE_LOOP_REPAIR_VALIDATED**（非 B-2）。B-2 requalification-01 **INVALID** 凍結。B-2 requalification-02 **PASS**（X 32228；oracle 1514/1514；stress 100/100/1000；timeout=0）。歷史 `feeaa56` stall-obs-01 **CASE_LOOP** 凍結。`327b028` SUPERSEDED。歷史 **R6 PASS** 在凍結 `0f1e546`。歷史 B-2 FAIL 在 `0d72332` 凍結。R7 cells 未開。Stop before R8。Production Gate A BLOCKED。）。
+權威現況：`HANDOFF.md`（裝置 experimental 為 `fdfb1ce` CI **35103216566** INSTALLED。CASE_LOOP repair-validation **CASE_LOOP_REPAIR_VALIDATED**（非 B-2）。B-2 requalification-01 **INVALID** 凍結。B-2 requalification-02 **PASS**。歷史 R7 qualification-01 **BLOCKED**（r7-04 halt_mismatch，凍結）。R7-04 requalification-01 **PASS**（X 9891）。R7 overall **IN PROGRESS / NOT YET PASS**。歷史 `feeaa56` stall-obs-01 **CASE_LOOP** 凍結。`327b028` SUPERSEDED。歷史 **R6 PASS** 在凍結 `0f1e546`。Stop before R8。Production Gate A BLOCKED。）。
 文件對齊查驗（2026-09-08 15:33 CST）：`git ls-remote`、[PR #1095](https://github.com/termux/termux-x11/pull/1095)、[PR #1114](https://github.com/termux/termux-x11/pull/1114) 頁面與表內 SHA 一致；兩個 PR 目前仍為 open，尚未 merge。P2-B.2 / Stable 基線數值未在 2026-09-14 重測；裝置 PID／experimental 版號以 `HANDOFF.md` 當日 snapshot 為準。
 
 ## Control build（Phase 1A，官方 CI）
@@ -62,7 +62,7 @@
 | XFCE compositor on | — | bounded isolated qualification 已 PASS；未列入目前 daily session，不留在 experimental `:3` 常駐。 | bounded PASS / daily not qualified |
 | XRender histogram | — | 舊 probe dump 未收集；P2-A 已由 A.3/A.4 關閉，不再以 histogram 作 blocker。 | historical |
 | GPU Composite | — | P2-B.2 narrow Over：ARGB→XRGB、無 mask/transform/repeat/componentAlpha、nearest，R3 oracle exact RGB；其餘 cases 仍 software。 | **P2-B.2 PASS (R3)** |
-| Gate A P2 runtime（experimental `:3` only） | 禁裝／禁碰 | 裝置 `7549e36` INSTALLED；repair-validation **CASE_LOOP_REPAIR_VALIDATED**（非 B-2）。B-2 requalification-02 **PASS**（X 32228）。`b2-requalification-01` **INVALID** 凍結。歷史 `feeaa56` obs-01 **CASE_LOOP** 凍結。歷史 B-2 FAIL 在 `0d72332` 凍結。歷史 R6 PASS 在 `0f1e546`。 | **R6 PASS**（歷史）；CASE_LOOP repair **VALIDATED**；B-2 **PASS**；R7 **NOT STARTED**；Production Gate A **BLOCKED**；**STOP BEFORE R8** |
+| Gate A P2 runtime（experimental `:3` only） | 禁裝／禁碰 | 裝置 `fdfb1ce` INSTALLED；repair-validation **CASE_LOOP_REPAIR_VALIDATED**（非 B-2）。B-2 requalification-02 **PASS**（X 32228）。`b2-requalification-01` **INVALID** 凍結。歷史 R7 qualification-01 **BLOCKED**（r7-04 X 31122 halt_mismatch）。R7-04 requal **PASS**（X 9891）。R7 overall **IN PROGRESS**。歷史 `feeaa56` obs-01 **CASE_LOOP** 凍結。歷史 B-2 FAIL 在 `0d72332` 凍結。歷史 R6 PASS 在 `0f1e546`。 | **R6 PASS**（歷史）；CASE_LOOP repair **VALIDATED**；B-2 **PASS**；R7-04 **PASS**（`fdfb1ce`）；R7 overall **IN PROGRESS**；Production Gate A **BLOCKED**；**STOP BEFORE R8** |
 | 10～30 min 穩定性＋CPU/RAM | | | |
 | glxinfo bare | llvmpipe（預期） | | | |
 | f8-gpu glxinfo | Adreno 840 yes | | | |
