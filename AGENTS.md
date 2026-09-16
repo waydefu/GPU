@@ -6,7 +6,10 @@ Gate A frozen control `src/f8-ahb-gatea-a1`, active A1 implementation
 `src/f8-ahb-gatea-xpump`, R5 installed `src/f8-ahb-gatea-r5-fix`, R6 source
 `src/f8-ahb-gatea-r6-retire`, R7 source `src/f8-ahb-gatea-r7`, EXA Composite
 timeout repair `src/f8-ahb-gatea-exa-timeout`, stall-phase diagnostic
-`src/f8-ahb-gatea-stall-diag`) plus research docs. It is itself NOT a Git repo — work
+`src/f8-ahb-gatea-stall-diag`, notify-phase diagnostic
+`src/f8-ahb-gatea-notify-diag`, notify function-coverage diagnostic
+`src/f8-ahb-gatea-notify-fn`, CASE_LOOP wakeup fix
+`src/f8-ahb-gatea-case-loop`) plus research docs. It is itself NOT a Git repo — work
 per-worktree.
 
 ## Entry order (every task)
@@ -54,8 +57,8 @@ per-worktree.
 - R4 PASS (X 29807, 1514/1514 fail=0 maxΔ=0 Xnz=0, N=8 publish=consume=lookup=draw=fence=completed=success=ack).
 - R5 FAIL (X 14858 hang after serial 819 RELOCK_DST; checkpoints 1/16/64/256 pixel PASS; 1024/4096 not reached). Authorized bounded rerun FAIL REPRODUCED (X 31265 hang after serial 1283 RELOCK_DST; 1/16/64/256/1024 pixel PASS; 4096 not reached). R5 root cause is PROVEN (AF_UNIX tiny-record backpressure + lock-across-write cycle).
 - Bounded correction is COMMITTED `37d8393` on `fix/gatea-r5-backpressure-20260915` (worktree `src/f8-ahb-gatea-r5-fix`) and pushed to fork; GitHub CI run **34918397208** PASS; artifact QUALIFIED (APK SHA256 `31ec7037...`, Build ID `cc8cee05...`).
-- APK INSTALLED on experimental only (`1.03.01-27d8d1b-16.09.26` CI **35056388284**, SHA256 `142b6e1f…45b0`, Build ID `e8d859dd…5e2c`). One stall observation **STALL_NOT_OBSERVED** (X 16420; 1000/1000; timeout=0; CASE_A/B/C NOT CLASSIFIED; **not B-2**). Do **not** retry `runtime-27d8d1b/stall-obs-01`. Historical **R6 PASS** APK `1.03.01-0f1e546-15.09.26` CI **34999213228** is no longer installed. Frozen R6 worktree remains `0f1e546`. B-2 R1 unset **FAIL** on `0d72332` (X 11212; stress 650/1000; timeout serial 2370 fail-stop). Historical `a7528bd` FAIL frozen. R7 cells not started. Production Gate A BLOCKED. Do not silent-retry `runtime-0d72332/r1-unset-oracle`, `runtime-a7528bd/r1-unset-oracle`, `runtime-95e6f96` inflight cells, or `9369553` D2.
-- Do not silent-retry PROTO=0. Do not second-retry R5 on `d9b7f60`. Experimental is `27d8d1b` INSTALLED; stall-obs-01 **STALL_NOT_OBSERVED** (do not retry). B-2 remains **BLOCKED** from `0d72332` fail-stop (serial 2370 / rerun1 1810, no timeout→Done); historical `a7528bd` FAIL / diagnostic-02 RCA frozen. Do not start R7 cells. Do not start R8–R10, Stable, HDMI, Production enable, origin PR/merge, origin push, or force without a new explicit authorization. Do not silent-retry R6-D1 historical cells. Do not silent-retry `runtime-0d72332/r1-unset-oracle` or `runtime-a7528bd/r1-unset-oracle`.
+- APK INSTALLED on experimental only (`1.03.01-7549e36-16.09.26` CI **35084701124**, SHA256 `45500894…4bc3`, Build ID `4c5b7b86…8f81`). CASE_LOOP repair-validation **CASE_LOOP_REPAIR_VALIDATED** (X 19887; **not B-2**). B-2 requalification-01 **INVALID** frozen. B-2 requalification-02 **B2_REQUALIFICATION_PASS** (X 32228; oracle 1514/1514; stress 100/100/1000; timeout=0). Historical `feeaa56` stall-obs-01 **CASE_LOOP** frozen. Initial `327b028` is **SUPERSEDED**. Do **not** retry `runtime-7549e36/repair-validation-01`, `runtime-7549e36/b2-requalification-01`, `runtime-7549e36/b2-requalification-02`, `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`, or `runtime-27d8d1b/stall-obs-01`. Historical **R6 PASS** APK `1.03.01-0f1e546-15.09.26` CI **34999213228** is no longer installed. Frozen R6 worktree remains `0f1e546`. Historical B-2 FAIL on `0d72332` remains frozen. Historical `a7528bd` FAIL frozen. R7 cells not started. Production Gate A BLOCKED. Do not silent-retry `runtime-0d72332/r1-unset-oracle`, `runtime-a7528bd/r1-unset-oracle`, `runtime-95e6f96` inflight cells, or `9369553` D2.
+- Do not silent-retry PROTO=0. Do not second-retry R5 on `d9b7f60`. Experimental is `7549e36` INSTALLED; B-2 **PASS** on requalification-02. Do not overwrite B-2 cells. Historical `feeaa56` stall-obs-01 **CASE_LOOP** frozen. `327b028` SUPERSEDED. Do not start R7 cells without a new explicit authorization. Do not start R8–R10, Stable, HDMI, Production enable, origin PR/merge, origin push, or force without a new explicit authorization. Do not silent-retry R6-D1 historical cells. Do not silent-retry `runtime-0d72332/r1-unset-oracle` or `runtime-a7528bd/r1-unset-oracle`.
 - Never rerun R3 on `88e3f17`, `8479997`, `6c7ee6f`, or `98b0011`.
 
 ## ART JIT 偶發當機分類與處置規則（0x4800xxxx / dalvik-jit 類）
@@ -80,7 +83,7 @@ per-worktree.
 ## Redlines
 
 - Stable display `:1` (daily driver, `com.termux.x11`) is NEVER touched. Experimental APKs only in `com.waydefu.x11gpu`.
-- Closed gates stay closed: P0 / P1 / P2-A / P2-B.1 / P2-B.2 (R3 PASS). Do not reopen them as P2-B.3. Current work is Gate A P2 stall-phase on device `27d8d1b` INSTALLED / stall-obs-01 **STALL_NOT_OBSERVED** / B-2 **BLOCKED** (`0d72332` fail-stop) / R7 qualification **NOT STARTED** (support artifact `a7528bd` exists only); Production Gate A stays BLOCKED. Stop before R8.
+- Closed gates stay closed: P0 / P1 / P2-A / P2-B.1 / P2-B.2 (R3 PASS). Do not reopen them as P2-B.3. Current work is Gate A P2: device `7549e36` INSTALLED / CASE_LOOP repair-validation **CASE_LOOP_REPAIR_VALIDATED** / B-2 **PASS** (`b2-requalification-02`, X 32228) / R7 qualification **NOT STARTED** (support artifact `a7528bd` exists only); Production Gate A stays BLOCKED. Stop before R8.
 - Predicate stays narrow: mask / two-pass / transform / bilinear / repeat / componentAlpha remain software.
 - No `termux/termux-x11` origin PR. Docs-only `waydefu/GPU` PRs are records, not qualification. No `±1 UNORM counts as PASS`. Kill/install safety exactly as HANDOFF.md "Runtime" says.
 
