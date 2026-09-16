@@ -1,4 +1,4 @@
-# 狀態交接 — 2026-09-16 13:50（UTC+8）
+# 狀態交接 — 2026-09-16 13:55（UTC+8）
 
 這是狀態快照，不是開工手冊，也不是授權。
 倉庫：https://github.com/waydefu/GPU（docs 紀錄；**沒有** PR status checks）
@@ -23,9 +23,8 @@ timeout:  2000 ms 未改
 `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`、
 `evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`。
 
-`main` 上舊快照（`5580e73` / 00:49、裝置曾寫 `95e6f96`）**過期**；以本檔與 `HANDOFF.md` 為準。
-歷史 R6 PASS 另見尚未合併的 [PR #1](https://github.com/waydefu/GPU/pull/1)。
-目前 docs 累積快照是 [PR #3](https://github.com/waydefu/GPU/pull/3)（**包含** [PR #2](https://github.com/waydefu/GPU/pull/2)）。
+`main` 已合併 [PR #1](https://github.com/waydefu/GPU/pull/1)（R6 PASS 證據）與 [PR #3](https://github.com/waydefu/GPU/pull/3)（現況；含 #2）。
+[PR #2](https://github.com/waydefu/GPU/pull/2) **不 merge 關閉**。歷史 `5580e73` 過期。
 
 ---
 
@@ -33,7 +32,7 @@ timeout:  2000 ms 未改
 
 裝置 experimental 是 stall-phase diagnostic `27d8d1b`。一次授權 observation **沒有**出現 >2 s EXA Composite wait。這**不是** B-2 PASS。B-2 仍 BLOCKED。R7 **資格格未開**（只有 support artifact）。
 
-不准 retry `stall-obs-01`。不准開 B-2 矩陣。不准改 timeout。不准開 R7 qualification。不准 merge GPU PR（除非另授權）。
+不准 retry `stall-obs-01`。不准開 B-2 矩陣。不准改 timeout。不准開 R7 qualification。
 
 ---
 
@@ -43,7 +42,7 @@ timeout:  2000 ms 未改
 - Artifact B `a7528bd` 源碼 + fork CI；B-2 在其上 FAIL；**不是 R7 qualification**。
 - EXA Composite wait-false fail-stop `0d72332`：B-2 FAIL REPRODUCED（serial 2370 / 1810）。
 - stall-obs-01 **STALL_NOT_OBSERVED**。
-- waydefu/GPU 開了 docs PR #1 / #2 / #3；**皆無 status checks**。
+- waydefu/GPU docs：`#1`+#3 已 merge；`#2` 不 merge 關閉。本倉庫仍 **無 status checks**。
 
 ---
 
@@ -52,7 +51,6 @@ timeout:  2000 ms 未改
 - 下一次 stall observation（需新授權；本格禁止 retry）。
 - B-2 重資格（仍 BLOCKED）。
 - R7 qualification cells。
-- 把 docs 快照合進 `waydefu/GPU` `main`（需另授權 merge）。
 
 **後面沒開、現在也不該開**
 

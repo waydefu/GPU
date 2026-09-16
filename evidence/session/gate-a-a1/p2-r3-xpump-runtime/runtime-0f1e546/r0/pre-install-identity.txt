@@ -1,0 +1,27 @@
+ts=2026-09-16T01:20:21+08:00
+serial=10.191.48.13:43399
+head=0f1e54699d0b11a781f2c044fbc77505f8a53bd8
+ci=34999213228
+25102PCBEG
+myron
+16
+36
+===stable pre===
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-11b82d9-06.09.26
+    lastUpdateTime=2026-09-07 22:55:03
+===experimental pre===
+    pkg=Package{43a34a3 com.waydefu.x11gpu}
+    codePath=/data/app/~~CKS5eDNJ4V9t8Rv8zQoQVg==/com.waydefu.x11gpu-7A2Eqsgsc_qPt5VLGDSi6Q==
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-95e6f96-15.09.26
+    lastUpdateTime=2026-09-15 16:17:14
+===hdmi observe===
+    mDisplayId=0
+  mDisplayId=0
+  mDisplayId=0
+  mDisplayId=: 0
+  mDisplayId= 0
+  mDisplayId=0
+  mDisplayId=0
+  mDisplayId=0

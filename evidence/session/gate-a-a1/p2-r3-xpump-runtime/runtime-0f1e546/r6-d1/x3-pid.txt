@@ -1,0 +1,1 @@
+x3_pid=29152 variant=d1 proto=1 telemetry=1 watchdog_stall=45s watchdog_max=60s

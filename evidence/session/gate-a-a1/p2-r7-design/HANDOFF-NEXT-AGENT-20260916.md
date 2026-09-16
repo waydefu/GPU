@@ -43,8 +43,9 @@ Do not rewrite it. Do not silent-retry its cells.
    This does **not** falsify `0d72332` fail-stop cells.
 5. B-2 remains BLOCKED. R7 **qualification** not started (support artifact
    `a7528bd` only). Timeout 2000 unchanged.
-6. waydefu/GPU docs PRs: map
-   `WAYDEFU-GPU-PR-MAP-20260916.md`. No status checks on that repo.
+6. waydefu/GPU docs: `#1` and `#3` **MERGED**; `#2` closed without merge.
+   Map `WAYDEFU-GPU-PR-MAP-20260916.md`. No status checks on that repo.
+   Docs merge is not qualification.
 
 ## Next
 

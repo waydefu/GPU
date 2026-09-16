@@ -16,6 +16,11 @@ failure, completion telemetry, runtime judges, fixtures, and artifact binding.
 This skill is review discipline, not permission to modify source, push, install,
 or run a device cell.
 
+Related skills: `../gate-a-r6-runtime-qualification/references/RELATED-SKILLS.md`.
+Runtime/CI/install: `../gate-a-r6-runtime-qualification/SKILL.md`.
+Writer contract (complete; do not re-run):
+`../gate-a-r6-present-retirement-implementation/SKILL.md`.
+
 ## When to Use
 
 - R6-D1 or R6-D2 fails, is redesigned, or is proposed for authorization.
@@ -35,7 +40,7 @@ Read these files in order every session; do not use remembered state:
 1. `AGENTS.md`
 2. `HANDOFF.md`
 3. `TEST-MATRIX.md`
-4. `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`
+4. The newest `HANDOFF-NEXT-AGENT-*.md` named by current `HANDOFF.md`
 5. `evidence/session/gate-a-a1/p2-r6-design/GATE-A-P2-R6-DESIGN-20260915.md`
 6. The newest R6-D2 HOLD/root-cause packet named by `HANDOFF.md`
 7. `references/R6-D2-REVIEW-20260915.md` for the review that created this skill
@@ -233,7 +238,10 @@ boundary and requires explicit approval before source mutation.
 - [ ] INFLIGHT proves exactly one bound branch:
       busy → reason-1 reject before cover and no target lease/publish/success
       before cover; or quiescent → cover before the first target lease followed
-      by a complete target direct LEASE/PUBLISH/COMPLETED/SUCCESS lifecycle.
+      by a complete target direct LEASE/PUBLISH/COMPLETED/SUCCESS lifecycle
+      **and then** a later Composite REQUEST/CALLBACK plus a second complete
+      lifecycle. The later Composite is a PRODUCT INVARIANT (DESIGN §6.2 / §9);
+      do not delete it to match a short trace. If its status is unknown, STOP.
 - [ ] A Composite callback alone is not admission evidence.
 - [ ] OOM proves the requeue-fail branch, has no event 32, and proves post-cover
       ACK/idle ordering.
