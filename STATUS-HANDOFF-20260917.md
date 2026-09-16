@@ -8,6 +8,7 @@
 工作站權威樹：/root/projects/GPU加速
 程式碼遠端：https://github.com/waydefu/termux-x11（fork artifact CI ≠ 本倉庫）
 本快照分支：docs/fdfb1ce-r7-04-handoff-20260917
+PR：https://github.com/waydefu/GPU/pull/6（紀錄；未 merge；不是 qualification）
 ```
 
 **先讀本檔。** 然後：`CONTINUATION.md` → `HANDOFF.md` → `WORKTREE-MAP.md` →

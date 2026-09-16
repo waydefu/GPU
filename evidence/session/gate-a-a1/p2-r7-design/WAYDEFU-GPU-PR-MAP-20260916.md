@@ -14,8 +14,9 @@ main 6c83338  ← merge of PR #5 (B-2 PASS 7549e36)
   ├─ PR #3  stall-obs-27d8d1b-20260916      MERGED 2ab76b30
   ├─ PR #4  case-loop-feeaa56-20260916      CLOSED without merge
   ├─ PR #5  b2-pass-7549e36-20260916        MERGED 6c83338
-  └─ this   docs/fdfb1ce-r7-04-handoff-20260917
+  └─ PR #6  docs/fdfb1ce-r7-04-handoff-20260917
             Record fdfb1ce INSTALLED + R7-04 PASS; R7 overall IN PROGRESS
+            https://github.com/waydefu/GPU/pull/6
 ```
 
 ## Verdict labels (do not mix)

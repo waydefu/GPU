@@ -33,6 +33,7 @@
 見 [`evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`](evidence/session/gate-a-a1/p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md)。
 
 歷史：[#1](https://github.com/waydefu/GPU/pull/1) R6 PASS **merged**；[#3](https://github.com/waydefu/GPU/pull/3) stall-obs **merged**；[#5](https://github.com/waydefu/GPU/pull/5) B-2 PASS **merged**；[#2](https://github.com/waydefu/GPU/pull/2)/[#4](https://github.com/waydefu/GPU/pull/4) 不 merge 關閉。
+本快照：[PR #6](https://github.com/waydefu/GPU/pull/6) `fdfb1ce` R7-04 PASS 接續包（未 merge）。
 
 不含：完整 git worktree、xserver submodule、APK、unstripped ELF、B-2 大 logcat、`.gradle`。
 APK 從 [termux-x11 CI 35103216566](https://github.com/waydefu/termux-x11/actions/runs/35103216566) 下載，SHA256 必須是 `5313fc9a7e3e87907fd42ece330124362ab7284d41fbf6e4b492eb12ffd4915c`。
