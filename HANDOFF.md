@@ -1,22 +1,24 @@
-# GPU Research Handoff — 2026-09-16 B-2 **BLOCKED**; R7 qualification **NOT STARTED**; stall-obs **STALL_NOT_OBSERVED**
+# GPU Research Handoff — 2026-09-16 B-2 **BLOCKED**; R7 qualification **NOT STARTED**; stall-obs **CASE_LOOP** (`feeaa56`); CASE_LOOP source fix **not installed**
 
-> Device experimental is **`27d8d1b`** on `com.waydefu.x11gpu` only
-> (CI **35056388284**). Frozen R6 worktree `src/f8-ahb-gatea-r6-retire` HEAD
+> Device experimental is **`feeaa56`** on `com.waydefu.x11gpu` only
+> (CI **35076884763**). One stall observation **CASE_LOOP** (X 23034; timeout
+> serial 86; NOTIFY 86/86 max 0.105 ms; SWAP max 1.479 ms; NEXT_FENCE max
+> 1.751 ms; timeout→Done=0). **Not B-2.** Function-body NOTIFY wrap is valid.
+> CASE_LOOP source fix lives on `src/f8-ahb-gatea-case-loop` (parent `0d72332`)
+> and is **not installed**. Frozen R6 worktree `src/f8-ahb-gatea-r6-retire` HEAD
 > **`0f1e54699d0b11a781f2c044fbc77505f8a53bd8`** still clean vs fork — **do not mutate**.
 > Historical **R6 PASS** on `0f1e546` remains the last qualified R6 runtime.
 > EXA Composite timeout repair remains **COMMITTED**
-> `0d72332c0e591b2137262d06d7dcab704be49383` (source worktree; no longer the
-> installed APK). B-2 R1 unset on `0d72332` **FAIL** (serial 2370) + authorized
-> rerun **FAIL REPRODUCED** (serial 1810); **no timeout→Done**. Stall RCA
-> **NARROWED BUT NOT PROVEN**. Stall-phase diagnostic **`27d8d1b` INSTALLED**;
-> one observation **STALL_NOT_OBSERVED** (stress 1000/1000, timeout=0; SWAP max
-> 1.468 ms / NEXT_FENCE max 4.806 ms; CASE_A/B/C **NOT CLASSIFIED**). **Not B-2.**
-> Do **not** retry `runtime-27d8d1b/stall-obs-01`. Historical `a7528bd` B-2 FAIL
-> / diagnostic-02 RCA remain frozen. R7 **support artifact** `a7528bd` exists;
-> R7 **qualification cells were never started**.
-> Canonical next-agent brief:
+> `0d72332c0e591b2137262d06d7dcab704be49383`. B-2 R1 unset on `0d72332` **FAIL**
+> (serial 2370) + authorized rerun **FAIL REPRODUCED** (serial 1810); **no
+> timeout→Done**. Historical stall-obs **STALL_NOT_OBSERVED** on `27d8d1b` /
+> `1f85b80` remain frozen (those cells did not hit this stall). Do **not** retry
+> `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`, or
+> `runtime-27d8d1b/stall-obs-01`. Historical `a7528bd` B-2 FAIL / diagnostic-02
+> RCA remain frozen. R7 **support artifact** `a7528bd` exists; R7 **qualification
+> cells were never started**. Canonical next-agent brief:
 > `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
-> Stable `:1` PID **17922** untouched. HDMI untouched. Stop before R8.
+> Stable `:1` PID **14604** untouched. HDMI untouched. Stop before R8.
 > Production Gate A **BLOCKED**.
 
 ```
@@ -129,12 +131,15 @@ GATE A P2 R6-D2-OOM PASS / 0f1e546 (X 2638; event 33 executed; ACK after cover)
 GATE A P2 R6 PASS / 0f1e546
 R7 SUPPORT ARTIFACT COMMITTED / a7528bd (termux-x11 fork CI; NOT qualification)
 B-2 BLOCKED / 0d72332 fail-stop (R7 QUALIFICATION NOT STARTED)
+NOTIFY STALL DIAGNOSTIC INSTALLED / 1f85b80 (stall-obs-01 STALL_NOT_OBSERVED; NOT B-2; superseded on device)
+NOTIFY FN DIAGNOSTIC INSTALLED / feeaa56 (stall-obs-01 CASE_LOOP serial 86; NOT B-2)
+CASE_LOOP SOURCE FIX / 327b028 parent 0d72332 NOT INSTALLED
 PRODUCTION GATE A BLOCKED
 ```
 
 Do not reopen P0/P1/P2-A/P2-B.1/P2-B.2. Do not treat ±1 UNORM as PASS. Do not open a `termux/termux-x11` origin PR. Docs-only PRs on `waydefu/GPU` are records, not qualification. Do not touch stable `:1`. Do not leave XFCE/xfwm running on experimental `:3` as a daily session; the R3 bounded window already passed and was stopped.
 
-## Current Gate A P2 runtime (2026-09-16 device 27d8d1b INSTALLED; stall-obs STALL_NOT_OBSERVED; B-2 BLOCKED; R7 qualification NOT STARTED)
+## Current Gate A P2 runtime (2026-09-16 device feeaa56 INSTALLED; stall-obs CASE_LOOP; CASE_LOOP fix not installed; B-2 BLOCKED; R7 qualification NOT STARTED)
 
 Next-agent brief:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
@@ -145,16 +150,16 @@ Prior `88e3f17` R3 FAIL remains historical:
 
 | | |
 |---|---|
-| Worktree (installed source) | Device **`27d8d1b`**; stall-diag `src/f8-ahb-gatea-stall-diag` HEAD **`27d8d1b4fcfc5456bac8720d36110eeeb7cbc9d3`**; repair source still `0d72332`; R7 **support** worktree `a7528bd` (not installed; qualification **not started**); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
+| Worktree (installed source) | Device **`feeaa56`**; notify-fn `src/f8-ahb-gatea-notify-fn` HEAD **`feeaa569b86216126116c9bd99037a014efe0b79`**; CASE_LOOP fix worktree `src/f8-ahb-gatea-case-loop` (parent `0d72332`, **not installed**); repair source still `0d72332`; R7 **support** worktree `a7528bd` (not installed; qualification **not started**); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
 | R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6-retire` branch `fix/gatea-r6-present-retirement-20260915` HEAD **`0f1e546`** (fork in sync; origin ABSENT) |
 | Historical R6 source | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` HEAD **`95e6f96`** clean; do not overwrite its cells |
 | Control | `/root/projects/GPU加速/src/f8-ahb-gatea-a1` HEAD **`88e3f17`** clean |
-| Installed APK | `com.waydefu.x11gpu` `1.03.01-27d8d1b-16.09.26` CI **35056388284** |
-| APK SHA256 | `142b6e1fc6856c87c8dac0a006dd13a97c963bd480f8c2ac548d88325c0a45b0` MATCH on-device |
-| Build ID | `e8d859dd25120e21d5be13f72ffc0a7dcf385e2c` MATCH |
-| lastUpdateTime | 2026-09-16 13:13:30 |
-| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **17922** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
-| Last ADB | `10.191.48.13:43399` live-fetched `_adb-tls-connect._tcp.local.` |
+| Installed APK | `com.waydefu.x11gpu` `1.03.01-feeaa56-16.09.26` CI **35076884763** |
+| APK SHA256 | `a2d92ff9ecb948c5b3ac3c424727d12e97b9991f3b1b68d068a6828d744f3210` MATCH on-device |
+| Build ID | `62d4a3f66adf3326513b7b79868c21c3ad8310f2` MATCH |
+| lastUpdateTime | 2026-09-16 17:21:53 |
+| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **14604** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
+| Last ADB | `10.191.48.13:37077` live-fetched `_adb-tls-connect._tcp.local.` |
 | R1 unset | PASS (X 19391; 1514/1514; stress 100/100/1000; GATEA_EVENT=0) |
 | R1 PROTO=0 first | FAIL SIGSEGV X PID **21639** (`si_addr=0`, Uctx PC `0x4800229c` in `dalvik-jit-code-cache`) OBSERVED |
 | R1 PROTO=0 rerun | PASS X PID **27435**; 1514/1514; stress 100/100/1000; GATEA_EVENT=0; **21639 NON-REPRODUCED** |
@@ -195,15 +200,18 @@ Prior `88e3f17` R3 FAIL remains historical:
 | R6 | **PASS** design-complete three cells on `0f1e546`. Timeout/loss/scrap/destroy/CloseScreen-with-pending remain SOURCE-PROVEN not DEVICE-PROVEN. |
 | R7 support artifact source | **COMMITTED** `a7528bd` on `src/f8-ahb-gatea-r7` (events 35/36). This is a **support artifact**, not an R7 qualification result. Frozen R6 tree untouched. Host verifiers PASS. **R7 cells NOT STARTED.** |
 | Artifact B termux-x11 CI | **PASS** fork `debug_build.yml` run **35007764673** exact headSha `a7528bd`. Artifact QUALIFIED. SHA256 `c29b1c68…4c2c` Build ID `aa1d23e7…3b9c`. This is **not** a `waydefu/GPU` PR status check and **not** R7 qualification. |
-| Artifact B historical install | **DONE then superseded.** Experimental-only `runtime-a7528bd/r0/`; SHA/Build ID MATCH at that time. **Not R7 qualification.** Device now `27d8d1b`. |
+| Artifact B historical install | **DONE then superseded.** Experimental-only `runtime-a7528bd/r0/`; SHA/Build ID MATCH at that time. **Not R7 qualification.** Device now `1f85b80`. |
 | B-2 R1 unset on `a7528bd` | **FAIL** X PID **17192**; oracle 1514/1514; stress 100/100 PASS; 1000 **ok=999 fail=1 alive=1**; event 35=0; SUMMARY `x-close-screen` counters 0. Cell `runtime-a7528bd/r1-unset-oracle/`. Do not silent-retry. **Authoritative historical FAIL.** **Not R7.** |
 | B-2 diagnostic-01 on `a7528bd` | **DID NOT REPRODUCE** X PID **29184**; `ok=1000 fail=0`; no `B2_DIAG_FAIL`; EXA timeout **0**. Cell `runtime-a7528bd/r1-unset-diagnostic-01/`. Do **not** overwrite. Not a B-2 PASS. Not R7. |
 | B-2 diagnostic-02 on `a7528bd` | **RCA IDENTIFIED** X PID **10903**; `ok=997 fail=3`; 3× timeout then `Gcomp Done`. Cell `runtime-a7528bd/r1-unset-diagnostic-02/`. Do **not** overwrite. Not a B-2 PASS. Not R7. |
 | EXA Composite timeout repair | **COMMITTED+CI** `0d72332` CI **35049545631**; **superseded on device** by `27d8d1b`. B-2 R1 unset **FAIL** X PID **11212** serial **2370**; authorized rerun1 **FAIL REPRODUCED** X PID **8172** serial **1810** (`ok=90 fail=910 alive=0`); both fail-stop `x-exa-composite-wait` reason=4; **no timeout→Done**. Cells `runtime-0d72332/r1-unset-oracle/` and `r1-unset-oracle-rerun1/`. Historical `runtime-a7528bd/` frozen. Do **not** silent-retry. Do **not** start R7. |
 | Stall-phase diagnostic | **INSTALLED** `27d8d1b` CI **35056388284**. Cell `runtime-27d8d1b/r0/`. Observation **STALL_NOT_OBSERVED** X PID **16420**; stress 1000/1000 timeout=0; `STALL_PHASE` 3712; SWAP max 1.468 ms; NEXT_FENCE max 4.806 ms; CASE_A/B/C **NOT CLASSIFIED**. Packet `runtime-27d8d1b/GATE-A-P2-STALL-OBS-01-20260916.md`. **Not B-2.** Do **not** retry `stall-obs-01`. |
-| Renderer blocking audit | **NARROWED BUT NOT PROVEN** (read-only `27d8d1b`). Highest remaining: `eglSwapBuffers`/BufferQueue; cond_wait lost-wakeup source-possible. Packet `p2-r7-design/GATE-A-P2-RENDERER-BLOCKER-AUDIT-20260916.md`. No device rerun. |
-| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS evidence). `#3` **MERGED** as current snapshot (contains `#2`). `#2` **closed without merge**. This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
-| Next | Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2 matrix. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1` or `runtime-a7528bd/r1-unset-oracle`. Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1 or R7 qualification. Stop before R8. Production Gate A remains BLOCKED. |
+| Notify-phase diagnostic | Historical **STALL_NOT_OBSERVED** on `1f85b80` (X 28893; 1000/1000; `NOTIFY_*` NOT OBSERVED = coverage gap). Packet `runtime-1f85b80/GATE-A-P2-STALL-OBS-01-20260916.md`. Superseded on device by `feeaa56`. Do **not** retry. |
+| Notify function-coverage diagnostic | **INSTALLED** `feeaa56` CI **35076884763**. Cell `runtime-feeaa56/r0/`. Observation **CASE_LOOP** X PID **23034**; timeout serial **86**; Gcomp Done=81; NOTIFY 86/86 max 0.105 ms; SWAP max 1.479 ms; NEXT_FENCE max 1.751 ms; timeout→Done=0. Packet `runtime-feeaa56/GATE-A-P2-STALL-OBS-01-20260916.md`. **Not B-2.** Do **not** retry `runtime-feeaa56/stall-obs-01`. |
+| CASE_LOOP source fix | **COMMITTED** `327b028` on `src/f8-ahb-gatea-case-loop` (parent `0d72332`). `waitWhileIdle`: sticky writeIndex recheck + 8 ms `pthread_cond_timedwait` while `waitForNextFrame`. EXA 2000 ms unchanged. Host RED hang / GREEN 5 ms. Packet `p2-r7-design/GATE-A-P2-CASE-LOOP-FIX-20260916.md`. **Not installed.** Do **not** install without new authorization. |
+| Renderer blocking audit | Historical `27d8d1b` read-only packet remains; SWAP/NEXT_FENCE as 2 s blocker **FALSIFIED** on `feeaa56` stall-obs-01. Remaining was infinite `cond_wait` + lost wakeup / no Choreographer during `lorieGpuCopyWait`. |
+| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **closed without merge**. `#4` **this snapshot** (`feeaa56` CASE_LOOP + `327b028` not installed). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
+| Next | Do **not** install the CASE_LOOP fix without new authorization. Do **not** retry `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`, or `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2 matrix. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1` or `runtime-a7528bd/r1-unset-oracle`. Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1 or R7 qualification. Stop before R8. Production Gate A remains BLOCKED. |
 
 ## Runtime (S3 qualification snapshot; B3a current state is recorded below)
 
@@ -421,8 +429,8 @@ authorized.
 
 ## Next (when resuming)
 
-Current next (2026-09-16, **device `27d8d1b` INSTALLED; stall-obs-01 STALL_NOT_OBSERVED**):
-Do **not** retry `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2 matrix.
+Current next (2026-09-16, **device `feeaa56` INSTALLED; stall-obs CASE_LOOP; CASE_LOOP fix not installed**):
+Do **not** install the CASE_LOOP fix without new authorization. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`. Do **not** start B-2 matrix.
 Do **not** start R7 cells. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
 Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
 Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1. Do **not** start R8. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on

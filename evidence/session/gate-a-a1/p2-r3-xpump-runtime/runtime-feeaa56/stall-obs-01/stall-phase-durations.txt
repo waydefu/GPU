@@ -1,0 +1,18 @@
+# STALL_PHASE interval stats — stall-obs-01 (not a B-2 verdict)
+source=logcat-follow.txt parsed_events=468
+phase_counts NEXT_FENCE_ENTER=74 NEXT_FENCE_EXIT=74 NOTIFY_ENTER=86 NOTIFY_EXIT=86 SWAP_ENTER=74 SWAP_EXIT=74
+apply_follow=83 apply_unfiltered=83
+NOTIFY_unfiltered ENTER=86 EXIT=86
+NOTIFY_ENTER→EXIT n=86 min_ns=9479 med_ns=27448 max_ns=105104 max_ms=0.105 gt2000ms=0 unmatched_enter=0 unmatched_exit=0
+  top_ms=0.105@cs=52 0.102@cs=54
+SWAP_ENTER→EXIT n=74 min_ns=92344 med_ns=240573 max_ns=1478802 max_ms=1.479 gt2000ms=0 unmatched_enter=0 unmatched_exit=0
+  top_ms=1.479@cs=4 1.126@cs=62
+NEXT_FENCE_ENTER→EXIT n=74 min_ns=203490 med_ns=420365 max_ns=1751094 max_ms=1.751 gt2000ms=0 unmatched_enter=0 unmatched_exit=0
+  top_ms=1.751@cs=43 1.129@cs=52
+EXA timeout count=1
+Gcomp Done=81
+fatal_count=2
+pixel_mismatch=0
+timeout_then_done=0
+verdict=CASE_LOOP
+not_b2=1

@@ -1,0 +1,38 @@
+verdict=CASE_LOOP
+detail=notify_ns=22865 swap_ns=102292 next_fence_ns=390677 last_cs=85 last_rd=85 last_wr=85 lag=0
+stall_phase_count=468
+phases_before_timeout=466
+timeout_count=1
+fatal_count=2
+gcomp_count=81
+apply_follow=83
+apply_unfiltered=83
+notify_enter_follow=86
+notify_exit_follow=86
+notify_enter_unfiltered=86
+notify_exit_unfiltered=86
+notify_max_ms=0.105
+swap_max_ms=1.479
+next_fence_max_ms=1.751
+pixel_mismatch=0
+timeout_then_done=0
+not_b2=1
+TIMEOUT 09-16 17:29:53.583 23034 23540 E LorieNative: EXA GPU composite wait timeout serial=86 scheduled=1
+FATAL 09-16 17:29:53.587 23034 23540 F gatea-a1: GATEA_FATAL_HALT what=x-exa-composite-wait reason=4
+LAST_PHASES_BEFORE_TIMEOUT
+09-16 17:29:51.525  7175 22960 I LorieNative: STALL_PHASE phase=NEXT_FENCE_ENTER mono_ns=63842369690020 tid=22960 completedSerial=82 readIndex=82 writeIndex=82
+09-16 17:29:51.525  7175 22960 I LorieNative: STALL_PHASE phase=NEXT_FENCE_EXIT mono_ns=63842370103041 tid=22960 result=12534 completedSerial=82 readIndex=82 writeIndex=82
+09-16 17:29:51.538  7175 22960 I LorieNative: STALL_PHASE phase=NOTIFY_ENTER mono_ns=63842382905072 tid=22960 completedSerial=83 readIndex=83 writeIndex=83
+09-16 17:29:51.538  7175 22960 I LorieNative: STALL_PHASE phase=NOTIFY_EXIT mono_ns=63842382952781 tid=22960 completedSerial=83 readIndex=83 writeIndex=83
+09-16 17:29:51.554  7175 22960 I LorieNative: STALL_PHASE phase=NOTIFY_ENTER mono_ns=63842398461895 tid=22960 completedSerial=84 readIndex=84 writeIndex=84
+09-16 17:29:51.554  7175 22960 I LorieNative: STALL_PHASE phase=NOTIFY_EXIT mono_ns=63842398489395 tid=22960 completedSerial=84 readIndex=84 writeIndex=84
+09-16 17:29:51.555  7175 22960 I LorieNative: STALL_PHASE phase=SWAP_ENTER mono_ns=63842399489603 tid=22960 completedSerial=84 readIndex=84 writeIndex=84
+09-16 17:29:51.555  7175 22960 I LorieNative: STALL_PHASE phase=SWAP_EXIT mono_ns=63842399907364 tid=22960 result=1 completedSerial=84 readIndex=84 writeIndex=84
+09-16 17:29:51.555  7175 22960 I LorieNative: STALL_PHASE phase=NEXT_FENCE_ENTER mono_ns=63842400378301 tid=22960 completedSerial=84 readIndex=84 writeIndex=84
+09-16 17:29:51.556  7175 22960 I LorieNative: STALL_PHASE phase=NEXT_FENCE_EXIT mono_ns=63842400830228 tid=22960 result=12534 completedSerial=84 readIndex=84 writeIndex=84
+09-16 17:29:51.567  7175 22960 I LorieNative: STALL_PHASE phase=NOTIFY_ENTER mono_ns=63842411483301 tid=22960 completedSerial=85 readIndex=85 writeIndex=85
+09-16 17:29:51.567  7175 22960 I LorieNative: STALL_PHASE phase=NOTIFY_EXIT mono_ns=63842411506166 tid=22960 completedSerial=85 readIndex=85 writeIndex=85
+09-16 17:29:51.568  7175 22960 I LorieNative: STALL_PHASE phase=SWAP_ENTER mono_ns=63842412606895 tid=22960 completedSerial=85 readIndex=85 writeIndex=85
+09-16 17:29:51.568  7175 22960 I LorieNative: STALL_PHASE phase=SWAP_EXIT mono_ns=63842412709187 tid=22960 result=1 completedSerial=85 readIndex=85 writeIndex=85
+09-16 17:29:51.568  7175 22960 I LorieNative: STALL_PHASE phase=NEXT_FENCE_ENTER mono_ns=63842413094864 tid=22960 completedSerial=85 readIndex=85 writeIndex=85
+09-16 17:29:51.569  7175 22960 I LorieNative: STALL_PHASE phase=NEXT_FENCE_EXIT mono_ns=63842413485541 tid=22960 result=12534 completedSerial=85 readIndex=85 writeIndex=85

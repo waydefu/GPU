@@ -1,0 +1,15 @@
+===STALL_PHASE===
+468
+===NOTIFY===
+86
+86
+===timeout===
+1
+09-16 17:29:53.583 23034 23540 E LorieNative: EXA GPU composite wait timeout serial=86 scheduled=1
+===fatal===
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-feeaa56/stall-obs-01/logcat-follow.txt:09-16 17:29:53.583 23034 23540 I gatea-a1: GATEA_SUMMARY where=x-exa-composite-wait nonce=0 generation=0 nextSequence=0 overflow=0 firstFailed=0 generationFatal=4 fatalReason=4 c0=0 c1=0 c2=0 c3=0 c4=0 c5=0 c6=0 c7=0 c8=0 c9=0 c10=0 c11=0 c12=0 c13=0 c14=0 c15=0 c16=0 c17=0 c18=0 c19=0 c20=0 c21=0 c22=0 c23=0 c24=0 c25=0 c26=0 c27=0
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-feeaa56/stall-obs-01/logcat-follow.txt:09-16 17:29:53.587 23034 23540 F gatea-a1: GATEA_FATAL_HALT what=x-exa-composite-wait reason=4
+===gcomp===
+81
+===apply===
+83
