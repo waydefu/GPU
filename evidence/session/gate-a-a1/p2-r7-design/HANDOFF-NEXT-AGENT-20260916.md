@@ -1,4 +1,4 @@
-# Gate A P2 CASE_LOOP — 2026-09-16 `feeaa56` INSTALLED stall-obs-01 **CASE_LOOP**; hardened source **not installed**
+# Gate A P2 CASE_LOOP — 2026-09-16 `feeaa56` INSTALLED stall-obs-01 **CASE_LOOP**; `7549e36` QUALIFIED **not installed**; repair-validation **designed not started**
 
 ```
 STATUS: R6 PASS on frozen 0f1e546 remains historical
@@ -11,11 +11,12 @@ STATUS: R6 PASS on frozen 0f1e546 remains historical
         notify-phase 1f85b80 stall-obs-01 STALL_NOT_OBSERVED historical
         function-coverage diagnostic feeaa56 CI 35076884763 INSTALLED
         stall-obs-01 CASE_LOOP (X 23034; timeout serial=86; NOTIFY 86/86 max 0.105 ms)
-        CASE_LOOP source: initial 327b028 then hardened 7549e36
+        CASE_LOOP source: 327b028 SUPERSEDED; only device SHA is 7549e36
           waitWhileIdle: sticky writeIndex recheck + 8 ms CLOCK_MONOTONIC timedwait
           EXA 2000 unchanged; host RED hang 151 ms / GREEN 10 ms; C11 acquire/release
           fork CI 35084701124 QUALIFIED; NOT INSTALLED
-        not B-2; do not retry stall-obs-01; do not install fix without new auth
+        repair-validation cell DESIGNED / NOT STARTED / not B-2
+        not B-2; do not retry stall-obs-01; do not install without new auth
         historical a7528bd B-2 FAIL / diagnostic-02 RCA FROZEN
         R7 support artifact a7528bd exists
         R7 qualification cells NOT STARTED
@@ -48,6 +49,8 @@ Observation packet:
 
 Fix packet:
 `evidence/session/gate-a-a1/p2-r7-design/GATE-A-P2-CASE-LOOP-FIX-20260916.md`.
+Repair-validation cell (designed, not started):
+`evidence/session/gate-a-a1/p2-r7-design/GATE-A-P2-CASE-LOOP-REPAIR-VALIDATION-CELL-20260916.md`.
 
 ## Summary
 
@@ -64,12 +67,17 @@ Fix packet:
    8 ms CLOCK_MONOTONIC timedwait while `waitForNextFrame`. Host test:
    legacy hangs 151 ms without signal; fixed wakes in 10 ms without signal.
    EXA 2000 verifier PASS.
-6. Fix is **not installed**. B-2 remains BLOCKED. R7 not started.
+6. Hardened `7549e36` is the **only** CASE_LOOP SHA for a later phone test.
+   `327b028` is initial / SUPERSEDED. Fix is **not installed**.
+7. Next cut is an independent **repair-validation** cell, not B-2.
+   That cell is designed, not started, and still needs a new install grant.
 
 ## Next
 
-Do **not** install the CASE_LOOP fix without **new explicit authorization**.
+Do **not** install `7549e36` without a **new explicit install grant**.
+Do **not** install `327b028`.
+Do **not** start B-2 from this lock. Repair-validation ≠ B-2.
 Do **not** retry `runtime-feeaa56/stall-obs-01`.
 Do **not** retry `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
-Do **not** start B-2. Do **not** start R7 qualification. Do **not** change 2000 ms.
+Do **not** start R7 qualification. Do **not** change 2000 ms.
 Do **not** mutate frozen R6.

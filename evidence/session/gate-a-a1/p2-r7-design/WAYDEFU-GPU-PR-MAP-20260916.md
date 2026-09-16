@@ -27,9 +27,11 @@ main 2ab76b30  ← merge of PR #3 (contains unique R6 files from #1)
 - **R6 = PASS** (frozen `0f1e546`)
 - **B-2 = BLOCKED** (`0d72332` fail-stop; historical `a7528bd` FAIL kept)
 - **feeaa56 stall-obs-01 = CASE_LOOP DEVICE-PROVEN** — **not** a B-2 PASS
-- **CASE_LOOP initial `327b028` + hardened `7549e36` = COMMITTED, not installed**
+- **CASE_LOOP fix `327b028` = initial / SUPERSEDED**
+- **CASE_LOOP hardened `7549e36` = only device SHA; CI QUALIFIED; not installed**
+- **repair-validation cell = designed, not started, not B-2**
 - **R7 support artifact** `a7528bd` exists; **R7 qualification NOT STARTED**
 
-Docs merge is **not** R7 qualification, **not** a B-2 PASS, and **not** device install of `7549e36`.
+Docs merge is **not** R7 qualification, **not** a B-2 PASS, **not** device install of `7549e36`, and **not** a repair-validation run.
 
 No APK / ELF / logcat. No C tree. No runtime rerun in this PR.

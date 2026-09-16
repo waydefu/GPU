@@ -5,12 +5,16 @@ Source worktree `src/f8-ahb-gatea-case-loop` branch `fix/gatea-case-loop-wakeup-
 | Role | SHA |
 |---|---|
 | parent (EXA Composite fail-stop) | `0d72332c0e591b2137262d06d7dcab704be49383` |
-| initial CASE_LOOP fix | `327b02838009eca8bac127ca7bb381fd2aff48ed` |
-| hardened candidate | `7549e3667ec03b8b5e50d2e5befe03065840bbd9` |
+| initial CASE_LOOP fix | `327b02838009eca8bac127ca7bb381fd2aff48ed` **SUPERSEDED** |
+| only device candidate | `7549e3667ec03b8b5e50d2e5befe03065840bbd9` |
 
 **Not B-2.** **Not R7.** Timeout **2000 ms unchanged**. Frozen R6 `0f1e546` untouched. Diagnostic trees `feeaa56` / `1f85b80` / `27d8d1b` not mutated.
 
 Device still has observational `feeaa56`. Hardened SHA is **not installed**.
+`327b028` is the initial source fix and is **SUPERSEDED**. Do not install it.
+
+Repair-validation cell is **designed / not started / not B-2**:
+`GATE-A-P2-CASE-LOOP-REPAIR-VALIDATION-CELL-20260916.md`.
 
 ## Evidence language
 
@@ -100,7 +104,8 @@ Host test does **not** prove device B-2.
 
 ## Not done
 
-- Device install of `7549e36`
+- Device install of `7549e36` (repair-validation cell designed, not started)
+- Installing `327b028` is forbidden (`SUPERSEDED`)
 - B-2 matrix / silent-retry of `0d72332` / `feeaa56` stall-obs-01
 - Timeout change
 - R7
