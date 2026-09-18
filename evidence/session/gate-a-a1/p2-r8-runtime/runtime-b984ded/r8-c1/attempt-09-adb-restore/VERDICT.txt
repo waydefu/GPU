@@ -1,0 +1,17 @@
+STATUS: ADB_LANE_RESTORED
+CLASSIFIER: ADB_PAIR_THEN_CONNECT
+CELL: not created (attempt-09 directory absent)
+RUNNER_INVOKED: no
+SERIAL: 10.191.48.13:46847
+PRODUCT: myron
+SCREEN: Awake / Display ON
+EXPERIMENTAL: 1.03.01-b984ded-18.09.26
+APK_SHA256: 0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3
+STABLE: PID 20146 termux-x11 com.termux.x11 :1 -legacy-drawing UNCHANGED
+X3: none
+PAIRING_PORT: 35027 (code not recorded)
+CONNECT_PORT: 46847 live _adb-tls-connect
+FROZEN_45165: not reused
+C1: NOT RUN
+C2_P2: NOT RUN
+PRODUCTION: BLOCKED

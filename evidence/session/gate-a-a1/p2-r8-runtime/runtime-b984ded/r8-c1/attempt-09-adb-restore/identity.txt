@@ -1,0 +1,2 @@
+ro.product.device=myron
+ro.build.display.id=BP2A.250605.031.A3

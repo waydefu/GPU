@@ -1,0 +1,2 @@
+0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3  /data/local/tmp/gate-a-p2-r8-b984ded-35347497216.apk
+STAGED_SHA256=PASS

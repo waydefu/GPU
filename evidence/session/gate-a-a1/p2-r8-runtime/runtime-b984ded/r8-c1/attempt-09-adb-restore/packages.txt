@@ -1,0 +1,8 @@
+experimental_package=com.waydefu.x11gpu
+experimental_versionName=1.03.01-b984ded-18.09.26
+experimental_lastUpdateTime=2026-09-18 21:09:22
+experimental_apk=/data/app/~~rFFvIv-lWGyyexL0JSn9HQ==/com.waydefu.x11gpu-7sRHDntTilRWZpxUyxcNuw==/base.apk
+experimental_apk_sha256=0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3
+stable_package=com.termux.x11
+stable_versionName=1.03.01-11b82d9-06.09.26
+stable_lastUpdateTime=2026-09-07 22:55:03

@@ -1,0 +1,42 @@
+{
+  "status": "R8_RUNTIME_TOOLING_B984DED_PREPARED",
+  "created": "2026-09-18",
+  "validate_only_device_mutation": false,
+  "support_source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+  "parent_sha": "fb4f017c73e942e13dc2423744acb912c055b74e",
+  "ci_run": 35347497216,
+  "ci_head_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+  "apk_filename": "termux-x11-universal-debug.apk",
+  "apk_size": 15346450,
+  "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+  "package": "com.waydefu.x11gpu",
+  "versionName": "1.03.01-b984ded-18.09.26",
+  "versionCode": 15,
+  "signer": "b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1",
+  "build_id": "3658dd1f8047bfbb9d4671b269305313adaf1aa7",
+  "judge_vectors": 53,
+  "device_cells": 10,
+  "fixture_sha256": "ad93f2ba6adcaae53dbb750b9bdc928d32b1932c3e86ea1b4d2121a5c96f12de",
+  "runner_path": "p2-r8-runtime/run-r8-one-cell-b984ded.sh",
+  "runner_sha256": "f22546b7f42aa9f45c4bdee5e7ce675efe6b1fae4e9709e15696e59262dab7b0",
+  "hashes": {
+    "verify-r8-support.py": "c45e428aca5431a85f665d905a67058453344b54f0f209a01f3cd3ce8c013e3b",
+    "test_r8_obs_terminal.py": "de8bf4f2c7911a5f74006694b2c237f23cce6fbe3ca5a811cb63ffaa67bcc586",
+    "judge-r8.py": "f021048da3c1b729c6f9bf560eba52609b2f980336dd4fab77ad1700438c0e31",
+    "collect-r8.py": "e6df519a75c872c8a56fac00146585853eec7f17a3f424e70e5d4736340666c8",
+    "lifecycle-cell-spec.json": "ff22a1521d23a8954b0b4f3a603dbb19af98b3e8b3727342caf5e107b639b3ba",
+    "r8_orchestration_v2.py": "d5e6310fcec62c70a9a97f5259803f68c8419e424fa77a503d47183f38896853",
+    "p_r8_lifecycle.c": "f6f6a74054bbdc3668567887327bd5c405d666967088a7151fa2360ec13bf941",
+    "r8_xcb_request.c": "9e3b1e63f0228f2549e97e9a8d0d34881713d296d0eff1a1f1f81638ead5eb30",
+    "r8_xcb_request.h": "328abe1d137b04e1af1da2786ce830cf36e88c83ab08d4add4d3725983b98e2a"
+  },
+  "frozen_ci": [
+    35304122983,
+    35305368742,
+    35311343984,
+    35321447455,
+    35331185799,
+    35338856846
+  ],
+  "notes": "C1 attempt-08 next; do not retry attempts 01-07 or frozen CIs"
+}
