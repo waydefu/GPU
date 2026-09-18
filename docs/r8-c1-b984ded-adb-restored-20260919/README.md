@@ -15,4 +15,4 @@ STATUS: b984ded INSTALLED / ADB_LANE_RESTORED
 - Frozen failed connect `10.191.48.13:45165` was not reused
 - Pairing code is not in this snapshot
 
-Do **not** treat merge as C1 PASS. Do **not** start C1/C2/R9 from this PR.
+Current GitHub record: https://github.com/waydefu/GPU/pull/10
