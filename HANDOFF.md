@@ -1,13 +1,16 @@
-# GPU Research Handoff — 2026-09-17 `fdfb1ce` INSTALLED; R7-04 **PASS**; R7 overall **IN PROGRESS**; B-2 remains PASS
+# GPU Research Handoff — 2026-09-18 device `5a782f6` INSTALLED; GATE A P2 R7 **PASS / COMPLETE 13/13**; R8-C1 attempt-05 **R8_INVALID POST_END_OBSERVATION** frozen; C2–P2 **NOT RUN**; Production Gate A **BLOCKED**
 
-> Device experimental is **`fdfb1ce`** on `com.waydefu.x11gpu` only
-> (CI **35103216566**). Repair-validation **CASE_LOOP_REPAIR_VALIDATED** remains
+> Device experimental is **`5a782f6`** on `com.waydefu.x11gpu` only
+> (CI **35321447455**). Repair is **R8_INSTALL_BIND_PASS**. Fresh C1
+> `runtime-5a782f6/r8-c1/attempt-05-obs-terminal/` is **R8_INVALID**
+> `POST_END_OBSERVATION` (X 14186; frozen; no attempt-06). Historical
+> `65938a4` (CI **35311343984**) is superseded on device. Historical `a4c8177` (CI **35295094951**) is superseded on device. Historical `abb27a65` (CI **35253641841**) is superseded on device. Historical `8545b26` (CI **35225593518**) is superseded on device. Historical `a07d66c` (CI **35171333149**) remains superseded. Repair-validation **CASE_LOOP_REPAIR_VALIDATED** remains
 > frozen (X 19887; not B-2). B-2 requalification-01 is frozen **INVALID** (no TLS).
 > B-2 requalification-02 is **B2_REQUALIFICATION_PASS** (X 32228; oracle 1514/1514;
 > stress 100/100/1000; timeout=0; fatal=0; timeout→Done=0; pixels exact).
 > Do **not** overwrite `b2-requalification-01` or `b2-requalification-02`.
 > Historical `feeaa56` stall-obs-01 **CASE_LOOP** remains frozen. CASE_LOOP hardened
-> SHA **`7549e36`** remains DEVICE-VALIDATED (superseded on device by `fdfb1ce`).
+> SHA **`7549e36`** remains DEVICE-VALIDATED (superseded on device).
 > Worktree `src/f8-ahb-gatea-case-loop` HEAD **`fdfb1ce`** (parent `7549e36`).
 > Initial `327b028` is **SUPERSEDED**. Frozen R6 worktree
 > `src/f8-ahb-gatea-r6-retire` HEAD **`0f1e54699d0b11a781f2c044fbc77505f8a53bd8`**
@@ -20,12 +23,121 @@
 > `runtime-7549e36/b2-requalification-01`, or historical `0d72332`/`a7528bd` cells.
 > R7 **support artifact** `a7528bd` exists. Historical R7 qualification-01 is
 > **BLOCKED** (r7-04 FAIL `halt_mismatch`; remaining cells NOT RUN; **do not overwrite**).
-> Fatal-propagation repair **`fdfb1ce`** is INSTALLED. R7-04 requalification-01
-> **R7_04_REQUALIFICATION_PASS** (X 9891). R7 overall **IN PROGRESS / NOT YET PASS**.
+> Fatal-propagation repair **`fdfb1ce`** remains historical INSTALLED then superseded.
+> R7-04 requalification-01 **R7_04_REQUALIFICATION_PASS** (X 9891). Historical R7-05
+> **R7_05_QUALIFICATION_FAIL** (X 22704; last halt `r-hup reason=6`; frozen).
+> HUP-preserve **`a07d66c`** INSTALLED. R7-05 requalification-01
+> **R7_05_A07D66C_REQUALIFICATION_PASS** (X 8418; last halt `x-direct-not-success/2`;
+> `GATEA_HUP_PRESERVE published=2`; r-hup/6 HALT=0). R7-01
+> **R7_01_A07D66C_QUALIFICATION_PASS** (X 15029; last halt
+> `r-gatea-DIRECT_LOOKUP_FAIL/2`). R7-02
+> **R7_02_A07D66C_QUALIFICATION_PASS** (X 28625; event35 enum=2;
+> last halt `r-gatea-DIRECT_LOOKUP_FAIL/2`). R7-03
+> **R7_03_A07D66C_QUALIFICATION_PASS** (X 28326; event35 enum=3;
+> last halt `r-gatea-direct-identity/5`). R7-06
+> **R7_06_A07D66C_QUALIFICATION_PASS** (X 21795; DRAW then event35 enum=6;
+> last halt `r-gatea-fence-create/3`). R7-07
+> **R7_07_A07D66C_QUALIFICATION_PASS** (X 31938; DRAW then event35 enum=7;
+> last halt `r-gatea-fence-wait/3`). R7-08
+> **R7_08_A07D66C_QUALIFICATION_PASS** (X 14424; CONSUME then event35 enum=8;
+> last halt `r-test-fatal-pre-fence/6`; DRAW absent). R7-09
+> **R7_09_A07D66C_QUALIFICATION_PASS** (X 22076; event35 enum=9 side=1;
+> last halt `x-wrong-generation/6`; PUBLISH absent). R7-11
+> **R7_11_A07D66C_QUALIFICATION_PASS** (X 31764; event35 enum=11 side=1;
+> last halt `x-serial-wrap/6`; PUBLISH serial=0=0). R7-10
+> **R7_10_A07D66C_QUALIFICATION_FAIL** (X 12568; event35 enum=10 side=2;
+> last halt `x-direct-not-success/4`; expected `x-hup/6`; **FROZEN**). R7-10 RCA
+> **PROVEN**. Repair SHA **`8545b26`** is **INSTALLED** (CI **35225593518**).
+> Dedicated 8545b26 R7-10 runner is **R7_10_8545B26_RUNNER_QUALIFIED**.
+> 8545b26 R7-10 device requal is **R7_10_8545B26_REQUALIFICATION_PASS**
+> (X 13115; last halt `x-hup/6`; reason4=0; classifier `EXPECTED_HUP`;
+> judge `R7_PASS renderer-exit-after-consume`). Historical R7-P1 device
+> **R7_P1_8545B26_QUALIFICATION_INVALID** (X 14331; classifier
+> `NO_PRESENT_CALLBACK`; frozen). abb27a65 R7-P1 device
+> **R7_P1_ABB27A65_QUALIFICATION_INVALID** (X 19686; classifier
+> `PEER_DIED`; frozen). a4c8177 R7-P1 device
+> **R7_P1_A4C8177_QUALIFICATION_INVALID** (X 24284; classifier
+> `PEER_DIED` / `activity_pre_cleanup=ABSENT`; frozen). a4c8177 P1 validity-02 **R7_P1_A4C8177_QUALIFICATION_PASS** (X 1892). a4c8177 P2 **R7_P2_A4C8177_QUALIFICATION_PASS** (X 12663). R7 **COMPLETE 13/13**.
 > Canonical next-agent brief:
-> `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
-> Stable `:1` PID **24999** untouched. HDMI untouched. Stop before R8.
-> Production Gate A **BLOCKED**.
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-05-invalid.md`.
+> Historical install-blocked brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-obs-terminal-install-blocked.md`.
+> Historical C1 attempt-04 INVALID brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-04-invalid.md`.
+> Historical header-escalation brief remains:
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-header-escalation.md`.
+> Historical d382c0a CI fail brief remains `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-ci-fail-d382c0a.md`.
+> Historical prototype-era R8 CI fail brief remains `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-ci-fail.md`.
+> Historical R7 complete brief remains `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260918-r7-complete-a4c8177.md`.
+> Historical INVALID brief remains `HANDOFF-NEXT-AGENT-20260918-r7-p1-a4c8177.md`.
+> Historical abb27a65 INVALID brief `HANDOFF-NEXT-AGENT-20260918-r7-p1-abb27a65.md` remains historical.
+> Historical validity brief `HANDOFF-NEXT-AGENT-20260918-r7-p1-validity.md` remains historical.
+> Historical INVALID device brief `HANDOFF-NEXT-AGENT-20260917-r7-p1-8545b26.md` remains historical.
+> Historical R7-P1 runner brief `HANDOFF-NEXT-AGENT-20260917-r7-p1-8545b26-runner.md` remains historical.
+> Historical R7-10 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-10-8545b26.md` remains historical.
+> Historical BLOCKED brief `HANDOFF-NEXT-AGENT-20260917-r7-10-8545b26-blocked.md` remains historical.
+> Historical runner brief `HANDOFF-NEXT-AGENT-20260917-r7-10-8545b26-runner.md` remains historical.
+> Historical RCA brief `HANDOFF-NEXT-AGENT-20260917-r7-10-rca.md` remains historical.
+> Historical R7-10 FAIL brief `HANDOFF-NEXT-AGENT-20260917-r7-10-a07d66c.md` remains historical.
+> RCA packet `GATE-A-P2-R7-10-RCA-REPAIR-20260917.md`.
+> Historical R7-11 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-11-a07d66c.md` remains historical.
+> Historical R7-11 BLOCKED brief `HANDOFF-NEXT-AGENT-20260917-r7-11-a07d66c-blocked.md` remains historical.
+> Historical R7-11 runner brief `HANDOFF-NEXT-AGENT-20260917-r7-11-a07d66c-runner.md` remains historical.
+> Historical R7-09 device brief `HANDOFF-NEXT-AGENT-20260917-r7-09-a07d66c.md` remains historical.
+> Historical R7-09 runner brief `HANDOFF-NEXT-AGENT-20260917-r7-09-a07d66c-runner.md` remains historical.
+> Historical R7-08 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-08-a07d66c.md` remains historical.
+> Historical R7-07 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-07-a07d66c.md` remains historical.
+> Historical R7-06 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-06-a07d66c.md` remains historical.
+> Historical R7-03 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-03-a07d66c.md` remains historical.
+> Historical R7-02 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-02-a07d66c.md` remains historical.
+> Historical R7-01 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-01-a07d66c.md` remains historical.
+> Historical runner brief `HANDOFF-NEXT-AGENT-20260917-r7-a07d66c-runner.md` remains historical.
+> Historical R7-01 BLOCKED brief `HANDOFF-NEXT-AGENT-20260917-r7-01-blocked.md` remains historical.
+> R7-05 PASS brief `HANDOFF-NEXT-AGENT-20260917-r7-05-a07d66c.md` remains historical.
+> Prior HUP-preserve brief `HANDOFF-NEXT-AGENT-20260917-hup-preserve.md` remains historical.
+> R7-05 FAIL brief `HANDOFF-NEXT-AGENT-20260917.md` remains historical.
+> Prior R7-04 brief `HANDOFF-NEXT-AGENT-20260916.md` remains historical.
+> Stable `:1` PID **20146** untouched. HDMI untouched. R8 CI **35304122983** / **35305368742** FAIL frozen; header grant **SCOPE_ESCALATION**.
+> Production Gate A **BLOCKED**. Do **not** retry `runtime-a07d66c/r7-09`,
+> `runtime-a07d66c/r7-08`,
+> `runtime-a07d66c/r7-07`,
+> `runtime-a07d66c/r7-06`,
+> `runtime-a07d66c/r7-03`,
+> `runtime-a07d66c/r7-02`,
+> `runtime-a07d66c/r7-01`,
+> `runtime-fdfb1ce/r7-05`, `runtime-a07d66c/r7-05-requalification-01`,
+> `runtime-a07d66c/r7-11`, or `runtime-a07d66c/r7-10`.
+> Do **not** retry `runtime-8545b26/r7-10` or `runtime-8545b26/r7-10-preflight`.
+> Do **not** retry `runtime-8545b26/r7-p1`, `runtime-abb27a65/r7-p1`, or `runtime-a4c8177/r7-p1`.
+> a07d66c reusable one-cell R7 runner remains **R7_A07D66C_RUNNER_QUALIFIED**
+> (still `REVIEW_REQUIRED` for r7-09 and r7-11; do **not** lift; do **not** modify).
+> a07d66c R7-09 dedicated early-fault runner remains **R7_09_A07D66C_RUNNER_QUALIFIED**.
+> a07d66c R7-11 dedicated serial-wrap runner is **R7_11_A07D66C_RUNNER_QUALIFIED**
+> (`run-r7-11-a07d66c.sh` SHA256 `74385947…c453`). R7-09 device cell is
+> **PASS / DEVICE-QUALIFIED**. R7-11 device cell is **PASS / DEVICE-QUALIFIED**.
+> Historical R7-10 device cell is **FAIL** (frozen). 8545b26 R7-10 runner is
+> **R7_10_8545B26_RUNNER_QUALIFIED** (`run-r7-10-8545b26.sh` SHA256 `690a865d…54cd`).
+> 8545b26 R7-10 device cell is **PASS / DEVICE-QUALIFIED**.
+> 8545b26 R7-P1 dedicated runner is **R7_P1_8545B26_RUNNER_QUALIFIED**
+> (`run-r7-p1-8545b26.sh` SHA256 `46c2289d…16ba7`). Historical R7-P1 device cell is
+> **R7_P1_8545B26_QUALIFICATION_INVALID** (`runtime-8545b26/r7-p1/` X 14331;
+> last halt none; classifier `NO_PRESENT_CALLBACK`; frozen). Validity RCA
+> **PROVEN**; support **COMMITTED** `abb27a65` then superseded. Hold support
+> **`a4c8177` INSTALLED** (CI **35295094951**). abb27a65 P1/P2 runners **QUALIFIED**
+> (historical INVALID generation). a4c8177 P1/P2 runners **QUALIFIED**.
+> abb27a65 R7-P1 device is
+> **R7_P1_ABB27A65_QUALIFICATION_INVALID** (`runtime-abb27a65/r7-p1/` X 19686;
+> classifier `PEER_DIED`; frozen). a4c8177 R7-P1 device is
+> **R7_P1_A4C8177_QUALIFICATION_INVALID** (`runtime-a4c8177/r7-p1/` X 24284;
+> classifier `PEER_DIED`; frozen). a4c8177 P1 validity-02 is
+> **R7_P1_A4C8177_QUALIFICATION_PASS** (`runtime-a4c8177/r7-p1-validity-02/` X 1892).
+> a4c8177 P2 is **R7_P2_A4C8177_QUALIFICATION_PASS** (`runtime-a4c8177/r7-p2/` X 12663).
+> R7 **COMPLETE 13/13**. Next is **stop**; do not silent-retry.
+> Do **not** retry `runtime-8545b26/r7-p1`, `runtime-abb27a65/r7-p1`, `runtime-a4c8177/r7-p1`,
+> `runtime-a4c8177/r7-p1-validity-02`, or `runtime-a4c8177/r7-p2`.
+> Do **not** retry `runtime-a07d66c/r7-10`.
+> Do **not** retry `runtime-8545b26/r7-10`. Do **not** retry `runtime-8545b26/r7-10-preflight`.
+> Do **not** retry `runtime-a07d66c/r7-11`. Do **not** silent-retry R8 CI **35304122983**, **35305368742**, **35311343984**, or **35321447455**. Do **not** install `bc25170` or `d382c0a`. Device is **`5a782f6` INSTALLED**. R8-C1 attempt-05 is **R8_INVALID** `POST_END_OBSERVATION` frozen. Do **not** retry C1 attempts 01–05. Do **not** start R8-C2.
 
 ```
 P0 CLOSED
@@ -139,7 +251,23 @@ R7 SUPPORT ARTIFACT COMMITTED / a7528bd (termux-x11 fork CI; NOT qualification)
 B-2 PASS / 7549e36 requalification-02
 R7 QUALIFICATION-01 BLOCKED / r7-04 halt_mismatch (remaining cells NOT RUN)
 R7 FATAL-PROPAGATION REPAIR / fdfb1ce CI 35103216566 ARTIFACT QUALIFIED / INSTALLED
-R7-04 REQUALIFICATION-01 / R7_04_REQUALIFICATION_PASS (fdfb1ce X 9891; R7 overall IN PROGRESS)
+R7-04 REQUALIFICATION-01 / R7_04_REQUALIFICATION_PASS (fdfb1ce X 9891)
+R7-05 QUALIFICATION / R7_05_QUALIFICATION_FAIL (fdfb1ce X 22704 halt_mismatch r-hup/6; frozen)
+R7-05 HUP-PRESERVE REQUAL / R7_05_A07D66C_REQUALIFICATION_PASS (a07d66c X 8418; R7 IN PROGRESS)
+R7-10 HUP CONTAINMENT / 8545b26 INSTALLED / R7_10_8545B26_REQUALIFICATION_PASS (X 13115; last halt x-hup/6)
+R7-P1 DEVICE QUALIFICATION / R7_P1_8545B26_QUALIFICATION_INVALID (X 14331; NO_PRESENT_CALLBACK; FROZEN)
+R7-P1 TARGET-ARM / abb27a65 SUPERSEDED / R7_P1_ABB27A65_QUALIFICATION_INVALID (X 19686; PEER_DIED; FROZEN)
+R7-P1 HOLD SUPPORT / a4c8177 INSTALLED CI 35295094951 / R7_P1_A4C8177_QUALIFICATION_INVALID (X 24284; PEER_DIED; FROZEN)
+R7-P1 LIVENESS-V2 / R7_P1_A4C8177_QUALIFICATION_PASS (validity-02 X 1892 EXPECTED_PRESENT_TIMEOUT)
+R7-P2 / R7_P2_A4C8177_QUALIFICATION_PASS (X 12663 EXPECTED_PRESENT_RENDERER_EXIT)
+GATE A P2 R7 PASS / a4c8177 COMPLETE 13/13
+R8 PR #8 AUTHORITY RECONCILED DOCS-ONLY / still PROPOSED / NOT STARTED
+R8 DESIGN ACCEPTED ON A4C8177 / DESIGN_FROZEN (this implementation generation)
+R8 SUPPORT HOST VERIFIED
+R8 CI FAIL / bc25170 CI 35304122983 (InitOutput.c undeclared lorieExaDestroyPixmap; frozen; no rerun)
+R8 PROTOTYPE REPAIR / d382c0a (InitOutput.c +1; parent bc25170)
+R8 CI FAIL / d382c0a CI 35305368742 (lorie_r8_test.c PixmapPtr/XMD; frozen; no rerun)
+R8 HEADER REPAIR SCOPE ESCALATION / pixmap.h not pointer-only; checkpoint sizeof 72 != sz 64; no commit
 NOTIFY STALL DIAGNOSTIC INSTALLED / 1f85b80 (stall-obs-01 STALL_NOT_OBSERVED; NOT B-2; superseded on device)
 NOTIFY FN DIAGNOSTIC INSTALLED then superseded / feeaa56 (stall-obs-01 CASE_LOOP serial 86; NOT B-2; frozen)
 CASE_LOOP SOURCE FIX / 327b028 SUPERSEDED; hardened 7549e36 CI 35084701124 QUALIFIED INSTALLED
@@ -151,9 +279,71 @@ PRODUCTION GATE A BLOCKED
 
 Do not reopen P0/P1/P2-A/P2-B.1/P2-B.2. Do not treat ±1 UNORM as PASS. Do not open a `termux/termux-x11` origin PR. Docs-only PRs on `waydefu/GPU` are records, not qualification. Do not touch stable `:1`. Do not leave XFCE/xfwm running on experimental `:3` as a daily session; the R3 bounded window already passed and was stopped.
 
-## Current Gate A P2 runtime (2026-09-17 device fdfb1ce INSTALLED; B-2 PASS; R7-04 PASS; R7 overall IN PROGRESS)
+## Current Gate A P2 runtime (2026-09-18 device 5a782f6 INSTALLED; GATE A P2 R7 PASS / COMPLETE 13/13; R8-C1 attempt-05 INVALID frozen; C2–P2 NOT RUN; Production BLOCKED)
 
 Next-agent brief:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-05-invalid.md`.
+Historical install-blocked brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-obs-terminal-install-blocked.md`.
+Historical attempt-04 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-04-invalid.md`.
+Historical attempt-02 BLOCKED brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-02-blocked.md`.
+Historical C1 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-invalid.md`.
+Historical install-blocked brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-install-blocked.md`.
+Historical header-escalation brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-header-escalation.md`.
+Historical d382c0a CI fail brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-ci-fail-d382c0a.md`.
+Historical prototype-era R8 CI fail brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-ci-fail.md`.
+Historical R7 complete brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260918-r7-complete-a4c8177.md`.
+Historical first-P1 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260918-r7-p1-a4c8177.md`.
+Historical abb27a65 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260918-r7-p1-abb27a65.md`.
+Historical validity brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260918-r7-p1-validity.md`.
+Historical INVALID device brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-p1-8545b26.md`.
+Historical R7-P1 runner brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-p1-8545b26-runner.md`.
+Historical R7-10 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-10-8545b26.md`.
+Historical BLOCKED brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-10-8545b26-blocked.md`.
+Historical R7-10 FAIL brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-10-a07d66c.md`.
+Historical R7-11 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-11-a07d66c.md`.
+Historical R7-11 BLOCKED brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-11-a07d66c-blocked.md`.
+Historical R7-11 runner brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-11-a07d66c-runner.md`.
+Historical R7-09 device brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-09-a07d66c.md`.
+Historical R7-09 runner brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-09-a07d66c-runner.md`.
+Historical R7-08 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-08-a07d66c.md`.
+Historical R7-07 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-07-a07d66c.md`.
+Historical R7-06 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-06-a07d66c.md`.
+Historical R7-03 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-03-a07d66c.md`.
+Historical R7-02 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-02-a07d66c.md`.
+Historical R7-01 PASS brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-01-a07d66c.md`.
+Historical runner brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-a07d66c-runner.md`.
+Historical R7-01 BLOCKED brief remains:
+`evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260917-r7-01-blocked.md`.
+Frozen R6 runtime brief remains:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260916.md`.
 Prior `95e6f96` D2 physical-race brief remains historical:
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/HANDOFF-NEXT-AGENT-20260915.md`.
@@ -162,16 +352,16 @@ Prior `88e3f17` R3 FAIL remains historical:
 
 | | |
 |---|---|
-| Worktree (installed source) | Device **`fdfb1ce`** INSTALLED on `fix/gatea-r7-fatal-propagation-20260916` (parent `7549e36`); CASE_LOOP repair **DEVICE-VALIDATED** (historical); B-2 **PASS** (`runtime-7549e36/b2-requalification-02/`); `b2-requalification-01` INVALID frozen; historical notify-fn `feeaa56` **superseded on device**; historical R7 **BLOCKED** (`runtime-7549e36/r7-qualification-01/r7-04/` X 31122 halt_mismatch, frozen); R7-04 requal **PASS** (`runtime-fdfb1ce/r7-04-requalification-01/` X 9891); R7 **support** worktree `a7528bd` (not installed); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
+| Worktree (installed source) | Device **`5a782f6`** INSTALLED (`feat/gatea-r8-lifecycle-support-20260918`, parent `65938a4`); historical `65938a4` superseded on device; historical `a4c8177` superseded on device; historical Present-target-arm `abb27a65` superseded on device; historical HUP-containment `8545b26` superseded on device; historical HUP-preserve `a07d66c` superseded on device; CASE_LOOP repair **DEVICE-VALIDATED** (historical); B-2 **PASS** (`runtime-7549e36/b2-requalification-02/`); `b2-requalification-01` INVALID frozen; historical notify-fn `feeaa56` **superseded on device**; historical R7 **BLOCKED** (`runtime-7549e36/r7-qualification-01/r7-04/` X 31122 halt_mismatch, frozen); R7-04 requal **PASS** (`runtime-fdfb1ce/r7-04-requalification-01/` X 9891); historical R7-05 **FAIL** (`runtime-fdfb1ce/r7-05/` X 22704 r-hup/6, frozen); a07d66c R7-05 **PASS** (`runtime-a07d66c/r7-05-requalification-01/` X 8418); a07d66c R7-01 **PASS** (`runtime-a07d66c/r7-01/` X 15029); a07d66c R7-02 **PASS** (`runtime-a07d66c/r7-02/` X 28625); a07d66c R7-03 **PASS** (`runtime-a07d66c/r7-03/` X 28326); a07d66c R7-06 **PASS** (`runtime-a07d66c/r7-06/` X 21795); a07d66c R7-07 **PASS** (`runtime-a07d66c/r7-07/` X 31938); a07d66c R7-08 **PASS** (`runtime-a07d66c/r7-08/` X 14424); R7 **support** worktree `a7528bd` (not installed); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
 | R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6-retire` branch `fix/gatea-r6-present-retirement-20260915` HEAD **`0f1e546`** (fork in sync; origin ABSENT) |
 | Historical R6 source | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` HEAD **`95e6f96`** clean; do not overwrite its cells |
 | Control | `/root/projects/GPU加速/src/f8-ahb-gatea-a1` HEAD **`88e3f17`** clean |
-| Installed APK | `com.waydefu.x11gpu` `1.03.01-fdfb1ce-16.09.26` CI **35103216566** |
-| APK SHA256 | `5313fc9a7e3e87907fd42ece330124362ab7284d41fbf6e4b492eb12ffd4915c` MATCH on-device |
-| Build ID | `1d6bf3cd0eb06d12804e690679211ee7f34f998e` MATCH |
-| lastUpdateTime | 2026-09-17 00:54:07 |
-| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **24999** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
-| Last ADB | `10.191.48.13:41361` live-fetched `_adb-tls-connect._tcp.local.` (`adb-51c6f1fe-ZtRPH4`) |
+| Installed APK | `com.waydefu.x11gpu` `1.03.01-5a782f6-18.09.26` CI **35321447455** |
+| APK SHA256 | `43590412d5537339bb6822d0157e135b5fc00a7cca80570d987adc87c15ba78e` MATCH on-device |
+| Build ID | `d032a8188b4f768a523b4c06cfe62a813950b02a` MATCH |
+| lastUpdateTime | 2026-09-18 16:19:04 |
+| Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **20146** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
+| Last ADB | `10.191.48.13:38361` live-fetched `_adb-tls-connect._tcp.local.` (5a782f6 install + C1 attempt-05; isolated 5038 PID 3065) |
 | R1 unset | PASS (X 19391; 1514/1514; stress 100/100/1000; GATEA_EVENT=0) |
 | R1 PROTO=0 first | FAIL SIGSEGV X PID **21639** (`si_addr=0`, Uctx PC `0x4800229c` in `dalvik-jit-code-cache`) OBSERVED |
 | R1 PROTO=0 rerun | PASS X PID **27435**; 1514/1514; stress 100/100/1000; GATEA_EVENT=0; **21639 NON-REPRODUCED** |
@@ -226,10 +416,57 @@ Prior `88e3f17` R3 FAIL remains historical:
 | B-2 requalification-02 on `7549e36` | **B2_REQUALIFICATION_PASS** X PID **32228**; Activity **10703**; `NO_GATEA_ENV`; provenance MATCH; oracle 1514/1514 fail=0 maxΔ=0 ±1=0 Xnz=0; stress100 `ok=100 fail=0 alive=1`; mixed100 `mixed=1 ok=100 fail=0 alive=1`; stress1000 `ok=1000 fail=0 n=1000 alive=1`; Gcomp 2715/2715/2715; RECT→Done max 0.111 s ≥2000=0; timeout=0; fatal=0; timeout→Done=0; pixels exact; Stable PID **16485** UNTOUCHED; `NO_X3_RESIDUE`. Cell `runtime-7549e36/b2-requalification-02/`. Packet `runtime-7549e36/GATE-A-P2-B2-REQUALIFICATION-02-20260916.md`. **Not R7.** Do **not** overwrite. |
 | R7 qualification-01 on `7549e36` | **R7_QUALIFICATION_BLOCKED**. Cell `r7-04` `fbo-incomplete` X PID **31122**; env exact PROTO=1 TELEMETRY=1 TEST_FAULT=fbo-incomplete TEST_ARM=1; event 35 once seq=31 serial=5 src=4 dst=2 after LOOKUP_OK; renderer halt `r-gatea-DIRECT_LOOKUP_FAIL` reason=2; last halt `x-direct-not-success` reason=4; judge `halt_mismatch`; Gcomp Done=0; event 32=0; timeout→Done=0; no signal; Stable **16485** UNCHANGED; `NO_X3_RESIDUE`. Remaining mandatory cells **NOT RUN** (fail-fast). Packet `runtime-7549e36/GATE-A-P2-R7-QUALIFICATION-01-20260916.md`. Do **not** retry this cell. Do **not** overwrite `r7-qualification-01`. Frozen judge still FAILs this evidence. |
 | R7 fatal-propagation repair | **COMMITTED+CI+INSTALLED** `fdfb1ce` parent `7549e36` CI **35103216566**. APK `1.03.01-fdfb1ce-16.09.26` SHA256 `5313fc9a…915c` Build ID `1d6bf3cd…998e` signer continuity PASS. Packets `p2-r7-design/GATE-A-P2-R7-FATAL-PROPAGATION-REPAIR-20260916.md` and `p2-r7-fatal-propagation-ci-35103216566/`. |
-| R7-04 requalification-01 on `fdfb1ce` | **R7_04_REQUALIFICATION_PASS** X PID **9891**; Activity **23139** TID 8877; env EXACT_R7_04_ENV; event 35 once seq=45 serial=9 src=4 dst=2 after LOOKUP_OK; last halt `r-gatea-DIRECT_LOOKUP_FAIL` reason=2; `x-direct-not-success reason=4`=0; preserve dump `x-observe-fatal`; judge `R7_PASS fbo-incomplete`; Gcomp Done=0; event 32=0; timeout→Done=0; Stable **24999** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-fdfb1ce/r7-04-requalification-01/`. Packet `runtime-fdfb1ce/GATE-A-P2-R7-04-REQUALIFICATION-01-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. Do **not** start R7-05 without a new grant. |
+| R7-04 requalification-01 on `fdfb1ce` | **R7_04_REQUALIFICATION_PASS** X PID **9891**; Activity **23139** TID 8877; env EXACT_R7_04_ENV; event 35 once seq=45 serial=9 src=4 dst=2 after LOOKUP_OK; last halt `r-gatea-DIRECT_LOOKUP_FAIL` reason=2; `x-direct-not-success reason=4`=0; preserve dump `x-observe-fatal`; judge `R7_PASS fbo-incomplete`; Gcomp Done=0; event 32=0; timeout→Done=0; Stable **24999** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-fdfb1ce/r7-04-requalification-01/`. Packet `runtime-fdfb1ce/GATE-A-P2-R7-04-REQUALIFICATION-01-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-05 qualification on `fdfb1ce` | **R7_05_QUALIFICATION_FAIL** X PID **22704**; Activity **30140**; env EXACT_R7_05_ENV; fixture `p_r3_single_direct` ×1; PUBLISH serial=5 → DRAW → event 35 once seq=32 src=5 dst=2; first halt `x-direct-not-success reason=2`; last halt `r-hup reason=6`; judge `R7_FAIL halt_mismatch what=r-hup reason=6`; reason=4=0; forbidden-success zeros; no crash signal; Stable **843** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-fdfb1ce/r7-05/`. Packet `runtime-fdfb1ce/GATE-A-P2-R7-05-QUALIFICATION-20260917.md`. VALID FAIL. Do **not** retry. Do **not** overwrite. |
+| R7-05 HUP duplicate-fatal repair | **COMMITTED+CI+INSTALLED** `a07d66c` parent `fdfb1ce` CI **35171333149**. APK `1.03.01-a07d66c-17.09.26` SHA256 `a25861b4…ace5` Build ID `ad3509c0…43f2` signer continuity PASS. Packets `p2-r7-design/GATE-A-P2-R7-HUP-PRESERVE-REPAIR-20260917.md` and `p2-r7-hup-preserve-ci-35171333149/`. |
+| R7-05 requalification-01 on `a07d66c` | **R7_05_A07D66C_REQUALIFICATION_PASS** X PID **8418**; Activity **27372** TID 8356; env EXACT_R7_05_ENV; fixture `p_r3_single_direct` ×1; PUBLISH serial=5 → DRAW → event 35 once seq=32 src=5 dst=2; last halt `x-direct-not-success reason=2`; `GATEA_HUP_PRESERVE published=2`; `r-hup/6` HALT=0; judge `R7_PASS post-draw-gl`; Gcomp Done=0; event 32=0; timeout→Done=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-05-requalification-01/`. Packet `runtime-a07d66c/GATE-A-P2-R7-05-A07D66C-REQUALIFICATION-01-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-01 on `a07d66c` | **R7_01_A07D66C_QUALIFICATION_PASS** X PID **15029**; Activity **31259** TID **14945**; env EXACT_R7_01; fixture `p_r3_single_direct` ×1; PUBLISH seq=28 serial=5 → CONSUME_DIRECT seq=29 → event35 once seq=30 src=1 dst=2 role=2 → LOOKUP_FAIL seq=31; last halt `r-gatea-DIRECT_LOOKUP_FAIL reason=2`; HUP_PRESERVE=0; r-hup/x-hup/x-direct-not-success HALT=0; judge `R7_PASS src-ready-miss`; Gcomp Done=0; event 32=0; timeout→Done=0; DRAW after miss=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-01/`. Packet `runtime-a07d66c/GATE-A-P2-R7-01-A07D66C-20260917.md`. Historical BLOCKED packet stays frozen. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-02 on `a07d66c` | **R7_02_A07D66C_QUALIFICATION_PASS** X PID **28625**; Activity **18285** TID **28550**; env EXACT_R7_02 `TEST_FAULT=dst-ready-miss`; fixture `p_r3_single_direct` ×1; PUBLISH seq=28 serial=5 → CONSUME_DIRECT seq=29 → event35 once seq=30 **src=2 dst=2** role=2 → LOOKUP_FAIL seq=31; last halt `r-gatea-DIRECT_LOOKUP_FAIL reason=2`; not src-enum=1; HUP_PRESERVE=0; judge `R7_PASS dst-ready-miss`; Gcomp Done=0; DRAW after miss=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-02/`. Packet `runtime-a07d66c/GATE-A-P2-R7-02-A07D66C-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-03 on `a07d66c` | **R7_03_A07D66C_QUALIFICATION_PASS** X PID **28326**; Activity **28714** TID **28226**; env EXACT_R7_03 `TEST_FAULT=tuple-mismatch`; fixture `p_r3_single_direct` ×1; PUBLISH seq=28 serial=5 src=6 dst=7 → CONSUME_DIRECT seq=29 → event35 once seq=30 **src=3 dst=2** role=2 → GENERATION_FATAL seq=31; last halt `r-gatea-direct-identity reason=5` PROTOCOL; reason6=0; LOOKUP_FAIL=0; pre-fault `TUPLE_MATCH result=1` on buffers 6 and 7; judge `R7_PASS tuple-mismatch`; Gcomp Done=0; DRAW after=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-03/`. Packet `runtime-a07d66c/GATE-A-P2-R7-03-A07D66C-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-06 on `a07d66c` | **R7_06_A07D66C_QUALIFICATION_PASS** X PID **21795**; Activity **11758** TID **21709**; env EXACT_R7_06 `TEST_FAULT=fence-create-fail`; fixture `p_r3_single_direct` ×1; PUBLISH seq=28 serial=5 → LOOKUP_OK seq=30 → DRAW seq=31 event=10 → event35 once seq=32 **src=6 dst=2** → FENCE_ERROR seq=33; last halt `r-gatea-fence-create reason=3`; fence-wait=0; COMPLETED serial 5=0; FENCE_SATISFIED=0; judge `R7_PASS fence-create-fail`; Gcomp Done=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-06/`. Packet `runtime-a07d66c/GATE-A-P2-R7-06-A07D66C-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-07 on `a07d66c` | **R7_07_A07D66C_QUALIFICATION_PASS** X PID **31938**; Activity **24621** TID **31858**; env EXACT_R7_07 `TEST_FAULT=fence-timeout`; fixture `p_r3_single_direct` ×1; PUBLISH seq=28 serial=5 → LOOKUP_OK seq=30 → DRAW seq=31 event=10 → event35 once seq=32 **src=7 dst=2** → FENCE_TIMEOUT seq=33; last halt `r-gatea-fence-wait reason=3`; fence-create HALT=0; FENCE_ERROR=0; FENCE_SATISFIED=0; COMPLETED serial 5=0; reason4=0; judge `R7_PASS fence-timeout`; Gcomp Done=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-07/`. Packet `runtime-a07d66c/GATE-A-P2-R7-07-A07D66C-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-08 on `a07d66c` | **R7_08_A07D66C_QUALIFICATION_PASS** X PID **14424**; Activity **7683** TID **14366**; env EXACT_R7_08 `TEST_FAULT=renderer-fatal-pre-fence`; fixture `p_r3_single_direct` ×1; PUBLISH seq=28 serial=5 → CONSUME_DIRECT seq=29 → event35 once seq=30 **src=8 dst=2** → GENERATION_FATAL seq=31; DRAW absent (not required); last halt `r-test-fatal-pre-fence reason=6`; fence-create/fence-wait HALT=0; FENCE_SATISFIED=0 FENCE_TIMEOUT=0 FENCE_ERROR=0; COMPLETED serial 5=0; reason4=0; judge `R7_PASS renderer-fatal-pre-fence`; Gcomp Done=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-08/`. Packet `runtime-a07d66c/GATE-A-P2-R7-08-A07D66C-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-09 on `a07d66c` | **R7_09_A07D66C_QUALIFICATION_PASS** X PID **22076**; Activity **31018**; env EXACT_R7_09 `TEST_FAULT=wrong-generation-frame`; dedicated runner `run-r7-09-a07d66c.sh`; classifier `EXPECTED_EARLY_FAIL` (died elapsed=2, not DIED_DURING_8S INVALID); first REGISTER_READY seq=20 then event35 once seq=21 **src=9 dst=1** role=1 serial=0 generation=1; last halt `x-wrong-generation reason=6`; PUBLISH/CONSUME/DRAW=0; HUP_PRESERVE diagnostic only; judge `R7_PASS wrong-generation-frame`; Gcomp Done=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-09/`. Packet `runtime-a07d66c/GATE-A-P2-R7-09-A07D66C-20260917.md`. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-11 on `a07d66c` | **R7_11_A07D66C_QUALIFICATION_PASS** X PID **31764**; Activity **10191**; env EXACT_R7_11 `TEST_FAULT=serial-wrap`; dedicated runner `run-r7-11-a07d66c.sh`; classifier `EXPECTED_WRAP`; event35 once seq=28 **src=11 dst=1** role=1 serial_arg=0 generation=1; last halt `x-serial-wrap reason=6`; PUBLISH event6=0; PUBLISH serial=0=0; seed UINT64_MAX SOURCE-PROVEN / not device-observed; HUP_PRESERVE diagnostic only; judge `R7_PASS serial-wrap`; Gcomp Done=0; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-11/`. Packet `runtime-a07d66c/GATE-A-P2-R7-11-A07D66C-20260917.md`. Historical ADB BLOCKED packet stays frozen. **Not full R7 PASS.** Do **not** retry this cell. |
+| R7-10 on `a07d66c` | **R7_10_A07D66C_QUALIFICATION_FAIL** X PID **12568**; Activity **28497** TID **12463**; env EXACT_R7_10 `TEST_FAULT=renderer-exit-after-consume`; generic runner; PUBLISH seq=28 serial=5 → CONSUME_DIRECT seq=29 → event35 once seq=30 **src=10 dst=2** role=2; renderer SUMMARY `r-exit-after-consume` no own HALT; last halt `x-direct-not-success reason=4`; `x-hup/6`=0; judge `R7_FAIL halt_mismatch`; waitpid 127 NOT OBSERVED; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a07d66c/r7-10/`. Packet `runtime-a07d66c/GATE-A-P2-R7-10-A07D66C-20260917.md`. VALID FAIL. RCA **PROVEN** (`GATE-A-P2-R7-10-RCA-REPAIR-20260917.md`). Repair **INSTALLED** as `8545b26`. Dedicated 8545b26 R7-10 runner **QUALIFIED**. Do **not** retry. Do **not** overwrite. |
+| a07d66c reusable one-cell R7 runner | **R7_A07D66C_RUNNER_QUALIFIED** (tooling only; no device cell). Path `p2-r3-xpump-runtime/run-r7-one-cell-a07d66c.sh` SHA256 `36d66f17…8ded` size 20529. Binds `1.03.01-a07d66c-17.09.26` / versionCode 15 / `runtime-a07d66c`. R7-01 `src-ready-miss`/`direct` ENABLED. R7-04/R7-05 REFUSE. r7-09 and r7-11 remain **REVIEW_REQUIRED** / live REFUSE. WAIT_S=12. Frozen judge SHA `fba3c10f…cc17` 16/16. VALIDATE_ONLY host tests 18/18. Packet `p2-r3-xpump-runtime/r7-a07d66c-runner-qualification-20260917/`. Historical runners unmodified. Do **not** modify this runner. |
+| a07d66c R7-09 dedicated early-fault runner | **R7_09_A07D66C_RUNNER_QUALIFIED**. Path `p2-r3-xpump-runtime/run-r7-09-a07d66c.sh` SHA256 `d6ec76c1…f60d` size 22582. Device cell **PASS**. Packet `p2-r3-xpump-runtime/r7-09-a07d66c-runner-qualification-20260917/`. |
+| a07d66c R7-11 dedicated serial-wrap runner | **R7_11_A07D66C_RUNNER_QUALIFIED**. Path `p2-r3-xpump-runtime/run-r7-11-a07d66c.sh` SHA256 `74385947…c453` size 25716. Device cell **PASS**. Packet `p2-r3-xpump-runtime/r7-11-a07d66c-runner-qualification-20260917/`. Historical ADB BLOCKED preflight remains `runtime-a07d66c/r7-11-preflight/`. |
+| 8545b26 R7-10 dedicated HUP-containment runner | **R7_10_8545B26_RUNNER_QUALIFIED**. Path `p2-r3-xpump-runtime/run-r7-10-8545b26.sh` SHA256 `690a865d…54cd` size 22480. Device cell **PASS**. Packet `p2-r3-xpump-runtime/r7-10-8545b26-runner-qualification-20260917/`. Do **not** use the generic a07d66c runner for 8545b26. |
+| 8545b26 R7-10 device requal | **R7_10_8545B26_REQUALIFICATION_PASS** X PID **13115** TID **13536**; Activity **6495** renderer TID **12901**; env EXACT `TEST_FAULT=renderer-exit-after-consume`; dedicated runner; PUBLISH seq=28 serial=5 src=6 dst=7 → CONSUME_DIRECT seq=29 → event35 once seq=30 **src=10 dst=2** role=2; renderer SUMMARY `r-exit-after-consume` generationFatal=0 no own HALT; last halt `x-hup reason=6`; `x-direct-not-success/4`=0; classifier `EXPECTED_HUP`; judge `R7_PASS renderer-exit-after-consume`; waitpid 127 NOT AVAILABLE; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-8545b26/r7-10/`. Packet `runtime-8545b26/GATE-A-P2-R7-10-8545B26-20260917.md`. Historical BLOCKED preflight remains `runtime-8545b26/r7-10-preflight/`. **Not full R7 PASS.** Progress **11/13**. Do **not** retry this cell. Do **not** retry `runtime-a07d66c/r7-10`. |
+| 8545b26 R7-P1 dedicated present-hold runner | **R7_P1_8545B26_RUNNER_QUALIFIED**. Path `p2-r3-xpump-runtime/run-r7-p1-8545b26.sh` SHA256 `46c2289d…16ba7` size 24458. Classifier `classify_r7_p1_present_hold.py` SHA256 `07de408b…3908`. Present fixture ELF `p_r6_d2_present` SHA256 `fec8f46d…ba86` size 72536. Host tests 30/30. Judge 16/16. Wait-wake host PASS. Packet `p2-r3-xpump-runtime/r7-p1-8545b26-runner-qualification-20260917/` remains historical tooling QUALIFIED. Generic a07d66c r7-p1 remains **REVIEW_REQUIRED**. Do **not** use the generic runner for 8545b26. Do **not** modify this runner. |
+| 8545b26 R7-P1 device | **R7_P1_8545B26_QUALIFICATION_INVALID** X PID **14331**; Activity **30332** renderer TID **14251**; env EXACT `TEST_FAULT=present-hold-complete`; dedicated runner invoke once rc=**9**; holder ×1 pid 14819; fixture ×1 pid 14839 SHA `fec8f46d…ba86` CLIENT_OK; event35 once seq=2 **src=12 dst=2** serial=1 on CopyArea CALLBACK src=1; Present CALLBACK src=4 serial=7 seq=54 **after** consume; event36 serial=7 waited=0; last halt **NONE**; `x-present-copy-wait/4`=0; `x-hup/6`=0; classifier `NO_PRESENT_CALLBACK`; frozen judge **not invoked**; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-8545b26/r7-p1/`. Packet `runtime-8545b26/GATE-A-P2-R7-P1-8545B26-20260917.md`. Preflight remains `runtime-8545b26/r7-p1-preflight/`. INVALID construction (fault12 one-shot consumed on bring-up CopyArea). Progress **still 11/13**. Do **not** retry this cell. Do **not** start R7-P2. |
+| abb27a65 Present-target-arm artifact | **R7_P1_VALIDITY_ARTIFACT_QUALIFIED** CI **35253641841** headSha `abb27a65`. APK SHA256 `b7baa1df…9d99` size 15300558 signer continuity PASS Build ID `7362d978…f452`. Packet `p2-r7-p1-arm-ci-35253641841/P2-R7-P1-ARM-CI-ARTIFACT-PROVENANCE-20260918.md`. |
+| abb27a65 R7-P1 dedicated runner | **R7_P1_ABB27A65_RUNNER_QUALIFIED**. Path `p2-r3-xpump-runtime/run-r7-p1-abb27a65.sh` SHA256 `95900a2d…7098` size 24482. Classifier `classify_r7_p1_abb27a65.py` SHA256 `e741867f…efe7`. Host tests 30/30. Packet `p2-r3-xpump-runtime/r7-p1-abb27a65-runner-qualification-20260918/`. Historical 8545b26 P1 runner unmodified. |
+| abb27a65 R7-P2 dedicated runner | **R7_P2_ABB27A65_RUNNER_QUALIFIED** (tooling only; device **NOT RUN**). Path `p2-r3-xpump-runtime/run-r7-p2-abb27a65.sh` SHA256 `d36a4ccca7…d8cc` size 24501. Host tests 27/27. Packet `p2-r3-xpump-runtime/r7-p2-abb27a65-runner-qualification-20260918/`. |
+| abb27a65 R7-P1 device | **R7_P1_ABB27A65_QUALIFICATION_INVALID** X PID **19686**; Activity **19659** ADB-ALIVE at pre-cleanup; env EXACT `TEST_FAULT=present-hold-complete`; dedicated runner invoke once rc=**9**; Present CALLBACK seq=54 src=4 serial=7 then event35 seq=56 enum=12 once; early CopyArea did not consume enum12; host `/proc` liveness `renderer_alive_during=0`; classifier `PEER_DIED`; last halt **NONE**; fixture CLIENT_OK; frozen judge **not invoked**; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-abb27a65/r7-p1/`. Packet `runtime-abb27a65/GATE-A-P2-R7-P1-ABB27A65-20260918.md`. Progress **still 11/13**. Do **not** retry this cell. Do **not** start R7-P2. |
+| a4c8177 Present-hold artifact | **R7_P1_HOLD_ARTIFACT_QUALIFIED** CI **35295094951** headSha `a4c8177`. APK SHA256 `91a4b74e…a55c` size 15317074 signer continuity PASS Build ID `dcd82974…ba60`. Packet `p2-r7-p1-hold-ci-35295094951/P2-R7-P1-HOLD-CI-ARTIFACT-PROVENANCE-20260918.md`. |
+| a4c8177 R7-P1 dedicated runner | **R7_P1_A4C8177_RUNNER_QUALIFIED**. Path `p2-r3-xpump-runtime/run-r7-p1-a4c8177.sh` SHA256 `4cbb1394…1b47`. Classifier `classify_r7_p1_a4c8177.py` SHA256 `232892b2…27c4`. Host tests 38/38. Packet `p2-r3-xpump-runtime/r7-p1-a4c8177-runner-qualification-20260918/`. Historical abb27a65 P1 runner unmodified. |
+| a4c8177 R7-P2 dedicated runner | **R7_P2_A4C8177_RUNNER_QUALIFIED** (tooling only; device **NOT RUN**). Path `p2-r3-xpump-runtime/run-r7-p2-a4c8177.sh` SHA256 `6b0a9bdb…d55e`. Host tests 31/31. Packet `p2-r3-xpump-runtime/r7-p2-a4c8177-runner-qualification-20260918/`. |
+| a4c8177 R7-P1 device | **R7_P1_A4C8177_QUALIFICATION_INVALID** X PID **24284**; Activity **14349**; env EXACT `TEST_FAULT=present-hold-complete`; dedicated runner invoke once rc=**9**; Present CALLBACK seq=54 src=4 serial=7 then event35 seq=56 enum=12 side=2 once; later event14 serial=8; event36 seq=65 serial=7 **src=1 waited=1**; halt `x-present-copy-wait/4` at 09:39:40.200 (~2003 ms); fixture CompleteNotify FAIL; during-wait ADB Activity ALIVE (`activity_alive_during_wait=1`); pre-cleanup Activity ABSENT; classifier `PEER_DIED`; frozen judge **not invoked**; Stable **20146** UNCHANGED; `NO_X3_RESIDUE`. Cell `runtime-a4c8177/r7-p1/`. Packet `runtime-a4c8177/GATE-A-P2-R7-P1-A4C8177-20260918.md`. Observed hold path is **not** a PASS. **FROZEN**. Do **not** retry this cell. |
+| a4c8177 liveness-v2 P1/P2 runners | **R7_P1_A4C8177_V2_RUNNER_QUALIFIED** `run-r7-p1-a4c8177-v2.sh` SHA256 `63e3d8a2…d20c`. **R7_P2_A4C8177_V2_RUNNER_QUALIFIED** `run-r7-p2-a4c8177-v2.sh` SHA256 `3fca2553…d622`. Classifiers target-serial-scoped SHA `d287d361…bd14` / `3c6bb8a2…d43c`. Historical v1 runners unmodified (`4cbb1394…1b47` / `6b0a9bdb…d55e`). |
+| a4c8177 R7-P1 validity-02 | **R7_P1_A4C8177_QUALIFICATION_PASS** X PID **1892**; Activity **19391**; CALLBACK30 src=4 serial=7 seq=54; event35 enum=12 side=2 seq=56; during-wait ADB ALIVE; event36 waited=1; elapsed 2007 ms; terminal `x-present-copy-wait/4`; post-terminal Activity ABSENT observational; classifier `EXPECTED_PRESENT_TIMEOUT`; judge `R7_PASS present-hold-complete`. Cell `runtime-a4c8177/r7-p1-validity-02/`. Do **not** retry. |
+| a4c8177 R7-P2 device | **R7_P2_A4C8177_QUALIFICATION_PASS** X PID **12663**; Activity **27910**; CALLBACK30 src=4 serial=7 seq=54; event35 enum=13 side=2 seq=56; pre-fault ALIVE; post-fault ABSENT expected; terminal `x-hup/6`; classifier `EXPECTED_PRESENT_RENDERER_EXIT`; judge `R7_PASS present-renderer-exit`. Cell `runtime-a4c8177/r7-p2/`. Waitpid `_exit(127)` not available (not fabricated). Do **not** retry. |
+| 8545b26 R7-P1 validity support | **R7_P1_VALIDITY_RCA_PROVEN** + **R7_P1_VALIDITY_SUPPORT_COMMITTED** as `abb27a65`. Dual RCA **P1_LIVENESS_PROBE_RCA_PROVEN** + **P1_COMPLETION_RCA_PROVEN_HIGH_WATERMARK**. Hold support **COMMITTED** as `a4c8177`. Worktree `src/f8-ahb-gatea-r7-p1-arm` HEAD `a4c8177` clean. Do **not** retry `runtime-8545b26/r7-p1`, `runtime-abb27a65/r7-p1`, `runtime-a4c8177/r7-p1`, `runtime-a4c8177/r7-p1-validity-02`, or `runtime-a4c8177/r7-p2`. |
+| Next | Device **`5a782f6` INSTALLED**. C1 attempt-05 **R8_INVALID POST_END_OBSERVATION** frozen. Do **not** retry attempts 01–05. Do **not** create attempt-06. Do **not** start C2 or R9. Production Gate A remains BLOCKED. |
+| R8 design acceptance | **R8_DESIGN_ACCEPTED_ON_A4C8177** / DESIGN_FROZEN for this generation. Packet `p2-r8-design/GATE-A-P2-R8-DESIGN-ACCEPTANCE-20260918.md`. Historical PR #8 docs remain PROPOSED as written. A11 CloseScreen **SPLIT** (no live client registry at CloseScreen). |
+| R8 API/protocol amendment | **R8_TEST_API_PROTOCOL_AMENDMENT_ACCEPTED**. Packet `p2-r8-design/GATE-A-P2-R8-TEST-API-PROTOCOL-AMENDMENT-20260918.md`. Host **R8_API_PROTOCOL_AMENDMENT_HOST_QUALIFIED** (`p2-r8-design/GATE-A-P2-R8-API-PROTOCOL-AMENDMENT-HOST-QUALIFIED-20260918.md`). Shared header process-neutral; X-only `lorie_r8_test_x.h`; protocol v1 QV=32 Register=72 Checkpoint=72. |
+| R8 host support | **R8_SUPPORT_HOST_VERIFIED** plus amendment host QUALIFIED. Packet `p2-r8-design/GATE-A-P2-R8-SUPPORT-HOST-VERIFIED-20260918.md`. judge_vectors=53 (host); device_cells=10 (not run). |
+| R8 CI | Historical **R8_CI_FAIL** run **35304122983** headSha `bc25170` frozen (`InitOutput.c` undeclared dtor). Packet `p2-r8-design/GATE-A-P2-R8-CI-FAIL-20260918.md`. Repair **`d382c0a`**. Historical **R8_CI_FAIL** run **35305368742** headSha `d382c0a` (`lorie_r8_test.c` PixmapPtr/XMD). Packet `p2-r8-design/GATE-A-P2-R8-CI-FAIL-D382C0A-20260918.md`. Historical **R8_CI_PASS** run **35311343984** headSha `65938a4`. Packet `p2-r8-design/GATE-A-P2-R8-CI-PASS-65938A4-20260918.md`. Fresh **R8_CI_PASS** run **35321447455** headSha `5a782f6`. Packet `p2-r8-design/GATE-A-P2-R8-CI-PASS-5A782F6-20260918.md`. Do **not** rerun any of the four. |
+| R8 artifact | Historical **R8_ARTIFACT_QUALIFIED** APK `1.03.01-65938a4-18.09.26` SHA256 `b88f12ec…1a6c` Build ID `21770f73…cfa7` (superseded on device). Current **R8_OBS_TERMINAL_ARTIFACT_QUALIFIED** APK `1.03.01-5a782f6-18.09.26` SHA256 `43590412…a78e` Build ID `d032a818…b02a` signer `b6da0148…e5e1` **INSTALLED**. Packet `p2-r8-design/GATE-A-P2-R8-OBS-TERMINAL-ARTIFACT-QUALIFIED-20260918.md`. |
+| R8 runtime tooling | **R8_RUNTIME_TOOLING_QUALIFIED** VALIDATE_ONLY. Packet `p2-r8-design/GATE-A-P2-R8-RUNTIME-TOOLING-QUALIFIED-20260918.md`. Runner `p2-r8-runtime/run-r8-one-cell-65938a4.sh`. |
+| R8 install | **R8_INSTALL_BIND_PASS**. SERIAL `10.191.48.13:37861` live mDNS. Experimental `1.03.01-65938a4-18.09.26` SHA256 `b88f12ec…1a6c` Build ID `21770f73…cfa7`. Stable PID **20146** UNCHANGED. Packet `p2-r8-design/GATE-A-P2-R8-INSTALL-BIND-PASS-20260918.md`. Historical `R8_INSTALL_BIND_BLOCKED` remains frozen. |
+| R8 orchestration v2 | **R8_RUNTIME_ORCHESTRATION_V2_QUALIFIED**. Runner SHA256 `ea05aaa5…5db5`. Helper `r8_orchestration_v2.py` `21f97d9f…94cc`. Host tests 14/14. Judge 53/53 unchanged. Packet `p2-r8-design/GATE-A-P2-R8-RUNTIME-ORCHESTRATION-V2-QUALIFIED-20260918.md`. RCA `p2-r8-design/GATE-A-P2-R8-CLEAN-CELL-ORCHESTRATION-RCA-20260918.md`. |
+| R8-C1 device | Historical **R8_INVALID** `MISSING_END_x` X PID **14713**; Cell `runtime-65938a4/r8-c1/attempt-01/`. **FROZEN**. |
+| R8-C1 attempt-02 | **R8_BLOCKED SCREEN_NOT_AWAKE**. Cell `runtime-65938a4/r8-c1/attempt-02-orchestration-v2/`. **FROZEN**. |
+| R8-C1 attempt-03 | **R8_BLOCKED TOOLING_EMIT_JSON** X 18823; fixture never run. Cell `runtime-65938a4/r8-c1/attempt-03-orchestration-v2/`. **FROZEN**. |
+| R8-C1 attempt-04 | **R8_INVALID END_COUNT_MISMATCH_x** X PID **21246**; CLIENT_OK; TERM owned PID; X_CLOSE_ENTER/RESULT; both ENDs present; X recs 52 vs actual_count 42 (destructors after ObsEnd); renderer recs after END. Cell `runtime-65938a4/r8-c1/attempt-04-orchestration-v2/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-04-INVALID-20260918.md`. **FROZEN**. C2–P2 **NOT RUN**. |
+| R8 OBS terminal repair | **R8_OBS_TERMINAL_RCA_PROVEN** + **R8_OBS_TERMINAL_REPAIR_HOST_QUALIFIED** + commit **`5a782f6`** parent `65938a4` + CI **35321447455** PASS + **R8_OBS_TERMINAL_ARTIFACT_QUALIFIED**. Host 53/53 + obs-terminal C/Python PASS. X END after saved CloseScreen return; renderer END after unbind+surface+loop drain; `R8_OBS_POST_END` detector. Packet `p2-r8-design/GATE-A-P2-R8-OBS-TERMINAL-REPAIR-HOST-QUALIFIED-20260918.md`. |
+| R8 5a782f6 install | **R8_INSTALL_BIND_PASS**. SERIAL `10.191.48.13:38361`. Experimental `1.03.01-5a782f6-18.09.26` SHA256 `43590412…a78e` Build ID `d032a818…b02a`. Stable PID **20146** UNCHANGED. Cell `runtime-5a782f6/r0/`. Packet `p2-r8-design/GATE-A-P2-R8-INSTALL-BIND-PASS-5A782F6-20260918.md`. Historical ADB-empty `R8_INSTALL_BIND_BLOCKED` packet remains frozen. |
+| R8 runtime tooling 5a782f6 | **R8_RUNTIME_TOOLING_5A782F6_BOUND**. Manifest `runtime-5a782f6/r8-runtime-tooling-manifest.json`. Runner `p2-r8-runtime/run-r8-one-cell-5a782f6.sh` SHA256 `992ea257…8216` (v2 not overwritten; live v2 SHA `6c5bfbd0…246d`; original v2 `ea05aaa5…5db5` preserved). Judge/spec/collector/fixture hashes unchanged. VALIDATE_ONLY created no device evidence. |
+| R8-C1 attempt-05 | **R8_INVALID POST_END_OBSERVATION** X PID **14186**; CLIENT_OK; SIGTERM owned PID; X END=1 renderer END=1; X `R8_OBS_POST_END`=8 after saved CloseScreen return; judge not invoked. Cell `runtime-5a782f6/r8-c1/attempt-05-obs-terminal/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-05-INVALID-20260918.md`. **FROZEN**. Do **not** retry. Do **not** create attempt-06. C2–P2 **NOT RUN**. |
 | Renderer blocking audit | Historical `27d8d1b` read-only packet remains; SWAP/NEXT_FENCE as 2 s blocker **FALSIFIED** on `feeaa56` stall-obs-01. Remaining was infinite `cond_wait` + lost wakeup / no Choreographer during `lorieGpuCopyWait`. |
-| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **closed without merge**. `#4` **closed without merge** (stale CASE_LOOP snapshot). `#5` **MERGED** (`6c83338`, B-2 PASS `7549e36`). `#6` **OPEN** ([PR](https://github.com/waydefu/GPU/pull/6), `fdfb1ce` R7-04 PASS continuation kit; not merged; not qualification). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
-| Next | R7-04 **PASS** on `fdfb1ce`. R7 overall **IN PROGRESS**. B-2 remains **PASS**. Historical R7-04 FAIL on `7549e36` remains frozen. Next legal step is a **separately authorized** R7-05 `post-draw-gl` on installed `fdfb1ce`. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry historical `r7-qualification-01`. Do **not** overwrite `b2-requalification-01`/`02` or `r7-qualification-01`. Do **not** retry `repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01`, `runtime-1f85b80/stall-obs-01`, `runtime-27d8d1b/stall-obs-01`, `runtime-0d72332/r1-unset-oracle`, or `runtime-a7528bd/r1-unset-oracle`. Stop before R8. Production Gate A remains BLOCKED. |
+| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **MERGED** (historical EXA timeout snapshot). `#4` **closed without merge** (stale CASE_LOOP snapshot). `#5` **MERGED** (`6c83338`, B-2 PASS `7549e36`). `#6` **MERGED** (`c95b893`, `fdfb1ce` R7-04 PASS continuation kit; not qualification). `#7` **MERGED** (V1-Core plan; not qualification). `#8` **MERGED** ([PR](https://github.com/waydefu/GPU/pull/8), R8 design/plan). `#9` **OPEN** ([PR](https://github.com/waydefu/GPU/pull/9), `5a782f6` INSTALLED + R8-C1 attempt-05 INVALID; not qualification). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
 
 ## Runtime (S3 qualification snapshot; B3a current state is recorded below)
 
@@ -447,15 +684,15 @@ authorized.
 
 ## Next (when resuming)
 
-Current next (2026-09-17, **device `fdfb1ce` INSTALLED; B-2 PASS; R7-04 PASS; R7 overall IN PROGRESS**):
-Separately authorized R7-05 `post-draw-gl` on **`fdfb1ce`**. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry `runtime-7549e36/r7-qualification-01`. Do **not** overwrite `runtime-7549e36/b2-requalification-01` or `b2-requalification-02`. Do **not** retry `runtime-7549e36/repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
-Do **not** start R8. Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
+Current next (2026-09-18, **device `5a782f6` INSTALLED; GATE A P2 R7 PASS / COMPLETE 13/13; R8-C1 attempt-05 INVALID frozen; C2–P2 NOT RUN; Production BLOCKED**):
+**STOP.** `R8_INVALID POST_END_OBSERVATION` on C1 attempt-05. Do **not** retry C1 attempts 01–05. Do **not** create attempt-06. Do **not** start R8-C2 or R9. Do **not** silent-retry R8 CI **35304122983**, **35305368742**, **35311343984**, or **35321447455**. Do **not** install `bc25170` or `d382c0a`. Do **not** retry `runtime-a4c8177/r7-p1`. Do **not** retry `runtime-a4c8177/r7-p1-validity-02`. Do **not** retry `runtime-a4c8177/r7-p2`. Do **not** retry `runtime-abb27a65/r7-p1`. Do **not** retry `runtime-8545b26/r7-p1`. Do **not** retry `runtime-8545b26/r7-10`. Do **not** retry `runtime-8545b26/r7-10-preflight`. Do **not** retry `runtime-a07d66c/r7-10`. Do **not** retry `runtime-a07d66c/r7-11`. Do **not** use `run-r7-one-cell-a07d66c.sh` for r7-11 or for 8545b26. Do **not** retry `runtime-a07d66c/r7-09`. Do **not** retry `runtime-a07d66c/r7-08`. Do **not** retry `runtime-a07d66c/r7-07`. Do **not** retry `runtime-a07d66c/r7-06`. Do **not** retry `runtime-a07d66c/r7-03`. Do **not** retry `runtime-a07d66c/r7-02`. Do **not** retry `runtime-a07d66c/r7-01`. Do **not** retry `runtime-a07d66c/r7-05-requalification-01`. Do **not** retry `runtime-fdfb1ce/r7-05`. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry `runtime-7549e36/r7-qualification-01`. Do **not** overwrite `runtime-7549e36/b2-requalification-01` or `b2-requalification-02`. Do **not** retry `runtime-7549e36/repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
+Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
 Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
-Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1. Do **not** start R8. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
+Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
 `d9b7f60`. Do **not** retry R3 on `88e3f17`, `8479997`, `6c7ee6f`, or
 `98b0011`. Do **not** silent-retry historical R6 cells. Production Gate A
 BLOCKED.
-Authority: `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`.
+Authority: `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-05-invalid.md`.
 
 1. Keep P0/P1/P2-A/P2-B.1/P2-B.2 closed and keep the Over predicate narrow.
 2. Gate A/D 2026-09-11 architecture review is superseded for Gate A's byte/import

@@ -1,0 +1,10 @@
+{"state": "PRESTART"}
+{"state": "X_STARTED"}
+{"state": "FIXTURE_ACTIVE"}
+{"state": "CLIENT_CONSTRUCTION_COMPLETE"}
+{"state": "CLEAN_SHUTDOWN_REQUESTED"}
+{"state": "CLOSESCREEN_OBSERVED"}
+{"state": "GENERATION_CLOSE_OBSERVED"}
+{"state": "RENDERER_UNBOUND"}
+{"state": "PRODUCERS_FINALIZED"}
+{"state": "RAW_EVIDENCE_FROZEN"}
