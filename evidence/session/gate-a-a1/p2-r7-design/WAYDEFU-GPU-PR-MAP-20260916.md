@@ -21,6 +21,7 @@ main 06eff51  ← merge of PR #8 (R8 design)
             https://github.com/waydefu/GPU/pull/9
   └─ PR #10 docs/r8-c1-b984ded-adb-restored-20260919
             Record b984ded INSTALLED + ADB restored; C1 attempt-09 NOT RUN
+            https://github.com/waydefu/GPU/pull/10
 ```
 
 ## Verdict labels (do not mix)
