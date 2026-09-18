@@ -19,7 +19,7 @@ main 06eff51  ← merge of PR #8 (R8 design)
   ├─ PR #8  docs/r8-lifecycle-design-20260917       MERGED 06eff51
   └─ PR #9  docs/r8-c1-attempt-05-invalid-20260918
             Record 5a782f6 INSTALLED + R8-C1 attempt-05 INVALID
-            (this branch)
+            https://github.com/waydefu/GPU/pull/9
 ```
 
 ## Verdict labels (do not mix)
