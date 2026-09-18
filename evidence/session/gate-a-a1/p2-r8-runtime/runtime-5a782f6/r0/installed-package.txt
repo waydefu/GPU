@@ -1,0 +1,12 @@
+===installed experimental===
+    pkg=Package{440f772 com.waydefu.x11gpu}
+    codePath=/data/app/~~RWKgrmErm38a1hH1G9JhLw==/com.waydefu.x11gpu-Uw1MKdglAnxg4JU4ohBYtQ==
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-5a782f6-18.09.26
+    lastUpdateTime=2026-09-18 16:19:04
+===pm path===
+package:/data/app/~~RWKgrmErm38a1hH1G9JhLw==/com.waydefu.x11gpu-Uw1MKdglAnxg4JU4ohBYtQ==/base.apk
+===stable===
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-11b82d9-06.09.26
+    lastUpdateTime=2026-09-07 22:55:03
