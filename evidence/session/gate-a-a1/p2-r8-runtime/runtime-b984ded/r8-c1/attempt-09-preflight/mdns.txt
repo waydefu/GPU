@@ -1,0 +1,2 @@
+MDNS_ENDPOINTS
+address=10.191.48.13 port=45165

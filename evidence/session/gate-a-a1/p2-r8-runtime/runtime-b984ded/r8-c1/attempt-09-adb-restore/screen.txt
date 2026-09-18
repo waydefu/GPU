@@ -1,0 +1,7 @@
+mWakefulness=Awake
+mHoldingDisplaySuspendBlocker=true
+Display State=ON
+mScreenState=ON
+mAwake=true
+mScreenOnFully=true
+mDreamingLockscreen=false
