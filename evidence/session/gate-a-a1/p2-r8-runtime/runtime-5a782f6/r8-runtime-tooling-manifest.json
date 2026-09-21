@@ -1,0 +1,59 @@
+{
+  "status": "R8_RUNTIME_TOOLING_5A782F6_BOUND",
+  "created": "2026-09-18",
+  "validate_only_device_mutation": false,
+  "design_acceptance": "R8_DESIGN_ACCEPTED_ON_A4C8177",
+  "api_protocol_amendment": "R8_TEST_API_PROTOCOL_AMENDMENT_ACCEPTED",
+  "obs_terminal_repair": "R8_OBS_TERMINAL_REPAIR_HOST_QUALIFIED",
+  "obs_terminal_artifact": "R8_OBS_TERMINAL_ARTIFACT_QUALIFIED",
+  "support_source_sha": "5a782f6f47ffa1a3374bac04aef5616a81d59089",
+  "parent_sha": "65938a447639fce2adae61a15a2d8348e7c6455f",
+  "r7_final_sha": "a4c8177f4b059fddd111717255e9d23cf0e15e1e",
+  "ci_run": 35321447455,
+  "ci_head_sha": "5a782f6f47ffa1a3374bac04aef5616a81d59089",
+  "apk_filename": "termux-x11-universal-debug.apk",
+  "apk_size": 15346290,
+  "apk_sha256": "43590412d5537339bb6822d0157e135b5fc00a7cca80570d987adc87c15ba78e",
+  "package": "com.waydefu.x11gpu",
+  "versionName": "1.03.01-5a782f6-18.09.26",
+  "versionCode": 15,
+  "signer": "b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1",
+  "build_id": "d032a8188b4f768a523b4c06cfe62a813950b02a",
+  "protocol": {
+    "name": "LORIE-R8-TEST",
+    "major": 1,
+    "minor": 0,
+    "sz_xLorieR8QueryVersionReply": 32,
+    "sz_xLorieR8RegisterBufferReply": 72,
+    "sz_xLorieR8CheckpointReply": 72
+  },
+  "judge_vectors": 53,
+  "device_cells": 10,
+  "cell_order": [
+    "R8-C1", "R8-C2", "R8-C3-window", "R8-C3-disconnect", "R8-C4",
+    "R8-C5-full", "R8-C5-overflow", "R8-D", "R8-P1", "R8-P2"
+  ],
+  "hashes": {
+    "p_r8_lifecycle.c": "ca52129288d5e0af68e56f72fe62125b1949926dd2d7fca6f0c8d07284c00954",
+    "p_r8_lifecycle_elf": "d3910436ca6489a991725f5293d915286c04b911f4526b95d84ce7cbfb200493",
+    "run-r8-one-cell-v2.sh": "6c5bfbd0e4649d406ca3d77698349bd8b19d4c34b2dbbd4c7e1b93f3f91e246d",
+    "run-r8-one-cell-v2.sh_original_qualified": "ea05aaa5ceac249f4f09359ddaa4db2698fa93072a0623917ff4b6a593ec5db5",
+    "run-r8-one-cell-5a782f6.sh": "992ea2570535bdbb32b4336628522bbd7e1d38318c8c013c3073d78094768216",
+    "r8_orchestration_v2.py": "21f97d9fd4dca5c4e7b33d6fe0e15269041c7609f852519659b2b7aff4c194cc",
+    "run-r8-one-cell.sh": "f4ed81f4df1da97d2e65e0fbc11b8581f258e9b861fe0bb0a6ecd5d6bcac2c3d",
+    "judge-r8.py": "f021048da3c1b729c6f9bf560eba52609b2f980336dd4fab77ad1700438c0e31",
+    "collect-r8.py": "e6df519a75c872c8a56fac00146585853eec7f17a3f424e70e5d4736340666c8",
+    "verify-r8-support.py": "47e136c66580d8e6bb32e34879820470eaec9ac23936872e496d20d907620405",
+    "lifecycle-cell-spec.json": "ff22a1521d23a8954b0b4f3a603dbb19af98b3e8b3727342caf5e107b639b3ba",
+    "judge-negative-cases.json": "360152a8c7cb3a6f49c8593502b0ee873505fae648bde84ff848796f841d38b7",
+    "r8-test-protocol.h": "1d29e0252331e6b11411e0408a23270abfc4870250022652315a57398853f75a"
+  },
+  "frozen_ci_fail": [35304122983, 35305368742],
+  "frozen_c1_attempts_65938a4": [
+    "attempt-01 R8_INVALID MISSING_END_x",
+    "attempt-02 R8_BLOCKED SCREEN_NOT_AWAKE",
+    "attempt-03 R8_BLOCKED TOOLING_EMIT_JSON",
+    "attempt-04 R8_INVALID END_COUNT_MISMATCH_x"
+  ],
+  "notes": "v2 history not overwritten. 5a782f6 runner is artifact-rebind plus POST_END detector; judge/spec/collector/fixture hashes unchanged."
+}

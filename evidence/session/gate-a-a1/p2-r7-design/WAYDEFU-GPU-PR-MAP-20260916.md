@@ -17,7 +17,10 @@ main 06eff51  ← merge of PR #8 (R8 design)
   ├─ PR #6  docs/fdfb1ce-r7-04-handoff-20260917     MERGED c95b893
   ├─ PR #7  docs/v1-core-master-plan-20260917       MERGED ece9f3f
   ├─ PR #8  docs/r8-lifecycle-design-20260917       MERGED 06eff51
-  ├─ PR #9  docs/r8-c1-attempt-05-invalid-20260918  OPEN (stale attempt-05 record)
+  ├─ PR #9  docs/r8-c1-attempt-05-invalid-20260918  MERGED 2026-09-21
+            Record 5a782f6 INSTALLED CI 35321447455 + R8-C1 attempt-05
+            R8_INVALID POST_END_OBSERVATION (X 14186; frozen)
+            Superseded on device by b984ded; the attempt-05 classifier stays frozen.
             https://github.com/waydefu/GPU/pull/9
   └─ PR #10 docs/r8-c1-b984ded-adb-restored-20260919
             Record b984ded INSTALLED + ADB restored; C1 attempt-09 NOT RUN
