@@ -1,0 +1,13 @@
+cell	judge	fixture	judge_requires	fixture_sends	unsatisfiable	status
+R8-C1	judge_c1	cell_c1	X_CHECKPOINT,X_DESTRUCTOR_ENTER,X_DESTRUCTOR_EXIT	r8_checkpoint,r8_query	-	ok
+R8-C2	judge_c2	cell_c2	R_UNBOUND_FINAL,X_CLOSE_ENTER,X_CLOSE_RESULT	-	-	ok
+R8-C3-window	judge_c3	cell_c3_window	PRESENT_POST_ACK,PRESENT_PRE_ACK,PRESENT_SUBMIT	-	-	ok
+R8-C3-disconnect	judge_c3	cell_c1	PRESENT_POST_ACK,PRESENT_PRE_ACK,PRESENT_SUBMIT	r8_checkpoint,r8_query	-	ok
+R8-C4	judge_c4	cell_c4	R_ACK_SETTLED,R_DESTROY_STAGE,X_DESTRUCTOR_EXIT	r8_checkpoint,r8_query,r8_register	-	ok
+R8-C5-full	judge_c5_full	cell_c5_full	R_UNBOUND_FINAL,X_CHECKPOINT,X_CLOSE_ENTER	r8_checkpoint,r8_query,r8_register	-	ok
+R8-C5-overflow	judge_c5_overflow	cell_c5_overflow	X_CHECKPOINT	r8_checkpoint,r8_query,r8_register	-	ok
+R8-D	judge_d	cell_d	DEFER_DISPATCH,DEFER_ENQUEUE,R_WAKE_SENT,X_WAKE_RECEIVED	-	-	ok
+R8-P1	judge_p1	cell_p	P1_DESTRUCTOR_CALL	-	-	ok
+R8-P2	judge_p2	cell_p	X_CLOSE_ENTER	-	-	ok
+
+VERDICT CONTRACT_CONSISTENT  (no cell demands a phase its fixture cannot trigger)

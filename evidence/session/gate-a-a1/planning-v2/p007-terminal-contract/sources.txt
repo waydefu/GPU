@@ -1,0 +1,8 @@
+product_sha        b984dedcac731b77ca4cf8899f8a78b7848ad083
+xserver_submodule  65d790bd208ec380b196eb98f144abb0b32e334d
+dix/main.c         L274-L360    teardown order, ClearWorkQueue, DE_TERMINATE gates
+os/utils.c         L426-L433    GiveUp body
+os/connection.c    L299-L300    OsSignal(SIGINT/SIGTERM, GiveUp)
+InitOutput.c       L1228-L1260  lorieCloseScreen
+InitOutput.c       L636-L651    ddxGiveUp
+lorie_r8_test.c    L327-L344    ProcLorieR8Terminate

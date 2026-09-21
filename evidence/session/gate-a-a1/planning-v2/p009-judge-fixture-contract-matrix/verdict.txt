@@ -1,0 +1,15 @@
+CONTRACT_MISMATCH — 2/10 cells structurally unreachable (2026-09-21 baseline)
+
+  R8-C1           judge_c1 requires R_ACK_SETTLED, R_DESTROY_STAGE, X_CHECKPOINT;
+                  cell_c1 never sends r8_register or r8_checkpoint.
+  R8-C5-overflow  judge_c5_overflow requires X_CHECKPOINT;
+                  cell_c5_overflow never sends r8_checkpoint.
+
+The other 8 cells are contract-consistent.
+
+STANDING GATE: re-run check-judge-fixture-contract.py before every runtime grant
+and after any change to judge-r8-v2.py or p_r8_lifecycle.c. Exit 1 = do not grant.
+
+LIMIT: static analysis over source text. It detects only the class "judge demands a
+phase whose producing client request the fixture never sends". Exit 0 does NOT mean
+a cell will pass.
