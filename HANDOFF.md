@@ -1,9 +1,20 @@
-# GPU Research Handoff — 2026-09-18 device `5a782f6` INSTALLED; GATE A P2 R7 **PASS / COMPLETE 13/13**; R8-C1 attempt-05 **R8_INVALID POST_END_OBSERVATION** frozen; C2–P2 **NOT RUN**; Production Gate A **BLOCKED**
+# GPU Research Handoff — 2026-09-19 device `b984ded` INSTALLED; ADB **RESTORED** `10.191.48.13:46847`; GATE A P2 R7 **PASS / COMPLETE 13/13**; R8-C1 attempt-09 cell **NOT RUN**; attempt-08 **R8_INVALID JUDGE_NOT_PERMITTED / MULTI_BEGIN_x** frozen; C2–P2 **NOT RUN**; Production Gate A **BLOCKED**
 
-> Device experimental is **`5a782f6`** on `com.waydefu.x11gpu` only
-> (CI **35321447455**). Repair is **R8_INSTALL_BIND_PASS**. Fresh C1
-> `runtime-5a782f6/r8-c1/attempt-05-obs-terminal/` is **R8_INVALID**
-> `POST_END_OBSERVATION` (X 14186; frozen; no attempt-06). Historical
+> Device experimental is **`b984ded`** on `com.waydefu.x11gpu` only
+> (CI **35347497216**, **R8_INSTALL_BIND_PASS**; re-proven 2026-09-19).
+> Isolated ADB **ADB_LANE_RESTORED** SERIAL `10.191.48.13:46847`
+> (`myron`, screen Awake). R8-C1 `runtime-b984ded/r8-c1/attempt-09/` was
+> **not created**. Historical preflight remains **R8_BLOCKED ADB_CONNECT_FAILED**
+> (frozen; do not reuse `10.191.48.13:45165`). Historical C1
+> `runtime-b984ded/r8-c1/attempt-08-xcb-sender/` remains **R8_INVALID**
+> `JUDGE_NOT_PERMITTED` / `MULTI_BEGIN_x` (X 29598; frozen). Historical C1
+> `runtime-fb4f017/r8-c1/attempt-07-terminate/` remains **R8_INVALID**
+> `PRODUCERS_NOT_FINALIZED` / `MISSING_END_x` (X 725; frozen). Historical C1
+> `runtime-2a245b0/r8-c1/attempt-06-giveup-end/` remains **R8_INVALID**
+> `MISSING_END_x` (X 30003; frozen). Historical C1
+> `runtime-5a782f6/r8-c1/attempt-05-obs-terminal/` remains **R8_INVALID**
+> `POST_END_OBSERVATION` (X 14186; frozen). Historical `fb4f017` (CI **35338856846**)
+> is superseded on device. Historical
 > `65938a4` (CI **35311343984**) is superseded on device. Historical `a4c8177` (CI **35295094951**) is superseded on device. Historical `abb27a65` (CI **35253641841**) is superseded on device. Historical `8545b26` (CI **35225593518**) is superseded on device. Historical `a07d66c` (CI **35171333149**) remains superseded. Repair-validation **CASE_LOOP_REPAIR_VALIDATED** remains
 > frozen (X 19887; not B-2). B-2 requalification-01 is frozen **INVALID** (no TLS).
 > B-2 requalification-02 is **B2_REQUALIFICATION_PASS** (X 32228; oracle 1514/1514;
@@ -59,6 +70,20 @@
 > **R7_P1_A4C8177_QUALIFICATION_INVALID** (X 24284; classifier
 > `PEER_DIED` / `activity_pre_cleanup=ABSENT`; frozen). a4c8177 P1 validity-02 **R7_P1_A4C8177_QUALIFICATION_PASS** (X 1892). a4c8177 P2 **R7_P2_A4C8177_QUALIFICATION_PASS** (X 12663). R7 **COMPLETE 13/13**.
 > Canonical next-agent brief:
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260919-r8-c1-attempt-09-adb-restored.md`.
+> Historical attempt-09 blocked brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260919-r8-c1-attempt-09-blocked.md`.
+> Historical host tooling v2 brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-host-tooling-v2.md`.
+> Historical attempt-08 INVALID brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-08-invalid.md`.
+> Historical attempt-07 INVALID brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-07-invalid.md`.
+> Historical terminate-install-blocked brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-terminate-install-blocked.md`.
+> Historical attempt-06 INVALID brief remains
+> `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-06-invalid.md`.
+> Historical attempt-05 INVALID brief remains
 > `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-05-invalid.md`.
 > Historical install-blocked brief remains
 > `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-obs-terminal-install-blocked.md`.
@@ -137,7 +162,7 @@
 > `runtime-a4c8177/r7-p1-validity-02`, or `runtime-a4c8177/r7-p2`.
 > Do **not** retry `runtime-a07d66c/r7-10`.
 > Do **not** retry `runtime-8545b26/r7-10`. Do **not** retry `runtime-8545b26/r7-10-preflight`.
-> Do **not** retry `runtime-a07d66c/r7-11`. Do **not** silent-retry R8 CI **35304122983**, **35305368742**, **35311343984**, or **35321447455**. Do **not** install `bc25170` or `d382c0a`. Device is **`5a782f6` INSTALLED**. R8-C1 attempt-05 is **R8_INVALID** `POST_END_OBSERVATION` frozen. Do **not** retry C1 attempts 01–05. Do **not** start R8-C2.
+> Do **not** retry `runtime-a07d66c/r7-11`. Do **not** silent-retry R8 CI **35304122983**, **35305368742**, **35311343984**, **35321447455**, **35331185799**, **35338856846**, or **35347497216**. Do **not** install `bc25170` or `d382c0a`. Device is **`b984ded` INSTALLED**. R8-C1 attempts 01–08 frozen. Do **not** retry `runtime-b984ded/r8-c1/attempt-08-xcb-sender`. Do **not** retry `runtime-fb4f017/r8-c1`. Do **not** retry `runtime-2a245b0/r8-c1/attempt-06-giveup-end`. Do **not** start R8-C2.
 
 ```
 P0 CLOSED
@@ -279,12 +304,24 @@ PRODUCTION GATE A BLOCKED
 
 Do not reopen P0/P1/P2-A/P2-B.1/P2-B.2. Do not treat ±1 UNORM as PASS. Do not open a `termux/termux-x11` origin PR. Docs-only PRs on `waydefu/GPU` are records, not qualification. Do not touch stable `:1`. Do not leave XFCE/xfwm running on experimental `:3` as a daily session; the R3 bounded window already passed and was stopped.
 
-## Current Gate A P2 runtime (2026-09-18 device 5a782f6 INSTALLED; GATE A P2 R7 PASS / COMPLETE 13/13; R8-C1 attempt-05 INVALID frozen; C2–P2 NOT RUN; Production BLOCKED)
+## Current Gate A P2 runtime (2026-09-19 device b984ded INSTALLED; ADB RESTORED 10.191.48.13:46847; GATE A P2 R7 PASS / COMPLETE 13/13; R8-C1 attempt-09 cell NOT RUN; attempt-08 INVALID frozen; C2–P2 NOT RUN; Production BLOCKED)
 
 Next-agent brief:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260919-r8-c1-attempt-09-adb-restored.md`.
+Historical attempt-09 blocked brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260919-r8-c1-attempt-09-blocked.md`.
+Historical host tooling v2 brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-host-tooling-v2.md`.
+Historical attempt-08 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-08-invalid.md`.
+Historical attempt-07 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-07-invalid.md`.
+Historical attempt-06 INVALID brief remains:
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-06-invalid.md`.
+Historical attempt-05 INVALID brief remains:
 `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-05-invalid.md`.
 Historical install-blocked brief remains:
-`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-obs-terminal-install-blocked.md`.
+`evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-giveup-end-install-blocked.md`.
 Historical attempt-04 INVALID brief remains:
 `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-04-invalid.md`.
 Historical attempt-02 BLOCKED brief remains:
@@ -352,16 +389,16 @@ Prior `88e3f17` R3 FAIL remains historical:
 
 | | |
 |---|---|
-| Worktree (installed source) | Device **`5a782f6`** INSTALLED (`feat/gatea-r8-lifecycle-support-20260918`, parent `65938a4`); historical `65938a4` superseded on device; historical `a4c8177` superseded on device; historical Present-target-arm `abb27a65` superseded on device; historical HUP-containment `8545b26` superseded on device; historical HUP-preserve `a07d66c` superseded on device; CASE_LOOP repair **DEVICE-VALIDATED** (historical); B-2 **PASS** (`runtime-7549e36/b2-requalification-02/`); `b2-requalification-01` INVALID frozen; historical notify-fn `feeaa56` **superseded on device**; historical R7 **BLOCKED** (`runtime-7549e36/r7-qualification-01/r7-04/` X 31122 halt_mismatch, frozen); R7-04 requal **PASS** (`runtime-fdfb1ce/r7-04-requalification-01/` X 9891); historical R7-05 **FAIL** (`runtime-fdfb1ce/r7-05/` X 22704 r-hup/6, frozen); a07d66c R7-05 **PASS** (`runtime-a07d66c/r7-05-requalification-01/` X 8418); a07d66c R7-01 **PASS** (`runtime-a07d66c/r7-01/` X 15029); a07d66c R7-02 **PASS** (`runtime-a07d66c/r7-02/` X 28625); a07d66c R7-03 **PASS** (`runtime-a07d66c/r7-03/` X 28326); a07d66c R7-06 **PASS** (`runtime-a07d66c/r7-06/` X 21795); a07d66c R7-07 **PASS** (`runtime-a07d66c/r7-07/` X 31938); a07d66c R7-08 **PASS** (`runtime-a07d66c/r7-08/` X 14424); R7 **support** worktree `a7528bd` (not installed); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
+| Worktree (installed source) | Device **`2a245b0`** INSTALLED (`feat/gatea-r8-lifecycle-support-20260918`, parent `5a782f6`); historical `5a782f6` superseded on device; historical `65938a4` superseded on device; historical `a4c8177` superseded on device; historical Present-target-arm `abb27a65` superseded on device; historical HUP-containment `8545b26` superseded on device; historical HUP-preserve `a07d66c` superseded on device; CASE_LOOP repair **DEVICE-VALIDATED** (historical); B-2 **PASS** (`runtime-7549e36/b2-requalification-02/`); `b2-requalification-01` INVALID frozen; historical notify-fn `feeaa56` **superseded on device**; historical R7 **BLOCKED** (`runtime-7549e36/r7-qualification-01/r7-04/` X 31122 halt_mismatch, frozen); R7-04 requal **PASS** (`runtime-fdfb1ce/r7-04-requalification-01/` X 9891); historical R7-05 **FAIL** (`runtime-fdfb1ce/r7-05/` X 22704 r-hup/6, frozen); a07d66c R7-05 **PASS** (`runtime-a07d66c/r7-05-requalification-01/` X 8418); a07d66c R7-01 **PASS** (`runtime-a07d66c/r7-01/` X 15029); a07d66c R7-02 **PASS** (`runtime-a07d66c/r7-02/` X 28625); a07d66c R7-03 **PASS** (`runtime-a07d66c/r7-03/` X 28326); a07d66c R7-06 **PASS** (`runtime-a07d66c/r7-06/` X 21795); a07d66c R7-07 **PASS** (`runtime-a07d66c/r7-07/` X 31938); a07d66c R7-08 **PASS** (`runtime-a07d66c/r7-08/` X 14424); R7 **support** worktree `a7528bd` (not installed); frozen R6 `src/f8-ahb-gatea-r6-retire` **`0f1e546`** clean |
 | R6 implementation worktree | `/root/projects/GPU加速/src/f8-ahb-gatea-r6-retire` branch `fix/gatea-r6-present-retirement-20260915` HEAD **`0f1e546`** (fork in sync; origin ABSENT) |
 | Historical R6 source | `/root/projects/GPU加速/src/f8-ahb-gatea-r6` HEAD **`95e6f96`** clean; do not overwrite its cells |
 | Control | `/root/projects/GPU加速/src/f8-ahb-gatea-a1` HEAD **`88e3f17`** clean |
-| Installed APK | `com.waydefu.x11gpu` `1.03.01-5a782f6-18.09.26` CI **35321447455** |
-| APK SHA256 | `43590412d5537339bb6822d0157e135b5fc00a7cca80570d987adc87c15ba78e` MATCH on-device |
-| Build ID | `d032a8188b4f768a523b4c06cfe62a813950b02a` MATCH |
-| lastUpdateTime | 2026-09-18 16:19:04 |
+| Installed APK | `com.waydefu.x11gpu` `1.03.01-2a245b0-18.09.26` CI **35331185799** |
+| APK SHA256 | `008a1ece18c0b766abb8389a512fe81d3c2dd8527e7175531964a4cf43683af4` MATCH on-device |
+| Build ID | `5ea80da0915ba382c53345efd28099b66d101828` MATCH |
+| lastUpdateTime | 2026-09-18 18:02:12 |
 | Stable | `com.termux.x11` `1.03.01-11b82d9-06.09.26` PID **20146** `:1` UNTOUCHED (package lastUpdateTime 2026-09-07 22:55:03 unchanged) |
-| Last ADB | `10.191.48.13:38361` live-fetched `_adb-tls-connect._tcp.local.` (5a782f6 install + C1 attempt-05; isolated 5038 PID 3065) |
+| Last ADB | `192.168.1.100:46715` live-fetched `_adb-tls-connect._tcp` (2a245b0 install + C1 attempt-06; isolated 5038 PID 3065) |
 | R1 unset | PASS (X 19391; 1514/1514; stress 100/100/1000; GATEA_EVENT=0) |
 | R1 PROTO=0 first | FAIL SIGSEGV X PID **21639** (`si_addr=0`, Uctx PC `0x4800229c` in `dalvik-jit-code-cache`) OBSERVED |
 | R1 PROTO=0 rerun | PASS X PID **27435**; 1514/1514; stress 100/100/1000; GATEA_EVENT=0; **21639 NON-REPRODUCED** |
@@ -448,12 +485,12 @@ Prior `88e3f17` R3 FAIL remains historical:
 | a4c8177 R7-P1 validity-02 | **R7_P1_A4C8177_QUALIFICATION_PASS** X PID **1892**; Activity **19391**; CALLBACK30 src=4 serial=7 seq=54; event35 enum=12 side=2 seq=56; during-wait ADB ALIVE; event36 waited=1; elapsed 2007 ms; terminal `x-present-copy-wait/4`; post-terminal Activity ABSENT observational; classifier `EXPECTED_PRESENT_TIMEOUT`; judge `R7_PASS present-hold-complete`. Cell `runtime-a4c8177/r7-p1-validity-02/`. Do **not** retry. |
 | a4c8177 R7-P2 device | **R7_P2_A4C8177_QUALIFICATION_PASS** X PID **12663**; Activity **27910**; CALLBACK30 src=4 serial=7 seq=54; event35 enum=13 side=2 seq=56; pre-fault ALIVE; post-fault ABSENT expected; terminal `x-hup/6`; classifier `EXPECTED_PRESENT_RENDERER_EXIT`; judge `R7_PASS present-renderer-exit`. Cell `runtime-a4c8177/r7-p2/`. Waitpid `_exit(127)` not available (not fabricated). Do **not** retry. |
 | 8545b26 R7-P1 validity support | **R7_P1_VALIDITY_RCA_PROVEN** + **R7_P1_VALIDITY_SUPPORT_COMMITTED** as `abb27a65`. Dual RCA **P1_LIVENESS_PROBE_RCA_PROVEN** + **P1_COMPLETION_RCA_PROVEN_HIGH_WATERMARK**. Hold support **COMMITTED** as `a4c8177`. Worktree `src/f8-ahb-gatea-r7-p1-arm` HEAD `a4c8177` clean. Do **not** retry `runtime-8545b26/r7-p1`, `runtime-abb27a65/r7-p1`, `runtime-a4c8177/r7-p1`, `runtime-a4c8177/r7-p1-validity-02`, or `runtime-a4c8177/r7-p2`. |
-| Next | Device **`5a782f6` INSTALLED**. C1 attempt-05 **R8_INVALID POST_END_OBSERVATION** frozen. Do **not** retry attempts 01–05. Do **not** create attempt-06. Do **not** start C2 or R9. Production Gate A remains BLOCKED. |
+| Next | Device **`fb4f017` INSTALLED**. C1 attempt-07 **R8_INVALID PRODUCERS_NOT_FINALIZED / MISSING_END_x** frozen. Attempts 01–06 frozen. Do **not** retry C1. Do **not** start C2. Do **not** start R9. Production Gate A remains BLOCKED. |
 | R8 design acceptance | **R8_DESIGN_ACCEPTED_ON_A4C8177** / DESIGN_FROZEN for this generation. Packet `p2-r8-design/GATE-A-P2-R8-DESIGN-ACCEPTANCE-20260918.md`. Historical PR #8 docs remain PROPOSED as written. A11 CloseScreen **SPLIT** (no live client registry at CloseScreen). |
 | R8 API/protocol amendment | **R8_TEST_API_PROTOCOL_AMENDMENT_ACCEPTED**. Packet `p2-r8-design/GATE-A-P2-R8-TEST-API-PROTOCOL-AMENDMENT-20260918.md`. Host **R8_API_PROTOCOL_AMENDMENT_HOST_QUALIFIED** (`p2-r8-design/GATE-A-P2-R8-API-PROTOCOL-AMENDMENT-HOST-QUALIFIED-20260918.md`). Shared header process-neutral; X-only `lorie_r8_test_x.h`; protocol v1 QV=32 Register=72 Checkpoint=72. |
 | R8 host support | **R8_SUPPORT_HOST_VERIFIED** plus amendment host QUALIFIED. Packet `p2-r8-design/GATE-A-P2-R8-SUPPORT-HOST-VERIFIED-20260918.md`. judge_vectors=53 (host); device_cells=10 (not run). |
-| R8 CI | Historical **R8_CI_FAIL** run **35304122983** headSha `bc25170` frozen (`InitOutput.c` undeclared dtor). Packet `p2-r8-design/GATE-A-P2-R8-CI-FAIL-20260918.md`. Repair **`d382c0a`**. Historical **R8_CI_FAIL** run **35305368742** headSha `d382c0a` (`lorie_r8_test.c` PixmapPtr/XMD). Packet `p2-r8-design/GATE-A-P2-R8-CI-FAIL-D382C0A-20260918.md`. Historical **R8_CI_PASS** run **35311343984** headSha `65938a4`. Packet `p2-r8-design/GATE-A-P2-R8-CI-PASS-65938A4-20260918.md`. Fresh **R8_CI_PASS** run **35321447455** headSha `5a782f6`. Packet `p2-r8-design/GATE-A-P2-R8-CI-PASS-5A782F6-20260918.md`. Do **not** rerun any of the four. |
-| R8 artifact | Historical **R8_ARTIFACT_QUALIFIED** APK `1.03.01-65938a4-18.09.26` SHA256 `b88f12ec…1a6c` Build ID `21770f73…cfa7` (superseded on device). Current **R8_OBS_TERMINAL_ARTIFACT_QUALIFIED** APK `1.03.01-5a782f6-18.09.26` SHA256 `43590412…a78e` Build ID `d032a818…b02a` signer `b6da0148…e5e1` **INSTALLED**. Packet `p2-r8-design/GATE-A-P2-R8-OBS-TERMINAL-ARTIFACT-QUALIFIED-20260918.md`. |
+| R8 CI | Historical **R8_CI_FAIL** run **35304122983** headSha `bc25170` frozen. Packet `p2-r8-design/GATE-A-P2-R8-CI-FAIL-20260918.md`. Repair **`d382c0a`**. Historical **R8_CI_FAIL** run **35305368742** headSha `d382c0a`. Packet `p2-r8-design/GATE-A-P2-R8-CI-FAIL-D382C0A-20260918.md`. Historical **R8_CI_PASS** run **35311343984** headSha `65938a4`. Historical **R8_CI_PASS** run **35321447455** headSha `5a782f6`. Historical **R8_CI_PASS** run **35331185799** headSha `2a245b0`. Fresh **R8_CI_PASS** run **35338856846** headSha `fb4f017`. Packet `p2-r8-design/GATE-A-P2-R8-CI-PASS-FB4F017-20260918.md`. Do **not** rerun any of these. |
+| R8 artifact | Historical **R8_ARTIFACT_QUALIFIED** APK `1.03.01-65938a4-18.09.26` SHA256 `b88f12ec…1a6c` Build ID `21770f73…cfa7` (superseded). Historical **R8_OBS_TERMINAL_ARTIFACT_QUALIFIED** APK `1.03.01-5a782f6-18.09.26` SHA256 `43590412…a78e` Build ID `d032a818…b02a` (superseded). Historical **R8_GIVEUP_END_ARTIFACT_QUALIFIED** APK `1.03.01-2a245b0-18.09.26` SHA256 `008a1ece…83af4` Build ID `5ea80da0…1828` (superseded). Current **R8_TERMINATE_ARTIFACT_QUALIFIED** APK `1.03.01-fb4f017-18.09.26` SHA256 `71e83276…4c80` Build ID `3658dd1f…1aa7` signer `b6da0148…e5e1` **INSTALLED**. Packet `p2-r8-design/GATE-A-P2-R8-ARTIFACT-QUALIFIED-FB4F017-20260918.md`. |
 | R8 runtime tooling | **R8_RUNTIME_TOOLING_QUALIFIED** VALIDATE_ONLY. Packet `p2-r8-design/GATE-A-P2-R8-RUNTIME-TOOLING-QUALIFIED-20260918.md`. Runner `p2-r8-runtime/run-r8-one-cell-65938a4.sh`. |
 | R8 install | **R8_INSTALL_BIND_PASS**. SERIAL `10.191.48.13:37861` live mDNS. Experimental `1.03.01-65938a4-18.09.26` SHA256 `b88f12ec…1a6c` Build ID `21770f73…cfa7`. Stable PID **20146** UNCHANGED. Packet `p2-r8-design/GATE-A-P2-R8-INSTALL-BIND-PASS-20260918.md`. Historical `R8_INSTALL_BIND_BLOCKED` remains frozen. |
 | R8 orchestration v2 | **R8_RUNTIME_ORCHESTRATION_V2_QUALIFIED**. Runner SHA256 `ea05aaa5…5db5`. Helper `r8_orchestration_v2.py` `21f97d9f…94cc`. Host tests 14/14. Judge 53/53 unchanged. Packet `p2-r8-design/GATE-A-P2-R8-RUNTIME-ORCHESTRATION-V2-QUALIFIED-20260918.md`. RCA `p2-r8-design/GATE-A-P2-R8-CLEAN-CELL-ORCHESTRATION-RCA-20260918.md`. |
@@ -464,9 +501,21 @@ Prior `88e3f17` R3 FAIL remains historical:
 | R8 OBS terminal repair | **R8_OBS_TERMINAL_RCA_PROVEN** + **R8_OBS_TERMINAL_REPAIR_HOST_QUALIFIED** + commit **`5a782f6`** parent `65938a4` + CI **35321447455** PASS + **R8_OBS_TERMINAL_ARTIFACT_QUALIFIED**. Host 53/53 + obs-terminal C/Python PASS. X END after saved CloseScreen return; renderer END after unbind+surface+loop drain; `R8_OBS_POST_END` detector. Packet `p2-r8-design/GATE-A-P2-R8-OBS-TERMINAL-REPAIR-HOST-QUALIFIED-20260918.md`. |
 | R8 5a782f6 install | **R8_INSTALL_BIND_PASS**. SERIAL `10.191.48.13:38361`. Experimental `1.03.01-5a782f6-18.09.26` SHA256 `43590412…a78e` Build ID `d032a818…b02a`. Stable PID **20146** UNCHANGED. Cell `runtime-5a782f6/r0/`. Packet `p2-r8-design/GATE-A-P2-R8-INSTALL-BIND-PASS-5A782F6-20260918.md`. Historical ADB-empty `R8_INSTALL_BIND_BLOCKED` packet remains frozen. |
 | R8 runtime tooling 5a782f6 | **R8_RUNTIME_TOOLING_5A782F6_BOUND**. Manifest `runtime-5a782f6/r8-runtime-tooling-manifest.json`. Runner `p2-r8-runtime/run-r8-one-cell-5a782f6.sh` SHA256 `992ea257…8216` (v2 not overwritten; live v2 SHA `6c5bfbd0…246d`; original v2 `ea05aaa5…5db5` preserved). Judge/spec/collector/fixture hashes unchanged. VALIDATE_ONLY created no device evidence. |
-| R8-C1 attempt-05 | **R8_INVALID POST_END_OBSERVATION** X PID **14186**; CLIENT_OK; SIGTERM owned PID; X END=1 renderer END=1; X `R8_OBS_POST_END`=8 after saved CloseScreen return; judge not invoked. Cell `runtime-5a782f6/r8-c1/attempt-05-obs-terminal/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-05-INVALID-20260918.md`. **FROZEN**. Do **not** retry. Do **not** create attempt-06. C2–P2 **NOT RUN**. |
+| R8-C1 attempt-05 | **R8_INVALID POST_END_OBSERVATION** X PID **14186**; CLIENT_OK; SIGTERM owned PID; X END=1 renderer END=1; X `R8_OBS_POST_END`=8 after saved CloseScreen return; judge not invoked. Cell `runtime-5a782f6/r8-c1/attempt-05-obs-terminal/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-05-INVALID-20260918.md`. **FROZEN**. Do **not** retry. C2–P2 **NOT RUN**. |
+| R8 giveup-end repair | **R8_GIVEUP_END_RCA_PROVEN** + **R8_GIVEUP_END_HOST_QUALIFIED** + commit **`2a245b0`** parent `5a782f6` + CI **35331185799** PASS + **R8_GIVEUP_END_ARTIFACT_QUALIFIED**. X END at `ddxGiveUp` before `exit`; CloseScreen no longer emits END. Renderer terminal logic unchanged. Packet `p2-r8-design/GATE-A-P2-R8-GIVEUP-END-HOST-QUALIFIED-20260918.md`. Artifact `p2-r8-design/GATE-A-P2-R8-ARTIFACT-QUALIFIED-2A245B0-20260918.md`. |
+| R8 2a245b0 install | **R8_INSTALL_BIND_PASS**. SERIAL `192.168.1.100:46715`. Experimental `1.03.01-2a245b0-18.09.26` SHA256 `008a1ece…83af4` Build ID `5ea80da0…1828`. Stable PID **20146** UNCHANGED. Cell `runtime-2a245b0/r0/`. Packet `p2-r8-design/GATE-A-P2-R8-INSTALL-BIND-PASS-2A245B0-20260918.md`. Historical ADB-empty `R8_INSTALL_BIND_BLOCKED` packet remains frozen. |
+| R8 runtime tooling 2a245b0 | **BOUND**. Manifest `runtime-2a245b0/r8-runtime-tooling-manifest.json`. Runner `p2-r8-runtime/run-r8-one-cell-2a245b0.sh` SHA256 `5c7d07e0…e279fe`. Judge/spec/collector/fixture hashes unchanged. |
+| R8-C1 attempt-06 | **R8_INVALID PRODUCERS_NOT_FINALIZED / MISSING_END_x** X PID **30003**; CLIENT_OK; SIGTERM owned PID; X END=0 renderer END=1; gen-2 InitOutput after CloseScreen; `ddxGiveUp` not reached in FINALIZE_S=8; judge not invoked. Cell `runtime-2a245b0/r8-c1/attempt-06-giveup-end/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-06-INVALID-20260918.md`. **FROZEN**. Do **not** retry. C2–P2 **NOT RUN**. |
+| R8 terminate repair | **R8_TERMINATE_HOST_QUALIFIED** + commit **`fb4f017`** parent `2a245b0` + CI **35338856846** PASS + **R8_TERMINATE_ARTIFACT_QUALIFIED**. Test-only opcode 3 `GiveUp(0)` while client connected. X END still only at `ddxGiveUp`. Packet `p2-r8-design/GATE-A-P2-R8-TERMINATE-HOST-QUALIFIED-20260918.md`. Artifact `p2-r8-design/GATE-A-P2-R8-ARTIFACT-QUALIFIED-FB4F017-20260918.md`. |
+| R8 fb4f017 install | Historical **R8_INSTALL_BIND_BLOCKED SCREEN_DOZING** frozen (`screen-dozing-blocked.txt`). Later **R8_INSTALL_BIND_PASS**. SERIAL `192.168.1.100:46715`. Experimental `1.03.01-fb4f017-18.09.26` SHA256 `71e83276…4c80` Build ID `3658dd1f…1aa7`. Stable PID **20146** UNCHANGED. Cell `runtime-fb4f017/r0/`. Packet `p2-r8-design/GATE-A-P2-R8-INSTALL-BIND-PASS-FB4F017-20260918.md`. |
+| R8 runtime tooling fb4f017 | **BOUND**. Manifest `runtime-fb4f017/r8-runtime-tooling-manifest.json`. Runner `p2-r8-runtime/run-r8-one-cell-fb4f017.sh` SHA256 `ee756f5a…4101`. Fixture SHA256 `0156d296…045bf`. Judge/spec/collector hashes unchanged. VALIDATE_ONLY created no device evidence. |
+| R8-C1 attempt-07 | **R8_INVALID PRODUCERS_NOT_FINALIZED / MISSING_END_x** X PID **725**; CLIENT_OK; `TERMINATE_SENT` / no `TEST_CONTROL TERMINATE`; fixture exit **124**; CloseScreen then gen-2 InitOutput (EGL 1.5, buffer id 10); X END=0 renderer END=0; judge not invoked. Cell `runtime-fb4f017/r8-c1/attempt-07-terminate/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-07-INVALID-20260918.md`. **FROZEN**. Do **not** retry. C2–P2 **NOT RUN**. |
+| R8-C1 attempt-08 | **R8_INVALID JUDGE_NOT_PERMITTED / MULTI_BEGIN_x** X PID **29598**; CLIENT_OK; `TEST_CONTROL op=TERMINATE` PASS; `ddxGiveUp` then X END=1 renderer END=1; wait-finalized ok; permit-judge double-loads raw+jsonl; judge not invoked. Cell `runtime-b984ded/r8-c1/attempt-08-xcb-sender/`. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-08-INVALID-20260918.md`. **FROZEN**. Do **not** retry. C2–P2 **NOT RUN**. |
+| R8 host tooling v2 | **R8_HOST_TOOLING_V2_PUBLISHED**. Tooling commit `2a14ab2f7a5d81e7cd72d5308f5865b81b22881f` (host only). Product remains `b984ded` / CI **35347497216**. Frozen live runner `run-r8-one-cell-b984ded.sh` SHA256 `f22546b7…ab7b0` unchanged. New live runner `run-r8-one-cell-b984ded-v2.sh` SHA256 `53e0c6b8…44e5` binds `judge-r8-v2.py` `baceae09…80a2`. Packet `p2-r8-design/GATE-A-P2-R8-HOST-TOOLING-V2-PUBLISHED-20260918.md`. |
+| R8-C1 attempt-09 | **R8_BLOCKED ADB_CONNECT_FAILED**. Runner **not** invoked. Cell dir `runtime-b984ded/r8-c1/attempt-09/` **absent**. Preflight `runtime-b984ded/r8-c1/attempt-09-preflight/`. Live mDNS `10.191.48.13:45165`; `adb connect` failed (not CERT_UNKNOWN). Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-09-BLOCKED-20260919.md`. **FROZEN**. Do **not** silent-retry this endpoint. C2–P2 **NOT RUN**. |
+| R8-C1 attempt-09 ADB restore | **ADB_LANE_RESTORED**. SERIAL `10.191.48.13:46847` live `_adb-tls-connect` (pairing `35027`; code not recorded). `myron` Awake. Experimental `1.03.01-b984ded-18.09.26` SHA256 `0d06de68…98d3` MATCH. Stable PID **20146** UNCHANGED. No `:3`. Runner **not** invoked. Cell still absent. Packet `p2-r8-design/GATE-A-P2-R8-C1-ATTEMPT-09-ADB-RESTORED-20260919.md`. Do **not** start C1 without a new grant. |
 | Renderer blocking audit | Historical `27d8d1b` read-only packet remains; SWAP/NEXT_FENCE as 2 s blocker **FALSIFIED** on `feeaa56` stall-obs-01. Remaining was infinite `cond_wait` + lost wakeup / no Choreographer during `lorieGpuCopyWait`. |
-| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **MERGED** (historical EXA timeout snapshot). `#4` **closed without merge** (stale CASE_LOOP snapshot). `#5` **MERGED** (`6c83338`, B-2 PASS `7549e36`). `#6` **MERGED** (`c95b893`, `fdfb1ce` R7-04 PASS continuation kit; not qualification). `#7` **MERGED** (V1-Core plan; not qualification). `#8` **MERGED** ([PR](https://github.com/waydefu/GPU/pull/8), R8 design/plan). `#9` **OPEN** ([PR](https://github.com/waydefu/GPU/pull/9), `5a782f6` INSTALLED + R8-C1 attempt-05 INVALID; not qualification). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
+| waydefu/GPU docs PRs | `#1` **MERGED** (`0c353dd`, R6 PASS). `#3` **MERGED** (`2ab76b30`, historical stall-obs). `#2` **MERGED** (historical EXA timeout snapshot). `#4` **closed without merge** (stale CASE_LOOP snapshot). `#5` **MERGED** (`6c83338`, B-2 PASS `7549e36`). `#6` **MERGED** (`c95b893`, `fdfb1ce` R7-04 PASS continuation kit; not qualification). `#7` **MERGED** (V1-Core plan; not qualification). `#8` **MERGED** ([PR](https://github.com/waydefu/GPU/pull/8), R8 design/plan). `#9` **OPEN** ([PR](https://github.com/waydefu/GPU/pull/9), stale `5a782f6` + attempt-05 INVALID record). `#10` **OPEN** ([PR](https://github.com/waydefu/GPU/pull/10), `b984ded` INSTALLED + ADB restored; C1 attempt-09 NOT RUN; not qualification). This repo still has **no GitHub status checks**. Map: `p2-r7-design/WAYDEFU-GPU-PR-MAP-20260916.md`. Docs merge is **not** qualification. |
 
 ## Runtime (S3 qualification snapshot; B3a current state is recorded below)
 
@@ -684,15 +733,15 @@ authorized.
 
 ## Next (when resuming)
 
-Current next (2026-09-18, **device `5a782f6` INSTALLED; GATE A P2 R7 PASS / COMPLETE 13/13; R8-C1 attempt-05 INVALID frozen; C2–P2 NOT RUN; Production BLOCKED**):
-**STOP.** `R8_INVALID POST_END_OBSERVATION` on C1 attempt-05. Do **not** retry C1 attempts 01–05. Do **not** create attempt-06. Do **not** start R8-C2 or R9. Do **not** silent-retry R8 CI **35304122983**, **35305368742**, **35311343984**, or **35321447455**. Do **not** install `bc25170` or `d382c0a`. Do **not** retry `runtime-a4c8177/r7-p1`. Do **not** retry `runtime-a4c8177/r7-p1-validity-02`. Do **not** retry `runtime-a4c8177/r7-p2`. Do **not** retry `runtime-abb27a65/r7-p1`. Do **not** retry `runtime-8545b26/r7-p1`. Do **not** retry `runtime-8545b26/r7-10`. Do **not** retry `runtime-8545b26/r7-10-preflight`. Do **not** retry `runtime-a07d66c/r7-10`. Do **not** retry `runtime-a07d66c/r7-11`. Do **not** use `run-r7-one-cell-a07d66c.sh` for r7-11 or for 8545b26. Do **not** retry `runtime-a07d66c/r7-09`. Do **not** retry `runtime-a07d66c/r7-08`. Do **not** retry `runtime-a07d66c/r7-07`. Do **not** retry `runtime-a07d66c/r7-06`. Do **not** retry `runtime-a07d66c/r7-03`. Do **not** retry `runtime-a07d66c/r7-02`. Do **not** retry `runtime-a07d66c/r7-01`. Do **not** retry `runtime-a07d66c/r7-05-requalification-01`. Do **not** retry `runtime-fdfb1ce/r7-05`. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry `runtime-7549e36/r7-qualification-01`. Do **not** overwrite `runtime-7549e36/b2-requalification-01` or `b2-requalification-02`. Do **not** retry `runtime-7549e36/repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
+Current next (2026-09-19, **device `b984ded` INSTALLED; ADB RESTORED `10.191.48.13:46847`; R8-C1 attempt-09 cell NOT RUN; attempt-08 INVALID frozen; C2–P2 NOT RUN; Production BLOCKED**):
+**STOP.** Request explicit authorization for one fresh R8-C1 / attempt-09 on SERIAL `10.191.48.13:46847`. Do **not** silent-start C1. Do **not** silent-retry `10.191.48.13:45165`. Do **not** create attempt-10. Do **not** start C2. Do **not** start R9. Do **not** invoke `run-r8-one-cell-b984ded-v2.sh` without a new grant. Do **not** retry `runtime-b984ded/r8-c1`. Do **not** retry C1 attempts 01–08. Do **not** silent-retry R8 CI **35304122983**, **35305368742**, **35311343984**, **35321447455**, **35331185799**, **35338856846**, or **35347497216**. Do **not** install `bc25170` or `d382c0a`. Do **not** retry `runtime-fb4f017/r8-c1`. Do **not** retry `runtime-a4c8177/r7-p1`. Do **not** retry `runtime-a4c8177/r7-p1-validity-02`. Do **not** retry `runtime-a4c8177/r7-p2`. Do **not** retry `runtime-abb27a65/r7-p1`. Do **not** retry `runtime-8545b26/r7-p1`. Do **not** retry `runtime-8545b26/r7-10`. Do **not** retry `runtime-8545b26/r7-10-preflight`. Do **not** retry `runtime-a07d66c/r7-10`. Do **not** retry `runtime-a07d66c/r7-11`. Do **not** use `run-r7-one-cell-a07d66c.sh` for r7-11 or for 8545b26. Do **not** retry `runtime-a07d66c/r7-09`. Do **not** retry `runtime-a07d66c/r7-08`. Do **not** retry `runtime-a07d66c/r7-07`. Do **not** retry `runtime-a07d66c/r7-06`. Do **not** retry `runtime-a07d66c/r7-03`. Do **not** retry `runtime-a07d66c/r7-02`. Do **not** retry `runtime-a07d66c/r7-01`. Do **not** retry `runtime-a07d66c/r7-05-requalification-01`. Do **not** retry `runtime-fdfb1ce/r7-05`. Do **not** retry `runtime-fdfb1ce/r7-04-requalification-01`. Do **not** retry `runtime-7549e36/r7-qualification-01`. Do **not** overwrite `runtime-7549e36/b2-requalification-01` or `b2-requalification-02`. Do **not** retry `runtime-7549e36/repair-validation-01`. Do **not** install `327b028`. Do **not** retry `runtime-feeaa56/stall-obs-01` or `runtime-1f85b80/stall-obs-01` or `runtime-27d8d1b/stall-obs-01`.
 Do **not** silent-retry `runtime-0d72332/r1-unset-oracle` or `r1-unset-oracle-rerun1`.
 Do **not** silent-retry `runtime-a7528bd/r1-unset-oracle`.
 Do **not** overwrite diagnostic-01/02. Do **not** start R2–R6-D1. Do **not** silent-retry PROTO=0. Do **not** second-retry R5 on
 `d9b7f60`. Do **not** retry R3 on `88e3f17`, `8479997`, `6c7ee6f`, or
 `98b0011`. Do **not** silent-retry historical R6 cells. Production Gate A
 BLOCKED.
-Authority: `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260918-r8-c1-attempt-05-invalid.md`.
+Authority: `evidence/session/gate-a-a1/p2-r8-design/HANDOFF-NEXT-AGENT-20260919-r8-c1-attempt-09-adb-restored.md`.
 
 1. Keep P0/P1/P2-A/P2-B.1/P2-B.2 closed and keep the Over predicate narrow.
 2. Gate A/D 2026-09-11 architecture review is superseded for Gate A's byte/import

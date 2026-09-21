@@ -1,0 +1,2 @@
+pid=20146
+cmdline=termux-x11 com.termux.x11 :1 -legacy-drawing                                                                                                  

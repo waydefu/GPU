@@ -1,0 +1,11 @@
+ts=2026-09-19T03:08:00+08:00
+adb_5038_pid=3065
+pair_endpoint=10.191.48.13:35027
+pair_result=Successfully paired to 10.191.48.13:35027 [guid=adb-51c6f1fe-ZtRPH4]
+certificate_unknown=NO
+connect_endpoint=10.191.48.13:46847
+connect_result=connected to 10.191.48.13:46847
+devices=10.191.48.13:46847 device product:myron_global model:25102PCBEG device:myron transport_id:22
+frozen_45165_reused=NO
+runner_invoked=NO
+attempt09_dir_created=NO

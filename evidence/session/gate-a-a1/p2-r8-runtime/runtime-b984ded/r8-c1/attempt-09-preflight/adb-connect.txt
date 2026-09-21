@@ -1,0 +1,17 @@
+ts=2026-09-19T02:46:56+08:00
+mdns_service=_adb-tls-connect._tcp.local.
+mdns_name=adb-51c6f1fe-ZtRPH4._adb-tls-connect._tcp.local.
+mdns_server=Android-3.local.
+mdns_address=10.191.48.13
+mdns_port=45165
+wlan0_inet=10.191.48.13
+adb_5038_pid=3065
+adb_5038_cmd=/data/data/com.termux/files/usr/bin/adb -L tcp:5038 server nodaemon
+connect_endpoint=10.191.48.13:45165
+connect_result=failed to connect to 10.191.48.13:45165
+certificate_unknown=NO
+tcp_connect_ex=0
+ping_mdns=PASS
+loopback_connect=failed to connect to 127.0.0.1:45165
+runner_invoked=NO
+attempt09_dir_created=NO

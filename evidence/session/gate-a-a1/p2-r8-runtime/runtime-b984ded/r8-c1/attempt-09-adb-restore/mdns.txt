@@ -1,0 +1,8 @@
+connect_name=adb-51c6f1fe-ZtRPH4._adb-tls-connect._tcp.local.
+connect_server=Android-3.local.
+connect_address=10.191.48.13
+connect_port=46847
+pairing_name=adb-51c6f1fe-ZtRPH4._adb-tls-pairing._tcp.local.
+pairing_address=10.191.48.13
+pairing_port=35027
+wlan0_inet=10.191.48.13

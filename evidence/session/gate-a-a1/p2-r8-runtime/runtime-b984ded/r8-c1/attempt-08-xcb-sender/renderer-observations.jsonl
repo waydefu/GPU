@@ -1,0 +1,9 @@
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 0, "case": null, "phase": "BEGIN", "original_nonce": 0, "original_generation": 0, "expected_count": null, "expected_digest": null}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 1, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 1, "cause": "fence_completed", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 2, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 2, "cause": "fence_completed", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 3, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 3, "cause": "fence_completed", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 4, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 4, "cause": "fence_completed", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 5, "case": null, "phase": "R_UNBOUND_FINAL", "original_nonce": 0, "original_generation": 0, "ready": 0, "pending": 0}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 6, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": false, "cause": "surface_loss", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 7, "case": null, "phase": "R_SURFACE_QUIESCED", "original_nonce": 0, "original_generation": 0, "cause": "surface_loss"}
+{"v": 1, "role": "r", "pid": 1563, "tid": 28410, "producer_seq": 7, "case": null, "phase": "END", "original_nonce": 0, "original_generation": 0, "actual_count": 7, "actual_digest": "64bceee1decd3dc5"}

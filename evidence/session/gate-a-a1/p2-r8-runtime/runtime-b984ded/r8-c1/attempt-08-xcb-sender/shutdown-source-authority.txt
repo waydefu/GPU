@@ -1,0 +1,10 @@
+LORIE-R8-TEST Terminate opcode 3 (test-only, LORIE_ENABLE_R8_TEST_SUPPORT)
+lorie_r8_test.c ProcLorieR8Terminate writes reply then GiveUp(0)
+os/utils.c GiveUp sets dispatchException DE_TERMINATE (same flag as SIGTERM handler)
+dix/Dispatch yields, KillAllClients, clears DE_RESET only
+dix/main.c CloseScreen, ClearWorkQueue, then ddxGiveUp only if DE_TERMINATE
+InitOutput.c ddxGiveUp: UnlockServer then lorieR8ObsEnd(x) then exit
+renderer END only after generation_unbound AND surface_quiesced AND loop_drained
+last-client CloseDownClient uses dispatchExceptionAtReset=DE_RESET (product)
+not SIGKILL / SIGTERM / SIGINT / SIGHUP as C1 shutdown
+not runner lorieR8ObsEnd / pkill / Stable force-stop / -terminate product flag
