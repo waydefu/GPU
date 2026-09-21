@@ -7,7 +7,7 @@
 | 取代 | V2.0 樹狀版（29 檔）— 內容全部併入本檔 |
 | 上游快照 | `waydefu/GPU` PR #10，HEAD `697e16f3dab21946d77860b82c7e4ceeb8fe761e` |
 | 狀態 | **DESIGN ONLY — 未 commit、未執行、未授權任何 runtime** |
-| 目前進度 | R7 13/13 PASS · **R8 8/10 PASS**（C1·C2·C3-window·C3-disconnect·C4·C5-full·C5-overflow·D）· **P1/P2 = `INVALID_CONSTRUCTION` / `DESIGN_REQUIRED`（GAP-9：Gate A pair-lease 路徑從未進入，`EVENT_LEASE_GPU_OWNED` 在任何 cell 皆 0 次）** · Production Gate A **BLOCKED** · V1-Core **NOT QUALIFIED** |
+| 目前進度 | R7 13/13 PASS · **R8 10/10 PASS · `V2-R8-AGG` = PASS（12/12 重驗）** · R9 DESIGN FREEZE 未做 · Production Gate A **BLOCKED** · V1-Core **NOT QUALIFIED** |
 
 ---
 
@@ -420,7 +420,7 @@ V2.2 已完成 read-only repo 對帳：
 | GAP-3 | **CLOSED** | attempt 01–04 classifier | frozen classifier 已回填，見 §5.1 |
 | GAP-4 | **OPEN** | `a4c8177` → `b984ded` touched-symbol diff | `CF-PENDING-001/002`；P2 closure 前必關 |
 | GAP-5 | **CLOSED** | pinned current-product terminal sequence / ClearWorkQueue | `V2-P007` = `SOURCE_BOUND`（2026-09-21，見 `evidence/session/gate-a-a1/planning-v2/p007-terminal-contract/`） |
-| GAP-9 | **OPEN / DESIGN_REQUIRED / BLOCKS P1·P2** | `judge_p1/p2` 要求 `EVENT_LEASE_GPU_OWNED`，該事件只在 Gate A direct EXA composite 的 publish 路徑發出；實測所有 cell 皆 0 次，且 `DIRECT_ADMIT_REJECT` 亦 0 次 → 該路徑不是被拒絕而是從未被嘗試 | 需 `V2-R8-P-SRC-TRACE`，見 `planning-v2/r8-p1-p2-construction-gap/` |
+| GAP-9 | **CLOSED** | 真因為 fixture `pair_composite` 用 `PictOpSrc`，而 Gate A 只加速 `PictOpOver`，該檢查在任何 trace 之前就 return FALSE → 整條 lease 路徑從未進入。改 op 後 `EVENT_LEASE_GPU_OWNED` 立即出現，P1/P2 PASS。**v10 之前的所有 R8 結果都是 CPU fallback 結果** | ~~OPEN~~ | `judge_p1/p2` 要求 `EVENT_LEASE_GPU_OWNED`，該事件只在 Gate A direct EXA composite 的 publish 路徑發出；實測所有 cell 皆 0 次，且 `DIRECT_ADMIT_REJECT` 亦 0 次 → 該路徑不是被拒絕而是從未被嘗試 | 需 `V2-R8-P-SRC-TRACE`，見 `planning-v2/r8-p1-p2-construction-gap/` |
 | GAP-8 | **OPEN / PRODUCT DEFECT / BLOCKS C1·C5-full·C5-overflow** | `ProcLorieR8Checkpoint` 的 R8_OBS 載荷出現重複鍵 `phase`，觀測種類被 checkpoint 相位編號覆蓋；另 `total_actual_buffer_pending` 硬寫 null | `planning-v2/product-defect-r8-obs-phase-collision/`。§2.2 的 product-defect 證據條件已成立；收容方案為 collector/judge 端修正，不重建產品 |
 | GAP-7 | **CLOSED**（D-17 已實作；P009 = `CONTRACT_CONSISTENT` 10/10）| ~~judge_c1 / cell_c1 契約不一致~~ |
 | ~~GAP-7~~ | ~~OPEN / DESIGN_REQUIRED / BLOCKS C1~~ | `judge_c1` 要求 `R_DESTROY_STAGE` / `R_ACK_SETTLED` / `X_CHECKPOINT`，但 `cell_c1` 只做 pair composite，不 register 也不 checkpoint——那三個向量是 `cell_c4` 才產生的。C1 結構上不可達 | Astra/Sol 決策 D-17，見 `planning-v2/r8-c1-second-blocker/finding.md` |

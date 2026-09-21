@@ -1,0 +1,10 @@
+source=LORIE_R8_TERMINATE
+opcode=3
+handler=ProcLorieR8Terminate
+giveup=GiveUp(0)
+pid=19335
+display=:3
+package=com.waydefu.x11gpu
+cell=R8-C3-window
+x_alive=0
+ts=2026-09-21T18:47:51+08:00
