@@ -1,0 +1,80 @@
+InstallProbe installed=0 saved=0x7199142b20 new=lorieCompositeProbe current=0x7199142b20
+Sprep-pre pix=0xb4000071fea14870 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea14870 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea32500 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2ac40 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2ac40 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea13990 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2ac40 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2ac40 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2ac40 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea13990 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2ac40 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13610 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=5120 fb_pitch=5120 dev_ptr_before=0x0 devKind_before=5120 width=1280 height=1024 bpp=32
+Sprep pix=0xb4000071fea13610 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=5120 fb_pitch=5120 dev_ptr_before=0x0 devKind_before=5120 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0x7188ff0000 devKind_after=5120 width=1280 height=1024 bpp=32 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea32500 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea28080 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea32500 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea14950 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea14950 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea24070 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+D0 damageComposite ENTER depth=1 op=1 pSrc=0xb40000735ea1b280 pMask=0x0 pDst=0xb40000735ea1af20 srcDraw=0xb4000071fea13990 maskDraw=0x0 dstDraw=0xb4000071fea14950 current=0x71990a425c saved=0x7198efd1e8 saved_is_self=0
+D1 BEFORE_UNWRAP depth=1 current=0x71990a425c saved=0x7198efd1e8
+D2 AFTER_UNWRAP/BEFORE_CALL depth=1 current=0x7198efd1e8 saved=0x7198efd1e8 callee=0x7198efd1e8 callee_is_self=0
+Probe ENTER depth=1 max=1 enter=1 return=0 saved=0x7199142b20
+E0 EXA_COMPOSITE_ENTER op=1 pSrc=0xb40000735ea1b280 pMask=0x0 pDst=0xb40000735ea1af20 xywh=0,0,64,64 srcDraw=0xb4000071fea13990 maskDraw=0x0 dstDraw=0xb4000071fea14950 swappedOut=0
+E0u EXA_UNACCEL_ENTER op=1 pSrc=0xb40000735ea1b280 pMask=0x0 pDst=0xb40000735ea1af20 xywh=0,0,64,64 srcDraw=0xb4000071fea13990 maskDraw=0x0 dstDraw=0xb4000071fea14950 srcPix=0xb4000071fea13990 maskPix=0x0 dstPix=0xb4000071fea14950 src_ptr=0x0 src_kind=256 mask_ptr=0x0 mask_kind=-1 dst_ptr=0x0 dst_kind=256 src_whbpp=64,64,32 dst_whbpp=64,64,32 mask_whbpp=-1,-1,-1
+Sprep-pre pix=0xb4000071fea14950 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea14950 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea24070 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea13990 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea28080 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+E1 PRE_SWAP op=1 src_ptr=0xb40000739ea28080 src_kind=256 mask_ptr=0x0 mask_kind=-1 dst_ptr=0xb40000739ea24070 dst_kind=256 current=0x7198efd1e8 saved=0x7199021c9c
+E1 PRE_FB_COMPOSITE callee=0x7199021c9c saved=0x7198efd1e8
+Sfb role=src bits=0xb40000739ea28080 devKind=256 width=64 height=64 bpp=32 rowstride_bytes=256 stride_words=64 xoff=0 yoff=0 pix=0xb4000071fea13990
+Sfb role=dst bits=0xb40000739ea24070 devKind=256 width=64 height=64 bpp=32 rowstride_bytes=256 stride_words=64 xoff=0 yoff=0 pix=0xb4000071fea14950
+Probe RETURN depth=1 enter=1 return=1
+D3 AFTER_CALL depth=1 current=0x7198efd1e8 saved=0x7198efd1e8
+Sprep-pre pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea32500 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea14950 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea14950 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea24070 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea14870 index=2 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea32500 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea28080 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+D0 damageComposite ENTER depth=1 op=1 pSrc=0xb40000735ea1afb0 pMask=0x0 pDst=0xb40000735ea1b280 srcDraw=0xb4000071fea14950 maskDraw=0x0 dstDraw=0xb4000071fea13990 current=0x71990a425c saved=0x7198efd1e8 saved_is_self=0
+D1 BEFORE_UNWRAP depth=1 current=0x71990a425c saved=0x7198efd1e8
+D2 AFTER_UNWRAP/BEFORE_CALL depth=1 current=0x7198efd1e8 saved=0x7198efd1e8 callee=0x7198efd1e8 callee_is_self=0
+Probe ENTER depth=1 max=1 enter=2 return=1 saved=0x7199142b20
+E0 EXA_COMPOSITE_ENTER op=1 pSrc=0xb40000735ea1afb0 pMask=0x0 pDst=0xb40000735ea1b280 xywh=0,0,64,64 srcDraw=0xb4000071fea14950 maskDraw=0x0 dstDraw=0xb4000071fea13990 swappedOut=0
+E0u EXA_UNACCEL_ENTER op=1 pSrc=0xb40000735ea1afb0 pMask=0x0 pDst=0xb40000735ea1b280 xywh=0,0,64,64 srcDraw=0xb4000071fea14950 maskDraw=0x0 dstDraw=0xb4000071fea13990 srcPix=0xb4000071fea14950 maskPix=0x0 dstPix=0xb4000071fea13990 src_ptr=0x0 src_kind=256 mask_ptr=0x0 mask_kind=-1 dst_ptr=0x0 dst_kind=256 src_whbpp=64,64,32 dst_whbpp=64,64,32 mask_whbpp=-1,-1,-1
+Sprep-pre pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea13990 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea28080 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea14950 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 width=64 height=64 bpp=32
+Sprep pix=0xb4000071fea14950 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=256 fb_pitch=256 dev_ptr_before=0x0 devKind_before=256 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000739ea24070 devKind_after=256 width=64 height=64 bpp=32 nested=0 skip=none ret=1
+E1 PRE_SWAP op=1 src_ptr=0xb40000739ea24070 src_kind=256 mask_ptr=0x0 mask_kind=-1 dst_ptr=0xb40000739ea28080 dst_kind=256 current=0x7198efd1e8 saved=0x7199021c9c
+E1 PRE_FB_COMPOSITE callee=0x7199021c9c saved=0x7198efd1e8
+Sfb role=src bits=0xb40000739ea24070 devKind=256 width=64 height=64 bpp=32 rowstride_bytes=256 stride_words=64 xoff=0 yoff=0 pix=0xb4000071fea14950
+Sfb role=dst bits=0xb40000739ea28080 devKind=256 width=64 height=64 bpp=32 rowstride_bytes=256 stride_words=64 xoff=0 yoff=0 pix=0xb4000071fea13990
+Probe RETURN depth=1 enter=2 return=2
+D3 AFTER_CALL depth=1 current=0x7198efd1e8 saved=0x7198efd1e8
+InstallProbe installed=0 saved=0x7199142b20 new=lorieCompositeProbe current=0x7199142b20
+Sprep-pre pix=0xb4000071fea12b90 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea12b90 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2b930 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2a7f0 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2a7f0 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea16e10 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea16e10 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2a7f0 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2a7f0 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea16e10 index=0 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2a7f0 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1
+Sprep-pre pix=0xb4000071fea16e10 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 width=16 height=16 bpp=1
+Sprep pix=0xb4000071fea16e10 index=1 has_gpu_copy=1 fb_ptr=0x0 sys_ptr=0x0 sys_pitch=64 fb_pitch=64 dev_ptr_before=0x0 devKind_before=64 PrepareAccess_called=1 PrepareAccess_ret=1 dev_ptr_after=0xb40000725ea2a7f0 devKind_after=64 width=16 height=16 bpp=1 nested=0 skip=none ret=1

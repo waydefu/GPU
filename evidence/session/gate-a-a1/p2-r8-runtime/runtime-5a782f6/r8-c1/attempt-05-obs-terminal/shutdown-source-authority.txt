@@ -1,0 +1,10 @@
+SIGTERM to exact owned X PID
+os/connection.c OsSignal(SIGTERM, GiveUp)
+os/utils.c GiveUp sets dispatchException DE_TERMINATE
+dix/main.c CloseScreen then ddxGiveUp(EXIT_NO_ERROR)
+lorieCloseScreen: X_CLOSE_ENTER, gateACloseGeneration, X_CLOSE_RESULT,
+  DestroyPixmap(devPrivate), restore saved CloseScreen,
+  delegate CloseScreen returns, then lorieR8ObsEnd(x)
+renderer END only after generation_unbound AND surface_quiesced AND loop_drained
+post-END lorieR8Obs emits R8_OBS_POST_END (not JSON R8_OBS)
+not SIGKILL / pkill / Stable force-stop / broad :3
