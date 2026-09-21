@@ -1,0 +1,265 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        7613636 com.waydefu.x11gpu/com.termux.x11.MainActivity filter 6acb937
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+        f83cea4 com.waydefu.x11gpu/com.termux.x11.LoriePreferences filter aed240d
+          Action: "android.intent.action.MAIN"
+          Action: "android.intent.action.APPLICATION_PREFERENCES"
+      android.intent.action.APPLICATION_PREFERENCES:
+        f83cea4 com.waydefu.x11gpu/com.termux.x11.LoriePreferences filter aed240d
+          Action: "android.intent.action.MAIN"
+          Action: "android.intent.action.APPLICATION_PREFERENCES"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        1813110 com.waydefu.x11gpu/androidx.profileinstaller.ProfileInstallReceiver filter c33982f
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      com.termux.x11.CHANGE_PREFERENCE:
+        7027fc2 com.waydefu.x11gpu/com.termux.x11.LoriePreferences$Receiver filter 109b1d3
+          Action: "com.termux.x11.CHANGE_PREFERENCE"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        1813110 com.waydefu.x11gpu/androidx.profileinstaller.ProfileInstallReceiver filter 354f409
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        1813110 com.waydefu.x11gpu/androidx.profileinstaller.ProfileInstallReceiver filter 57cd60e
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        1813110 com.waydefu.x11gpu/androidx.profileinstaller.ProfileInstallReceiver filter db04e3c
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+
+Service Resolver Table:
+  Non-Data Actions:
+      android.accessibilityservice.AccessibilityService:
+        a4fc7c5 com.waydefu.x11gpu/com.termux.x11.utils.KeyInterceptor filter a34451a permission android.permission.BIND_ACCESSIBILITY_SERVICE
+          Action: "android.accessibilityservice.AccessibilityService"
+
+Domain verification status:
+
+Permissions:
+  Permission [com.waydefu.x11gpu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (2e7951e):
+    sourcePackage=com.waydefu.x11gpu
+    uid=10503 gids=[] type=0 prot=signature
+    perm=PermissionInfo{f3dd1ff com.waydefu.x11gpu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  com.waydefu.x11gpu/androidx.startup.InitializationProvider:
+    Provider{d884bcc com.waydefu.x11gpu/androidx.startup.InitializationProvider}
+
+ContentProvider Authorities:
+  [com.waydefu.x11gpu.androidx-startup]:
+    Provider{d884bcc com.waydefu.x11gpu/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{5e89e15 com.waydefu.x11gpu}
+
+Key Set Manager:
+  [com.waydefu.x11gpu]
+      Signing KeySets: 293
+
+Packages:
+  Package [com.waydefu.x11gpu] (2bbe4d8):
+    appId=10503
+    pkg=Package{d73e52a com.waydefu.x11gpu}
+    codePath=/data/app/~~rFFvIv-lWGyyexL0JSn9HQ==/com.waydefu.x11gpu-7sRHDntTilRWZpxUyxcNuw==
+    resourcePath=/data/app/~~rFFvIv-lWGyyexL0JSn9HQ==/com.waydefu.x11gpu-7sRHDntTilRWZpxUyxcNuw==
+    legacyNativeLibraryDir=/data/app/~~rFFvIv-lWGyyexL0JSn9HQ==/com.waydefu.x11gpu-7sRHDntTilRWZpxUyxcNuw==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=15 minSdk=24 targetSdk=34
+    minExtensionVersions=[]
+    versionName=1.03.01-b984ded-18.09.26
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    isMiuiPreinstall=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    queriesPackages=[com.termux]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.window.extensions
+      androidx.window.sidecar
+    usesLibraryFiles:
+      /system_ext/framework/androidx.window.extensions.jar
+      /system_ext/framework/androidx.window.sidecar.jar
+    timeStamp=2026-09-18 21:09:21
+    lastUpdateTime=2026-09-18 21:09:22
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{2a78f1b version:2, signatures:[db86cf3c], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      com.waydefu.x11gpu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      android.permission.POST_NOTIFICATIONS
+      android.permission.FOREGROUND_SERVICE
+      android.permission.INTERNET
+      android.permission.WRITE_SECURE_SETTINGS
+      com.waydefu.x11gpu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+    install permissions:
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.INTERNET: granted=true
+      com.waydefu.x11gpu.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+    User 0: ceDataInode=1425181 deDataInode=1423068 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/0/com.waydefu.x11gpu
+      firstInstallTime=2026-09-07 03:45:30
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/GestureLineOverlay.apk
+        /product/overlay/TransparentNavigationBar/TransparentNavigationBarOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-AX4X.frro
+        /data/resource-cache/com.android.systemui-accent-fxrs.frro
+        /data/resource-cache/com.android.systemui-dynamic-uN2l.frro
+      legacy overlay paths:
+        /product/overlay/GestureLineOverlay.apk
+        /product/overlay/TransparentNavigationBar/TransparentNavigationBarOverlay.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+    com.waydefu.x11gpu:
+      [com.termux.api,com.termux.widget,com.termux]
+  queries via component:
+    [com.xiaomi.misettings,com.miui.qr,com.xiaomi.joyose,com.qualcomm.qti.services.systemhelper,com.miui.securitycore,com.miui.daemon,com.xiaomi.mtb,android,com.xiaomi.mirror,com.xiaomi.aon,com.miui.aod,com.android.keychain,com.android.DeviceAsWebcam,miui.systemui.plugin,com.android.settings,com.novatek.novavis,com.android.providers.settings,com.xiaomi.aiasst.vision,com.miui.touchassistant,com.android.localtransport,com.miui.misightservice,com.miui.audiomonitor,com.bsp.catchlog,com.qualcomm.qti.xrvd.service,com.xiaomi.mi_connect_service,com.android.dynsystem,vendor.qti.frameworks.utils,com.miui.cit,com.xiaomi.touchservice,com.xiaomi.trustservice,com.miui.securitycenter,com.android.location.fused,com.android.inputdevices,com.xiaomi.barrage,com.android.provision,com.miui.bugreport,com.miui.powerkeeper,com.android.server.telecom,com.miui.notification]:
+      com.waydefu.x11gpu
+    [com.miui.huanji,com.miui.backup]:
+      com.waydefu.x11gpu
+    com.miui.euicc:
+      com.waydefu.x11gpu
+    com.miui.player:
+      com.waydefu.x11gpu
+    com.android.settings.intelligence:
+      com.waydefu.x11gpu
+    com.google.android.as.oss:
+      com.waydefu.x11gpu
+    com.miui.tsmclient:
+      com.waydefu.x11gpu
+    com.miui.notes:
+      com.waydefu.x11gpu
+    com.miui.weather2:
+      com.waydefu.x11gpu
+    com.miui.android.fashiongallery:
+      com.waydefu.x11gpu
+    com.mi.global.shop:
+      com.waydefu.x11gpu
+    com.android.soundrecorder:
+      com.waydefu.x11gpu
+    com.mi.global.pocobbs:
+      com.waydefu.x11gpu
+    com.duokan.phone.remotecontroller:
+      com.waydefu.x11gpu
+    com.xiaomi.smarthome:
+      com.waydefu.x11gpu
+    com.fitbit.FitbitMobile:
+      com.waydefu.x11gpu
+    com.facebook.katana:
+      com.waydefu.x11gpu
+    com.instagram.android:
+      com.waydefu.x11gpu
+    com.kurogame.wutheringwaves.global:
+      com.waydefu.x11gpu
+    com.antutu.ABenchMark:
+      com.waydefu.x11gpu
+    io.github.jqssun.displayextend:
+      com.waydefu.x11gpu
+    com.sparkslab.dcardreader:
+      com.waydefu.x11gpu
+    com.taobao.taobao:
+      com.waydefu.x11gpu
+    com.spaceship.screen.textcopy:
+      com.waydefu.x11gpu
+    jp.naver.line.android:
+      com.waydefu.x11gpu
+    com.starbucks.tw:
+      com.waydefu.x11gpu
+    cc.relive.reliveapp:
+      com.waydefu.x11gpu
+    co.xoss:
+      com.waydefu.x11gpu
+    com.autonavi.minimap:
+      com.waydefu.x11gpu
+    com.lemon.lvoverseas:
+      com.waydefu.x11gpu
+    com.google.android.play.games:
+      com.waydefu.x11gpu
+    com.gryphline.endfield.gp:
+      com.waydefu.x11gpu
+    com.kardz.overseas:
+      com.waydefu.x11gpu
+    com.lelaer.yshelper:
+      com.waydefu.x11gpu
+    com.linepaytw.upay:
+      com.waydefu.x11gpu
+    com.mcdonalds.mobileapp:
+      com.waydefu.x11gpu
+    com.mi.earphone:
+      com.waydefu.x11gpu
+    com.moonshot.kimichat:
+      com.waydefu.x11gpu
+    com.naver.linewebtoon:
+      com.waydefu.x11gpu
+    com.sony.songpal.mdr:
+      com.waydefu.x11gpu
+    com.tencent.mm:
+      com.waydefu.x11gpu
+    com.whatsapp:
+      com.waydefu.x11gpu
+    gogolook.callgogolook2:
+      com.waydefu.x11gpu
+    jp.pxv.android:
+      com.waydefu.x11gpu
+    ru.zdevs.zarchiver:
+      com.waydefu.x11gpu
+    tw.com.feebee:
+      com.waydefu.x11gpu
+    com.ChillyRoom.DungeonShooter:
+      com.waydefu.x11gpu
+    com.facebook.orca:
+      com.waydefu.x11gpu
+  queryable via interaction:
+    User 0:
+      [com.xiaomi.misettings,com.miui.qr,com.xiaomi.joyose,com.qualcomm.qti.services.systemhelper,com.miui.securitycore,com.miui.daemon,com.xiaomi.mtb,android,com.xiaomi.mirror,com.xiaomi.aon,com.miui.aod,com.android.keychain,com.android.DeviceAsWebcam,miui.systemui.plugin,com.android.settings,com.novatek.novavis,com.android.providers.settings,com.xiaomi.aiasst.vision,com.miui.touchassistant,com.android.localtransport,com.miui.misightservice,com.miui.audiomonitor,com.bsp.catchlog,com.qualcomm.qti.xrvd.service,com.xiaomi.mi_connect_service,com.android.dynsystem,vendor.qti.frameworks.utils,com.miui.cit,com.xiaomi.touchservice,com.xiaomi.trustservice,com.miui.securitycenter,com.android.location.fused,com.android.inputdevices,com.xiaomi.barrage,com.android.provision,com.miui.bugreport,com.miui.powerkeeper,com.android.server.telecom,com.miui.notification]:
+        com.waydefu.x11gpu
+      com.google.android.inputmethod.latin:
+        com.waydefu.x11gpu
+      com.android.systemui:
+        com.waydefu.x11gpu
+      com.google.android.ext.services:
+        com.waydefu.x11gpu
+      com.xiaomi.wearable:
+        com.waydefu.x11gpu
+      com.xiaomi.xmsf:
+        com.waydefu.x11gpu
+  queryable via uses-library:
+
+Dexopt state:
+  [com.waydefu.x11gpu]
+    path: /data/app/~~rFFvIv-lWGyyexL0JSn9HQ==/com.waydefu.x11gpu-7sRHDntTilRWZpxUyxcNuw==/base.apk
+      arm64: [status=verify] [reason=ab-ota] [primary-abi]
+        [location is /data/app/~~rFFvIv-lWGyyexL0JSn9HQ==/com.waydefu.x11gpu-7sRHDntTilRWZpxUyxcNuw==/oat/arm64/base.odex]
+    base APK odex file size: base.odex: 32Kb base.vdex: 1800Kb 
+
+Compiler stats:
+  [com.waydefu.x11gpu]
+     base.apk - 129

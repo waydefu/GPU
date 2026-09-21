@@ -1,0 +1,9 @@
+{
+  "exit": 2,
+  "verdict": "R8_INVALID",
+  "cell": "R8-P1",
+  "reason": "GPU_OWNED_NOT_CONSTRUCTED",
+  "true": true,
+  "false": false,
+  "null": null
+}

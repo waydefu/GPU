@@ -1,0 +1,9 @@
+{
+  "exit": 2,
+  "verdict": "R8_INVALID",
+  "cell": "R8-C1",
+  "reason": "MISSING_OBS_X_CHECKPOINT",
+  "true": true,
+  "false": false,
+  "null": null
+}

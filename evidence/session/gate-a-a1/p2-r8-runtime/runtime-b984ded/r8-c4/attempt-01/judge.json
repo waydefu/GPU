@@ -1,0 +1,9 @@
+{
+  "exit": 0,
+  "verdict": "R8_PASS",
+  "cell": "R8-C4",
+  "reason": "ACCEPT",
+  "true": true,
+  "false": false,
+  "null": null
+}

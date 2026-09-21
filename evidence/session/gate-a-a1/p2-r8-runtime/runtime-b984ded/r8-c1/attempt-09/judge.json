@@ -1,0 +1,9 @@
+{
+  "exit": 2,
+  "verdict": "R8_INVALID",
+  "cell": "R8-C1",
+  "reason": "STABLE_EVIDENCE_MISSING",
+  "true": true,
+  "false": false,
+  "null": null
+}

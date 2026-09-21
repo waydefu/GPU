@@ -1,0 +1,34 @@
+TOOLING_HASH_REVERIFIED
+8/8 checkable authority hashes MATCH at their execution-path locations.
+TOOLING_COMMIT 2a14ab2f7a5d81e7cd72d5308f5865b81b22881f == worktree
+  src/f8-ahb-gatea-r7-p1-arm HEAD (verified 2026-09-21).
+
+NOT CHECKABLE (plan gap, NON-BLOCKING):
+  FIXTURE ELF    ad93f2ba6adcaae53dbb750b9bdc928d32b1932c3e86ea1b4d2121a5c96f12de
+  FIXTURE SOURCE f6f6a74054bbdc3668567887327bd5c405d666967088a7151fa2360ec13bf941
+  -- §2.3 pins these hashes but names no file. Runner checks the ELF at
+     /tmp/p_r8_lifecycle itself, so C1 is protected; the plan text is incomplete.
+
+STALE SIBLING (do not mistake for corruption):
+  evidence/session/gate-a-a1/p2-r8-runtime/r8_orchestration_v2.py  21f97d9f...
+  NOT on the execution path (runner HERE= points at the worktree copy).
+  Encodes the retired SIGTERM terminal model. Append-only: mark, do not delete.
+
+PROVENANCE RISK (new, not in §17):
+  TOOLING_COMMIT 2a14ab2 exists on NO remote branch -- local unpushed commit only.
+  PRODUCT_SHA b984ded IS pushed (fork/feat/gatea-r8-lifecycle-support-20260918).
+  V1-Core acceptance item 19 (complete provenance) is at risk if this host is lost.
+
+AMENDMENT 2026-09-21 — both fixture gaps CLOSED
+  FIXTURE SOURCE f6f6a740... == src/f8-ahb-gatea-r7-p1-arm/tests/r8/p_r8_lifecycle.c
+                 (identified by hash search; §2.3 names no file -- plan text gap)
+  FIXTURE ELF    ad93f2ba... REPRODUCED byte-identical from that source with
+                 cc -O2 -o p_r8_lifecycle p_r8_lifecycle.c r8_xcb_request.c \
+                    -lxcb -lxcb-render -lxcb-present
+                 (gcc 13.3.0 Ubuntu 24.04 aarch64). Build is deterministic.
+  /tmp is tmpfs: the ELF is destroyed on every reboot and was ABSENT when checked.
+  Rebuild helper installed at /root/.local/bin/f8-r8-fixture (verifies the hash and
+  refuses on mismatch).
+  NOTE: evidence/.../p2-r8-design/*-20260918.md records an EARLIER fixture generation
+  (source ca521292... / ELF d3910436...). Those documents are historical; the plan's
+  f6f6a740.../ad93f2ba... pair is current and matches the runner's EXPECT_FIXTURE_SHA.
