@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "status": "R9_IDENTITY_CONTRACT_V1",
+  "created": "2026-09-22",
+  "derives_from": {
+    "Q7_Q8": "process identity = (PID, starttime); starttime from /proc/<pid>/stat field 22, parsed relative to the LAST ')'. SC_CLK_TCK = 100.",
+    "Q3": "sessionNonce is per X PROCESS (getrandom once, never re-rolled); generation is per Activity SHARE, 1-based, monotonic.",
+    "Q2_F2": "(nonce, generation) CANNOT distinguish 'same X, new Activity' from 'same X, same Activity, new generation', because the nonce is per X process and only the generation advances.",
+    "D_02": "epoch_id is a renderer-process-local counter, independent of epoch_generation."
+  },
+
+  "identity_axes": {
+    "x_process": {
+      "value": ["pid", "starttime"],
+      "source": "/proc/<pid>/stat field 22, relative to the last ')'",
+      "changes_when": "a new X server process starts",
+      "note": "REQUIRED on both sides of every generation boundary. PID alone is FORBIDDEN (Q7)."
+    },
+    "activity_process": {
+      "value": ["pid", "starttime"],
+      "source": "same, for the com.waydefu.x11gpu process",
+      "changes_when": "the Activity process is recreated (COLD)",
+      "note": "This is THE discriminator between WARM and COLD. Neither the tuple nor the epoch_id can substitute for it (Q2-F2)."
+    },
+    "generation_tuple": {
+      "value": ["sessionNonce", "generation"],
+      "source": "shared mapping state->gateA",
+      "changes_when": "sessionNonce: only on a NEW X process. generation: on every lorieActivityConnected()",
+      "note": "NOT sufficient alone. See Q2-F2."
+    },
+    "renderer_latched_tuple": {
+      "value": ["gateABoundNonce", "gateABoundGeneration"],
+      "source": "renderer-process-local latch, taken only on EVENT_SHARED_SERVER_STATE",
+      "changes_when": "the renderer latches a new tuple",
+      "note": "Q3 proved the renderer admits against THIS, never the shared field. A lag between the two authorities is the failure mode, so BOTH must be recorded at every boundary."
+    },
+    "epoch_id": {
+      "value": ["epoch_id"],
+      "source": "R_EPOCH_BEGIN / R_EPOCH_END records (D-02)",
+      "changes_when": "the renderer latches a genuinely different tuple",
+      "note": "Counts what THIS renderer process has seen. Deliberately independent of generation, because generation cannot express an Activity boundary."
+    }
+  },
+
+  "classification_rules": {
+    "WARM": {
+      "requires": [
+        "activity_process UNCHANGED across the boundary (same pid AND same starttime)",
+        "x_process CHANGED (new pid, or same pid with a different starttime)",
+        "generation advanced by exactly 1",
+        "epoch_id advanced by exactly 1"
+      ],
+      "forbidden_proof": "the launch method. §8.4: 'must not use \"we started it this way\" as proof'."
+    },
+    "COLD": {
+      "requires": [
+        "activity_process CHANGED (different pid OR different starttime)",
+        "epoch_id RESET to 1 (a new renderer process starts its counter at 0)",
+        "renderer_latched_tuple rebuilt from zero"
+      ],
+      "note": "V-8: the notification-bar Exit does NOT end the termux-x11 command, so COLD must prove the PROCESS is gone, not that the Activity looks closed."
+    }
+  },
+
+  "forbidden": [
+    "PID alone as process identity (Q7: /proc/sys/kernel/pid_max is unreadable in this PRoot, so the reuse margin cannot even be computed)",
+    "(nonce, generation) alone to classify WARM vs COLD (Q2-F2)",
+    "epoch_id alone to classify WARM vs COLD (it resets with the renderer process, so a COLD restart and a fresh first epoch are indistinguishable by it)",
+    "inferring generationFatal state after a re-share bump: lorieGateAProtocolInit clears it (Q3), so absence proves nothing",
+    "treating a missing renderer END as a failure without first checking whether TERMINATE was sent (D-02: the END is gated on explicit whole-run finalization)"
+  ],
+
+  "required_evidence_fields": {
+    "per_boundary": [
+      "x_pid", "x_starttime",
+      "activity_pid", "activity_starttime",
+      "shared_nonce", "shared_generation",
+      "renderer_bound_nonce", "renderer_bound_generation",
+      "epoch_id",
+      "x_fd_table_had_previous_conn_fd"
+    ],
+    "rationale": {
+      "x_fd_table_had_previous_conn_fd": "Q9-F1: getXConnection neither closes nor unregisters the previous fd, so two fds can be registered at once. Nothing in the product reports this; it must come from /proc/<x_pid>/fd at the boundary."
+    }
+  }
+}

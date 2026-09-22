@@ -1,0 +1,6 @@
+{
+  "exit": 2,
+  "verdict": "R9_INVALID",
+  "cell": "R9-COLD-2",
+  "reason": "IDENTITY_FIELD_MISSING_x_fd_table_had_previous_conn_fd"
+}
