@@ -225,6 +225,26 @@ PRs             waydefu/GPU #9, #10, #11 all MERGED 2026-09-21 (verified via gh)
 
 ## 6. R9 DESIGN FREEZE — what is done and what is not
 
+> ## ⚠ §6 ～ §6.4 是 DESIGN-FREEZE 當下的紀錄。R9 已於 2026-09-22 執行完畢。
+> **現行狀態看 §6.5 和 [`V2-R9-AGG.md`](evidence/session/gate-a-a1/planning-v2/r9-agg/V2-R9-AGG.md)。**
+> 以下原文保留，因為它是「當時設計了什麼」的紀錄；但這幾條已經被**證據推翻或決策取代**，
+> 照著做會走錯路：
+>
+> | §6 裡的說法 | 現況 | 權威 |
+> |---|---|---|
+> | R9 DEVICE CELL SET = **3 格**（COLD-2 / F1 / F2） | **2 格**（F1 / F2）。移除 6 格。 | §6.5 · `V2-R9-AGG.md` |
+> | R9-COLD-2「可構造」、fault 8 會讓「X 存活」 | **X 不會存活**，COLD-2 不可構造並已移除 | `COLD2-ROUTE-SEARCH.md` §A |
+> | 「存活的 X 裡要有 generation boundary，必須先進入 fatal 狀態」 | 更強：**根本沒有可到達的 generation boundary**。那個 fatal 拿不到手。 | `COLD2-ROUTE-SEARCH.md` §C-§E |
+> | 「R9 packets 必須驅動 `lorieActivityConnected()` 製造 boundary」 | 第二次 boundary 到不了。R9 觀測到的**只有一個 generation**。 | 同上 |
+> | Q4/F3 OBS_TERMINAL_ONE_SHOT 是 R9 fixture 的 BLOCKER | **已解**：D-02 另加 epoch record，不動原終結器 | §6.1 D-02 · `V2-R9-AGG.md` |
+> | DE_RESET 三選項，(c)`-terminate`「真正移除」 | **決策是 `-noreset`（D-01）**。`-terminate` 會在最後一個 client 離線時殺掉 X，那會毀掉 R9 的前提。 | §6.1 D-01 |
+> | `R9_CELL_SPEC_FROZEN_V1` / 28 向量 / `device_cells=3` | `R9_CELL_SPEC_FROZEN_V2` / 32 向量 / `device_cells=2`；`spec_sha` 已變 | §6.5 · commit `3a12e73` |
+> | R9 fixture = `p_r8_lifecycle` | `tests/r9/p_r9_boundary.c`（不需 R8 test extension） | §6.5 |
+>
+> Q1-Q11 的 source trace 本身**沒有被推翻**，照常引用。被取代的是根據它們做出的
+> cell 規劃與 fixture 計畫。
+
+
 **RESOLVED (see `planning-v2/r9-design-freeze/Q7-Q8-process-identity.md`):**
 ```
 Q8  starttime IS obtainable and stable: /proc/<pid>/stat field 22, 71/71 readable,
@@ -253,6 +273,10 @@ Q3  The tuple's two halves have DIFFERENT lifetimes, and PR #7's design does not
     "no fatal after the bump" proves nothing.
 -> R9 packets must drive lorieActivityConnected() to create a boundary, and must
    record BOTH authorities at the boundary, not just the shared pair.
+   [SUPERSEDED 2026-09-22] 第一次連線的 boundary 可以，**第二次到不了** —— 每個 X
+   process 只 bump 一次 generation。R9 兩格都只觀測到一個 generation。
+   「兩個 authority 分開記錄」這條仍然有效而且照做了（boundary record 裡
+   shared_* 與 renderer_bound_* 是分開的欄位）。見 COLD2-ROUTE-SEARCH.md §C-§E。
 -> Q10 is pre-answered by this trace: same-process reset after a clean close is
    impossible without new code. Confirm against the trace, do not re-derive.
 ```
@@ -336,6 +360,9 @@ Q4  Retention is the DEFAULT, not an oversight: g_renderer (activity.cpp:128) an
          R9 spans generations inside one process, so there is currently NO
          per-generation renderer observation terminal. Decide this BEFORE writing
          any R9 fixture.
+         [RESOLVED 2026-09-22 by D-02] 沒有動那個 one-shot 終結器。改成**另外加**
+         per-epoch 的 R_EPOCH_BEGIN/END，當普通 semantic phase record，碰不到
+         r8Ended[] latch，R8 既有契約原封不動。見 §6.1 D-02。
     DESIGN_REQUIRED not raised.
 -> Q10 now has THREE independent pre-answers: no nonce re-roll (Q3), no READY
    teardown outside UNREGISTER (Q5), no context turnover (Q4/F2).
@@ -443,6 +470,12 @@ Q10 A same-process reset path ALREADY EXISTS, is the DEFAULT, needs no new code,
      ANY R9 fixture that EXITS NORMALLY instead of issuing the terminate request
      drops the last client, fires DE_RESET, and silently kills Gate A for the rest
      of that X process — no fatal, no log line.
+   [DECIDED 2026-09-22 = D-01: `-noreset`。**不是** 下面任何一個。]
+   `-noreset` 把 dispatchExceptionAtReset 設成 0，最後一個 client 離線時不 reset，
+   Gate A 留著、X 也留著。選項 (c) 的 `-terminate` 會在最後一個 client 離線時直接
+   結束 X —— 那會把「X 活過 client」這個 R9 前提整個毀掉，所以下面把它寫成
+   「REMOVES it」是錯的。R9 兩格都是靠 `-noreset` 跑出來的，runner 在 cell 開始前
+   會檢查 /proc/<x_pid>/cmdline 真的帶這個 flag，沒有就 refuse。
    Three options, only one actually removes the hazard:
      (a) keep issuing the explicit terminate        — avoids it
      (b) hold a second X client across the boundary — avoids it
@@ -779,11 +812,13 @@ these answers replace it" — is now met **on the design axis**.
 1  Q10/N1+N2  CLOSED 2026-09-22. Existing R8 evidence is clean (10/10 X DEAD).
               What REMAINS is the decision: R9 fixtures must not exit normally, or
               X must be launched with `-terminate`. Astra/Sol call — see §6 Q10.
+              [CLOSED 2026-09-22 = D-01 `-noreset`, NOT `-terminate`. R9 fixture
+               正常 exit 就好。]
 2  Q4/F3      OPEN. There is no per-generation renderer observation terminal.
               Settle this BEFORE any R9 fixture work.
+              [CLOSED 2026-09-22 = D-02, 另加 epoch record。]
 ```
-**Before any R9 fixture work, settle Q4/F3**: there is no per-generation renderer
-observation terminal today.
+~~**Before any R9 fixture work, settle Q4/F3**~~ — **兩項都已結案，R9 已執行完畢（§6.5）。**
 §8.1 forbids running R9 off PR #7's design; these answers replace it.
 
 ---
@@ -817,6 +852,10 @@ Five corrections, recorded in r9-cell-spec.json:**
 ```
 
 **THE CELL SET — 8 cells, with an honest constructibility column:**
+> **[SUPERSEDED 2026-09-22]** 8 格裡 6 格已移除（WARM-1/2/3 · COLD-1/3 · COLD-2），
+> device packet 是 **F1 / F2 兩格，都 PASS**。這個 constructibility 欄位是這份設計
+> 最划算的部分：4 個 `NOT_PROVEN` 全部真的不可構造，4 個 `PLAUSIBLE` 裡也有 2 個是。
+> **六格都沒有燒掉 attempt**（COLD-2 在證明成立前已花掉的兩次除外，維持凍結 INVALID）。
 ```
 R9-WARM-1           Q1, Q4          PLAUSIBLE     PASS
 R9-WARM-2           Q1-F1, Q5       NOT_PROVEN *  PASS via expected r-rebind-busy
@@ -864,7 +903,16 @@ test has yet crossed a boundary with the renderer surviving).
 
 全部離線完成，**零 attempt**。結論是 §8.7 的 9 個 device packet（#8-16）收斂成 **3 格**。
 
-### 最終 R9 DEVICE CELL SET — 3 格
+> **[SUPERSEDED 2026-09-22]** 再收斂成 **2 格**。下面 `#1 R9-COLD-2 可構造` 這一項
+> **是錯的**：fault 8 publish fatal 的那一刻，X 正卡在同一個 serial 的
+> `gateAWaitTerminal` 裡（`InitOutput.c:3539`），`lorieGateADeriveResult` 在
+> `fatal != 0` 直接短路（`lorie.h:296-297`），走到
+> `gateAXFatal("x-direct-not-success")`（`:3546`）後因為 fatal 已被 publish 而
+> `_exit(127)`（`:3212-3217`）。**X 不會存活**，`pendingCount` 留在 1 也沒有用，
+> 因為沒有下一個 `lorieActivityConnected()` 可以撞上它。
+> 逐行證明：`planning-v2/r9-fixture/COLD2-ROUTE-SEARCH.md` §A-§B。
+
+### 最終 R9 DEVICE CELL SET — 3 格（→ 現為 2 格，見上方 SUPERSEDED）
 ```
 #1  R9-COLD-2   可構造  fault 8  (RENDERER_FATAL_PRE_FENCE) -> expected x-bump-unterminal
                         它 publish fatal 所以 X 存活，且觸發點嚴格落在 lease
@@ -922,6 +970,15 @@ fatal 清除），而就這份 trace 所能判斷，它**在不先進入 fatal �
 **對 R9 的後果：** 三格存活的 cell **全部**是 fatal-path cell。R9 裡完全沒有乾淨路徑的
 generation-boundary cell —— 而那是**產品的性質，不是測試設計的缺口**。
 
+> **[SUPERSEDED 2026-09-22 — 結論比這裡寫的更強]** 不是「必須先進入 fatal 狀態」，
+> 而是**根本到不了**：那個前置 fatal 拿不到手。X 側每一個 publisher 都在同一口氣裡
+> `_exit(127)`（`lorie.h:1414-1416`），renderer 側 14 個 publish 點全在 X 卡於
+> `gateAWaitTerminal` 時才觸發。所以每個 X process 只 bump 一次 generation，
+> `lorieGateARegistryCloseGeneration`（`cmdentrypoint.cpp:380`）沒有 runtime caller，
+> `x-bump-unterminal`（`:391`）與 `x-share-in-lease`（`InitOutput.c:570`）是純防禦碼。
+> 旁證（非證明）：`evidence/` 下 201989 行 `GATEA_EVENT`，`generation` 從沒超過 1。
+> 「這是產品性質不是測試缺口」這句話仍然成立，而且更強烈地成立。D-06 只記錄不決策。
+
 **超出 R9 的後果：** 這屬於 **D-06**（production lifecycle redesign 範圍）。Production
 Gate A 被期望要能存活一般的 Activity lifecycle 事件；如果唯一可達的 generation
 boundary 要穿過 fatal，那是 production-lifecycle 的問題，不是 R9 的。**此處記錄，不在此處決定。**
@@ -929,6 +986,12 @@ boundary 要穿過 fatal，那是 production-lifecycle 的問題，不是 R9 的
 ---
 
 ## 6.4 V2-R9-FIXTURE 凍結 · JUDGE · HOST-VERIFY — DONE 2026-09-22（commit `6ee3b5c`）
+
+> **[SUPERSEDED 2026-09-22 — 數字全部變了，見 §6.5]**
+> `R9_CELL_SPEC_FROZEN_V1` → **V2**；`3 格 + 7 項移除` → **2 格 + 7 項移除**（COLD-2 移入）；
+> `28 向量 / device_cells=3` → **32 向量 / device_cells=2**；另加 `test_r9_evidence.py` 36 個測試
+> 與 `p_r9_boundary.c`。`spec_sha` 已隨之改變，不要拿下面那個值去比對。
+> 現行 commit 是 `3a12e73`，不是 `6ee3b5c`。
 
 `tests/r9/` 新增四個檔，全部 host-only、零 attempt、未動產品：
 ```
