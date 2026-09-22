@@ -1,0 +1,2 @@
+sigkill_target_pid=19477
+termux-x11gpu com.waydefu.x11gpu :3 -noreset                                                                                           

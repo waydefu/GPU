@@ -1,0 +1,3 @@
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"CONNECTED","display":":3"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"PAIRS_CREATED","pairs":4,"w":1024,"h":1024}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"FAIL","what":"composite_conn_lost","errno":11}

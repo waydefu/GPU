@@ -1,0 +1,3 @@
+workload CONNECTED "display":":3"
+workload PAIRS_CREATED "pairs":4,"w":1024,"h":1024
+workload FAIL "what":"composite_conn_lost","errno":11

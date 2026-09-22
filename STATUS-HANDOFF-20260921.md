@@ -1,7 +1,10 @@
-# Gate A P2 — R9 COMPLETE · D-06 DECIDED · R10 DESIGNED — 2026-09-21, updated 2026-09-22
+# Gate A P2 — R9 · D-06 · **R10 COMPLETE (4/4 PASS)** — 2026-09-21, updated 2026-09-22
 
 ```
-STATUS: **D-06 DECIDED** — V1 不做 generation 2，採 fresh-process recovery
+STATUS: **R10 COMPLETE — A / B / C / E 四個 series 全 PASS**（V2-R10-AGG）
+        無 leak · 15 次 clean close counter 零失衡 · Stable 全程未動
+        唯一帶走的發現：activity.maps_count 跨 session 上飄，轉 D-04
+        **D-06 DECIDED** — V1 不做 generation 2，採 fresh-process recovery
         **V2-R10-DESIGN / PROBE-INVENTORY 完成**（commit 16cdb22），R10 尚未跑任何 round
         R10 cell set 重建為 **A / B / C 三模式**，取代 WARM-R1..R5 / COLD-R1..R5
         R9 DEVICE PACKET **COMPLETE — 2/2 PASS**（V2-R9-AGG）
@@ -19,7 +22,7 @@ STATUS: **D-06 DECIDED** — V1 不做 generation 2，採 fresh-process recovery
         b984ded and dc94485 evidence are NOT poolable
         Production Gate A BLOCKED
         V1-Core NOT QUALIFIED
-        TOOLING 16cdb22（R10 probe）· b68770f（counter fix）· 3a12e73（R9）
+        TOOLING 4de9e33（R10）· 16cdb22（R10 probe）· b68770f（counter fix）· 3a12e73（R9）
         ADB SERIAL 換了：手機換網段，現在是 192.168.1.104:36405（lane 5038）
         永遠用 mdns 重新探測，不要沿用舊值
 ```
@@ -1167,6 +1170,53 @@ GATEA_SUMMARY where=x-close-screen nonce=0 generation=0 generationFatal=0
 UNREGISTER / RESOURCE_DESTROY。工具原本讀錯（已於 `b68770f` 修正並加靜態檢查）；
 用舊的讀法，上面這個完全乾淨的 close 會被讀成「16 個 entry 沒釋放」。
 
+## 6.7 R10 COMPLETE — 2026-09-22（commit `4de9e33`）
+
+```
+彙總      evidence/session/gate-a-a1/planning-v2/r10-agg/V2-R10-AGG.md
+runner    evidence/session/gate-a-a1/p2-r10-runtime/run-r10.sh
+證據      evidence/session/gate-a-a1/p2-r10-runtime/runtime-dc94485/
+          noise-01 · r10-a-01 · r10-b-01 · r10-c-01 · r10-e-01(INVALID) · r10-e-02
+tolerance src/f8-ahb-gatea-r7-p1-arm/tests/r10/r10-tolerance.json  （先凍結後判）
+```
+
+```bash
+MODE=B ROUNDS=5 SERIAL=$(cat /tmp/r9_serial) \
+EVIDENCE=$PWD/runtime-dc94485/r10-b-02 ./run-r10.sh
+```
+
+### 結果
+
+```
+R10-A  單 session 5 次 workload           PASS   每次 registry 0/0、lease 0、event=5 x8
+R10-B  一個存活 Activity + 5 個 session    PASS   同一個 pid 25809 撐完 5 個 session
+R10-C  5 次完整冷啟                        PASS   5 個不同 pid、5 個不同 nonce
+R10-E  F / H 兩種非乾淨結尾 + fresh        PASS   兩種結尾都讓兩個 process 一起死
+所有 session generation 都是 1 —— D-06 在 runtime 被強制檢查，不是假設
+```
+
+### 三個要記住的事
+
+1. **counter 索引錯了會製造假 leak。** 15 次 clean close 每次都是
+   `AHB 8/8 · EGLImage 8/8 · texture 8/8 · registry 0/0 · lease 0`。若用舊的
+   c25/c26 讀法，這 15 次全部會被讀成「每邊漏 8 個」。`b68770f` 已修並加靜態檢查。
+2. **memory 類指標很弱，不要拿它當結論。** 凍結出來的 idle 雜訊帶是
+   `x.pss_kb` ~17 MB、`activity.pss_kb` ~21 MB、`vm_size_kb` ~728 MB，
+   而 workload 一次才配 ~32 MB。R10 的正確性結論靠的是 **counter（精確）**
+   與 **fd / maps 計數**（帶寬 1 / 8 / 2）。
+3. **F / H 結尾不能拿來算 leak。** 它們照設計就不釋放任何東西——process 帶著資源死掉、
+   由 OS 回收。E1 死的時候 registry 還掛著 2/2，那是結尾的定義，不是漏。
+   judge 對 mode E 直接早退，vector E02 釘住這件事。
+
+### 帶走的發現（D-04）
+
+`activity.maps_count` 跨 session 持續上飄：B@B3 +10、C@B3 +22、C@B0 +13，
+而 idle 帶寬只有 2。不算 LEAK（序列中間有回落，不是嚴格遞增），但方向一致、
+幅度是雜訊的 5–10 倍。**不是 Gate A 記帳問題**：同幾輪的 counter 都精確平衡，
+而且 R10-C 每輪 process 全新也照樣飄，所以不可能是長壽 Activity 的累積。
+判斷：**不是 V1 blocker**（每 session 約 2–4 個 mapping、無 counter 失衡、無 fd 成長、
+無 PSS 趨勢），但留給 D-04。要收斂的話：跑 20+ session 的長序列 + `/proc/<pid>/maps` 差分。
+
 ## 7. Redlines still in force
 
 ```
@@ -1199,6 +1249,9 @@ D-06   FED, not decided. Two inputs now on the record:
            context never turns over, so only process death reclaims them (Q4-F2, Q5).
        R9-F2 shows the NEXT process starts clean; it does NOT show the previous one
        released anything.
+D-04   OPEN — resource leak disposition. R10 delivered no leak, with ONE item
+       attached: activity.maps_count drifts upward across sessions (+10 to +22 over
+       5 rounds, idle band 2). Not a Gate A accounting failure. See V2-R10-AGG §5.
 R-30   OPEN — the three ahb_*_fence_fd metrics (plan §9.4, from V-5) have NO trace
        site in dc94485. Frozen null in r10-probe-inventory.json so the gap stays
        visible. R10 cannot answer the fence-fd ownership question without a product

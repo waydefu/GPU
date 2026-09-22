@@ -1,0 +1,9 @@
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"CONNECTED","display":":3"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"PAIRS_CREATED","pairs":4,"w":1024,"h":1024}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"COMPOSITES_DONE","count":8}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"HANDSHAKE_WAIT","tag":"A1"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"HANDSHAKE_GO","tag":"A1"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"TEARDOWN_DONE"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"HANDSHAKE_WAIT","tag":"A2"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"HANDSHAKE_GO","tag":"A2"}
+{"v":1,"fixture":"p_r10_ledger","mode":"workload","phase":"RESULT","outcome":"CLIENT_OK","pairs":4,"composites":8}
