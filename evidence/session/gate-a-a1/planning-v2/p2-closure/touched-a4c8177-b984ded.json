@@ -1,0 +1,99 @@
+{
+  "old": "a4c8177",
+  "new": "b984ded",
+  "product_files_touched": 11,
+  "total_added_in_product": 102,
+  "total_added_in_test_guard": 1024,
+  "total_removed_or_modified": 12,
+  "files": [
+    {
+      "path": "lorie/src/main/cpp/lorie/InitOutput.c",
+      "added": 169,
+      "added_in_test_guard": 133,
+      "added_in_product": 36,
+      "removed_or_modified": 5,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/renderer.cpp",
+      "added": 92,
+      "added_in_test_guard": 67,
+      "added_in_product": 25,
+      "removed_or_modified": 6,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/cmdentrypoint.cpp",
+      "added": 73,
+      "added_in_test_guard": 60,
+      "added_in_product": 13,
+      "removed_or_modified": 1,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/buffer.h",
+      "added": 6,
+      "added_in_test_guard": 0,
+      "added_in_product": 6,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_obs.h",
+      "added": 33,
+      "added_in_test_guard": 28,
+      "added_in_product": 5,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_test.h",
+      "added": 32,
+      "added_in_test_guard": 27,
+      "added_in_product": 5,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_test_x.h",
+      "added": 23,
+      "added_in_test_guard": 18,
+      "added_in_product": 5,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/buffer.c",
+      "added": 4,
+      "added_in_test_guard": 0,
+      "added_in_product": 4,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie.h",
+      "added": 4,
+      "added_in_test_guard": 3,
+      "added_in_product": 1,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_obs.c",
+      "added": 268,
+      "added_in_test_guard": 267,
+      "added_in_product": 1,
+      "removed_or_modified": 0,
+      "whole_file_guarded": true
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_test.c",
+      "added": 422,
+      "added_in_test_guard": 421,
+      "added_in_product": 1,
+      "removed_or_modified": 0,
+      "whole_file_guarded": true
+    }
+  ],
+  "note": "added_in_product lines and every removed_or_modified line must be read individually. This tool reports where they are, not whether they are safe."
+}

@@ -1,0 +1,75 @@
+{
+  "old": "b984ded",
+  "new": "dc94485",
+  "product_files_touched": 8,
+  "total_added_in_product": 54,
+  "total_added_in_test_guard": 142,
+  "total_removed_or_modified": 12,
+  "files": [
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie.h",
+      "added": 31,
+      "added_in_test_guard": 0,
+      "added_in_product": 31,
+      "removed_or_modified": 1,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/activity.cpp",
+      "added": 29,
+      "added_in_test_guard": 17,
+      "added_in_product": 12,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/cmdentrypoint.cpp",
+      "added": 10,
+      "added_in_test_guard": 0,
+      "added_in_product": 10,
+      "removed_or_modified": 5,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/InitOutput.c",
+      "added": 1,
+      "added_in_test_guard": 0,
+      "added_in_product": 1,
+      "removed_or_modified": 1,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_obs.c",
+      "added": 63,
+      "added_in_test_guard": 63,
+      "added_in_product": 0,
+      "removed_or_modified": 1,
+      "whole_file_guarded": true
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_obs.h",
+      "added": 11,
+      "added_in_test_guard": 11,
+      "added_in_product": 0,
+      "removed_or_modified": 0,
+      "whole_file_guarded": false
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/lorie_r8_test.c",
+      "added": 9,
+      "added_in_test_guard": 9,
+      "added_in_product": 0,
+      "removed_or_modified": 0,
+      "whole_file_guarded": true
+    },
+    {
+      "path": "lorie/src/main/cpp/lorie/renderer.cpp",
+      "added": 42,
+      "added_in_test_guard": 42,
+      "added_in_product": 0,
+      "removed_or_modified": 4,
+      "whole_file_guarded": false
+    }
+  ],
+  "note": "added_in_product lines and every removed_or_modified line must be read individually. This tool reports where they are, not whether they are safe."
+}

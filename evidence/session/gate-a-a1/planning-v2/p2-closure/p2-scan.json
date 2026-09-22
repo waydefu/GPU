@@ -1,0 +1,2512 @@
+{
+  "root": "/root/projects/GPU\u52a0\u901f/evidence/session/gate-a-a1",
+  "attempts": [
+    {
+      "path": "p2-r1-diag-runtime/r0",
+      "packet": "p2-r1-diag-runtime",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "dd81ac0",
+        "version_name": "1.03.01-dd81ac0-13.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": null,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r10-runtime/runtime-dc94485/noise-01",
+      "packet": "p2-r10-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "run-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r10-runtime/runtime-dc94485/r10-a-01",
+      "packet": "p2-r10-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R10_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "run-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r10-runtime/runtime-dc94485/r10-b-01",
+      "packet": "p2-r10-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R10_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "run-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r10-runtime/runtime-dc94485/r10-c-01",
+      "packet": "p2-r10-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R10_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "run-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r10-runtime/runtime-dc94485/r10-e-01",
+      "packet": "p2-r10-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "run-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "r-test-fatal-pre-fence",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": [
+        "SERIES-FROZEN-INVALID.md"
+      ]
+    },
+    {
+      "path": "p2-r10-runtime/runtime-dc94485/r10-e-02",
+      "packet": "p2-r10-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R10_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "run-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "r-test-fatal-pre-fence",
+          "reason": 6
+        },
+        {
+          "what": "r-hup",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-bound-runtime/r0",
+      "packet": "p2-r3-bound-runtime",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "98b0011",
+        "version_name": "1.03.01-98b0011-13.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": null,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-diag-runtime/r0",
+      "packet": "p2-r3-diag-runtime",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "6c7ee6f",
+        "version_name": "1.03.01-6c7ee6f-13.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-drain-runtime/r0",
+      "packet": "p2-r3-drain-runtime",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "8479997",
+        "version_name": "1.03.01-8479997-14.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-terminal-runtime/runtime-88e3f17/r0",
+      "packet": "p2-r3-terminal-runtime",
+      "artifact_group": "runtime-88e3f17",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "88e3f17",
+        "version_name": "1.03.01-88e3f17-14.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-0d72332/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-0d72332",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "0d72332",
+        "version_name": "1.03.01-0d72332-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 17922,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-0f1e546/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-0f1e546",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "0f1e546",
+        "version_name": "1.03.01-0f1e546-15.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 17922,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-1f85b80/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-1f85b80",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "1f85b80",
+        "version_name": "1.03.01-1f85b80-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 14604,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-27d8d1b/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-27d8d1b",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "27d8d1b",
+        "version_name": "1.03.01-27d8d1b-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 17922,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-37d8393/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-37d8393",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "37d8393",
+        "version_name": "1.03.01-37d8393-15.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 16085,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-7549e36/b2-requalification-01",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-7549e36",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 16485,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-7549e36/b2-requalification-02",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-7549e36",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 16485,
+        "format": "r7_text",
+        "compared_keys": [
+          "cmd",
+          "lastUpdateTime",
+          "pid",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-7549e36/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-7549e36",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "7549e36",
+        "version_name": "1.03.01-7549e36-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 14604,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-7549e36",
+      "verdict": "R7_FAIL",
+      "verdict_source": "primary-verdict.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-7549e36/r7-qualification-01/r7-04",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-7549e36",
+      "verdict": "R7_FAIL",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "7549e36",
+        "version_name": "1.03.01-7549e36-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 16485,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-7549e36/repair-validation-01",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-7549e36",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 14604,
+        "format": "r7_text",
+        "compared_keys": [
+          "cmd",
+          "lastUpdateTime",
+          "pid",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-8545b26/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-8545b26",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "8545b26",
+        "version_name": "1.03.01-8545b26-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-8545b26/r7-10",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-8545b26",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "8545b26",
+        "version_name": "1.03.01-8545b26-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-8545b26/r7-10-preflight",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-8545b26",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-8545b26/r7-p1",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-8545b26",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "8545b26",
+        "version_name": "1.03.01-8545b26-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-8545b26/r7-p1-preflight",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-8545b26",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "8545b26",
+        "version_name": "1.03.01-8545b26-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-9369553/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-9369553",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "9369553",
+        "version_name": "1.03.01-9369553-15.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 16085,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-95e6f96/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-95e6f96",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "95e6f96",
+        "version_name": "1.03.01-95e6f96-15.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 1004,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-01",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-02",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-03",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-05-requalification-01",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "cmd",
+          "lastUpdateTime",
+          "pid",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-06",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-07",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-08",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-09",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-10",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_FAIL",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-11",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a07d66c",
+        "version_name": "1.03.01-a07d66c-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-11-preflight",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a07d66c",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "NOT_COMPARABLE",
+        "pid": null,
+        "format": "r7_text",
+        "note": "pre and after capture disjoint facts"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a4c8177/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a4c8177",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a4c8177",
+        "version_name": "1.03.01-a4c8177-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a4c8177/r7-p1",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a4c8177",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a4c8177",
+        "version_name": "1.03.01-a4c8177-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a4c8177/r7-p1-validity-02",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a4c8177",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a4c8177",
+        "version_name": "1.03.01-a4c8177-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a4c8177/r7-p2",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a4c8177",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a4c8177",
+        "version_name": "1.03.01-a4c8177-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-a7528bd/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-a7528bd",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "a7528bd",
+        "version_name": "1.03.01-a7528bd-15.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 17922,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-abb27a65/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-abb27a65",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "abb27a6",
+        "version_name": "1.03.01-abb27a6-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-abb27a65/r7-p1",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-abb27a65",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "abb27a6",
+        "version_name": "1.03.01-abb27a6-17.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-d9b7f60/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-d9b7f60",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "d9b7f60",
+        "version_name": "1.03.01-d9b7f60-14.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-fdfb1ce/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-fdfb1ce",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "fdfb1ce",
+        "version_name": "1.03.01-fdfb1ce-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 24999,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-fdfb1ce",
+      "verdict": "R7_PASS",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "fdfb1ce",
+        "version_name": "1.03.01-fdfb1ce-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 24999,
+        "format": "r7_text",
+        "compared_keys": [
+          "cmd",
+          "lastUpdateTime",
+          "pid",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-fdfb1ce/r7-05",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-fdfb1ce",
+      "verdict": "R7_FAIL",
+      "verdict_source": "judge.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "fdfb1ce",
+        "version_name": "1.03.01-fdfb1ce-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 843,
+        "format": "r7_text",
+        "compared_keys": [
+          "lastUpdateTime",
+          "versionName"
+        ],
+        "diff": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r3-xpump-runtime/runtime-feeaa56/r0",
+      "packet": "p2-r3-xpump-runtime",
+      "artifact_group": "runtime-feeaa56",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "feeaa56",
+        "version_name": "1.03.01-feeaa56-16.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 14604,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-2a245b0/r0",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-2a245b0",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "2a245b0",
+        "version_name": "1.03.01-2a245b0-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-2a245b0/r8-c1/attempt-06-giveup-end",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-2a245b0",
+      "verdict": "R8_INVALID",
+      "verdict_source": "VERDICT.txt",
+      "artifact": {
+        "apk_sha256": "008a1ece18c0b766abb8389a512fe81d3c2dd8527e7175531964a4cf43683af4",
+        "source_sha": "2a245b0bc5d38394df29546e0af0de798f9d260c",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-5a782f6/r0",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-5a782f6",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "5a782f6",
+        "version_name": "1.03.01-5a782f6-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-5a782f6/r8-c1/attempt-05-obs-terminal",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-5a782f6",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "43590412d5537339bb6822d0157e135b5fc00a7cca80570d987adc87c15ba78e",
+        "source_sha": "5a782f6f47ffa1a3374bac04aef5616a81d59089",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-65938a4/r0",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-65938a4",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "65938a4",
+        "version_name": "1.03.01-65938a4-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-65938a4/r8-c1/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-65938a4",
+      "verdict": "R8_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "b88f12ecdb6a6fb9bf8db724b4dbee5ac363cb863f8246bc15ac08bc20c31a6c",
+        "source_sha": "65938a447639fce2adae61a15a2d8348e7c6455f",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "r-hup",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-65938a4/r8-c1/attempt-02-orchestration-v2",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-65938a4",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "b88f12ecdb6a6fb9bf8db724b4dbee5ac363cb863f8246bc15ac08bc20c31a6c",
+        "source_sha": "65938a447639fce2adae61a15a2d8348e7c6455f",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-65938a4/r8-c1/attempt-03-orchestration-v2",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-65938a4",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "b88f12ecdb6a6fb9bf8db724b4dbee5ac363cb863f8246bc15ac08bc20c31a6c",
+        "source_sha": "65938a447639fce2adae61a15a2d8348e7c6455f",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-65938a4/r8-c1/attempt-04-orchestration-v2",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-65938a4",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "b88f12ecdb6a6fb9bf8db724b4dbee5ac363cb863f8246bc15ac08bc20c31a6c",
+        "source_sha": "65938a447639fce2adae61a15a2d8348e7c6455f",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-7e3a05e/r8-d/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-7e3a05e",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "fd4bbed07f2d723d26e5a22ce5b1c9dd39957db4fc318da5a9ae8a9b0a3cc8c9",
+        "source_sha": "7e3a05e0a809dedd4d4a59dfb57b8e07528991b7",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 8553,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r0",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "b984ded",
+        "version_name": "1.03.01-b984ded-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-08-xcb-sender",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_INVALID",
+      "verdict_source": "VERDICT.txt",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-09",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-09-adb-restore",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-09-preflight",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_BLOCKED",
+      "verdict_source": "VERDICT.txt",
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": null,
+        "from": null
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-10",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-11",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-12",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-13",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-disconnect/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-disconnect/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-disconnect/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-04",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c4/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c4/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c4/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-04",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-overflow/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8430,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-overflow/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-c5-overflow/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-d/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-d/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-d/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-d/attempt-04",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-p1/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-p1/attempt-02",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-destroy-in-lease",
+          "reason": 7
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-p1/attempt-03",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-destroy-in-lease",
+          "reason": 7
+        }
+      ],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-b984ded/r8-p2/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-b984ded",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "0d06de68025ca41d91e316d55f6f77ba9d5b3ba1a90b6a2bfacb65add0d398d3",
+        "source_sha": "b984dedcac731b77ca4cf8899f8a78b7848ad083",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 15071,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-close-in-lease",
+          "reason": 8
+        }
+      ],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-dc94485/r8-d/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8553,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-dc94485/r8-p2/attempt-01",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R8_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 8553,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-close-in-lease",
+          "reason": 8
+        }
+      ],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-fb4f017/r0",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-fb4f017",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "fb4f017",
+        "version_name": "1.03.01-fb4f017-18.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "r7_text"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r8-runtime/runtime-fb4f017/r8-c1/attempt-07-terminate",
+      "packet": "p2-r8-runtime",
+      "artifact_group": "runtime-fb4f017",
+      "verdict": "R8_INVALID",
+      "verdict_source": "VERDICT.txt",
+      "artifact": {
+        "apk_sha256": "71e832768106c9208b2bb3361b2faacbb591c649346ce013f02cbcd0204b4c80",
+        "source_sha": "fb4f017c73e942e13dc2423744acb912c055b74e",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20146,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r9-artifact/artifact-7e3a05e",
+      "packet": "p2-r9-artifact",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "fd4bbed07f2d723d26e5a22ce5b1c9dd39957db4fc318da5a9ae8a9b0a3cc8c9",
+        "source_sha": "7e3a05e0a809dedd4d4a59dfb57b8e07528991b7",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r9-artifact/artifact-dc94485",
+      "packet": "p2-r9-artifact",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": true,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-cold-2/attempt-01",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R9_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-r8-env",
+          "reason": 5
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-cold-2/attempt-02",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R9_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-hup",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-f1/attempt-01",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "NO_AFTER",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-wrong-generation",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": [
+        "ATTEMPT-FROZEN-INVALID.md"
+      ]
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-f1/attempt-02",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R9_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-wrong-generation",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": [
+        "ATTEMPT-FROZEN-INVALID.md"
+      ]
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-f1/attempt-03",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R9_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "x-wrong-generation",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-f2/attempt-01",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R9_INVALID",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [
+        {
+          "what": "r-hup",
+          "reason": 6
+        }
+      ],
+      "has_manifest": false,
+      "frozen_note": [
+        "ATTEMPT-FROZEN-INVALID.md"
+      ]
+    },
+    {
+      "path": "p2-r9-runtime/runtime-dc94485/r9-f2/attempt-02",
+      "packet": "p2-r9-runtime",
+      "artifact_group": "runtime-dc94485",
+      "verdict": "R9_PASS",
+      "verdict_source": "judge.json",
+      "artifact": {
+        "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "from": "artifact-binding.json"
+      },
+      "stable": {
+        "state": "UNCHANGED",
+        "pid": 20881,
+        "format": "json"
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    },
+    {
+      "path": "p2-runtime-phase1/r0",
+      "packet": "p2-runtime-phase1",
+      "artifact_group": null,
+      "verdict": null,
+      "verdict_source": null,
+      "artifact": {
+        "apk_sha256": null,
+        "source_sha": "15caa00",
+        "version_name": "1.03.01-15caa00-13.09.26",
+        "from": "installed-package.txt"
+      },
+      "stable": {
+        "state": "NO_BEFORE",
+        "pid": null
+      },
+      "halts": [],
+      "has_manifest": false,
+      "frozen_note": []
+    }
+  ]
+}
