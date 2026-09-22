@@ -1,0 +1,6 @@
+{
+  "exit": 2,
+  "verdict": "R9_INVALID",
+  "cell": "R9-F2",
+  "reason": "IDENTITY_FIELD_MISSING_shared_nonce"
+}

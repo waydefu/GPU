@@ -1,0 +1,6 @@
+{
+  "legitimate_ready_sent": false,
+  "stale_frame_sent": true,
+  "gate_a_active_on_arrival": true,
+  "stale_tuple_accepted": false
+}

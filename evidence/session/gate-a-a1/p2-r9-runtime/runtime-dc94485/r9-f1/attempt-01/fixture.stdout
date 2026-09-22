@@ -1,0 +1,5 @@
+R9-F1 CONNECTED "display":":3"
+R9-F1 FORMATS "fmt32":37,"fmt24":41
+R9-F1 PAIR_CREATED 
+R9-F1 COMPOSITE_SENT "op":"PictOpOver","w":64,"h":64
+R9-F1 RESULT "outcome":"SERVER_CONNECTION_BROKE","composite_issued":true

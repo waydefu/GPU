@@ -1,0 +1,5 @@
+{"v": 1, "role": "r", "pid": 32647, "tid": 32647, "producer_seq": 0, "case": null, "phase": "BEGIN", "original_nonce": 0, "original_generation": 0, "expected_count": null, "expected_digest": null}
+{"v": 1, "role": "r", "pid": 32647, "tid": 32647, "producer_seq": 1, "case": null, "phase": "R_EPOCH_BEGIN", "original_nonce": 0, "original_generation": 0, "epoch_id": 1, "epoch_nonce": 10003825356621476728, "epoch_generation": 1, "reason": "bind"}
+{"v": 1, "role": "r", "pid": 32647, "tid": 22112, "producer_seq": 2, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 1, "cause": "fence_completed", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 32647, "tid": 22112, "producer_seq": 3, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 2, "cause": "fence_completed", "completedSerial": 0}
+{"v": 1, "role": "r", "pid": 32647, "tid": 22112, "producer_seq": 4, "case": null, "phase": "R_WAKE_SENT", "original_nonce": 0, "original_generation": 0, "send_ok": true, "ordinal": 3, "cause": "fence_completed", "completedSerial": 0}
