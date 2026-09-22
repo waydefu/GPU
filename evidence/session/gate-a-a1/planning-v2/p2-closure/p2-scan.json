@@ -121,7 +121,8 @@
       "halts": [
         {
           "what": "r-test-fatal-pre-fence",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -148,11 +149,13 @@
       "halts": [
         {
           "what": "r-test-fatal-pre-fence",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         },
         {
           "what": "r-hup",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -453,7 +456,18 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-DIRECT_LOOKUP_FAIL",
+          "reason": 2,
+          "source": "logcat-follow.txt"
+        },
+        {
+          "what": "x-direct-not-success",
+          "reason": 4,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -527,7 +541,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-hup",
+          "reason": 6,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -682,7 +702,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-DIRECT_LOOKUP_FAIL",
+          "reason": 2,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -708,7 +734,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-DIRECT_LOOKUP_FAIL",
+          "reason": 2,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -734,7 +766,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-direct-identity",
+          "reason": 5,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -762,7 +800,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-direct-not-success",
+          "reason": 2,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -788,7 +832,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-fence-create",
+          "reason": 3,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -814,7 +864,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-fence-wait",
+          "reason": 3,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -840,7 +896,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-test-fatal-pre-fence",
+          "reason": 6,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -866,7 +928,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-wrong-generation",
+          "reason": 6,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -892,7 +960,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-direct-not-success",
+          "reason": 4,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -918,7 +992,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-serial-wrap",
+          "reason": 6,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -986,7 +1066,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-present-copy-wait",
+          "reason": 4,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -1012,7 +1098,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-present-copy-wait",
+          "reason": 4,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -1038,7 +1130,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-hup",
+          "reason": 6,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -1175,7 +1273,13 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "r-gatea-DIRECT_LOOKUP_FAIL",
+          "reason": 2,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -1201,7 +1305,18 @@
         ],
         "diff": null
       },
-      "halts": [],
+      "halts": [
+        {
+          "what": "x-direct-not-success",
+          "reason": 2,
+          "source": "logcat-follow.txt"
+        },
+        {
+          "what": "r-hup",
+          "reason": 6,
+          "source": "logcat-follow.txt"
+        }
+      ],
       "has_manifest": false,
       "frozen_note": []
     },
@@ -1348,7 +1463,8 @@
       "halts": [
         {
           "what": "r-hup",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2132,7 +2248,8 @@
       "halts": [
         {
           "what": "x-destroy-in-lease",
-          "reason": 7
+          "reason": 7,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2157,7 +2274,8 @@
       "halts": [
         {
           "what": "x-destroy-in-lease",
-          "reason": 7
+          "reason": 7,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": true,
@@ -2182,7 +2300,8 @@
       "halts": [
         {
           "what": "x-close-in-lease",
-          "reason": 8
+          "reason": 8,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": true,
@@ -2227,7 +2346,8 @@
       "halts": [
         {
           "what": "x-close-in-lease",
-          "reason": 8
+          "reason": 8,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": true,
@@ -2331,7 +2451,8 @@
       "halts": [
         {
           "what": "x-r8-env",
-          "reason": 5
+          "reason": 5,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2356,7 +2477,8 @@
       "halts": [
         {
           "what": "x-hup",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2381,7 +2503,8 @@
       "halts": [
         {
           "what": "x-wrong-generation",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2408,7 +2531,8 @@
       "halts": [
         {
           "what": "x-wrong-generation",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2435,7 +2559,8 @@
       "halts": [
         {
           "what": "x-wrong-generation",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,
@@ -2460,7 +2585,8 @@
       "halts": [
         {
           "what": "r-hup",
-          "reason": 6
+          "reason": 6,
+          "source": "raw-logcat.txt"
         }
       ],
       "has_manifest": false,

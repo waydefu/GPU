@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "generated": "2026-09-23",
+  "document_status": "COMPUTED_FROM_EVIDENCE",
+  "candidate": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+  "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+  "rule": "p2_runtime_closed is true only when every required item is satisfied=true with non-empty evidence. null is unverified, never 0.",
+  "p2_runtime_closed": true,
+  "production_gate_a_closed": false,
+  "v1_core_qualified": false,
+  "items": [
+    {
+      "id": "R0",
+      "title": "Installed artifact binding",
+      "status": "BOUND",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "apk_sha256=1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "source_sha=dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "recorded in every R9/R10 attempt's artifact-binding.json / run-binding.json"
+      ],
+      "decision": "NOT_APPLICABLE as carry-forward: re-established per artifact"
+    },
+    {
+      "id": "R1",
+      "title": "Off-mode regressions",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73)"
+    },
+    {
+      "id": "R2",
+      "title": "Imported AHB rejection",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73)"
+    },
+    {
+      "id": "R3",
+      "title": "X pump / drain / terminal",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73)"
+    },
+    {
+      "id": "R4",
+      "title": "R4",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73)"
+    },
+    {
+      "id": "R5",
+      "title": "R5",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73)"
+    },
+    {
+      "id": "R6",
+      "title": "R6",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73)"
+    },
+    {
+      "id": "R7",
+      "title": "R7 13/13",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "p2-r3-xpump-runtime/runtime-8545b26/r7-10",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-01",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-02",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-03",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-05-requalification-01",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-06",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-07",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-08",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-09",
+        "p2-r3-xpump-runtime/runtime-a07d66c/r7-11",
+        "p2-r3-xpump-runtime/runtime-a4c8177/r7-p1-validity-02",
+        "p2-r3-xpump-runtime/runtime-a4c8177/r7-p2",
+        "p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73); 13/13 predicates intact on dc94485, 4 reproduced on device"
+    },
+    {
+      "id": "R8",
+      "title": "R8 10/10",
+      "status": "CARRY_FORWARD",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-11",
+        "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-12",
+        "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-13",
+        "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-01",
+        "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-c3-disconnect/attempt-01",
+        "p2-r8-runtime/runtime-b984ded/r8-c3-disconnect/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-c3-disconnect/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-04",
+        "p2-r8-runtime/runtime-b984ded/r8-c4/attempt-01",
+        "p2-r8-runtime/runtime-b984ded/r8-c4/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-c4/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-c5-full/attempt-04",
+        "p2-r8-runtime/runtime-b984ded/r8-c5-overflow/attempt-01",
+        "p2-r8-runtime/runtime-b984ded/r8-c5-overflow/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-c5-overflow/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-d/attempt-02",
+        "p2-r8-runtime/runtime-b984ded/r8-d/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-d/attempt-04",
+        "p2-r8-runtime/runtime-b984ded/r8-p1/attempt-03",
+        "p2-r8-runtime/runtime-b984ded/r8-p2/attempt-01",
+        "p2-r8-runtime/runtime-dc94485/r8-d/attempt-01",
+        "p2-r8-runtime/runtime-dc94485/r8-p2/attempt-01"
+      ],
+      "decision": "CARRY_FORWARD (GAP-4-TOUCHED-SYMBOLS.md \u00a73); claim scope carried: ran WITHOUT -noreset"
+    },
+    {
+      "id": "R9",
+      "title": "R9 accepted",
+      "status": "BOUND_CURRENT",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "p2-r9-runtime/runtime-dc94485/r9-f1/attempt-03",
+        "p2-r9-runtime/runtime-dc94485/r9-f2/attempt-02"
+      ],
+      "decision": "bound to dc94485 directly; V2-R9-AGG"
+    },
+    {
+      "id": "R10",
+      "title": "R10 accepted",
+      "status": "BOUND_CURRENT",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "p2-r10-runtime/runtime-dc94485/r10-a-01",
+        "p2-r10-runtime/runtime-dc94485/r10-b-01",
+        "p2-r10-runtime/runtime-dc94485/r10-c-01",
+        "p2-r10-runtime/runtime-dc94485/r10-e-02"
+      ],
+      "decision": "bound to dc94485 directly; V2-R10-AGG. D-04 open on maps drift"
+    },
+    {
+      "id": "COUNTERS",
+      "title": "One adopted verdict per cell, and it exists",
+      "status": "CLEAN",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "cells adopted by an aggregate=10",
+        "conflicts=[]",
+        "adopted_without_a_pass_on_disk=[]"
+      ],
+      "decision": null
+    },
+    {
+      "id": "UNEXPECTED_FATAL",
+      "title": "Zero unexpected fatal in any PASS",
+      "status": "CLEAN",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "PASS attempts carrying their expected fatal=18",
+        "unexpected=[]",
+        "expected_but_absent=[]"
+      ],
+      "decision": null
+    },
+    {
+      "id": "STABLE",
+      "title": "Stable unchanged for every PASS",
+      "status": "CLEAN",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "PASS attempts with incomplete or changed Stable proof=[]"
+      ],
+      "decision": null
+    },
+    {
+      "id": "NO_X3_RESIDUE",
+      "title": "No X3 residue after cleanup",
+      "status": "CLEAN",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "R10 ledgers record x11_unix_after=['X1'] for every series",
+        "R8/R9 runners assert x_pre_cleanup=DEAD / NO_X3_RESIDUE"
+      ],
+      "decision": null
+    },
+    {
+      "id": "EVIDENCE",
+      "title": "Hash manifests recompute",
+      "status": "CLEAN",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "manifests checked=40",
+        "failed_runtime_evidence=[]",
+        "failed_planning_only=[]"
+      ],
+      "decision": null
+    },
+    {
+      "id": "CARRY_FORWARD",
+      "title": "Every carry-forward has a matrix entry and a ruling",
+      "status": "CLOSED",
+      "satisfied": true,
+      "required_for_p2": true,
+      "evidence": [
+        "planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md"
+      ],
+      "decision": "GAP-4, CF-PENDING-001, CF-PENDING-002 all closed 2026-09-23"
+    }
+  ],
+  "audits": {
+    "fatals": {
+      "unexpected": [],
+      "expected_fatal_observed": [
+        {
+          "path": "p2-r10-runtime/runtime-dc94485/r10-e-02",
+          "halts": [
+            "r-hup",
+            "r-test-fatal-pre-fence"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-8545b26/r7-10",
+          "halts": [
+            "x-hup"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-01",
+          "halts": [
+            "r-gatea-DIRECT_LOOKUP_FAIL"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-02",
+          "halts": [
+            "r-gatea-DIRECT_LOOKUP_FAIL"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-03",
+          "halts": [
+            "r-gatea-direct-identity"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-05-requalification-01",
+          "halts": [
+            "x-direct-not-success"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-06",
+          "halts": [
+            "r-gatea-fence-create"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-07",
+          "halts": [
+            "r-gatea-fence-wait"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-08",
+          "halts": [
+            "r-test-fatal-pre-fence"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-09",
+          "halts": [
+            "x-wrong-generation"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a07d66c/r7-11",
+          "halts": [
+            "x-serial-wrap"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a4c8177/r7-p1-validity-02",
+          "halts": [
+            "x-present-copy-wait"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-a4c8177/r7-p2",
+          "halts": [
+            "x-hup"
+          ]
+        },
+        {
+          "path": "p2-r3-xpump-runtime/runtime-fdfb1ce/r7-04-requalification-01",
+          "halts": [
+            "r-gatea-DIRECT_LOOKUP_FAIL"
+          ]
+        },
+        {
+          "path": "p2-r8-runtime/runtime-b984ded/r8-p1/attempt-03",
+          "halts": [
+            "x-destroy-in-lease"
+          ]
+        },
+        {
+          "path": "p2-r8-runtime/runtime-b984ded/r8-p2/attempt-01",
+          "halts": [
+            "x-close-in-lease"
+          ]
+        },
+        {
+          "path": "p2-r8-runtime/runtime-dc94485/r8-p2/attempt-01",
+          "halts": [
+            "x-close-in-lease"
+          ]
+        },
+        {
+          "path": "p2-r9-runtime/runtime-dc94485/r9-f1/attempt-03",
+          "halts": [
+            "x-wrong-generation"
+          ]
+        }
+      ],
+      "expected_but_absent": []
+    },
+    "duplicates": {
+      "adopted_cells": 10,
+      "conflicts": [],
+      "adopted_without_a_pass_on_disk": [],
+      "adopted": {
+        "r8-aggregate:R8-C1": {
+          "attempt": "attempt-13",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c1/attempt-13"
+        },
+        "r8-aggregate:R8-C2": {
+          "attempt": "attempt-03",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03"
+        },
+        "r8-aggregate:R8-C3-window": {
+          "attempt": "attempt-04",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-04"
+        },
+        "r8-aggregate:R8-C3-disconnect": {
+          "attempt": "attempt-03",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03"
+        },
+        "r8-aggregate:R8-C4": {
+          "attempt": "attempt-03",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03"
+        },
+        "r8-aggregate:R8-C5-full": {
+          "attempt": "attempt-04",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-04"
+        },
+        "r8-aggregate:R8-C5-overflow": {
+          "attempt": "attempt-03",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03"
+        },
+        "r8-aggregate:R8-D": {
+          "attempt": "attempt-04",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c3-window/attempt-04"
+        },
+        "r8-aggregate:R8-P1": {
+          "attempt": "attempt-03",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-03"
+        },
+        "r8-aggregate:R8-P2": {
+          "attempt": "attempt-01",
+          "aggregate": "planning-v2/r8-aggregate/V2-R8-AGG.md",
+          "path": "p2-r8-runtime/runtime-b984ded/r8-c2/attempt-01"
+        }
+      }
+    },
+    "manifests": {
+      "checked": 40,
+      "failed": [],
+      "failed_runtime_evidence": [],
+      "failed_planning_only": []
+    }
+  }
+}
