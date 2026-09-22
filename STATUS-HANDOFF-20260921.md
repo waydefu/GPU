@@ -1,7 +1,12 @@
-# Gate A P2 — R9 · D-06 · **R10 COMPLETE (4/4 PASS)** — 2026-09-21, updated 2026-09-22
+# Gate A P2 — R10 COMPLETE · **GAP-4 / CF-PENDING 全關** — 2026-09-21, updated 2026-09-23
 
 ```
-STATUS: **R10 COMPLETE — A / B / C / E 四個 series 全 PASS**（V2-R10-AGG）
+STATUS: **GAP-4 CLOSED · CF-PENDING-001 CLOSED · CF-PENDING-002 CLOSED**
+        R7 13/13 → dc94485 CARRY_FORWARD（13/13 predicate intact，4 個已實機重現）
+        R8 10/10 → dc94485 CARRY_FORWARD（claim scope 原樣帶走：無 -noreset）
+        R0–R6 → dc94485 CARRY_FORWARD + 1 項 REVERIFY（已由 R9-F1 / R10-E2 滿足）
+        **p2_runtime_closed 仍為 false**——17 項 ledger 尚未完成
+        **R10 COMPLETE — A / B / C / E 四個 series 全 PASS**（V2-R10-AGG）
         無 leak · 15 次 clean close counter 零失衡 · Stable 全程未動
         唯一帶走的發現：activity.maps_count 跨 session 上飄，轉 D-04
         **D-06 DECIDED** — V1 不做 generation 2，採 fresh-process recovery
@@ -22,7 +27,7 @@ STATUS: **R10 COMPLETE — A / B / C / E 四個 series 全 PASS**（V2-R10-AGG�
         b984ded and dc94485 evidence are NOT poolable
         Production Gate A BLOCKED
         V1-Core NOT QUALIFIED
-        TOOLING 4de9e33（R10）· 16cdb22（R10 probe）· b68770f（counter fix）· 3a12e73（R9）
+        TOOLING 9d26816（P2 tools）· 7cab5ab（p2_scan）· 4de9e33（R10）· 3a12e73（R9）
         ADB SERIAL 換了：手機換網段，現在是 192.168.1.104:36405（lane 5038）
         永遠用 mdns 重新探測，不要沿用舊值
 ```
@@ -1217,6 +1222,64 @@ R10-E  F / H 兩種非乾淨結尾 + fresh        PASS   兩種結尾都讓兩�
 判斷：**不是 V1 blocker**（每 session 約 2–4 個 mapping、無 counter 失衡、無 fd 成長、
 無 PSS 趨勢），但留給 D-04。要收斂的話：跑 20+ session 的長序列 + `/proc/<pid>/maps` 差分。
 
+## 6.8 P2 CLOSURE 進行中 — GAP-4 與三項 carry-forward 已關 — 2026-09-23
+
+```
+報告   evidence/session/gate-a-a1/planning-v2/p2-closure/GAP-4-TOUCHED-SYMBOLS.md
+工具   src/f8-ahb-gatea-r7-p1-arm/tests/p2/{p2_scan,touched_symbols,verify_r7_predicates}.py
+```
+
+### 掃描先推翻了問題本身
+
+`CF-PENDING-001` 寫「R7 13/13 取得於 `a4c8177`」——**證據不是這樣**。13 格分散在
+**四個** artifact：`a07d66c`(9)、`8545b26`(1)、`a4c8177`(2)、`fdfb1ce`(1)，
+而其中三個本身就是 Gate A fatal 語意的修復 commit。R7 是**沿著修復鏈**被 qualify 的，
+不是在鏈上某一點。只問 `a4c8177 → b984ded` 會讓十一格建立在從未涵蓋它們的前提上。
+
+### 兩段 diff 的逐行判讀
+
+```
+a4c8177 → b984ded   production 語意變更 = 0
+                    全部是保留回傳值的重構、前向宣告、唯讀 getter，
+                    以及 notifyGpuCopyDoneCause（guard 外的 body 與舊版逐字相同）
+b984ded → dc94485   production 語意變更 = 1
+                    Q4-F1 的 gateAMappedState = NULL（修 use-after-unmap，兩條 unmap 路徑）
+                    Q6-F1 只是把同 5 行往前移，算出來的值不變
+                    runFinalize 要 arm 了 test fault 才可達
+```
+
+### 工具第一版是錯的，而且錯得剛好會放過
+
+`verify_r7_predicates` 第一版對 R7 全部回 INTACT，**同時**對 cell 14
+`x-destroy-in-lease` 也回 INTACT——那正是 token 被移進 `#else` 的唯一案例。
+**不會失敗的對照組不是對照組**，所以那批結果不能用。
+
+原因：`guard_map` 回答「這行是不是寫在 guard 裡」，而它把 `#else` 正確地判為不在
+guard 內。但 experimental APK 是 `-DLORIE_ENABLE_R8_TEST_SUPPORT=ON` 編的
+（`lorie/build.gradle:41`），在那個編譯下 `#else` **根本不會被編進去**——
+predicate 檢查要問的是相反的問題。加了 `compiled_map(guard_on=True)` 之後，
+cell 14 變成 `sites=2 (live 1)`：`InitOutput.c:3434` 在 source 裡但不在 binary 裡，
+`:3911` 才是活的。**§3 的所有結論都是修正後重新推導的**，錯誤版本刻意保留在 audit trail。
+
+### 裁決（我依授權直接簽）
+
+```
+CF-PENDING-001  R7 → dc94485    CARRY_FORWARD，13/13 predicate intact
+                                其中 4 個已在 dc94485 實機重現：
+                                  cell 8  r-test-fatal-pre-fence r6  ← R10-E1 同一個 fault
+                                  cell 9  x-wrong-generation r6      ← R9-F1
+                                  cell 10/13 x-hup r6                ← R9/R10 corpus
+CF-PENDING-002  R0–R6 → dc94485 CARRY_FORWARD + peer-HUP 路徑 REVERIFY
+                                該 REVERIFY 已由 R10-E2（r-hup）與 R9-F1
+                                （GATEA_HUP_PRESERVE）在 dc94485 上滿足，不需新跑
+R8 b984ded→dc94485              CARRY_FORWARD。claim scope 原樣帶走：
+                                10/10 是在**沒有 -noreset** 下跑的，不含
+                                same-process DE_RESET continuity，不可與 R9/R10 混判
+```
+
+**注意：`p2_runtime_closed` 仍是 false。** 上面只關掉三個 carry-forward 項，
+17 項 ledger 的其餘部分還沒做。
+
 ## 7. Redlines still in force
 
 ```
@@ -1234,7 +1297,8 @@ Frozen attempts and their classifiers are never reclassified or diluted (§5.1).
 ## 8. Known-open, carried forward
 
 ```
-GAP-4  a4c8177 -> b984ded touched-symbol diff (CF-PENDING-001/002); needed before P2 closure
+GAP-4  CLOSED 2026-09-23 — 見 §6.8。連帶 CF-PENDING-001 / CF-PENDING-002 一併關閉。
+       注意原始描述有誤：R7 不是只在 a4c8177，而是分散在四個 artifact。
 GAP-8  PRODUCT defect: ProcLorieR8Checkpoint emits a duplicate "phase" key, and
        total_actual_buffer_pending is hardcoded null. Both contained tooling-side;
        product deliberately NOT rebuilt (§13.4 chain cost). Evidence recorded.

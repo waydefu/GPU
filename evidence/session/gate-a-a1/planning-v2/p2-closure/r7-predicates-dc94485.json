@@ -1,0 +1,386 @@
+{
+  "sha": "dc94485",
+  "judge": "/root/projects/GPU\u52a0\u901f/evidence/session/gate-a-a1/p2-r7-design/judge-r7.py",
+  "cells_checked": "1-13",
+  "fail_codes": {
+    "LORIE_GATEA_FAIL_NONE": 0,
+    "LORIE_GATEA_FAIL_IMPORT": 1,
+    "LORIE_GATEA_FAIL_DRAW": 2,
+    "LORIE_GATEA_FAIL_FENCE": 3,
+    "LORIE_GATEA_FAIL_TIMEOUT": 4,
+    "LORIE_GATEA_FAIL_PROTOCOL": 5,
+    "LORIE_GATEA_FAIL_GENERATION": 6,
+    "LORIE_GATEA_FAIL_UNREGISTER": 7,
+    "LORIE_GATEA_FAIL_CLOSE": 8
+  },
+  "summary": {
+    "PREDICATE_INTACT": 13
+  },
+  "cells": [
+    {
+      "cell": 1,
+      "name": "src-ready-miss",
+      "expected_halt": "r-gatea-DIRECT_LOOKUP_FAIL",
+      "expected_reason": 2,
+      "fault_index_name_in_product": "src-ready-miss",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1834,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(state, \"r-gatea-DIRECT_LOOKUP_FAIL\","
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 2,
+      "name": "dst-ready-miss",
+      "expected_halt": "r-gatea-DIRECT_LOOKUP_FAIL",
+      "expected_reason": 2,
+      "fault_index_name_in_product": "dst-ready-miss",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1834,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(state, \"r-gatea-DIRECT_LOOKUP_FAIL\","
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 3,
+      "name": "tuple-mismatch",
+      "expected_halt": "r-gatea-direct-identity",
+      "expected_reason": 5,
+      "fault_index_name_in_product": "tuple-mismatch",
+      "fault_index_matches": true,
+      "halt_sites": 2,
+      "halt_sites_compiled_in_apk": 2,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1812,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(state, \"r-gatea-direct-identity\","
+        },
+        {
+          "file": "renderer.cpp",
+          "line": 1821,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(state, \"r-gatea-direct-identity\","
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 4,
+      "name": "fbo-incomplete",
+      "expected_halt": "r-gatea-DIRECT_LOOKUP_FAIL",
+      "expected_reason": 2,
+      "fault_index_name_in_product": "fbo-incomplete",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1834,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(state, \"r-gatea-DIRECT_LOOKUP_FAIL\","
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 5,
+      "name": "post-draw-gl",
+      "expected_halt": "x-direct-not-success",
+      "expected_reason": 2,
+      "fault_index_name_in_product": "post-draw-gl",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "InitOutput.c",
+          "line": 3546,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-direct-not-success\", reason, exaGpuComp.lastSerial);"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 6,
+      "name": "fence-create-fail",
+      "expected_halt": "r-gatea-fence-create",
+      "expected_reason": 3,
+      "fault_index_name_in_product": "fence-create-fail",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1039,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(st, \"r-gatea-fence-create\", LORIE_GATEA_FAIL_FENCE,"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 7,
+      "name": "fence-timeout",
+      "expected_halt": "r-gatea-fence-wait",
+      "expected_reason": 3,
+      "fault_index_name_in_product": "fence-timeout",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1057,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(st, \"r-gatea-fence-wait\", LORIE_GATEA_FAIL_FENCE,"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 8,
+      "name": "renderer-fatal-pre-fence",
+      "expected_halt": "r-test-fatal-pre-fence",
+      "expected_reason": 6,
+      "fault_index_name_in_product": "renderer-fatal-pre-fence",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "renderer.cpp",
+          "line": 1799,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateARendererFatal(state, \"r-test-fatal-pre-fence\","
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 9,
+      "name": "wrong-generation-frame",
+      "expected_halt": "x-wrong-generation",
+      "expected_reason": 6,
+      "fault_index_name_in_product": "wrong-generation-frame",
+      "fault_index_matches": true,
+      "halt_sites": 2,
+      "halt_sites_compiled_in_apk": 2,
+      "sites": [
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 637,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAFatalFromInput(LORIE_GATEA_FAIL_GENERATION, \"x-wrong-generation\");"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 641,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAFatalFromInput(LORIE_GATEA_FAIL_GENERATION, \"x-wrong-generation\");"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 10,
+      "name": "renderer-exit-after-consume",
+      "expected_halt": "x-hup",
+      "expected_reason": 6,
+      "fault_index_name_in_product": "renderer-exit-after-consume",
+      "fault_index_matches": true,
+      "halt_sites": 7,
+      "halt_sites_compiled_in_apk": 7,
+      "sites": [
+        {
+          "file": "InitOutput.c",
+          "line": 1965,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", LORIE_GATEA_FAIL_GENERATION, serial);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 1969,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", wakeReason, serial);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 3195,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", LORIE_GATEA_FAIL_GENERATION, serial);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 3197,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", wakeReason, serial);"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 862,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "lorieGateADumpSummary(lorieGateASharedState(), \"x-hup\");"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 864,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "lorieGateAFatalHalt(\"x-hup\", LORIE_GATEA_FAIL_GENERATION);"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 1317,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAFatalFromInput(LORIE_GATEA_FAIL_GENERATION, \"x-hup\");"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 11,
+      "name": "serial-wrap",
+      "expected_halt": "x-serial-wrap",
+      "expected_reason": 6,
+      "fault_index_name_in_product": "serial-wrap",
+      "fault_index_matches": true,
+      "halt_sites": 1,
+      "halt_sites_compiled_in_apk": 1,
+      "sites": [
+        {
+          "file": "InitOutput.c",
+          "line": 3460,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-serial-wrap\", LORIE_GATEA_FAIL_GENERATION, 0);"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 12,
+      "name": "present-hold-complete",
+      "expected_halt": "x-present-copy-wait",
+      "expected_reason": 4,
+      "fault_index_name_in_product": "present-hold-complete",
+      "fault_index_matches": true,
+      "halt_sites": 2,
+      "halt_sites_compiled_in_apk": 2,
+      "sites": [
+        {
+          "file": "InitOutput.c",
+          "line": 1979,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-present-copy-wait\", LORIE_GATEA_FAIL_PROTOCOL, 0);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 1981,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-present-copy-wait\", LORIE_GATEA_FAIL_TIMEOUT, serial);"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    },
+    {
+      "cell": 13,
+      "name": "present-renderer-exit",
+      "expected_halt": "x-hup",
+      "expected_reason": 6,
+      "fault_index_name_in_product": "present-renderer-exit",
+      "fault_index_matches": true,
+      "halt_sites": 7,
+      "halt_sites_compiled_in_apk": 7,
+      "sites": [
+        {
+          "file": "InitOutput.c",
+          "line": 1965,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", LORIE_GATEA_FAIL_GENERATION, serial);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 1969,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", wakeReason, serial);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 3195,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", LORIE_GATEA_FAIL_GENERATION, serial);"
+        },
+        {
+          "file": "InitOutput.c",
+          "line": 3197,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAXFatal(\"x-hup\", wakeReason, serial);"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 862,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "lorieGateADumpSummary(lorieGateASharedState(), \"x-hup\");"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 864,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "lorieGateAFatalHalt(\"x-hup\", LORIE_GATEA_FAIL_GENERATION);"
+        },
+        {
+          "file": "cmdentrypoint.cpp",
+          "line": 1317,
+          "in_test_guard": false,
+          "compiled_in_apk": true,
+          "text": "gateAFatalFromInput(LORIE_GATEA_FAIL_GENERATION, \"x-hup\");"
+        }
+      ],
+      "verdict": "PREDICATE_INTACT"
+    }
+  ]
+}
