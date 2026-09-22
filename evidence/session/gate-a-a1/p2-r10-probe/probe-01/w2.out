@@ -1,0 +1,5 @@
+R9-F2 CONNECTED "display":":3"
+R9-F2 FORMATS "fmt32":37,"fmt24":41
+R9-F2 PAIR_CREATED 
+R9-F2 COMPOSITE_SENT "op":"PictOpOver","w":64,"h":64
+R9-F2 RESULT "outcome":"CLIENT_OK","composite_issued":true

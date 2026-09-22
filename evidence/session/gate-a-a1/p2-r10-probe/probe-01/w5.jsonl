@@ -1,0 +1,5 @@
+{"v":1,"fixture":"p_r9_boundary","cell":"R9-F2","phase":"CONNECTED","display":":3"}
+{"v":1,"fixture":"p_r9_boundary","cell":"R9-F2","phase":"FORMATS","fmt32":37,"fmt24":41}
+{"v":1,"fixture":"p_r9_boundary","cell":"R9-F2","phase":"PAIR_CREATED"}
+{"v":1,"fixture":"p_r9_boundary","cell":"R9-F2","phase":"COMPOSITE_SENT","op":"PictOpOver","w":64,"h":64}
+{"v":1,"fixture":"p_r9_boundary","cell":"R9-F2","phase":"RESULT","outcome":"CLIENT_OK","composite_issued":true}

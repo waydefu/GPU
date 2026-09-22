@@ -1,0 +1,6 @@
+{"v":1,"fixture":"p_r10_ledger","mode":"idle","phase":"CONNECTED","display":":3"}
+{"v":1,"fixture":"p_r10_ledger","mode":"idle","phase":"HANDSHAKE_WAIT","tag":"A1"}
+{"v":1,"fixture":"p_r10_ledger","mode":"idle","phase":"HANDSHAKE_GO","tag":"A1"}
+{"v":1,"fixture":"p_r10_ledger","mode":"idle","phase":"HANDSHAKE_WAIT","tag":"A2"}
+{"v":1,"fixture":"p_r10_ledger","mode":"idle","phase":"HANDSHAKE_GO","tag":"A2"}
+{"v":1,"fixture":"p_r10_ledger","mode":"idle","phase":"RESULT","outcome":"IDLE_OK","pairs":0,"composites":0}

@@ -1,0 +1,11 @@
+tag=P0
+x_fd=88
+x_maps=3004
+x_threads=13
+x_rss_kb=218880
+x_pss_kb=79887
+act_fd=232
+act_maps=
+act_threads=33
+act_rss_kb=216308
+act_pss_kb=62401

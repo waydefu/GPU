@@ -1,0 +1,6 @@
+idle CONNECTED "display":":3"
+idle HANDSHAKE_WAIT "tag":"A1"
+idle HANDSHAKE_GO "tag":"A1"
+idle HANDSHAKE_WAIT "tag":"A2"
+idle HANDSHAKE_GO "tag":"A2"
+idle RESULT "outcome":"IDLE_OK","pairs":0,"composites":0

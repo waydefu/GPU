@@ -1,0 +1,9 @@
+workload CONNECTED "display":":3"
+workload PAIRS_CREATED "pairs":4,"w":1024,"h":1024
+workload COMPOSITES_DONE "count":8
+workload HANDSHAKE_WAIT "tag":"A1"
+workload HANDSHAKE_GO "tag":"A1"
+workload TEARDOWN_DONE 
+workload HANDSHAKE_WAIT "tag":"A2"
+workload HANDSHAKE_GO "tag":"A2"
+workload RESULT "outcome":"CLIENT_OK","pairs":4,"composites":8

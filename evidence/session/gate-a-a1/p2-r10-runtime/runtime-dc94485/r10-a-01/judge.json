@@ -1,0 +1,787 @@
+{
+  "exit": 0,
+  "verdict": "R10_PASS",
+  "reason": "ACCEPT",
+  "trend": [
+    {
+      "key": "activity.egl_mtrack_pss_kb@A0",
+      "values": [
+        39520,
+        44640,
+        50416,
+        50416,
+        50416
+      ],
+      "tolerance": 512,
+      "total_delta": 10896,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.egl_mtrack_pss_kb@A1",
+      "values": [
+        80480,
+        86256,
+        86256,
+        86256,
+        86256
+      ],
+      "tolerance": 512,
+      "total_delta": 5776,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.egl_mtrack_pss_kb@A2",
+      "values": [
+        44640,
+        50416,
+        50416,
+        50416,
+        50416
+      ],
+      "tolerance": 512,
+      "total_delta": 5776,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.fd_count@A0",
+      "values": [
+        203,
+        218,
+        223,
+        223,
+        223
+      ],
+      "tolerance": 8,
+      "total_delta": 20,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.fd_count@A1",
+      "values": [
+        246,
+        251,
+        251,
+        251,
+        251
+      ],
+      "tolerance": 8,
+      "total_delta": 5,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.fd_count@A2",
+      "values": [
+        218,
+        223,
+        223,
+        223,
+        223
+      ],
+      "tolerance": 8,
+      "total_delta": 5,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.fd_table_size@A0",
+      "values": [
+        256,
+        256,
+        256,
+        256,
+        256
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.fd_table_size@A1",
+      "values": [
+        256,
+        256,
+        256,
+        256,
+        256
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.fd_table_size@A2",
+      "values": [
+        256,
+        256,
+        256,
+        256,
+        256
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.gfx_dev_pss_kb@A0",
+      "values": [
+        552,
+        604,
+        672,
+        732,
+        788
+      ],
+      "tolerance": 512,
+      "total_delta": 236,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.gfx_dev_pss_kb@A1",
+      "values": [
+        604,
+        672,
+        732,
+        788,
+        852
+      ],
+      "tolerance": 512,
+      "total_delta": 248,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.gfx_dev_pss_kb@A2",
+      "values": [
+        604,
+        672,
+        732,
+        788,
+        852
+      ],
+      "tolerance": 512,
+      "total_delta": 248,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.gl_mtrack_pss_kb@A0",
+      "values": [
+        820,
+        820,
+        820,
+        820,
+        820
+      ],
+      "tolerance": 512,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.gl_mtrack_pss_kb@A1",
+      "values": [
+        820,
+        820,
+        820,
+        820,
+        820
+      ],
+      "tolerance": 512,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.gl_mtrack_pss_kb@A2",
+      "values": [
+        820,
+        820,
+        820,
+        820,
+        820
+      ],
+      "tolerance": 512,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.maps_count@A0",
+      "values": [
+        4024,
+        4025,
+        4018,
+        4018,
+        4018
+      ],
+      "tolerance": 2,
+      "total_delta": -6,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.maps_count@A1",
+      "values": [
+        4032,
+        4033,
+        4025,
+        4025,
+        4025
+      ],
+      "tolerance": 2,
+      "total_delta": -7,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.maps_count@A2",
+      "values": [
+        4025,
+        4018,
+        4018,
+        4018,
+        4018
+      ],
+      "tolerance": 2,
+      "total_delta": -7,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.native_heap_pss_kb@A0",
+      "values": [
+        15529,
+        15876,
+        15924,
+        16076,
+        16076
+      ],
+      "tolerance": 1992,
+      "total_delta": 547,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.native_heap_pss_kb@A1",
+      "values": [
+        15884,
+        15920,
+        16076,
+        16076,
+        16076
+      ],
+      "tolerance": 1992,
+      "total_delta": 192,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.native_heap_pss_kb@A2",
+      "values": [
+        15876,
+        15924,
+        16076,
+        16076,
+        16076
+      ],
+      "tolerance": 1992,
+      "total_delta": 200,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.pss_kb@A0",
+      "values": [
+        59000,
+        61768,
+        61768,
+        61984,
+        62036
+      ],
+      "tolerance": 21098,
+      "total_delta": 3036,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.pss_kb@A1",
+      "values": [
+        61985,
+        61848,
+        62044,
+        62036,
+        62104
+      ],
+      "tolerance": 21098,
+      "total_delta": 119,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.pss_kb@A2",
+      "values": [
+        61749,
+        61760,
+        61980,
+        62040,
+        62156
+      ],
+      "tolerance": 21098,
+      "total_delta": 407,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.rss_kb@A0",
+      "values": [
+        214436,
+        214976,
+        215072,
+        215108,
+        215144
+      ],
+      "tolerance": 24480,
+      "total_delta": 708,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.rss_kb@A1",
+      "values": [
+        215204,
+        214908,
+        215184,
+        215108,
+        215228
+      ],
+      "tolerance": 24480,
+      "total_delta": 24,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.rss_kb@A2",
+      "values": [
+        214848,
+        215012,
+        215068,
+        215228,
+        215108
+      ],
+      "tolerance": 24480,
+      "total_delta": 260,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.threads@A0",
+      "values": [
+        34,
+        34,
+        33,
+        33,
+        33
+      ],
+      "tolerance": 1,
+      "total_delta": -1,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.threads@A1",
+      "values": [
+        34,
+        34,
+        33,
+        33,
+        33
+      ],
+      "tolerance": 1,
+      "total_delta": -1,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.threads@A2",
+      "values": [
+        34,
+        33,
+        33,
+        33,
+        33
+      ],
+      "tolerance": 1,
+      "total_delta": -1,
+      "class": "NOISE"
+    },
+    {
+      "key": "activity.vm_size_kb@A0",
+      "values": [
+        18156168,
+        17887280,
+        17869788,
+        17869788,
+        17869788
+      ],
+      "tolerance": 512,
+      "total_delta": -286380,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.vm_size_kb@A1",
+      "values": [
+        17887476,
+        17887504,
+        17869984,
+        17869984,
+        17869984
+      ],
+      "tolerance": 512,
+      "total_delta": -17492,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "activity.vm_size_kb@A2",
+      "values": [
+        17887280,
+        17869788,
+        17869788,
+        17869788,
+        17869788
+      ],
+      "tolerance": 512,
+      "total_delta": -17492,
+      "class": "ONE_OFF"
+    },
+    {
+      "key": "x.fd_count@A0",
+      "values": [
+        88,
+        88,
+        88,
+        88,
+        88
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.fd_count@A1",
+      "values": [
+        121,
+        121,
+        121,
+        121,
+        121
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.fd_count@A2",
+      "values": [
+        89,
+        89,
+        89,
+        89,
+        89
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.fd_table_size@A0",
+      "values": [
+        512,
+        512,
+        512,
+        512,
+        512
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.fd_table_size@A1",
+      "values": [
+        512,
+        512,
+        512,
+        512,
+        512
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.fd_table_size@A2",
+      "values": [
+        512,
+        512,
+        512,
+        512,
+        512
+      ],
+      "tolerance": 1,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.maps_count@A0",
+      "values": [
+        3012,
+        3015,
+        3015,
+        3015,
+        3015
+      ],
+      "tolerance": 16,
+      "total_delta": 3,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.maps_count@A1",
+      "values": [
+        3028,
+        3031,
+        3031,
+        3031,
+        3031
+      ],
+      "tolerance": 16,
+      "total_delta": 3,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.maps_count@A2",
+      "values": [
+        3012,
+        3015,
+        3015,
+        3015,
+        3015
+      ],
+      "tolerance": 16,
+      "total_delta": 3,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_anon_kb@A0",
+      "values": [
+        43564,
+        43044,
+        43032,
+        43028,
+        43020
+      ],
+      "tolerance": 17512,
+      "total_delta": -544,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_anon_kb@A1",
+      "values": [
+        43008,
+        43000,
+        43000,
+        43000,
+        43004
+      ],
+      "tolerance": 17512,
+      "total_delta": -4,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_anon_kb@A2",
+      "values": [
+        43000,
+        42988,
+        42984,
+        42976,
+        42984
+      ],
+      "tolerance": 17512,
+      "total_delta": -16,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_kb@A0",
+      "values": [
+        87395,
+        86863,
+        86851,
+        86847,
+        86839
+      ],
+      "tolerance": 17114,
+      "total_delta": -556,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_kb@A1",
+      "values": [
+        86828,
+        86819,
+        86819,
+        86819,
+        86823
+      ],
+      "tolerance": 17114,
+      "total_delta": -5,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_kb@A2",
+      "values": [
+        86820,
+        86807,
+        86803,
+        86795,
+        86803
+      ],
+      "tolerance": 17114,
+      "total_delta": -17,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_shmem_kb@A0",
+      "values": [
+        7148,
+        7148,
+        7148,
+        7148,
+        7148
+      ],
+      "tolerance": 512,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_shmem_kb@A1",
+      "values": [
+        7148,
+        7148,
+        7148,
+        7148,
+        7148
+      ],
+      "tolerance": 512,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.pss_shmem_kb@A2",
+      "values": [
+        7148,
+        7148,
+        7148,
+        7148,
+        7148
+      ],
+      "tolerance": 512,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.rss_kb@A0",
+      "values": [
+        226408,
+        225816,
+        225808,
+        225880,
+        225836
+      ],
+      "tolerance": 17192,
+      "total_delta": -572,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.rss_kb@A1",
+      "values": [
+        225896,
+        225888,
+        225880,
+        225836,
+        225876
+      ],
+      "tolerance": 17192,
+      "total_delta": -20,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.rss_kb@A2",
+      "values": [
+        225896,
+        225888,
+        225880,
+        225836,
+        225876
+      ],
+      "tolerance": 17192,
+      "total_delta": -20,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.threads@A0",
+      "values": [
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "tolerance": 2,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.threads@A1",
+      "values": [
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "tolerance": 2,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.threads@A2",
+      "values": [
+        13,
+        13,
+        13,
+        13,
+        13
+      ],
+      "tolerance": 2,
+      "total_delta": 0,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.vm_size_kb@A0",
+      "values": [
+        16700224,
+        16700536,
+        16700536,
+        16700536,
+        16700536
+      ],
+      "tolerance": 744960,
+      "total_delta": 312,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.vm_size_kb@A1",
+      "values": [
+        16741408,
+        16741720,
+        16741720,
+        16741720,
+        16741720
+      ],
+      "tolerance": 744960,
+      "total_delta": 312,
+      "class": "NOISE"
+    },
+    {
+      "key": "x.vm_size_kb@A2",
+      "values": [
+        16700224,
+        16700536,
+        16700536,
+        16700536,
+        16700536
+      ],
+      "tolerance": 744960,
+      "total_delta": 312,
+      "class": "NOISE"
+    }
+  ]
+}

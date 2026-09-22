@@ -1,0 +1,35 @@
+Starting: Intent { cmp=com.waydefu.x11gpu/com.termux.x11.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.waydefu.x11gpu/com.termux.x11.MainActivity
+TotalTime: 717
+WaitTime: 721
+Complete
+Starting: Intent { cmp=com.waydefu.x11gpu/com.termux.x11.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.waydefu.x11gpu/com.termux.x11.MainActivity
+TotalTime: 685
+WaitTime: 689
+Complete
+Starting: Intent { cmp=com.waydefu.x11gpu/com.termux.x11.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.waydefu.x11gpu/com.termux.x11.MainActivity
+TotalTime: 243
+WaitTime: 246
+Complete
+Starting: Intent { cmp=com.waydefu.x11gpu/com.termux.x11.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.waydefu.x11gpu/com.termux.x11.MainActivity
+TotalTime: 569
+WaitTime: 571
+Complete
+Starting: Intent { cmp=com.waydefu.x11gpu/com.termux.x11.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.waydefu.x11gpu/com.termux.x11.MainActivity
+TotalTime: 305
+WaitTime: 309
+Complete
