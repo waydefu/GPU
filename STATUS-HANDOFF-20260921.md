@@ -1,7 +1,10 @@
-# Gate A P2 — R9 COMPLETE (2/2 PASS) — 2026-09-21, updated 2026-09-22
+# Gate A P2 — R9 COMPLETE · D-06 DECIDED · R10 DESIGNED — 2026-09-21, updated 2026-09-22
 
 ```
-STATUS: R9 DEVICE PACKET **COMPLETE — 2/2 PASS**（V2-R9-AGG）
+STATUS: **D-06 DECIDED** — V1 不做 generation 2，採 fresh-process recovery
+        **V2-R10-DESIGN / PROBE-INVENTORY 完成**（commit 16cdb22），R10 尚未跑任何 round
+        R10 cell set 重建為 **A / B / C 三模式**，取代 WARM-R1..R5 / COLD-R1..R5
+        R9 DEVICE PACKET **COMPLETE — 2/2 PASS**（V2-R9-AGG）
         R9-F1 PASS  r9-f1/attempt-03   expected fatal x-wrong-generation reason=6
         R9-F2 PASS  r9-f2/attempt-02   new nonce · empty registry · event=5 · no fatal
         R9 DEVICE CELL SET = **2 格**（F1 / F2）。COLD-2 於 2026-09-22 被移除。
@@ -16,7 +19,9 @@ STATUS: R9 DEVICE PACKET **COMPLETE — 2/2 PASS**（V2-R9-AGG）
         b984ded and dc94485 evidence are NOT poolable
         Production Gate A BLOCKED
         V1-Core NOT QUALIFIED
-        TOOLING 3a12e73（R9）· 2a14ab2 + amendments v3..v11（R8，pushed to fork）
+        TOOLING 16cdb22（R10 probe）· b68770f（counter fix）· 3a12e73（R9）
+        ADB SERIAL 換了：手機換網段，現在是 192.168.1.104:36405（lane 5038）
+        永遠用 mdns 重新探測，不要沿用舊值
 ```
 
 ## 2026-09-22 — R9 的三件事（先讀這段）
@@ -1093,6 +1098,75 @@ Every attempt, including the five INVALID ones, is listed with its cause in
   live "after" identity; a second all-None record would make `load_boundaries` refuse
   a correct run.
 
+## 6.6 D-06 DECIDED + R10 REDESIGNED — 2026-09-22
+
+```
+D-06 決策        evidence/session/gate-a-a1/planning-v2/d06/D-06-DECISION.md
+R10 設計         evidence/session/gate-a-a1/planning-v2/r10-design/V2-R10-DESIGN.md
+R10 probe 證據   evidence/session/gate-a-a1/p2-r10-probe/probe-01/   （35 檔，已 hash）
+R10 metric 凍結  src/f8-ahb-gatea-r7-p1-arm/tests/r10/r10-probe-inventory.json
+R10 取樣器       src/f8-ahb-gatea-r7-p1-arm/tests/r10/r10_sample.py
+```
+
+### D-06：V1 不做 generation 2
+
+V1 不實作也不驗證 same-X warm reconnect、Activity replacement while retaining X、
+generation 2、cross-generation registry handoff、cross-generation GPU reclamation。
+V1 的 recovery model 是 **fresh-process recovery**。
+
+**重點是：這不是政策選擇，是產品目前唯一有的行為。** 新發現（D-06 §2.3）——
+`lorieGateAClassifyPeerHup` 的兩個 bound 分支**都** `_exit(127)`
+（`lorie_gatea_hup_class.h:28-34`、`activity.cpp:442-447`），所以只要 Gate A 是
+bound，X 的 socket 一 HUP，Activity process 就一起死。兩個分支都有實測：
+`r9-f1/attempt-03` 的 `GATEA_HUP_PRESERVE` + Zygote `exited cleanly (127)`，
+`r9-f2/attempt-01` 的 `what=r-hup reason=6`。
+
+**唯一例外，而且很重要（D-06 §2.4）：** clean close 時 renderer 會
+`lorieGateAUnbindTuple`（`renderer.cpp:846`），`gateABound` 歸 0，之後的 HUP 被分類為
+`UNBOUND`，**Activity 活下來**。新的 X 可以透過 `CmdEntryPoint` 每秒一次的
+`ACTION_START` 廣播重新接上（`CmdEntryPoint.java:125-129` → `MainActivity.java:130-133`
+→ `tryConnect` → `:612`）。實測兩次：R8-D attempt-01（renderer 29941 在
+`R_UNBOUND_FINAL` 後 2.5 秒仍在跑），以及 2026-09-22 的 probe-01。
+
+那是**新 session，不是 generation 2**：新 X process → 新 nonce → generation 1 →
+空 registry，完全不需要改產品。它之所以重要，是因為 **Activity process 活得比 session 久**，
+所以任何沒在 clean close 釋放掉的東西，會在使用者永遠不會重開的 process 裡累積。
+R10-B 就是為這件事設計的。
+
+### R10 重建成三個模式
+
+```
+R10-A  單一 session 內，workload 跑 N 次 —— 一次 workload 有沒有留下東西
+R10-B  一個存活的 Activity + >=5 個連續 clean session —— 一個 session 有沒有留下東西
+       （= 計畫書 §8.4 的 WARM，正確地重新界定）
+R10-C  >=5 次完整冷啟 + F/H 結尾各一輪 —— 系統殘留與「有沒有繼承舊 session 狀態」
+```
+
+`V2-R10-NOISE` 必須在任何受判 round 之前跑完並凍結 tolerance。
+
+### probe-01 三個會改變設計的實測
+
+1. **64×64 的 pair 量不到。** 一對約 32 KB，而 Activity 的 `egl_mtrack` 在 workload
+   完全相同的情況下擺動 ~35 MB、PSS 擺動 ~1.4 MB。R8/R9 的 workload 比雜訊低兩三個
+   數量級。R10 改用 4 對 1024×1024。
+2. **看起來像 leak 的東西不是 leak。** `activity.fd_count` 連續五個取樣每次 +1、
+   `gfx_dev` 每次 +8 KB，第六次全部被回收（fd 210→175）。系列跑不完就下 leak 結論會錯。
+3. **Activity 的 `/proc` 要用 `run-as`。** 一般 `adb shell` 讀 fd / maps /
+   smaps_rollup 是 Permission denied 或空白。而且 **絕對不能配 shell redirect**：
+   `run-as p wc -l < /proc/X/maps` 是外層 shell 在解析，會回空字串卻看起來像讀到了。
+
+### clean close 的正確形狀（probe-01 實測）
+
+```
+GATEA_SUMMARY where=x-close-screen nonce=0 generation=0 generationFatal=0
+  c12/c13 AHB      16/16      c14/c15 EGLImage 16/16    c16/c17 texture 16/16
+  c18 X registry 0   c19 renderer registry 0   c20 lease 0   c27 close 1
+```
+
+**注意 counter 索引**：`c18`/`c19` 才是 registry-current，`c25`/`c26` 是
+UNREGISTER / RESOURCE_DESTROY。工具原本讀錯（已於 `b68770f` 修正並加靜態檢查）；
+用舊的讀法，上面這個完全乾淨的 close 會被讀成「16 個 entry 沒釋放」。
+
 ## 7. Redlines still in force
 
 ```
@@ -1125,6 +1199,10 @@ D-06   FED, not decided. Two inputs now on the record:
            context never turns over, so only process death reclaims them (Q4-F2, Q5).
        R9-F2 shows the NEXT process starts clean; it does NOT show the previous one
        released anything.
+R-30   OPEN — the three ahb_*_fence_fd metrics (plan §9.4, from V-5) have NO trace
+       site in dc94485. Frozen null in r10-probe-inventory.json so the gap stays
+       visible. R10 cannot answer the fence-fd ownership question without a product
+       change, which is a D-12-class decision R10 does not make.
 R-29   OPEN — the six removed R9 cells are not "done", they are unreachable in THIS
        product. Reopen WARM-1/2/3 and COLD-2 if a warm reconnect/rebind entry point
        is added; reopen COLD-1/3 and COLD-2 if a renderer fatal publisher appears

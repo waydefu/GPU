@@ -1,0 +1,4 @@
+FDSize:	256
+VmSize:	17906244 kB
+VmRSS:	  215868 kB
+Threads:	32
