@@ -1,0 +1,33 @@
+{
+  "Thunar": 28523,
+  "bash": [
+    29845,
+    30818
+  ],
+  "dbus-daemon": 28185,
+  "dbus-run-sessio": 28180,
+  "gvfs-afc-volume": 28654,
+  "gvfs-goa-volume": 28674,
+  "gvfs-gphoto2-vo": 28667,
+  "gvfs-mtp-volume": 28661,
+  "gvfs-udisks2-vo": 28648,
+  "gvfsd": 28228,
+  "gvfsd-metadata": 28710,
+  "gvfsd-trash": 28699,
+  "panel-10-notifi": 28582,
+  "panel-14-action": 28592,
+  "panel-6-systray": 28581,
+  "tumblerd": 28572,
+  "xfce4-notifyd": 28876,
+  "xfce4-panel": 28517,
+  "xfce4-session": 28189,
+  "xfce4-terminal": [
+    29828,
+    30614,
+    31145
+  ],
+  "xfconfd": 28195,
+  "xfdesktop": 28557,
+  "xfsettingsd": 28505,
+  "xfwm4": 28203
+}

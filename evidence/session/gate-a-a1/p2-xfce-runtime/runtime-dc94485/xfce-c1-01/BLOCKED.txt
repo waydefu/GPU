@@ -1,0 +1,2 @@
+external_display_connected 0
+x

@@ -1,0 +1,247 @@
+RequestedLayerState{ScreenFadeAnim#133 parentId=123 z=1073741825}
+RequestedLayerState{27cb856 DynamicIslandWindow#125 parentId=124}
+RequestedLayerState{WindowedMagnification:0:31#3 parentId=47}
+RequestedLayerState{HideDisplayCutout:0:14#4 parentId=3}
+RequestedLayerState{OneHanded:0:14#5 parentId=4}
+RequestedLayerState{AppZoomOut:0:0#6 parentId=5}
+RequestedLayerState{Leaf:0:0#7 parentId=6}
+RequestedLayerState{Leaf:1:1#8 parentId=5 z=1}
+RequestedLayerState{AppZoomOut:2:14#9 parentId=5 z=2}
+RequestedLayerState{DefaultTaskDisplayArea#10 parentId=9}
+RequestedLayerState{Leaf:3:12#11 parentId=9 z=1}
+RequestedLayerState{ImePlaceholder:13:14#12 parentId=9 z=2}
+RequestedLayerState{ImeContainer#13 parentId=12 relativeParentId=32663 z=1}
+RequestedLayerState{OneHanded:15:15#14 parentId=3 z=1}
+RequestedLayerState{Leaf:15:15#15 parentId=14}
+RequestedLayerState{HideDisplayCutout:16:16#16 parentId=3 z=2}
+RequestedLayerState{OneHanded:16:16#17 parentId=16}
+RequestedLayerState{AppZoomOut:16:16#18 parentId=17}
+RequestedLayerState{Leaf:16:16#19 parentId=18}
+RequestedLayerState{OneHanded:17:17#20 parentId=3 z=3}
+RequestedLayerState{Leaf:17:17#21 parentId=20}
+RequestedLayerState{HideDisplayCutout:18:23#22 parentId=3 z=4}
+RequestedLayerState{OneHanded:18:23#23 parentId=22}
+RequestedLayerState{AppZoomOut:18:18#24 parentId=23}
+RequestedLayerState{Leaf:18:18#25 parentId=24}
+RequestedLayerState{Leaf:19:19#26 parentId=23 z=1}
+RequestedLayerState{AppZoomOut:20:21#27 parentId=23 z=2}
+RequestedLayerState{Leaf:20:21#28 parentId=27}
+RequestedLayerState{Leaf:22:22#29 parentId=23 z=3}
+RequestedLayerState{AppZoomOut:23:23#30 parentId=23 z=4}
+RequestedLayerState{Leaf:23:23#31 parentId=30}
+RequestedLayerState{Leaf:24:25#32 parentId=3 z=5}
+RequestedLayerState{HideDisplayCutout:26:31#33 parentId=3 z=6}
+RequestedLayerState{OneHanded:26:31#34 parentId=33}
+RequestedLayerState{AppZoomOut:26:31#35 parentId=34}
+RequestedLayerState{Leaf:26:31#36 parentId=35}
+RequestedLayerState{HideDisplayCutout:32:36#37 parentId=47 z=1}
+RequestedLayerState{OneHanded:32:32#38 parentId=37}
+RequestedLayerState{AppZoomOut:32:32#39 parentId=38}
+RequestedLayerState{Leaf:32:32#40 parentId=39}
+RequestedLayerState{AppZoomOut:33:33#41 parentId=37 z=1}
+RequestedLayerState{Leaf:33:33#42 parentId=41}
+RequestedLayerState{OneHanded:34:36#43 parentId=37 z=2}
+RequestedLayerState{AppZoomOut:34:36#44 parentId=43}
+RequestedLayerState{Leaf:34:36#45 parentId=44}
+RequestedLayerState{Leaf:37:37#46 parentId=47 z=2}
+RequestedLayerState{Display 0 name="內建畫面"#47}
+RequestedLayerState{Display Overlays#48 parentId=47 z=2147483647}
+RequestedLayerState{Input Overlays#49 parentId=47 z=2147483646}
+RequestedLayerState{Accessibility Overlays#50 parentId=47 z=2147483645}
+RequestedLayerState{Task=1#51 parentId=10}
+RequestedLayerState{StatusBar Container of Task = 1#52 parentId=51 z=2147483636}
+RequestedLayerState{[Gesture Monitor] miui-gesture#53 parentId=49 z=1}
+RequestedLayerState{[Gesture Monitor] vibrator-input#54 parentId=49 z=1}
+RequestedLayerState{Task=2#55 parentId=51}
+RequestedLayerState{StatusBar Container of Task = 2#56 parentId=55 z=2147483636}
+RequestedLayerState{ActivityRecord{243893529 u0 com.mi.android.globallauncher/com.miui.home.launcher.Launcher t2}#57 parentId=55}
+RequestedLayerState{WallpaperWindowToken{925c01e showWhenLocked=false}#58 parentId=8}
+RequestedLayerState{WallpaperWindowToken{9e9dd91 showWhenLocked=false}#59 parentId=8 z=1}
+RequestedLayerState{bf4aadd com.miui.miwallpaper.wallpaperservice.ImageWallpaper#60 parentId=58}
+RequestedLayerState{com.miui.miwallpaper.wallpaperservice.ImageWallpaper#61 parentId=60}
+RequestedLayerState{Wallpaper BBQ wrapper#62 parentId=61}
+RequestedLayerState{70bfdd8 com.miui.miwallpaper.wallpaperservice.MiuiKeyguardPictorialWallpaper#63 parentId=59}
+RequestedLayerState{com.miui.miwallpaper.wallpaperservice.MiuiKeyguardPictorialWallpaper#64 parentId=63}
+RequestedLayerState{Wallpaper BBQ wrapper-lock#65 parentId=64}
+RequestedLayerState{c7e56fd NotificationModalWindowManager#109 parentId=108}
+RequestedLayerState{Input Consumer recents_animation_input_consumer#67 relativeParentId=31305 z=2147483647}
+RequestedLayerState{WindowToken{71bedce type=2027 android.os.BinderProxy@ba692c9}-topChild=null#68 parentId=36}
+RequestedLayerState{3ba8bfc GestureStubLeft#69 parentId=68}
+RequestedLayerState{WindowToken{2a5e932 type=2024 android.os.BinderProxy@61f8d3d}-topChild=null#70 parentId=32 z=1}
+RequestedLayerState{dd4d000 GestureStubHome#71 parentId=70}
+RequestedLayerState{WindowToken{cd510eb type=2027 android.os.BinderProxy@6e20c3a}-topChild=null#72 parentId=36 z=1}
+RequestedLayerState{4d4b206 GestureStubRight#73 parentId=72}
+RequestedLayerState{GestureStubHome#74 parentId=71}
+RequestedLayerState{GestureStubLeft#75 parentId=69}
+RequestedLayerState{home_task_overlay_container#76 z=2147483647}
+RequestedLayerState{GestureStubRight#77 parentId=73}
+RequestedLayerState{MultiTaskingVisualsController#78}
+RequestedLayerState{MaskParent#79 parentId=10 z=2147483647}
+RequestedLayerState{MaskSnapshotLayer_dragIcon#80}
+RequestedLayerState{MaskDark_dragIcon#81}
+RequestedLayerState{MaskIcon_dragIcon#82}
+RequestedLayerState{14ff517 com.mi.android.globallauncher/com.miui.home.launcher.Launcher#83 parentId=57}
+RequestedLayerState{WindowToken{9de679a type=2017 android.os.BinderProxy@c91d08e}-topChild=null#108 parentId=25}
+RequestedLayerState{[Gesture Monitor] WMShell#85 parentId=49 z=1}
+RequestedLayerState{[Gesture Monitor] onehanded-touch#86 parentId=49 z=1}
+RequestedLayerState{Task=3#87 parentId=10 z=2}
+RequestedLayerState{Task=4#88 parentId=87}
+RequestedLayerState{StatusBar Container of Task = 4#89 parentId=88 z=2147483636}
+RequestedLayerState{StatusBar Container of Task = 3#90 parentId=87 z=2147483636}
+RequestedLayerState{Task=5#91 parentId=87 z=1}
+RequestedLayerState{StatusBar Container of Task = 5#92 parentId=91 z=2147483636}
+RequestedLayerState{Task=6#93 parentId=10 z=1}
+RequestedLayerState{StatusBar Container of Task = 6#94 parentId=93 z=2147483636}
+RequestedLayerState{Task=7#95 parentId=93}
+RequestedLayerState{StatusBar Container of Task = 7#96 parentId=95 z=2147483636}
+RequestedLayerState{Task=8#97 parentId=93 z=1}
+RequestedLayerState{StatusBar Container of Task = 8#98 parentId=97 z=2147483636}
+RequestedLayerState{WindowToken{6a34e29 type=2038 android.os.BinderProxy@a059f24}-topChild=null#99 parentId=11}
+RequestedLayerState{b53e562 ShellDropTarget#100 parentId=99}
+RequestedLayerState{SoScBlurController#101 parentId=87 z=-30}
+RequestedLayerState{Dim layer#102 parentId=88 z=2147483647}
+RequestedLayerState{WindowToken{8f187c8 type=2016 android.os.BinderProxy@ca80eb3}-topChild=null#103 parentId=36 z=4}
+RequestedLayerState{42bc529 MiuiShellDropTarget#104 parentId=103}
+RequestedLayerState{Dim layer#105 parentId=91 z=2147483647}
+RequestedLayerState{Dim layer#106 parentId=95 z=2147483647}
+RequestedLayerState{Dim layer#107 parentId=97 z=2147483647}
+RequestedLayerState{WindowToken{6617ea3 type=2019 android.os.BinderProxy@44ed05d}-topChild=null#110 parentId=32}
+RequestedLayerState{12d1559 NavigationBar0#111 parentId=32865}
+RequestedLayerState{WindowToken{a720fb9 type=2000 android.os.BinderProxy@8139a03}-topChild=null#112 parentId=15}
+RequestedLayerState{a8a21ac StatusBar#113 parentId=32864}
+RequestedLayerState{WindowToken{306a009 type=2040 android.os.BinderProxy@7c07dd3}-topChild=null#114 parentId=21}
+RequestedLayerState{58b242f NotificationShade#115 parentId=114}
+RequestedLayerState{WindowToken{41519b1 type=2024 android.os.BinderProxy@6494458}-topChild=null#116 parentId=32 z=2}
+RequestedLayerState{5fa1a17 SecondaryHomeHandle0#117 parentId=116}
+RequestedLayerState{NavigationBar0#118 parentId=111}
+RequestedLayerState{StatusBar#119 parentId=113}
+RequestedLayerState{18c082f InputMethod#8710 parentId=32835}
+RequestedLayerState{WindowToken{9041d5a type=2038 android.os.BinderProxy@412d905}-topChild=null#18391 parentId=11 z=1}
+RequestedLayerState{30b8621 com.facebook.orca/com.facebook.messaging.msys.thread.fragment.MsysThreadViewActivity#32602 parentId=32589}
+RequestedLayerState{screenFade-container#123 parentId=47 z=1073741825}
+RequestedLayerState{WindowToken{b7be818 type=2009 android.os.BinderProxy@6f4d8a}-topChild=null#124 parentId=26}
+RequestedLayerState{#32676 parentId=32667}
+RequestedLayerState{80646e5 LauncherOverlayWindow:com.mi.appfinder#16787 parentId=57 z=1}
+RequestedLayerState{MaskIcon_1375#32846}
+RequestedLayerState{ActivityRecord{227011493 u0 tv.danmaku.bili/.MainActivityV2 t1367}#30402 parentId=30400}
+RequestedLayerState{ActivityRecord{98053195 u0 com.termux.x11/.MainActivity t1369}#31307 parentId=31305}
+RequestedLayerState{SurfaceControlViewHost#14766 parentId=14769}
+RequestedLayerState{StatusBar Container of Task = 1369#31306 parentId=31305 z=2147483636}
+RequestedLayerState{Surface(name=WallpaperWindowToken{925c01e showWhenLocked=false}#58)/@0x5ad1b10_transition-leash#32740 z=-2}
+RequestedLayerState{Task=1354#27981 z=4}
+RequestedLayerState{WindowToken{8cf320 type=2011 android.os.Binder@961f223}-topChild=null#8709 parentId=13}
+RequestedLayerState{b3abaf1 com.android.settings/com.android.settings.SubSettings#31799 parentId=31798}
+RequestedLayerState{Background for b311327 SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity]#32853 parentId=32851 relativeParentId=32848 z=-2147483648}
+RequestedLayerState{MiuiPaperContrastOverlay#30341 parentId=3 z=1000000}
+RequestedLayerState{SurfaceControlViewHost-com.android.soundrecorderLeash#14767 parentId=14766}
+RequestedLayerState{[BBQ] Floating Icon#32710#32711 parentId=32710}
+RequestedLayerState{WindowToken{e3e3237 type=2038 android.os.BinderProxy@ed8f336}-topChild=null#32662 parentId=11 z=2}
+RequestedLayerState{SurfaceControlViewHost-com.xiaomi.calendarLeash#14134 parentId=14133}
+RequestedLayerState{ActivityRecord{192306079 u0 com.facebook.orca/com.facebook.messaging.msys.thread.fragment.MsysThreadViewActivity t1374}#32589 parentId=32587}
+RequestedLayerState{Shell Root Leash 0#18392 parentId=18391}
+RequestedLayerState{#32675 parentId=32665}
+RequestedLayerState{element surface parent#31587 z=10}
+RequestedLayerState{a61c50d com.facebook.orca#32663 parentId=32662}
+RequestedLayerState{MaskDark_1375#32845}
+RequestedLayerState{StatusBar Container of Task = 1370#31352 parentId=31351 z=2147483636}
+RequestedLayerState{SurfaceControlViewHost-com.xiaomi.calendar#14135 parentId=14134}
+RequestedLayerState{SurfaceControlViewHost#30935}
+RequestedLayerState{Task=1367#30400 parentId=10 z=4}
+RequestedLayerState{element surface parent#14769 parentId=3 z=10}
+RequestedLayerState{ActivityRecord{38437076 u0 com.github.android/.main.MainActivity t1373}#31913 parentId=31911}
+RequestedLayerState{element surface parent#14136}
+RequestedLayerState{ActivityRecord{24216235 u0 com.android.settings/.SubSettings t1371}#31798 parentId=31770 z=1}
+RequestedLayerState{StatusBar Container of Task = 1374#32588 parentId=32587 z=2147483636}
+RequestedLayerState{SurfaceControlViewHost-com.android.soundrecorder#14768 parentId=14767}
+RequestedLayerState{Surface(name=Task=1321#23357)/@0xb843a2e_transition-leash#23409 z=10}
+RequestedLayerState{SurfaceControlViewHost#14133 parentId=14136}
+RequestedLayerState{Surface(name=Task=1374#32587)/@0xa9b08d2_transition-leash#32636 z=8}
+RequestedLayerState{823ba79 VtbAssistantView#31631 parentId=31630}
+RequestedLayerState{ActivityRecord{155713611 u0 com.facebook.orca/com.facebook.messaging.montage.composer.MontageComposerActivity t1374}#32600 z=1}
+RequestedLayerState{MaskSnapshotLayer_1375#32844}
+RequestedLayerState{5060cbf com.termux.x11/com.termux.x11.MainActivity#31323 parentId=31307}
+RequestedLayerState{Surface(name=Task=1#51)/@0x6564d34_transition-leash#32635 z=6}
+RequestedLayerState{Surface(name=WallpaperWindowToken{925c01e showWhenLocked=false}#58)/@0xcea67f0_transition-leash#32705 z=-2}
+RequestedLayerState{element surface parent#23129 z=10}
+RequestedLayerState{MiuiPaperContrastOverlay#30342 parentId=30341}
+RequestedLayerState{StatusBar Container of Task = 1367#30401 parentId=30400 z=2147483636}
+RequestedLayerState{VtbAssistantView#32352 parentId=31625}
+RequestedLayerState{ActivityRecord{6265285 u0 com.openai.chatgpt/.MainActivity t1370}#31353 parentId=31351}
+RequestedLayerState{ActivityRecord{62001825 u0 com.android.settings/.MainSettings t1371}#31772 parentId=31770}
+RequestedLayerState{Surface(name=a8a21ac StatusBar#113)/@0xc9f09f3 - animation-leash of insets_animation#32864 parentId=112}
+RequestedLayerState{Surface(name=Task=1371#31770)/@0x42f0bfb_transition-leash#32770 z=8}
+RequestedLayerState{Task=1348#26370 z=5}
+RequestedLayerState{WindowToken{50f16c3 type=2003 android.os.BinderProxy@23ba272}-topChild=null#31630 parentId=11 z=8}
+RequestedLayerState{Task=1308#19804 z=1}
+RequestedLayerState{StatusBar Container of Task = 1308#19805 z=2147483636}
+RequestedLayerState{f1a021e tv.danmaku.bili/tv.danmaku.bili.MainActivityV2#30418 parentId=30402}
+RequestedLayerState{#32677 parentId=32669}
+RequestedLayerState{Task=1345#25878 z=3}
+RequestedLayerState{Surface(name=a8a21ac StatusBar#113)/@0xc9f09f3 - animation-leash of insets_animation#32598}
+RequestedLayerState{b19f21 com.facebook.orca#32674 parentId=32673}
+RequestedLayerState{SurfaceControlViewHost#23126 parentId=23129 !handle}
+RequestedLayerState{Surface(name=Task=1#51)/@0x9003973_transition-leash#23408 z=8}
+RequestedLayerState{Surface(name=Task=1369#31305)/@0x6a263a2_transition-leash#32704 z=8}
+RequestedLayerState{StatusBar Container of Task = 1371#31771 parentId=31770 z=2147483636}
+RequestedLayerState{Surface(name=Task=1#51)/@0x2d5784_transition-leash#32703 z=6}
+RequestedLayerState{Task=1373#31911 parentId=10 z=6}
+RequestedLayerState{WindowToken{5d1ff6f type=2032 android.os.Binder@703524e}-topChild=null#30672 parentId=36 z=5}
+RequestedLayerState{Surface(name=Task=1371#31770)/@0x76dd9c2_transition-leash#32739 z=8}
+RequestedLayerState{Task=1371#31770 parentId=10 z=8}
+RequestedLayerState{SurfaceControlViewHost#31203}
+RequestedLayerState{5ea9fab com.github.android/com.github.android.main.MainActivity#31929 parentId=31913}
+RequestedLayerState{ActivityRecord{212781183 u0 tv.danmaku.bili/com.bilibili.search2.main.BiliMainSearchActivity t1367}#30906 parentId=30400 z=1}
+RequestedLayerState{51b9881 tv.danmaku.bili/com.bilibili.search2.main.BiliMainSearchActivity#30907 parentId=30906}
+RequestedLayerState{Surface(name=12d1559 NavigationBar0#111)/@0x28361ff - animation-leash of insets_animation#32599}
+RequestedLayerState{SurfaceControlViewHost#31584 parentId=31587}
+RequestedLayerState{SurfaceControlViewHost#30996}
+RequestedLayerState{SurfaceControlViewHost#31067}
+RequestedLayerState{SurfaceControlViewHost#31472}
+RequestedLayerState{Task=1370#31351 parentId=10 z=5}
+RequestedLayerState{StatusBar Container of Task = 1373#31912 parentId=31911 z=2147483636}
+RequestedLayerState{Floating Icon#32710}
+RequestedLayerState{Task=1369#31305 parentId=10 z=9}
+RequestedLayerState{86b38f6 com.android.settings/com.android.settings.MainSettings#31788 parentId=31772}
+RequestedLayerState{Letterbox - top#31325 parentId=31307 z=-20000}
+RequestedLayerState{9703c89 com.termux/com.termux.app.TermuxActivity#31291 parentId=31277}
+RequestedLayerState{1901c9a com.openai.chatgpt/com.openai.chatgpt.MainActivity#31374 parentId=31353}
+RequestedLayerState{Task=1374#32587 parentId=10 z=7}
+RequestedLayerState{Surface(name=18c082f InputMethod#8710)/@0xef5b7c5 - animation-leash of insets_animation#32835 parentId=8709}
+RequestedLayerState{b311327 SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity]#32851 parentId=32850 relativeParentId=32848 z=-2}
+RequestedLayerState{WindowToken{5c0c94b type=2003 android.os.BinderProxy@b81ea1a}-topChild=null#31628 parentId=11 z=7}
+RequestedLayerState{Task=1368#31275 parentId=10 z=3}
+RequestedLayerState{StatusBar Container of Task = 1368#31276 parentId=31275 z=2147483636}
+RequestedLayerState{ActivityRecord{59008327 u0 com.termux/.app.TermuxActivity t1368}#31277 parentId=31275}
+RequestedLayerState{ActivityRecord{214893556 u0 tv.danmaku.bili/com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity t1367}#31569 parentId=30400 z=2}
+RequestedLayerState{c743da8 tv.danmaku.bili/com.bilibili.ship.theseus.detail.UnitedBizDetailsActivity#31570 parentId=31569}
+RequestedLayerState{7bc441 VtbAssistantView#31629 parentId=31628}
+RequestedLayerState{WindowToken{a08535b type=2026 android.os.BinderProxy@d08126a}-topChild=null#31624 parentId=36 z=2}
+RequestedLayerState{90104d1 VtbAssistantView#31625 parentId=31624}
+RequestedLayerState{WindowToken{35bd2d3 type=2026 android.os.BinderProxy@eb484c2}-topChild=null#31626 parentId=36 z=3}
+RequestedLayerState{de7d09 VtbAssistantView#31627 parentId=31626}
+RequestedLayerState{WindowToken{24bb12b type=2038 android.os.BinderProxy@20a057a}-topChild=null#32673 parentId=11 z=6}
+RequestedLayerState{Surface(name=Task=1#51)/@0xde518a4_transition-leash#32738 z=6}
+RequestedLayerState{a0674da GoogleDiscoverWindow#32199 parentId=57 z=2}
+RequestedLayerState{Surface(name=Task=1#51)/@0xbefd7f5_transition-leash#32769 z=6}
+RequestedLayerState{Surface(name=12d1559 NavigationBar0#111)/@0x28361ff - animation-leash of insets_animation#32865 parentId=110}
+RequestedLayerState{com.miui.securitycenter/.FloatingWindow#32353 parentId=31629}
+RequestedLayerState{#32670 parentId=32663}
+RequestedLayerState{452d35 com.facebook.orca#32669 parentId=32668}
+RequestedLayerState{WindowToken{880c41f type=2038 android.os.BinderProxy@7b47bbe}-topChild=null#32668 parentId=11 z=5}
+RequestedLayerState{adb0b7d com.facebook.orca#32667 parentId=32666}
+RequestedLayerState{WindowToken{24a1727 type=2038 android.os.BinderProxy@42295e6}-topChild=null#32666 parentId=11 z=4}
+RequestedLayerState{d9788c5 com.facebook.orca#32665 parentId=32664}
+RequestedLayerState{WindowToken{35b312f type=2038 android.os.BinderProxy@28f330e}-topChild=null#32664 parentId=11 z=3}
+RequestedLayerState{Surface(name=WallpaperWindowToken{925c01e showWhenLocked=false}#58)/@0x332fe71_transition-leash#32771 z=-2}
+RequestedLayerState{d8171e9 ActivityRecordInputSink com.waydefu.x11gpu/com.termux.x11.MainActivity#32843 parentId=32838 z=-2147483648}
+RequestedLayerState{Bounds for - com.waydefu.x11gpu/com.termux.x11.MainActivity#32850 parentId=32848}
+RequestedLayerState{Letterbox - top#32849 parentId=32838 z=-20000}
+RequestedLayerState{com.waydefu.x11gpu/com.termux.x11.MainActivity#32848 parentId=32847}
+RequestedLayerState{Surface(name=WallpaperWindowToken{925c01e showWhenLocked=false}#58)/@0xf1e6ddf_transition-leash#32823 z=-2}
+RequestedLayerState{Surface(name=Task=1369#31305)/@0x1038639_transition-leash#32822 z=8}
+RequestedLayerState{Surface(name=Task=1#51)/@0x1598c83_transition-leash#32821 z=6}
+RequestedLayerState{Task=1375#32836 parentId=10 z=10}
+RequestedLayerState{StatusBar Container of Task = 1375#32837 parentId=32836 z=2147483636}
+RequestedLayerState{ActivityRecord{32886172 u0 com.waydefu.x11gpu/com.termux.x11.MainActivity t1375}#32838 parentId=32836}
+RequestedLayerState{b311327 SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#32852 parentId=32851}
+RequestedLayerState{d08aa07 com.waydefu.x11gpu/com.termux.x11.MainActivity#32847 parentId=32838}

@@ -1,0 +1,12 @@
+{
+  "source_sha": "bfb576940ded333f49d29a8910a785f8d680261c",
+  "apk_sha256": "ff7b9309c405b07245bc352911867a66e8498464e515e09dbd645b3a1ec18472",
+  "build_id": "890db760a77a7d22945b9640705f70d025b5d518",
+  "signer": "b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1",
+  "provenance": {
+    "apk_sha256": "MEASURED - sha256sum of $(pm path) on device, compared before any mutation; mismatch is refuse() R8_BLOCKED",
+    "signer": "DERIVED - the installed APK is byte-identical to the pinned artifact, therefore its embedded signing certificate is the pinned one. Not independently re-verified with apksigner here.",
+    "build_id": "NON-DISCRIMINATING - this ELF build-id is identical across product fb4f017 and b984ded, so it cannot establish artifact identity. Recorded for continuity only; apk_sha256 is the discriminating check.",
+    "source_sha": "BOUND - CI 35347497216 head; not re-derivable from the device"
+  }
+}

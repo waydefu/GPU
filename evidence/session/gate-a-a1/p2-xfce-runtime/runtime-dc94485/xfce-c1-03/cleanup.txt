@@ -1,0 +1,6 @@
+leftovers_after_logout:
+29828 xfce4-terminal
+29845 bash
+30614 xfce4-terminal
+30818 bash
+31145 xfce4-terminal

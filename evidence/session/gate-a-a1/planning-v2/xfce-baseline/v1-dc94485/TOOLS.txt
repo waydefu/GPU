@@ -1,0 +1,2 @@
+tools: tests/xfce @ fork bfb5769, FROZEN-SHA256SUMS a3eeaf9de97e9380 (XFCE-FREEZE-V1, unchanged since dfb82e6)
+b01115abc4a5983c660b83fd61ea372e0799e81a618373003583c097d8065344  xfce_aggregate.py

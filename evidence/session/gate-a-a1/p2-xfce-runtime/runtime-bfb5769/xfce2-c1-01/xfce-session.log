@@ -1,0 +1,10 @@
+dbus-daemon[638]: [session uid=0 pid=638] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[638]: [session uid=0 pid=638] Activating service name='org.xfce.Xfconf' requested by ':1.0' (uid=0 pid=642 comm="xfce4-session" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[638]: [session uid=0 pid=638] Successfully activated service 'org.xfce.Xfconf'
+/usr/bin/iceauth:  creating new authority file /tmp/xfce-x3-run-20260923105019-31812/runtime/ICEauthority
+
+(xfconfd:649): xfconfd-WARNING **: 10:50:35.141: Name org.xfce.Xfconf lost on the message dbus, exiting.
+
+(xfwm4:658): xfwm4-CRITICAL **: 10:50:35.535: Xfconf could not be initialized
+
+(xfwm4:658): xfwm4-WARNING **: 10:50:35.536: Missing data from default files

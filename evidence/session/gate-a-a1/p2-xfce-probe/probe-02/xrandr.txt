@@ -1,0 +1,3 @@
+Screen 0: minimum 1 x 1, current 1200 x 2191, maximum 32767 x 32767
+builtin connected 1200x2191+0+0 0mm x 0mm
+   1200x2191    119.93* 

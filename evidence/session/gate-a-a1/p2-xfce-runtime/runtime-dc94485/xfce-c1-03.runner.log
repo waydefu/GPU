@@ -1,0 +1,3 @@
+STOP logcat pid 27309 still alive after TERM
+XFCE_CAPTURED variant=C1 evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-xfce-runtime/runtime-dc94485/xfce-c1-03
+runner_rc=0

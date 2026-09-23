@@ -1,0 +1,2 @@
+
+(xfce4-terminal:13346): xfce4-terminal-WARNING **: 15:15:53.411: Failed to connect to session manager: Failed to connect to the session manager: SESSION_MANAGER environment variable not defined

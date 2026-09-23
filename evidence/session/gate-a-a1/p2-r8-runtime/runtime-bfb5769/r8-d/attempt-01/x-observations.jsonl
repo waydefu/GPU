@@ -1,0 +1,119 @@
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 0, "case": "R8-D", "phase": "BEGIN", "original_nonce": 0, "original_generation": 0, "expected_count": null, "expected_digest": null}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 1, "case": "R8-D", "phase": "TEST_CONTROL", "original_nonce": 0, "original_generation": 0, "op": "EXT_INIT"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 2, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 2, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 3, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 4, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 3, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 5, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 6, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 1, "type": 4, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 7, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 2, "type": 4, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 8, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 1, "type": 4}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 9, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 0, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 10, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 11, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 2, "type": 4}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 12, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 4, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 13, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 14, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 3, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 15, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 16, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 4, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 17, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 2}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 18, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 5, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 19, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 3}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 20, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 6, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 21, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 4}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 22, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 3, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 23, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 24, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 4, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 25, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 26, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 5, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 27, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 28, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 6, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 29, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 30, "case": "R8-D", "phase": "X_TERMINAL_WAIT_ENTER", "original_nonce": 0, "original_generation": 0, "serial": 5, "kind": "completedSerial"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 31, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 7, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 32, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 33, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 7, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 34, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 35, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 6, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 36, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 7, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 37, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 8, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 38, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 6}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 39, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 6, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 40, "case": "R8-D", "phase": "X_TERMINAL_WAIT_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 6, "serial": 5, "kind": "unregister"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 41, "case": "R8-D", "phase": "X_TERMINAL_WAIT_ENTER", "original_nonce": 0, "original_generation": 0, "serial": 5, "kind": "completedSerial"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 42, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 9, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 43, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 7}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 44, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 45, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 8, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 46, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 47, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 7, "dst_id": 0, "waited": 0, "completedSerial": 7, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 48, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 6, "dst_id": 0, "waited": 0, "completedSerial": 7, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 49, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 9, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 50, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 51, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 7, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 52, "case": "R8-D", "phase": "X_TERMINAL_WAIT_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 7, "serial": 5, "kind": "unregister"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 53, "case": "R8-D", "phase": "X_TERMINAL_WAIT_ENTER", "original_nonce": 0, "original_generation": 0, "serial": 5, "kind": "completedSerial"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 54, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 55, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 8, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 56, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 8, "dst_id": 0, "waited": 1, "completedSerial": 7, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 57, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 9, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 58, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 10, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 59, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 8}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 60, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 9, "dst_id": 0, "waited": 1, "completedSerial": 8, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 61, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 10, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 62, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 10, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 63, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 64, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 11, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 65, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 9}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 66, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 12, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 67, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 10}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 68, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 11, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 69, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 11, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 70, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 71, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 10, "dst_id": 0, "waited": 0, "completedSerial": 10, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 72, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 12, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 73, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 74, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 11, "dst_id": 0, "waited": 1, "completedSerial": 10, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 75, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 12, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 76, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 13, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 77, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 11}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 78, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 14, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 79, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 12}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 80, "case": "R8-D", "phase": "PRESENT_SUBMIT", "original_nonce": 0, "original_generation": 0, "gpu_serial": 13, "dst_id": 5}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 81, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 13, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 82, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 83, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 12, "dst_id": 0, "waited": 0, "completedSerial": 12, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 84, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 14, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 85, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 86, "case": "R8-D", "phase": "PRESENT_PRE_ACK", "original_nonce": 0, "original_generation": 0, "gpu_serial": 13, "dst_id": 0, "waited": 0, "completedSerial": 13, "firstFailed": 0, "generationFatal": 0}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 87, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 15, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 88, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 13}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 89, "case": "R8-D", "phase": "DEFER_DISPATCH", "original_nonce": 0, "original_generation": 0, "local_id": 15, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 90, "case": "R8-D", "phase": "RECHECK", "original_nonce": 0, "original_generation": 0, "site": "handleLegacyRecord"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 91, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 8, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 92, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 93, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 9, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 94, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 95, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 10, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 96, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 97, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 11, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 98, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 99, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 12, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 100, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 101, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 13, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 102, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 103, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 14, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 104, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 105, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 15, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 106, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 107, "case": "R8-D", "phase": "DEFER_ENQUEUE", "original_nonce": 0, "original_generation": 0, "local_id": 16, "type": 17, "nonce": 12223686255141495955, "generation": 1}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 108, "case": "R8-D", "phase": "X_WAKE_RECEIVED", "original_nonce": 0, "original_generation": 0, "ordinal": 14}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 109, "case": "R8-D", "phase": "TEST_CONTROL", "original_nonce": 0, "original_generation": 0, "op": "TERMINATE"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 110, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 1, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 111, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 112, "case": "R8-D", "phase": "X_CLOSE_ENTER", "original_nonce": 0, "original_generation": 0, "path": "lorieCloseScreen"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 113, "case": "R8-D", "phase": "X_TERMINAL_WAIT_ENTER", "original_nonce": 0, "original_generation": 0, "serial": 14, "kind": "completedSerial"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 114, "case": "R8-D", "phase": "DEFER_CANCEL", "original_nonce": 0, "original_generation": 0, "local_id": 16, "type": 17}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 115, "case": "R8-D", "phase": "X_CLOSE_RESULT", "original_nonce": 0, "original_generation": 0, "generation_close": "invoked"}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 116, "case": "R8-D", "phase": "X_DESTRUCTOR_ENTER", "original_nonce": 0, "original_generation": 0, "bufferId": 5, "overlap": false}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 117, "case": "R8-D", "phase": "X_DESTRUCTOR_EXIT", "original_nonce": 0, "original_generation": 0, "released": true}
+{"v": 1, "role": "x", "pid": 27114, "tid": 27563, "producer_seq": 117, "case": "R8-D", "phase": "END", "original_nonce": 0, "original_generation": 0, "actual_count": 117, "actual_digest": "8d21dc7f973abbad"}
