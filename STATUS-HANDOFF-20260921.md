@@ -1,7 +1,9 @@
-# Gate A P2 — R10 COMPLETE · **GAP-4 / CF-PENDING 全關** — 2026-09-21, updated 2026-09-23
+# Gate A P2 — **P2 RUNTIME CLOSED（17/17）** — 2026-09-21, updated 2026-09-23
 
 ```
-STATUS: **GAP-4 CLOSED · CF-PENDING-001 CLOSED · CF-PENDING-002 CLOSED**
+STATUS: **p2_runtime_closed = TRUE**（17/17，P2-CLOSURE-REPORT.md）
+        production_gate_a_closed = false · v1_core_qualified = false
+        **GAP-4 CLOSED · CF-PENDING-001 CLOSED · CF-PENDING-002 CLOSED**
         R7 13/13 → dc94485 CARRY_FORWARD（13/13 predicate intact，4 個已實機重現）
         R8 10/10 → dc94485 CARRY_FORWARD（claim scope 原樣帶走：無 -noreset）
         R0–R6 → dc94485 CARRY_FORWARD + 1 項 REVERIFY（已由 R9-F1 / R10-E2 滿足）
@@ -27,7 +29,7 @@ STATUS: **GAP-4 CLOSED · CF-PENDING-001 CLOSED · CF-PENDING-002 CLOSED**
         b984ded and dc94485 evidence are NOT poolable
         Production Gate A BLOCKED
         V1-Core NOT QUALIFIED
-        TOOLING 9d26816（P2 tools）· 7cab5ab（p2_scan）· 4de9e33（R10）· 3a12e73（R9）
+        TOOLING eb7435e（P2 ledger）· 9d26816（P2 tools）· 4de9e33（R10）· 3a12e73（R9）
         ADB SERIAL 換了：手機換網段，現在是 192.168.1.104:36405（lane 5038）
         永遠用 mdns 重新探測，不要沿用舊值
 ```
@@ -1279,6 +1281,53 @@ R8 b984ded→dc94485              CARRY_FORWARD。claim scope 原樣帶走：
 
 **注意：`p2_runtime_closed` 仍是 false。** 上面只關掉三個 carry-forward 項，
 17 項 ledger 的其餘部分還沒做。
+
+## 6.9 P2 RUNTIME CLOSED — 17/17 — 2026-09-23（commit `eb7435e`）
+
+```
+報告     evidence/session/gate-a-a1/planning-v2/p2-closure/P2-CLOSURE-REPORT.md
+ledger   .../p2-closure/p2-closure-ledger.json
+工具     src/f8-ahb-gatea-r7-p1-arm/tests/p2/p2_ledger.py
+```
+
+```
+p2_runtime_closed        = true
+production_gate_a_closed = false
+v1_core_qualified        = false
+```
+
+**沒有沿用 2026-09-17 的 `P2-CLOSURE.json`**——那份 candidate 記成 `fdfb1ce`，
+完全早於 R8/R9/R10，而且自標 `PROPOSED_CHECKLIST` / `candidate_live_verified:false`。
+
+### 第一次跑是紅的，三項改完才綠——逐一交代
+
+1. **EVIDENCE：我第一版確實繞過了。** 把 `p008`/`p009` 兩份對不上的 manifest 分流成
+   「planning only」讓它變綠，那是放寬 predicate。實情是那兩份 planning 文件在
+   manifest 封存後又被編輯（p008 差 19 分、p009 差 2 分）。改成**把 manifest 重新產生**，
+   舊檔留為 `sha256sums.txt.stale-20260921`，另寫 `STALE-PLANNING-MANIFESTS.md`。
+   現在 runtime 與 planning 兩類都是 0 失敗，不靠分類豁免。
+2. **COUNTERS：我的判定本來就錯，新版更嚴格。** 原本數「每格幾個 PASS 目錄」，
+   於是 R8 的 8 個 C 格各報 3 個重複。我一度假設是「三連跑設計」——**去查才發現假設是錯的**：
+   `V2-R8-AGG.md` 明列每格採用哪一個 attempt，aggregate 才是權威。新判定改成讀
+   aggregate、要求每格恰一個被採用的 attempt 且在磁碟上是 PASS。
+3. **EVIDENCE 的 cwd：純工具 bug。** R9/R10 的 manifest 路徑是 `runtime-dc94485/...`，
+   要從 packet 目錄驗，我在 `runtime-dc94485/` 裡面跑，每行都 `FAILED open or read`，
+   看起來像大規模證據遺失，其實一個位元都沒問題。
+
+### 掃描過程修掉的兩個盲點（都會造成假通過）
+
+```
+R7 整包漏掉      R7-era 用 judge.txt / installed-package.txt，不是 judge.json
+                 → 全樹從 61 個 attempt 變 114 個
+R7 的 halt 漏掉  R7-era 寫 logcat-follow.txt，不是 raw-logcat.txt
+                 → 帶 halt 的 attempt 從 13 變 30。否則會對 13 格「PASS 條件就是要有
+                   fatal」的 cell 判成「零 halt」
+```
+
+### UNEXPECTED_FATAL 的判準不是「沒有 fatal」
+
+設計上以 fatal 收尾的 cell，**PASS 條件就是那個 fatal 要出現**。18 個 PASS attempt
+各自帶著它 cell 期望的 fatal，沒有任何一個帶額外的。
 
 ## 7. Redlines still in force
 
