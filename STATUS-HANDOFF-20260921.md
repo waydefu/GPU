@@ -1380,12 +1380,20 @@ artifact      p2-pga-artifact/artifact-bfb5769/（binding + install 證據）
 * Monitor 工具 30 分鐘上限會殺掉它的子程序：長系列要 `setsid nohup` 背景跑，Monitor 只 tail log。
 * X 啟動時 VM-JIT 崩潰（xfce-c1-02 目錄，PC 0x4800229c，`undleMonitorStub`）：34 次啟動 1 次，R-31。
 
-### 下一步
+### 下一步——全部已凍結、只等裝置
 
 ```
-1. 使用者解鎖、螢幕保持亮著 → SERIAL=<live> setsid nohup ./series-v3.sh（p2-xfce-runtime/）
-2. direct-path oracle（tests/oracle/p_v1_oracle.c，acceptance #6/#9；runner/judge 尚未寫）
-3. B.3 matrix bind（D-11）→ telemetry verify → run → analysis → Gate H
+evidence/session/gate-a-a1/run-device-queue.sh   一個指令依序跑完，第一個非預期就停：
+  1. XFCE-FREEZE-V3 系列（C1 C0 C1 C0 C1 C0）         p2-xfce-runtime/series-v3.sh
+  2. V2-QUAL-ORACLE-DIRECT（acceptance #6/#9）       p2-oracle-runtime/run-oracle.sh
+     fork tests/oracle（de6b2e8）：16 tests、9/9 mutants；在 Xvfb（pixman 參考）上 1298/36/7 全綠
+  3. V2-B3：ATTR、G、C、S、G2                        p2-b3-runtime/run-b3.sh
+     設計 planning-v2/b3/V2-B3-MATRIX-BIND.md（D-11）；fork tests/b3（dac5a35）
+     263 格（A 132 / B 91 / 保留 C 40）＋中心格；剪枝是可被推翻的主張（保留驗證 ≥90% 勝負一致、
+     log 誤差中位數 ≤0.25）；fixture 在 Xvfb 上 48 次 cell 執行 0 錯誤、像素全過
+需要：手機解鎖、螢幕全程亮著（約 1.5 小時）、期間不要用手機（實驗 app 會佔前景）
+SERIAL=<live> setsid nohup ./run-device-queue.sh > /dev/null 2>&1 &     進度：device-queue.log
+之後：B.3 分析 → Gate H（D-07/D-16）→ Gate W freeze（D-08，門檻需先凍結）→ acceptance audit
 ```
 
 ## 7. Redlines still in force
