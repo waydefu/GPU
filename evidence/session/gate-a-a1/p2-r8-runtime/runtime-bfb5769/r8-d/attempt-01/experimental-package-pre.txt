@@ -1,0 +1,2 @@
+    versionCode=15 minSdk=24 targetSdk=34
+    versionName=1.03.01-bfb5769-23.09.26

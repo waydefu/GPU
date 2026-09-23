@@ -1,0 +1,4 @@
+180e835e61ebfeb37584a7cb08702d9c4ac62f70d5da3b56407fd66ab9a19728  ./TOOLS.txt
+5cf07ba166595089e21639b32ab37030687aec847f98f27cfb3c085c44428e24  ./xfce-aggregate.json
+5b77e2066dfc5a88fe6aefdf05dfcfca4a7b944a58be9390ae42f18a9e5e3d76  ./xfce-run-xfce-c1-03.json
+5de9f5408c553adcbc4b6ae3062ca86d9bc4426c4bf3f4742f2d0c1d8a7d9dba  ./xfce-verdict-xfce-c1-03.json

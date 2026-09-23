@@ -1,0 +1,4 @@
+R3 S1_AHB buffer=0xb400007130a26160 src=0xb400007160a1f060 ahb=0xb400006f60a26180 dst=0x7222700000 w=64 h=64 srcStride=64 dstStride=64 format=5 req=0,0 srcPx=80004000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400007130a26160 src=0xb400007160a1f060 ahb=0xb400006f60a26180 dst=0x7222700000 w=64 h=64 srcStride=64 dstStride=64 format=5 req=0,0 srcPx=80004000 dstPx=80004000 hash=8541fe55
+R3 S1_AHB buffer=0xb400007130a25230 src=0xb400007160a1b050 ahb=0xb400006f60a23150 dst=0x7222579000 w=64 h=64 srcStride=64 dstStride=64 format=2 req=0,0 srcPx=00804000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400007130a25230 src=0xb400007160a1b050 ahb=0xb400006f60a23150 dst=0x7222579000 w=64 h=64 srcStride=64 dstStride=64 format=2 req=0,0 srcPx=00804000 dstPx=00804000 hash=04059355

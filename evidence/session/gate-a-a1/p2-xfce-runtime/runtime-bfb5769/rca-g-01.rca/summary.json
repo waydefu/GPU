@@ -1,0 +1,186 @@
+{
+  "x3": 25137,
+  "samples": 399,
+  "threads": {
+    "25137": {
+      "comm": "main",
+      "samples": 399,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.8847
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0376
+        ],
+        [
+          "t:do_epoll_wait",
+          0.0301
+        ],
+        [
+          "S:ptrace_stop",
+          0.0251
+        ],
+        [
+          "S:0",
+          0.0175
+        ],
+        [
+          "S:ptrace_notify",
+          0.0025
+        ]
+      ]
+    },
+    "25435": {
+      "comm": "Jit thread pool",
+      "samples": 399,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "25438": {
+      "comm": "Signal Catcher",
+      "samples": 399,
+      "top": [
+        [
+          "S:do_sigtimedwait",
+          1.0
+        ]
+      ]
+    },
+    "25441": {
+      "comm": "perfetto_hprof_",
+      "samples": 399,
+      "top": [
+        [
+          "S:pipe_read",
+          1.0
+        ]
+      ]
+    },
+    "25442": {
+      "comm": "HeapTaskDaemon",
+      "samples": 399,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "25443": {
+      "comm": "ReferenceQueueD",
+      "samples": 399,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "25444": {
+      "comm": "FinalizerDaemon",
+      "samples": 399,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "25445": {
+      "comm": "FinalizerWatchd",
+      "samples": 399,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "25589": {
+      "comm": "binder:25137_1",
+      "samples": 399,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "25590": {
+      "comm": "binder:25137_2",
+      "samples": 399,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "25711": {
+      "comm": "main",
+      "samples": 399,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.6942
+        ],
+        [
+          "t:ptrace_stop",
+          0.0977
+        ],
+        [
+          "S:hrtimer_nanosleep",
+          0.0602
+        ],
+        [
+          "t:0",
+          0.0476
+        ],
+        [
+          "R:0",
+          0.0301
+        ],
+        [
+          "R:ptrace_stop",
+          0.0226
+        ]
+      ]
+    },
+    "25712": {
+      "comm": "Thread-1",
+      "samples": 399,
+      "top": [
+        [
+          "S:inet_csk_accept",
+          1.0
+        ]
+      ]
+    },
+    "25713": {
+      "comm": "binder:25137_3",
+      "samples": 399,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "25725": {
+      "comm": "binder:25137_4",
+      "samples": 398,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    }
+  }
+}

@@ -1,0 +1,5 @@
+START C1 /root/projects/GPU加速/evidence/session/gate-a-a1/p2-xfce-runtime/runtime-bfb5769/xfce2-c1-02 10:51:20
+CAPTURE rc=0 XFCE_CAPTURED variant=C1 evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-xfce-runtime/runtime-bfb5769/xfce2-c1-02
+XFCE_BASELINE_DEFECT variant=C1 failed=3 findings=3
+VERDICT C1 02 jrc=1 BASELINE_DEFECT {'crash': ['terminals_exited'], 'hard': [], 'validity': ['choreo_every_step_ok', 'choreo_no_step_late']} ['x.fd_count K3-K0 delta 8 exceeds R10 tolerance 1', 'activity.fd_count K4-K0 delta 16 exceeds R10 tolerance 8', 'activity.maps_count K4-K0 delta 567 exceeds R10 tolerance 2']
+STOP verdict_not_valid /root/projects/GPU加速/evidence/session/gate-a-a1/p2-xfce-runtime/runtime-bfb5769/xfce2-c1-02

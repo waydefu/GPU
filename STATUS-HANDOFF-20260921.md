@@ -1,6 +1,16 @@
-# Gate A P2 — **P2 RUNTIME CLOSED（17/17）** — 2026-09-21, updated 2026-09-23
+# Gate A P2 — P2 RUNTIME CLOSED（17/17）· **PGA-GAP-1 修補中（bfb5769）** — 2026-09-21, updated 2026-09-23 晚
 
 ```
+STATUS 2026-09-23 晚（先讀 §6.10）:
+        **INSTALLED ARTIFACT bfb5769**（PGA-GAP-1：p2a2 診斷 stamp 預設關）CI 35811368916
+          APK ff7b9309…8472 · smoke R8-D / R8-P2 = R8_PASS · R0–R10 CARRY_FORWARD
+        **XFCE baseline 尚未取得有效資料**：
+          V1（dc94485）→ PGA-GAP-1（產品缺陷，已證明、已修）
+          V2（bfb5769）→ RCA-XFCE-2：X3 被 PRoot ptrace 追蹤，harness 構造不成立
+          V3 已凍結（X3 以 TermuxService 不被追蹤啟動＋螢幕檢查），**尚未執行**
+        **裝置目前鎖屏（Dozing）——XFCE／oracle／B.3 都需要使用者解鎖並讓螢幕保持亮著**
+        ADB SERIAL 現為 10.191.48.13:39997（mdns 會同時廣播一筆舊的 41637，逐筆試）
+
 STATUS: **p2_runtime_closed = TRUE**（17/17，P2-CLOSURE-REPORT.md）
         production_gate_a_closed = false · v1_core_qualified = false
         **GAP-4 CLOSED · CF-PENDING-001 CLOSED · CF-PENDING-002 CLOSED**
@@ -1329,6 +1339,55 @@ R7 的 halt 漏掉  R7-era 寫 logcat-follow.txt，不是 raw-logcat.txt
 設計上以 fatal 收尾的 cell，**PASS 條件就是那個 fatal 要出現**。18 個 PASS attempt
 各自帶著它 cell 期望的 fatal，沒有任何一個帶額外的。
 
+## 6.10 XFCE 三版凍結、PGA-GAP-1、untraced X3 — 2026-09-23
+
+```
+XFCE 設計     planning-v2/xfce-design-freeze/V2-XFCE-DESIGN-FREEZE.md（13 項參數，兩個 compositor 變體）
+凍結工具      fork tests/xfce（V1，dfb82e6）· tests/xfce2（V2，00f909d）· tests/xfce3（V3，e502e20）
+runner        p2-xfce-runtime/run-xfce.sh · run-xfce-v2.sh · run-xfce-v3.sh · series-v{2,3}.sh
+報告          planning-v2/xfce-baseline/XFCE-ROUND-1-REPORT.md · RCA-XFCE-2.md
+PGA           planning-v2/pga/{V2-PGA-GAP-INVENTORY,PGA-GAP-1-RCA,PGA-GAP-1-DESIGN,
+              PGA-GAP-1-TOUCHED-SEMANTICS,GRANT-PGA-GAP-1-REQUAL}.md
+artifact      p2-pga-artifact/artifact-bfb5769/（binding + install 證據）
+```
+
+### 發生了什麼（依時間）
+
+1. **XFCE-FREEZE-V1**（dc94485）：非 XFCE probe 量出 X root 1200×2191（只在 Activity 綁上後）、
+   SF `--latency` 的 BLAST layer 可讀（CLOCK_MONOTONIC，與 choreo 同一個時鐘）。compositor 做成
+   C1（開，歷史 B.1 狀態）/ C0（關，**使用者日常 :1 的設定**）兩個永不合併的變體。
+2. **xfce-c1-03 = BASELINE_DEFECT → PGA-GAP-1**：`p2a2_emit` 每行都 open+fsync 一個 snap 檔，PRoot
+   下 ≥332 µs，天花板 3015 次/秒；X 在 XFCE 下輸出中位 2123、峰值 3494 行/秒，client 全部餓死。
+   修補：`TERMUX_X11_P2A_DIAG=1` 才輸出（fork bfb5769）。host 測試對 dc94485 紅 7/9。
+3. **xfce2-c1-02（bfb5769）= BASELINE_DEFECT，但 RCA-XFCE-2 證明不可歸因於產品**：X3 從 PRoot 裡
+   啟動 → 被唯一的 proot tracer 追蹤。全 CPU 對照組同樣做不到 choreography（往返 p50 15 ms，
+   idle 0.25 ms；xdotool search 5–19 s，上限 3 s）。Stable :1 **不被追蹤**（shell 先 fork X 再
+   exec proot）。GPU arm 的尾端較差（p99 5×）是真的——同步 `lorieGpuCopyWait` 的成本，交給 B.3。
+4. **untraced 啟動**：`start-x3-untraced.sh` 經 Termux 的 app_process `am` 啟動 app 內部的
+   `TermuxService`（`com.termux.service_execute`），X3 成為 com.termux 的子程序，TracerPid 0。
+   用 `bash -c`（非 login，不讀使用者 profile）。**從 PRoot 內部任何方式都逃不出 ptrace**。
+5. **probe-03 在螢幕暗掉時執行**（surface 1200×2464、0 幀）→ V3 runner 前後都檢查螢幕。
+
+### 會咬人的事
+
+* `Gcomp Prepare TRUE` 只在 staging 路徑印；direct 路徑不印（dc94485）。現在 stamp 預設全關，
+  XFCE V2/V3 用 5 s counter 與 event 串流算 composite / staged。
+* TELEMETRY=1 讓 `loriePrepareAccess` 每次都 trace event 30：XFCE 一輪 **133 萬行 GATEA_EVENT**，
+  logcat 會掉行（events_incomplete，counter 仍照判）。TELEMETRY 是 R8 arm（clean close 所需）的前提。
+* `adb shell ... grep -c` 沒匹配會回 exit 1；在 pipefail 下別接 `|| echo`（xfce-c1-01 BLOCKED 的原因）。
+* 在 `for p in /proc/*` 迴圈裡用 `case "$cmdline" in *rca-pair*)` 會匹配到**自己的 shell**
+  並把它殺掉——一律用完整前綴並排除 `$$`。
+* Monitor 工具 30 分鐘上限會殺掉它的子程序：長系列要 `setsid nohup` 背景跑，Monitor 只 tail log。
+* X 啟動時 VM-JIT 崩潰（xfce-c1-02 目錄，PC 0x4800229c，`undleMonitorStub`）：34 次啟動 1 次，R-31。
+
+### 下一步
+
+```
+1. 使用者解鎖、螢幕保持亮著 → SERIAL=<live> setsid nohup ./series-v3.sh（p2-xfce-runtime/）
+2. direct-path oracle（tests/oracle/p_v1_oracle.c，acceptance #6/#9；runner/judge 尚未寫）
+3. B.3 matrix bind（D-11）→ telemetry verify → run → analysis → Gate H
+```
+
 ## 7. Redlines still in force
 
 ```
@@ -1369,6 +1428,12 @@ R-30   OPEN — the three ahb_*_fence_fd metrics (plan §9.4, from V-5) have NO 
        site in dc94485. Frozen null in r10-probe-inventory.json so the gap stays
        visible. R10 cannot answer the fence-fd ownership question without a product
        change, which is a D-12-class decision R10 does not make.
+PGA-GAP-1 FIX INSTALLED (bfb5769), REQUAL PENDING — step 8 needs a valid XFCE-FREEZE-V3 series.
+R-31   OPEN — X3 startup VM-JIT crash (PC 0x4800xxxx in dalvik-jit-code-cache, "undleMonitorStub").
+       1 in 34 launches. Not Gate A (reproduces under PROTO=0). Gate W counts any crash.
+QUAL-6/9 OPEN — direct-path pixel oracle (acceptance #6) and pixel-verified negative controls
+       (#9) have only an 8x8 R3 case on the current lineage. tests/oracle/p_v1_oracle.c is written;
+       runner/judge are not.
 R-29   OPEN — the six removed R9 cells are not "done", they are unreachable in THIS
        product. Reopen WARM-1/2/3 and COLD-2 if a warm reconnect/rebind entry point
        is added; reopen COLD-1/3 and COLD-2 if a renderer fatal publisher appears

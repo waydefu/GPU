@@ -1,0 +1,5 @@
+START G 15:11:12
+CAPTURE G rc=0 XFCE_CAPTURED variant=C1 evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-xfce-runtime/runtime-bfb5769/rca-g-01
+START C 15:14:52
+CAPTURE C rc=0 XFCE_CAPTURED variant=C1 evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-xfce-runtime/runtime-bfb5769/rca-c-01
+RCA_PAIR_DONE

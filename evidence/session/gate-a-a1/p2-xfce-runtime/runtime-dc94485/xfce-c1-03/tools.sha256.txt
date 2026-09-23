@@ -1,0 +1,3 @@
+45935eefc1f5fffeaab28810a39a44874b3b4190ed8cfb6bbb666de5347addc3  ./run-xfce.sh
+a3eeaf9de97e93802ce1bdb1a8e96b58559a7354d3cdd5061f70e29e75bbaadb  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/xfce/FROZEN-SHA256SUMS
+2aca8ae15d536065168b3a819de1414c5520792712ea56ce254efbdde05ae50b  /tmp/p_r10_ledger

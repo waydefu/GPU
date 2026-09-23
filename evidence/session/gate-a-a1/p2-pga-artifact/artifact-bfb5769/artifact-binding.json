@@ -1,0 +1,34 @@
+{
+  "source_sha": "bfb576940ded333f49d29a8910a785f8d680261c",
+  "ci_run": 35811368916,
+  "package": "com.waydefu.x11gpu",
+  "version_name": "1.03.01-bfb5769-23.09.26",
+  "version_code": 15,
+  "variant": "termux-x11-universal-debug",
+  "apk_sha256": "ff7b9309c405b07245bc352911867a66e8498464e515e09dbd645b3a1ec18472",
+  "apk_size": 15381006,
+  "build_id": "890db760a77a7d22945b9640705f70d025b5d518",
+  "signer": "b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1",
+  "install_status": "INSTALLED_AND_VERIFIED_ON_DEVICE",
+  "device_verification": {
+    "method": "install-bfb5769.sh: pm install-create/write/commit, then pull the installed base.apk and compare sha256, signer, libXlorie build-id and marker strings",
+    "evidence": "install/ (install-bind-pass.txt)"
+  },
+  "parent": {
+    "source_sha": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+    "ci_run": 35673085569,
+    "apk_sha256": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3"
+  },
+  "change": "PGA-GAP-1: p2a2_emit diagnostic stamps default off (TERMUX_X11_P2A_DIAG=1 re-enables them)",
+  "product_diff": "lorie/src/main/cpp/patches/dix-config.h.in only (+19 -1)",
+  "carry_forward": "planning-v2/pga/PGA-GAP-1-TOUCHED-SEMANTICS.md",
+  "not_poolable_with": [
+    "b984ded",
+    "dc94485"
+  ],
+  "provenance": {
+    "apk_sha256": "MEASURED on the CI artifact and on the device after install",
+    "signer": "VERIFIED apksigner --print-certs, unchanged",
+    "build_id": "MEASURED readelf -n lib/arm64-v8a/libXlorie.so"
+  }
+}

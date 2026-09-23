@@ -1,0 +1,4 @@
+A_full         n=2000 total_s=0.663 per_emit_us mean=331.7 p50=317.0 p95=433.5 p99=574.2 max=1115.2 max_emits_per_s=3015
+B_no_fsync     n=2000 total_s=0.350 per_emit_us mean=175.1 p50=158.6 p95=305.7 p99=477.7 max=4419.3 max_emits_per_s=5710
+C_stderr_only  n=2000 total_s=0.009 per_emit_us mean=4.3 p50=4.0 p95=4.6 p99=9.5 max=35.6 max_emits_per_s=234755
+D_empty        n=2000 total_s=0.001 per_emit_us mean=0.7 p50=0.4 p95=0.4 p99=0.4 max=17.6 max_emits_per_s=1386081

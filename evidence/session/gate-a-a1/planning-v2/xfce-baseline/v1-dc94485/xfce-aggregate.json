@@ -1,0 +1,429 @@
+{
+  "classification": "BASELINE",
+  "freeze_status": "XFCE_DESIGN_FROZEN_V1",
+  "runs": {
+    "xfce-c1-03": {
+      "events_complete": false,
+      "failed": {
+        "crash": [
+          "terminals_exit_0"
+        ],
+        "hard": [],
+        "validity": [
+          "choreo_every_step_ok",
+          "choreo_no_step_late",
+          "logout_clean"
+        ]
+      },
+      "findings": [
+        "x.fd_count K3-K0 delta 252 exceeds R10 tolerance 1",
+        "activity.fd_count K4-K0 delta -15 exceeds R10 tolerance 8",
+        "activity.maps_count K4-K0 delta 484 exceeds R10 tolerance 2"
+      ],
+      "variant": "C1",
+      "verdict": "BASELINE_DEFECT"
+    }
+  },
+  "schema": "xfce-aggregate/1",
+  "skipped_not_judged": {
+    "xfce-c1-01": "BLOCKED.txt: external_display_connected 0",
+    "xfce-c1-02": "X3-STARTUP-CRASH.md: # xfce-c1-02 \u2014 X3 startup crash (NOT an XFCE run; not consumed)"
+  },
+  "variants": {
+    "C1": {
+      "metrics": {
+        "act_cpu_s": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "activity.fd_count K4-K0": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "activity.maps_count K4-K0": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "activity.pss_kb K4-K0": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "activity.rss_kb K2-K1": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "c12_ahb_acquire": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "c25_unregister": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "composite_total": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "cpu_composite": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "cpu_per_frame_ms": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "d0a_staged": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "events_total": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "exa_comp_check_false": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "exa_comp_check_true": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "exa_copy_attempt": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "exa_copy_offload": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "frame_interval_ms_p50": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "frame_interval_ms_p95": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "frame_interval_ms_p99": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "frames_sf": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "gatea_direct": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "gatea_hit_rate": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "gpu_busy_mean": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "gpu_composite_share": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "jank_frames": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "prepare_false": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "prepare_true": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "present_lag_ms_p50": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "present_lag_ms_p95": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "present_lag_ms_p99": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "present_offload": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "stable_bg_frames_5s_mean": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "thermal_cpu_max": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "thermal_gpu_max": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "thermal_skin_max": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "thermal_status_max": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "wall_per_frame_ms": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "x.fd_count K3-K0": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "x.pss_kb K3-K0": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "x.rss_kb K2-K1": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "x_cpu_s": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "x_frames_5s": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        },
+        "xrender_ops": {
+          "max": null,
+          "median": null,
+          "min": null,
+          "n": 0,
+          "n_numeric": 0,
+          "null_in_some_runs": false,
+          "values": []
+        }
+      },
+      "runs": [
+        "xfce-c1-03"
+      ],
+      "valid_runs": []
+    }
+  }
+}

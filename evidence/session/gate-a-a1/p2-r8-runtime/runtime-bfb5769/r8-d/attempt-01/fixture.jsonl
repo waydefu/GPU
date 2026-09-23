@@ -1,0 +1,4 @@
+RESULT p_r8_lifecycle D CLIENT_OK
+TERMINATE_SENT
+FAIL r8 request minor=3 no_reply seq=19
+X_HANGUP_AFTER_TERMINATE

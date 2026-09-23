@@ -1,0 +1,452 @@
+{
+  "checks": {
+    "crash": [
+      {
+        "check": "x_pid_constant_K0_K3",
+        "detail": {
+          "alive": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "pids": [
+            27324,
+            27324,
+            27324,
+            27324
+          ]
+        },
+        "ok": true
+      },
+      {
+        "check": "x_ends_only_by_terminate",
+        "detail": {
+          "close": {
+            "x_alive_after_terminate": false
+          },
+          "summary_source": "file",
+          "where": "x-close-screen"
+        },
+        "ok": true
+      },
+      {
+        "check": "activity_pid_constant_K0_K4",
+        "detail": [
+          6381,
+          6381,
+          6381,
+          6381,
+          6381
+        ],
+        "ok": true
+      },
+      {
+        "check": "no_fatal_lines",
+        "detail": [],
+        "ok": true
+      },
+      {
+        "check": "no_anr",
+        "detail": [],
+        "ok": true
+      },
+      {
+        "check": "xfce_core_pids_constant_K1_K2",
+        "detail": {
+          "xfce4-panel": [
+            28517,
+            28517
+          ],
+          "xfdesktop": [
+            28557,
+            28557
+          ],
+          "xfwm4": [
+            28203,
+            28203
+          ]
+        },
+        "ok": true
+      },
+      {
+        "check": "terminals_exit_0",
+        "detail": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "ok": false
+      }
+    ],
+    "hard": [
+      {
+        "check": "ahb_balanced_c12_c13",
+        "detail": [
+          560,
+          560
+        ],
+        "ok": true
+      },
+      {
+        "check": "eglimage_balanced_c14_c15",
+        "detail": [
+          560,
+          560
+        ],
+        "ok": true
+      },
+      {
+        "check": "texture_balanced_c16_c17",
+        "detail": [
+          560,
+          560
+        ],
+        "ok": true
+      },
+      {
+        "check": "x_registry_current_c18_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "renderer_registry_current_c19_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "lease_current_c20_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "fence_timeout_c21_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "fence_error_c22_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "first_failed_c23_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "generation_fatal_c24_zero",
+        "detail": 0,
+        "ok": true
+      },
+      {
+        "check": "generation_close_c27_one",
+        "detail": 1,
+        "ok": true
+      },
+      {
+        "check": "summary_no_fatal",
+        "detail": {
+          "firstFailed": 0,
+          "generationFatal": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "lease_reserved_eq_released",
+        "detail": "events_incomplete",
+        "ok": null
+      },
+      {
+        "check": "no_forbidden_events",
+        "detail": "events_incomplete",
+        "ok": null
+      },
+      {
+        "check": "generation_is_1",
+        "detail": [
+          1
+        ],
+        "ok": true
+      },
+      {
+        "check": "exactly_one_gatea_bind",
+        "detail": 1,
+        "ok": true
+      }
+    ],
+    "soft": [
+      {
+        "check": "x.fd_count K3-K0",
+        "detail": {
+          "a": 88,
+          "b": 340,
+          "delta": 252,
+          "tolerance": 1
+        },
+        "ok": false
+      },
+      {
+        "check": "activity.fd_count K4-K0",
+        "detail": {
+          "a": 229,
+          "b": 214,
+          "delta": -15,
+          "tolerance": 8
+        },
+        "ok": false
+      },
+      {
+        "check": "activity.maps_count K4-K0",
+        "detail": {
+          "a": 4035,
+          "b": 4519,
+          "delta": 484,
+          "tolerance": 2
+        },
+        "ok": false
+      }
+    ],
+    "validity": [
+      {
+        "check": "binding_source_sha",
+        "detail": "dc94485a7ef4f74cada36ea3c1d35d0aa0f48693",
+        "ok": true
+      },
+      {
+        "check": "binding_apk_sha256",
+        "detail": "1bd8bef0909249737ea43acf0a35f3c995d941e1badbfcf370e5cd854f4bb8a3",
+        "ok": true
+      },
+      {
+        "check": "variant_known",
+        "detail": "C1",
+        "ok": true
+      },
+      {
+        "check": "session_ready",
+        "detail": {
+          "desktop": 1,
+          "panel": 1,
+          "ready": true,
+          "waited_s": 11.85,
+          "wm": 1
+        },
+        "ok": true
+      },
+      {
+        "check": "choreo_t0_present",
+        "detail": null,
+        "ok": true
+      },
+      {
+        "check": "choreo_not_test_mode",
+        "detail": {
+          "terminal": "xfce4-terminal",
+          "timescale": 1.0,
+          "xdotool": "xdotool"
+        },
+        "ok": true
+      },
+      {
+        "check": "choreo_all_steps_in_frozen_order",
+        "detail": {
+          "executed": 56,
+          "frozen": 56
+        },
+        "ok": true
+      },
+      {
+        "check": "choreo_every_step_ok",
+        "detail": {
+          "failed_steps": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55
+          ]
+        },
+        "ok": false
+      },
+      {
+        "check": "choreo_no_step_late",
+        "detail": {
+          "late": [
+            [
+              1,
+              7.9396
+            ],
+            [
+              2,
+              15.2799
+            ],
+            [
+              3,
+              17.6192
+            ],
+            [
+              4,
+              15.6192
+            ],
+            [
+              5,
+              13.6193
+            ],
+            [
+              6,
+              11.6193
+            ],
+            [
+              7,
+              9.6193
+            ],
+            [
+              8,
+              7.6193
+            ],
+            [
+              9,
+              5.6193
+            ],
+            [
+              10,
+              3.6194
+            ],
+            [
+              49,
+              5.0019
+            ],
+            [
+              51,
+              5.0009
+            ],
+            [
+              53,
+              8.004
+            ],
+            [
+              54,
+              16.0051
+            ],
+            [
+              55,
+              15.0059
+            ]
+          ],
+          "limit_s": 2.0
+        },
+        "ok": false
+      },
+      {
+        "check": "logcat_alive_at_end",
+        "detail": {
+          "logcat_alive": true
+        },
+        "ok": true
+      },
+      {
+        "check": "logcat_parsed",
+        "detail": null,
+        "ok": true
+      },
+      {
+        "check": "logout_clean",
+        "detail": {
+          "leftovers": [
+            "29828 xfce4-terminal",
+            "29845 bash",
+            "30614 xfce4-terminal",
+            "30818 bash",
+            "31145 xfce4-terminal"
+          ],
+          "ok": false,
+          "waited_s": 139.583
+        },
+        "ok": false
+      }
+    ]
+  },
+  "classification": "BASELINE",
+  "events_complete": false,
+  "failed": {
+    "crash": [
+      "terminals_exit_0"
+    ],
+    "hard": [],
+    "validity": [
+      "choreo_every_step_ok",
+      "choreo_no_step_late",
+      "logout_clean"
+    ]
+  },
+  "findings": [
+    "x.fd_count K3-K0 delta 252 exceeds R10 tolerance 1",
+    "activity.fd_count K4-K0 delta -15 exceeds R10 tolerance 8",
+    "activity.maps_count K4-K0 delta 484 exceeds R10 tolerance 2"
+  ],
+  "freeze_status": "XFCE_DESIGN_FROZEN_V1",
+  "schema": "xfce-verdict/1",
+  "unjudged": {
+    "hard": [
+      "lease_reserved_eq_released",
+      "no_forbidden_events"
+    ],
+    "soft": []
+  },
+  "variant": "C1",
+  "verdict": "BASELINE_DEFECT"
+}

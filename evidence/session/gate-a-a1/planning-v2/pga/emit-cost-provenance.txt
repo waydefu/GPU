@@ -1,0 +1,5 @@
+source 919196c8c6569b33d682e6c32584f32b2e939d7f7667638143c673d1f37cb260  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/pga/emit_cost.c
+binary e7ea92170957c8875a0deed45908c7d326ef45c42adf00dcd59dd2981cdee827  /tmp/claude-0/-root-projects-GPU--/50e4221f-d9ea-44d2-b233-5f884f2cb8e6/scratchpad/emit_cost
+cc: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+cmd: emit_cost /tmp/emit-cost-snap.bin <scratch>/emit-cost-stderr.bin 2000
+date: 2026-09-23 ~10:40 +0800, after xfce-c1-03 finished (device idle)

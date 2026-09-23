@@ -1,0 +1,2 @@
+RequestedLayerState{ActivityRecord{184554471 u0 com.waydefu.x11gpu/com.termux.x11.MainActivity t1437}#42364 parentId=42362}
+RequestedLayerState{c44b3aa com.waydefu.x11gpu/com.termux.x11.MainActivity#42365 parentId=42364}
