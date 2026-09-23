@@ -20,21 +20,29 @@ EXPECT_PACKAGE=com.waydefu.x11gpu
 EXPECT_VERSION=1.03.01-bfb5769-23.09.26
 EXPECT_APK_SHA256=ff7b9309c405b07245bc352911867a66e8498464e515e09dbd645b3a1ec18472
 EXPECT_TERMINATE_SHA=2aca8ae15d536065168b3a819de1414c5520792712ea56ce254efbdde05ae50b
-EXPECT_FREEZE_SHA=7bd04ec740fbd14c2f4aa2298327c71aea06c268cbe8d6c9f5eb8068623b32f7
-EXPECT_FIXTURE_SRC_SHA=ac2e9cc1309a2c019f7d80f985854fe651d06e3908b5bbf9df6c57792638e141
-EXPECT_JUDGE_SHA=c60da2a6fec60e4747e75b2ce6163f33e820d993747e4733f1a554e273a4a3c5
+# 7bd04ec7... -> afe0ab92...: ORACLE_FROZEN_V2 (ORACLE-01-TRIAGE.md)
+# afe0ab92... -> 40115b87...: ORACLE_FROZEN_V3 (event=5 completeness via c0)
+EXPECT_FREEZE_SHA=40115b879d8f2e24ccebb94d2dd69851fe589e2d80d7c1b5729bf8b7d7fd69ca
+# ac2e9cc1... -> de840363...: V2 fixture: quiet gaps, per-negative marks, effective repeat
+EXPECT_FIXTURE_SRC_SHA=de840363eeb8a02bcb62ff18ab3848aba73a21419795cb7017f2e38924b44e32
+# c60da2a6... -> streaming judge (INCIDENT-20260923); it imports xfce3/xfce_collect.py, pinned too
+# b6963fe3... -> c41dc068...: V2 judge: (BEGIN-1ms, END], per-case negatives, phase_gaps_quiet
+# c41dc068... -> d4f12d95...: V3 judge: event5_stream_complete
+EXPECT_JUDGE_SHA=d4f12d9562b900b155403c123f12d505ac1429dabd7148ed8ac7ba310fe62bc6
+EXPECT_COL_SHA=8c04d2a2c34d7063bef32ad9d4f9bdcd6898dd02e6090b78626e8bb8ad3d4028
 EXPECT_ROOT=1200x2191
 
 refuse() { echo "ORACLE_BLOCKED $*"; [ -n "${EVIDENCE:-}" ] && [ -d "$EVIDENCE" ] && echo "$*" > "$EVIDENCE/BLOCKED.txt"; exit 3; }
 invalid() { echo "ORACLE_INVALID $*"; echo "$*" > "$EVIDENCE/INVALID-CAPTURE.txt"; exit 2; }
 EVIDENCE="${EVIDENCE:-}"; [ -n "$EVIDENCE" ] || refuse "EVIDENCE"
-for pair in "$FREEZE:$EXPECT_FREEZE_SHA" "$FIXTURE_SRC:$EXPECT_FIXTURE_SRC_SHA" "$ORC/judge-oracle.py:$EXPECT_JUDGE_SHA"; do
+for pair in "$FREEZE:$EXPECT_FREEZE_SHA" "$FIXTURE_SRC:$EXPECT_FIXTURE_SRC_SHA" "$ORC/judge-oracle.py:$EXPECT_JUDGE_SHA" "$T/xfce3/xfce_collect.py:$EXPECT_COL_SHA"; do
   f=${pair%:*}; want=${pair##*:}
   [ "$(sha256sum "$f" | awk '{print $1}')" = "$want" ] || refuse "frozen_file_changed $f"
 done
 if [ "${VALIDATE_ONLY:-0}" = 1 ]; then echo "ORACLE_RUNNER_V1_VALIDATE_ONLY"; exit 0; fi
 [ -n "${SERIAL:-}" ] || refuse "SERIAL"
 [ -e "$EVIDENCE" ] && refuse "evidence_exists"
+"/root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/safe-run.sh" --disk-min-gb 15 --disk-path "$(dirname "$EVIDENCE")" --floor-mb 4500 --check-only || refuse "host_resources"
 [ "$(sha256sum "$TERMINATE" | awk '{print $1}')" = "$EXPECT_TERMINATE_SHA" ] || refuse "terminate_fixture_sha"
 cc -O2 -Wall -o "$FIXTURE" "$FIXTURE_SRC" -lxcb -lxcb-render || refuse "fixture_build"
 
@@ -44,7 +52,7 @@ source "$ROOT_HARNESS/harness-lib.sh"
 ADB get-state >/dev/null 2>&1 || refuse "ADB_DISCONNECTED"
 ADB devices | grep -qF "$SERIAL" || refuse "serial_not_verbatim"
 mkdir -p "$EVIDENCE"
-sha256sum "$0" "$FREEZE" "$FIXTURE_SRC" "$FIXTURE" "$ORC/judge-oracle.py" "$TERMINATE" > "$EVIDENCE/tools.sha256.txt"
+sha256sum "$0" "$FREEZE" "$FIXTURE_SRC" "$FIXTURE" "$ORC/judge-oracle.py" "$T/xfce3/xfce_collect.py" "$TERMINATE" > "$EVIDENCE/tools.sha256.txt"
 
 X3=""
 o_cleanup() {
@@ -55,7 +63,11 @@ o_cleanup() {
   fi
   ADB shell am force-stop "$EXPECT_PACKAGE" </dev/null >/dev/null 2>&1 || true
 }
-trap 'cleanup; o_cleanup' EXIT
+MG=""
+# our own child, exact pid. Every step tolerates failure: under set -e a failing kill of an
+# already-exited guard ended the runner after its capture (oracle-02, 2026-09-23).
+mg_stop() { if [ -n "${MG:-}" ]; then kill "$MG" 2>/dev/null || true; wait "$MG" 2>/dev/null || true; fi; MG=""; return 0; }
+trap 'cleanup; o_cleanup; mg_stop' EXIT
 stable_json() {
   local out=$1 pid cmd
   pid=$(stabpid) || refuse "stable_pid"; cmd=$(stab_cmd)
@@ -115,6 +127,12 @@ for i in $(seq 1 40); do X3=$(x3pid_now) && break || sleep 0.5; done
 echo "x3_pid=$X3" > "$EVIDENCE/x3-pid.txt"
 grep -E 'TracerPid|PPid' "/proc/$X3/status" > "$EVIDENCE/x3-tracer.txt" || true
 grep -q 'TracerPid:[[:space:]]*0$' "$EVIDENCE/x3-tracer.txt" || refuse "x3_traced"
+# memory watchdog (INCIDENT-20260923-2-LMK-B3-S): trips -> X3 SIGTERM + force-stop -> exit 5 below
+MEMGUARD=/root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/mem-guard.sh
+"$MEMGUARD" --x3-pid "$X3" --log "$EVIDENCE/mem-guard.log" --flag "$EVIDENCE/MEM-GUARD-TRIPPED.txt" \
+  --serial "$SERIAL" --floor-mb 3000 --swap-growth-mb 1536 --x3-max-mb 3072 </dev/null &
+MG=$!
+sha256sum "$MEMGUARD" >> "$EVIDENCE/tools.sha256.txt"
 ADB shell 'am start --display 0 -W -n com.waydefu.x11gpu/com.termux.x11.MainActivity' >> "$EVIDENCE/am-start.out" 2>&1
 sleep 6
 ACT=$(act_pid_now) || ACT=""; [ -n "$ACT" ] || invalid "activity_missing"
@@ -152,4 +170,10 @@ stop_logcat "$LOGCAT_PID" || true; LOGCAT_PID=""
 stable_json "$EVIDENCE/stable-after.json"
 cp -a "$LLOG" "$EVIDENCE/x3-launcher.log" 2>/dev/null || true
 (cd "$EVIDENCE" && find . -type f ! -name sha256sums.txt | sort | xargs sha256sum > sha256sums.txt)
+mg_stop
+if [ -e "$EVIDENCE/MEM-GUARD-TRIPPED.txt" ]; then
+  (cd "$EVIDENCE" && find . -type f ! -name sha256sums.txt | sort | xargs sha256sum > sha256sums.txt)
+  echo "ORACLE_ABORTED_MEM_GUARD evidence=$EVIDENCE $(head -1 "$EVIDENCE/MEM-GUARD-TRIPPED.txt")"
+  exit 5
+fi
 echo "ORACLE_CAPTURED evidence=$EVIDENCE"

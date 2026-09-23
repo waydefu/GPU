@@ -1,0 +1,1 @@
+GATEA_SUMMARY where=x-close-screen nonce=0 generation=0 nextSequence=34064 overflow=1 firstFailed=0 generationFatal=0 fatalReason=0 c0=1334 c1=1334 c2=1334 c3=0 c4=1334 c5=1334 c6=1334 c7=0 c8=2668 c9=1334 c10=1334 c11=2668 c12=88 c13=88 c14=88 c15=88 c16=88 c17=88 c18=0 c19=0 c20=0 c21=0 c22=0 c23=0 c24=0 c25=88 c26=88 c27=1

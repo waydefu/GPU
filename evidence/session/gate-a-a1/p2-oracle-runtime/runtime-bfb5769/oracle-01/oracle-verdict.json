@@ -1,0 +1,194 @@
+{
+  "checks": {
+    "attribution": [
+      {
+        "check": "persistent_all_direct",
+        "detail": {
+          "cases": 1298,
+          "event5": 1300
+        },
+        "ok": false
+      },
+      {
+        "check": "negative_no_direct",
+        "detail": 2,
+        "ok": false
+      }
+    ],
+    "correctness": [
+      {
+        "check": "persistent_exact",
+        "detail": {
+          "cases": 1298,
+          "exact_px": 1197392,
+          "fail": 0,
+          "maxd": 0,
+          "xnz_px": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "fresh_exact",
+        "detail": {
+          "cases": 36,
+          "exact_px": 33204,
+          "fail": 0,
+          "maxd": 0,
+          "xnz_px": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "negative_exact",
+        "detail": {
+          "cases": 7,
+          "exact_px": 0,
+          "fail": 0,
+          "maxd": 0,
+          "xnz_px": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "oracle_result_pass",
+        "detail": {
+          "fail_lines": [],
+          "result": "PASS"
+        },
+        "ok": true
+      },
+      {
+        "check": "lifecycle_balanced",
+        "detail": {
+          "c12": 90,
+          "c13": 90,
+          "c18": 0,
+          "c19": 0,
+          "c20": 0,
+          "c24": 0,
+          "c27": 1,
+          "where": "x-close-screen"
+        },
+        "ok": true
+      },
+      {
+        "check": "no_fatal",
+        "detail": [],
+        "ok": true
+      },
+      {
+        "check": "x_ends_only_by_terminate",
+        "detail": {
+          "x_alive_after_terminate": false
+        },
+        "ok": true
+      },
+      {
+        "check": "activity_survives_close",
+        "detail": [
+          4359,
+          4359
+        ],
+        "ok": true
+      }
+    ],
+    "validity": [
+      {
+        "check": "persistent_case_count",
+        "detail": 1298,
+        "ok": true
+      },
+      {
+        "check": "fresh_case_count",
+        "detail": 36,
+        "ok": true
+      },
+      {
+        "check": "negative_case_count",
+        "detail": 7,
+        "ok": true
+      },
+      {
+        "check": "x3_untraced",
+        "detail": "0",
+        "ok": true
+      },
+      {
+        "check": "screen_awake_throughout",
+        "detail": [
+          {
+            "awake": true,
+            "keyguard": false,
+            "wakefulness": "Awake"
+          },
+          {
+            "awake": true,
+            "keyguard": false,
+            "wakefulness": "Awake"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "check": "stable_unchanged",
+        "detail": null,
+        "ok": true
+      },
+      {
+        "check": "logcat_alive_at_end",
+        "detail": {
+          "logcat_alive": true
+        },
+        "ok": true
+      },
+      {
+        "check": "events_complete",
+        "detail": {
+          "lines": 34094,
+          "nextSequence": 34094
+        },
+        "ok": true
+      }
+    ]
+  },
+  "failed": {
+    "attribution": [
+      "persistent_all_direct",
+      "negative_no_direct"
+    ],
+    "correctness": [],
+    "validity": []
+  },
+  "freeze_status": "ORACLE_FROZEN_V1",
+  "fresh_direct_reported": 39,
+  "phases": {
+    "fresh": {
+      "cases": 36,
+      "exact_px": 33204,
+      "fail": 0,
+      "maxd": 0,
+      "xnz_px": 0
+    },
+    "negative": {
+      "cases": 7,
+      "exact_px": 0,
+      "fail": 0,
+      "maxd": 0,
+      "xnz_px": 0
+    },
+    "persistent": {
+      "cases": 1298,
+      "exact_px": 1197392,
+      "fail": 0,
+      "maxd": 0,
+      "xnz_px": 0
+    }
+  },
+  "schema": "oracle-verdict/1",
+  "unjudged": {
+    "attribution": [],
+    "correctness": [],
+    "validity": []
+  },
+  "verdict": "FAIL_CORRECTNESS"
+}

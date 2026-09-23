@@ -57,10 +57,13 @@ reuse × (src+dst) 總量 > 256 MB                                          → 
 
 ```
 A 核心平面   rect(11) × batch(4) × readback(3)，其餘取中心（ratio 1x、reuse 1、residency warm）   132 格
-B 交互平面   rect × ratio(4)、rect × reuse(4)、rect × residency(4)，其餘取中心                   3 × 44 − 重複的中心列
-             = 99 個新格（中心列已在 A）
+B 交互平面   rect × ratio(4)、rect × reuse(4)、rect × residency(4)，其餘取中心                   91 格
+             （3 × 44 − 重複的中心列 = 99，其中 8 格被下列可行性規則剪掉，見 pruned.tsv）
 C 保留驗證   從剩餘可行的完整矩陣中，以 seed 20260923 均勻抽 40 格                               40 格
-合計         271 格 × 每種模式
+合計         263 格（＋中心格 N，每 25 格重測一次）× 每種模式
+
+可行矩陣是 3136 格，不是 8448：reuse 的定義是「輪流使用 N 組**存活中**的 set」，只對 warm 有意義
+（cold / resize / recreate 每輪都沒有存活的 set），再加上 src ≤ 64 MB、總量 ≤ 256 MB 的記憶體上限。
 ```
 
 **剪枝的依據（可被推翻的假設）：** 把 rect 當成交互作用的樞紐——成本對 ratio / reuse / residency 的依賴
@@ -90,7 +93,8 @@ telemetry      計時執行**不開** TELEMETRY（產品設定；每個 event �
               另跑一次 TELEMETRY=1 的歸因執行（每格 3 輪、不計時），記錄每格實際走 direct / staged / CPU
 X 啟動         untraced（RCA-XFCE-2）；計時執行不 arm R8，結束時 SIGTERM X（construction，記錄 pid），
               效能執行不做 lifecycle 判定（那是 R8–R10 與 XFCE 的工作）
-環境           螢幕 Awake 且未鎖、Stable 不變、每 25 格記一次 thermal / loadavg / refresh period
+環境           螢幕 Awake 且未鎖、Stable 不變、每次執行前後各記一次 dumpsys thermalservice
+              （雜訊由中心格重測量化，不另取 loadavg；refresh period 不在 fixture 可觀測範圍）
 ```
 
 ## 6. 判讀（先凍結）

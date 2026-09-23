@@ -1,0 +1,827 @@
+RUN_BEGIN cells=263 noise=1 iters=3 warmup=1 every=25 1790154194.809744
+MARK CELL_BEGIN N0000 1790154194.809844
+MARK CELL_END N0000 1790154194.855766
+CELL {"seq":0,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1932604,"iter_ns_p95":3384688,"per_op_ns_p50":1932604,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154194.809844,1790154194.855766],"iter_ns":[3384688,1932604,1543594]}
+MARK CELL_BEGIN A0128 1790154194.855794
+MARK CELL_END A0128 1790154195.403172
+CELL {"seq":1,"id":"A0128","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":68895782,"iter_ns_p95":71335156,"per_op_ns_p50":8611972,"x_cpu_ticks":23,"errors":0,"pixel_ok":true,"wall":[1790154194.855794,1790154195.403172],"iter_ns":[68895782,71335156,68630625]}
+MARK CELL_BEGIN B0168 1790154195.403234
+MARK CELL_END B0168 1790154195.415025
+CELL {"seq":2,"id":"B0168","group":"B","rw":64,"rh":64,"sw":128,"sh":128,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1001302,"iter_ns_p95":1402396,"per_op_ns_p50":1001302,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154195.403234,1790154195.415025],"iter_ns":[1402396,895313,1001302]}
+MARK CELL_BEGIN A0000 1790154195.415054
+MARK CELL_END A0000 1790154195.424287
+CELL {"seq":3,"id":"A0000","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":831771,"iter_ns_p95":1058594,"per_op_ns_p50":831771,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154195.415054,1790154195.424287],"iter_ns":[1058594,778333,831771]}
+MARK CELL_BEGIN C0232 1790154195.424305
+MARK CELL_END C0232 1790154196.097299
+CELL {"seq":4,"id":"C0232","group":"C","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":16,"residency":"cold","readback":"delayed","iters":3,"iter_ns_p50":97391823,"iter_ns_p95":101079740,"per_op_ns_p50":6086988,"x_cpu_ticks":33,"errors":0,"pixel_ok":true,"wall":[1790154195.424305,1790154196.097299],"iter_ns":[97391823,101079740,94986198]}
+MARK CELL_BEGIN B0146 1790154196.097335
+MARK CELL_END B0146 1790154196.118662
+CELL {"seq":5,"id":"B0146","group":"B","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1989739,"iter_ns_p95":2015417,"per_op_ns_p50":1989739,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154196.097335,1790154196.118662],"iter_ns":[2015417,1989739,1972240]}
+MARK CELL_BEGIN B0219 1790154196.118681
+MARK CELL_END B0219 1790154196.576862
+CELL {"seq":6,"id":"B0219","group":"B","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":41031197,"iter_ns_p95":43463386,"per_op_ns_p50":41031197,"x_cpu_ticks":26,"errors":0,"pixel_ok":true,"wall":[1790154196.118681,1790154196.576862],"iter_ns":[35863072,41031197,43463386]}
+MARK CELL_BEGIN A0066 1790154196.576912
+MARK CELL_END A0066 1790154196.619507
+CELL {"seq":7,"id":"A0066","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":6172344,"iter_ns_p95":8439375,"per_op_ns_p50":771543,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154196.576912,1790154196.619507],"iter_ns":[5836302,6172344,8439375]}
+MARK CELL_BEGIN B0210 1790154196.619532
+MARK CELL_END B0210 1790154196.705894
+CELL {"seq":8,"id":"B0210","group":"B","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":11372396,"iter_ns_p95":11544531,"per_op_ns_p50":11372396,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154196.619532,1790154196.705894],"iter_ns":[11544531,11372396,11357240]}
+MARK CELL_BEGIN A0112 1790154196.705929
+MARK CELL_END A0112 1790154196.910620
+CELL {"seq":9,"id":"A0112","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":23267917,"iter_ns_p95":28394427,"per_op_ns_p50":5816979,"x_cpu_ticks":9,"errors":0,"pixel_ok":true,"wall":[1790154196.705929,1790154196.910620],"iter_ns":[23267917,28394427,22141250]}
+MARK CELL_BEGIN B0144 1790154196.910681
+MARK CELL_END B0144 1790154196.925860
+CELL {"seq":10,"id":"B0144","group":"B","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1763125,"iter_ns_p95":2737969,"per_op_ns_p50":1763125,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154196.910681,1790154196.925860],"iter_ns":[2737969,1763125,1756563]}
+MARK CELL_BEGIN A0052 1790154196.925877
+MARK CELL_END A0052 1790154196.945641
+CELL {"seq":11,"id":"A0052","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":3293178,"iter_ns_p95":4054792,"per_op_ns_p50":823294,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154196.925877,1790154196.945641],"iter_ns":[4054792,3293178,2117708]}
+MARK CELL_BEGIN A0119 1790154196.945657
+MARK CELL_END A0119 1790154197.523563
+CELL {"seq":12,"id":"A0119","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":94840678,"iter_ns_p95":105189740,"per_op_ns_p50":5927542,"x_cpu_ticks":23,"errors":0,"pixel_ok":true,"wall":[1790154196.945657,1790154197.523563],"iter_ns":[75936823,94840678,105189740]}
+MARK CELL_BEGIN A0033 1790154197.523609
+MARK CELL_END A0033 1790154197.587336
+CELL {"seq":13,"id":"A0033","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":12007969,"iter_ns_p95":12102657,"per_op_ns_p50":750498,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154197.523609,1790154197.587336],"iter_ns":[12102657,12007969,11671250]}
+MARK CELL_BEGIN A0001 1790154197.587363
+MARK CELL_END A0001 1790154197.596483
+CELL {"seq":14,"id":"A0001","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":757917,"iter_ns_p95":1001042,"per_op_ns_p50":757917,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154197.587363,1790154197.596483],"iter_ns":[716302,757917,1001042]}
+MARK CELL_BEGIN B0198 1790154197.596502
+MARK CELL_END B0198 1790154197.627798
+CELL {"seq":15,"id":"B0198","group":"B","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2798958,"iter_ns_p95":3595886,"per_op_ns_p50":2798958,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154197.596502,1790154197.627798],"iter_ns":[2798958,3595886,2578594]}
+MARK CELL_BEGIN A0096 1790154197.627826
+MARK CELL_END A0096 1790154197.674839
+CELL {"seq":16,"id":"A0096","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1969427,"iter_ns_p95":2748750,"per_op_ns_p50":1969427,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154197.627826,1790154197.674839],"iter_ns":[2748750,1969427,1879531]}
+MARK CELL_BEGIN A0023 1790154197.674868
+MARK CELL_END A0023 1790154197.745703
+CELL {"seq":17,"id":"A0023","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":13447343,"iter_ns_p95":17824792,"per_op_ns_p50":840458,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154197.674868,1790154197.745703],"iter_ns":[17824792,12361198,13447343]}
+MARK CELL_BEGIN A0083 1790154197.745730
+MARK CELL_END A0083 1790154197.836954
+CELL {"seq":18,"id":"A0083","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":16253020,"iter_ns_p95":18947812,"per_op_ns_p50":1015813,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154197.745730,1790154197.836954],"iter_ns":[15658802,16253020,18947812]}
+MARK CELL_BEGIN A0114 1790154197.836991
+MARK CELL_END A0114 1790154198.182108
+CELL {"seq":19,"id":"A0114","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":50140469,"iter_ns_p95":52711354,"per_op_ns_p50":6267558,"x_cpu_ticks":14,"errors":0,"pixel_ok":true,"wall":[1790154197.836991,1790154198.182108],"iter_ns":[50140469,52711354,47179583]}
+MARK CELL_BEGIN B0192 1790154198.182142
+MARK CELL_END B0192 1790154198.201666
+CELL {"seq":20,"id":"B0192","group":"B","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2196094,"iter_ns_p95":3099532,"per_op_ns_p50":2196094,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154198.182142,1790154198.201666],"iter_ns":[2196094,2054948,3099532]}
+MARK CELL_BEGIN A0042 1790154198.201686
+MARK CELL_END A0042 1790154198.234971
+CELL {"seq":21,"id":"A0042","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5898645,"iter_ns_p95":7227864,"per_op_ns_p50":737330,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154198.201686,1790154198.234971],"iter_ns":[5898645,7227864,4702605]}
+MARK CELL_BEGIN B0161 1790154198.234988
+MARK CELL_END B0161 1790154198.297678
+CELL {"seq":22,"id":"B0161","group":"B","rw":32,"rh":32,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2139635,"iter_ns_p95":4221875,"per_op_ns_p50":2139635,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154198.234988,1790154198.297678],"iter_ns":[2139635,4221875,1043541]}
+MARK CELL_BEGIN B0214 1790154198.297735
+MARK CELL_END B0214 1790154198.557315
+CELL {"seq":23,"id":"B0214","group":"B","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":17498333,"iter_ns_p95":21420989,"per_op_ns_p50":17498333,"x_cpu_ticks":14,"errors":0,"pixel_ok":true,"wall":[1790154198.297735,1790154198.557315],"iter_ns":[21420989,17498333,13682969]}
+MARK CELL_BEGIN B0140 1790154198.557358
+MARK CELL_END B0140 1790154198.573401
+CELL {"seq":24,"id":"B0140","group":"B","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":2460416,"iter_ns_p95":4032604,"per_op_ns_p50":2460416,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154198.557358,1790154198.573401],"iter_ns":[4032604,2460416,2352187]}
+MARK CELL_BEGIN C0235 1790154198.573421
+MARK CELL_END C0235 1790154198.735019
+CELL {"seq":25,"id":"C0235","group":"C","rw":16,"rh":16,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":4,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":30964323,"iter_ns_p95":33360313,"per_op_ns_p50":7741080,"x_cpu_ticks":9,"errors":0,"pixel_ok":true,"wall":[1790154198.573421,1790154198.735019],"iter_ns":[33360313,29997083,30964323]}
+MARK CELL_BEGIN N0000 1790154198.735056
+MARK CELL_END N0000 1790154198.786631
+CELL {"seq":26,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2043698,"iter_ns_p95":2106666,"per_op_ns_p50":2043698,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154198.735056,1790154198.786631],"iter_ns":[1853178,2106666,2043698]}
+MARK CELL_BEGIN C0245 1790154198.786675
+MARK CELL_END C0245 1790154198.813155
+CELL {"seq":27,"id":"C0245","group":"C","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":4,"residency":"recreate","readback":"immediate","iters":3,"iter_ns_p50":4519062,"iter_ns_p95":5524166,"per_op_ns_p50":1129765,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154198.786675,1790154198.813155],"iter_ns":[5524166,4178073,4519062]}
+MARK CELL_BEGIN B0170 1790154198.813178
+MARK CELL_END B0170 1790154198.873696
+CELL {"seq":28,"id":"B0170","group":"B","rw":64,"rh":64,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2009635,"iter_ns_p95":3081719,"per_op_ns_p50":2009635,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154198.813178,1790154198.873696],"iter_ns":[1037500,3081719,2009635]}
+MARK CELL_BEGIN A0071 1790154198.873761
+MARK CELL_END A0071 1790154198.958241
+CELL {"seq":29,"id":"A0071","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":15602604,"iter_ns_p95":19365313,"per_op_ns_p50":975162,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154198.873761,1790154198.958241],"iter_ns":[19365313,14272240,15602604]}
+MARK CELL_BEGIN A0098 1790154198.958272
+MARK CELL_END A0098 1790154199.010622
+CELL {"seq":30,"id":"A0098","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":2066198,"iter_ns_p95":3492240,"per_op_ns_p50":2066198,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154198.958272,1790154199.010622],"iter_ns":[3492240,2023073,2066198]}
+MARK CELL_BEGIN C0229 1790154199.010666
+MARK CELL_END C0229 1790154199.099661
+CELL {"seq":31,"id":"C0229","group":"C","rw":256,"rh":256,"sw":1024,"sh":1024,"ratio":"16x","reuse":4,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":11585781,"iter_ns_p95":12144323,"per_op_ns_p50":1448222,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154199.010666,1790154199.099661],"iter_ns":[10298021,12144323,11585781]}
+MARK CELL_BEGIN A0123 1790154199.099707
+MARK CELL_END A0123 1790154199.440970
+CELL {"seq":32,"id":"A0123","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":32392864,"iter_ns_p95":36700989,"per_op_ns_p50":8098216,"x_cpu_ticks":13,"errors":0,"pixel_ok":true,"wall":[1790154199.099707,1790154199.440970],"iter_ns":[26000521,32392864,36700989]}
+MARK CELL_BEGIN A0021 1790154199.441019
+MARK CELL_END A0021 1790154199.505957
+CELL {"seq":33,"id":"A0021","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":9947813,"iter_ns_p95":11191562,"per_op_ns_p50":621738,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154199.441019,1790154199.505957],"iter_ns":[9947813,9930417,11191562]}
+MARK CELL_BEGIN A0079 1790154199.505984
+MARK CELL_END A0079 1790154199.555459
+CELL {"seq":34,"id":"A0079","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":9541250,"iter_ns_p95":9678750,"per_op_ns_p50":1192656,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154199.505984,1790154199.555459],"iter_ns":[9678750,8336250,9541250]}
+MARK CELL_BEGIN A0031 1790154199.555482
+MARK CELL_END A0031 1790154199.589067
+CELL {"seq":35,"id":"A0031","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":5855261,"iter_ns_p95":6122657,"per_op_ns_p50":731907,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154199.555482,1790154199.589067],"iter_ns":[5855261,4792239,6122657]}
+MARK CELL_BEGIN A0082 1790154199.589092
+MARK CELL_END A0082 1790154199.689196
+CELL {"seq":36,"id":"A0082","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":17927240,"iter_ns_p95":18933073,"per_op_ns_p50":1120452,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154199.589092,1790154199.689196],"iter_ns":[18933073,17482292,17927240]}
+MARK CELL_BEGIN B0202 1790154199.689233
+MARK CELL_END B0202 1790154199.713950
+CELL {"seq":37,"id":"B0202","group":"B","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":2552709,"iter_ns_p95":2800625,"per_op_ns_p50":2552709,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154199.689233,1790154199.713950],"iter_ns":[2335000,2800625,2552709]}
+MARK CELL_BEGIN C0240 1790154199.713984
+MARK CELL_END C0240 1790154200.527196
+CELL {"seq":38,"id":"C0240","group":"C","rw":1200,"rh":2608,"sw":2400,"sh":5216,"ratio":"4x","reuse":1,"batch":16,"residency":"resize","readback":"immediate","iters":3,"iter_ns_p50":115966198,"iter_ns_p95":131677812,"per_op_ns_p50":7247887,"x_cpu_ticks":37,"errors":0,"pixel_ok":true,"wall":[1790154199.713984,1790154200.527196],"iter_ns":[131677812,105810052,115966198]}
+MARK CELL_BEGIN A0104 1790154200.527249
+MARK CELL_END A0104 1790154200.669617
+CELL {"seq":39,"id":"A0104","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":22449792,"iter_ns_p95":22872032,"per_op_ns_p50":2806224,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154200.527249,1790154200.669617],"iter_ns":[17269115,22449792,22872032]}
+MARK CELL_BEGIN B0207 1790154200.669665
+MARK CELL_END B0207 1790154200.762507
+CELL {"seq":40,"id":"B0207","group":"B","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5979219,"iter_ns_p95":7902604,"per_op_ns_p50":5979219,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154200.669665,1790154200.762507],"iter_ns":[5979219,5906406,7902604]}
+MARK CELL_BEGIN A0040 1790154200.762537
+MARK CELL_END A0040 1790154200.782382
+CELL {"seq":41,"id":"A0040","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":2079062,"iter_ns_p95":2495729,"per_op_ns_p50":519765,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154200.762537,1790154200.782382],"iter_ns":[1902031,2079062,2495729]}
+MARK CELL_BEGIN A0074 1790154200.782401
+MARK CELL_END A0074 1790154200.792124
+CELL {"seq":42,"id":"A0074","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1013386,"iter_ns_p95":1030729,"per_op_ns_p50":1013386,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154200.782401,1790154200.792124],"iter_ns":[1030729,1013386,1008802]}
+MARK CELL_BEGIN A0125 1790154200.792140
+MARK CELL_END A0125 1790154201.174442
+CELL {"seq":43,"id":"A0125","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":32635781,"iter_ns_p95":37278906,"per_op_ns_p50":8158945,"x_cpu_ticks":14,"errors":0,"pixel_ok":true,"wall":[1790154200.792140,1790154201.174442],"iter_ns":[28948281,32635781,37278906]}
+MARK CELL_BEGIN A0062 1790154201.174475
+MARK CELL_END A0062 1790154201.185455
+CELL {"seq":44,"id":"A0062","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1037656,"iter_ns_p95":1338125,"per_op_ns_p50":1037656,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154201.174475,1790154201.185455],"iter_ns":[1338125,988333,1037656]}
+MARK CELL_BEGIN C0253 1790154201.185472
+MARK CELL_END C0253 1790154201.423330
+CELL {"seq":45,"id":"C0253","group":"C","rw":1024,"rh":1024,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":8,"residency":"recreate","readback":"immediate","iters":3,"iter_ns_p50":46888958,"iter_ns_p95":47272917,"per_op_ns_p50":5861119,"x_cpu_ticks":12,"errors":0,"pixel_ok":true,"wall":[1790154201.185472,1790154201.423330],"iter_ns":[47272917,46888958,46822656]}
+MARK CELL_BEGIN A0058 1790154201.423362
+MARK CELL_END A0058 1790154201.482961
+CELL {"seq":46,"id":"A0058","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":11520885,"iter_ns_p95":11607396,"per_op_ns_p50":720055,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154201.423362,1790154201.482961],"iter_ns":[9860156,11520885,11607396]}
+MARK CELL_BEGIN B0194 1790154201.482989
+MARK CELL_END B0194 1790154201.502199
+CELL {"seq":47,"id":"B0194","group":"B","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":3528333,"iter_ns_p95":4371458,"per_op_ns_p50":3528333,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154201.482989,1790154201.502199],"iter_ns":[3276614,4371458,3528333]}
+MARK CELL_BEGIN B0185 1790154201.502222
+MARK CELL_END B0185 1790154201.517604
+CELL {"seq":48,"id":"B0185","group":"B","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":2843906,"iter_ns_p95":3876823,"per_op_ns_p50":2843906,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154201.502222,1790154201.517604],"iter_ns":[2843906,3876823,2600417]}
+MARK CELL_BEGIN A0013 1790154201.517627
+MARK CELL_END A0013 1790154201.527053
+CELL {"seq":49,"id":"A0013","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":992239,"iter_ns_p95":999062,"per_op_ns_p50":992239,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154201.517627,1790154201.527053],"iter_ns":[999062,702553,992239]}
+MARK CELL_BEGIN A0124 1790154201.527069
+MARK CELL_END A0124 1790154201.909373
+CELL {"seq":50,"id":"A0124","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":28961458,"iter_ns_p95":29945000,"per_op_ns_p50":7240364,"x_cpu_ticks":15,"errors":0,"pixel_ok":true,"wall":[1790154201.527069,1790154201.909373],"iter_ns":[29945000,28961458,26548698]}
+MARK CELL_BEGIN B0148 1790154201.909424
+MARK CELL_END B0148 1790154201.922094
+CELL {"seq":51,"id":"B0148","group":"B","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":1508698,"iter_ns_p95":1875834,"per_op_ns_p50":1508698,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154201.909424,1790154201.922094],"iter_ns":[1508698,1875834,1470104]}
+MARK CELL_BEGIN N0000 1790154201.922110
+MARK CELL_END N0000 1790154201.966580
+CELL {"seq":52,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1976041,"iter_ns_p95":2507136,"per_op_ns_p50":1976041,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154201.922110,1790154201.966580],"iter_ns":[2507136,1976041,1702657]}
+MARK CELL_BEGIN B0139 1790154201.966611
+MARK CELL_END B0139 1790154201.978715
+CELL {"seq":53,"id":"B0139","group":"B","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":1732761,"iter_ns_p95":2542084,"per_op_ns_p50":1732761,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154201.966611,1790154201.978715],"iter_ns":[1336823,1732761,2542084]}
+MARK CELL_BEGIN A0102 1790154201.978733
+MARK CELL_END A0102 1790154202.128518
+CELL {"seq":54,"id":"A0102","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":20567291,"iter_ns_p95":20839479,"per_op_ns_p50":2570911,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154201.978733,1790154202.128518],"iter_ns":[20294270,20567291,20839479]}
+MARK CELL_BEGIN B0218 1790154202.128555
+MARK CELL_END B0218 1790154202.395168
+CELL {"seq":55,"id":"B0218","group":"B","rw":3440,"rh":1440,"sw":3440,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":6414688,"iter_ns_p95":6528386,"per_op_ns_p50":6414688,"x_cpu_ticks":11,"errors":0,"pixel_ok":true,"wall":[1790154202.128555,1790154202.395168],"iter_ns":[6414688,5905260,6528386]}
+MARK CELL_BEGIN A0063 1790154202.395209
+MARK CELL_END A0063 1790154202.417095
+CELL {"seq":56,"id":"A0063","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":4042031,"iter_ns_p95":4186406,"per_op_ns_p50":1010507,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154202.395209,1790154202.417095],"iter_ns":[4042031,4186406,2168489]}
+MARK CELL_BEGIN A0056 1790154202.417117
+MARK CELL_END A0056 1790154202.442508
+CELL {"seq":57,"id":"A0056","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":3455052,"iter_ns_p95":5402865,"per_op_ns_p50":431881,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154202.417117,1790154202.442508],"iter_ns":[5402865,3455052,3414167]}
+MARK CELL_BEGIN B0191 1790154202.442529
+MARK CELL_END B0191 1790154202.500134
+CELL {"seq":58,"id":"B0191","group":"B","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2449062,"iter_ns_p95":2472812,"per_op_ns_p50":2449062,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154202.442529,1790154202.500134],"iter_ns":[2472812,2449062,2039480]}
+MARK CELL_BEGIN A0120 1790154202.500160
+MARK CELL_END A0120 1790154202.732612
+CELL {"seq":59,"id":"A0120","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5609114,"iter_ns_p95":7868698,"per_op_ns_p50":5609114,"x_cpu_ticks":8,"errors":0,"pixel_ok":true,"wall":[1790154202.500160,1790154202.732612],"iter_ns":[5609114,7868698,4860729]}
+MARK CELL_BEGIN A0130 1790154202.732671
+MARK CELL_END A0130 1790154203.606669
+CELL {"seq":60,"id":"A0130","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":146150000,"iter_ns_p95":156383802,"per_op_ns_p50":9134375,"x_cpu_ticks":40,"errors":0,"pixel_ok":true,"wall":[1790154202.732671,1790154203.606669],"iter_ns":[146150000,156383802,114267031]}
+MARK CELL_BEGIN C0252 1790154203.606720
+MARK CELL_END C0252 1790154203.908822
+CELL {"seq":61,"id":"C0252","group":"C","rw":512,"rh":512,"sw":2048,"sh":2048,"ratio":"16x","reuse":1,"batch":8,"residency":"recreate","readback":"delayed","iters":3,"iter_ns_p50":56476407,"iter_ns_p95":62969167,"per_op_ns_p50":7059550,"x_cpu_ticks":18,"errors":0,"pixel_ok":true,"wall":[1790154203.606720,1790154203.908822],"iter_ns":[62969167,54863125,56476407]}
+MARK CELL_BEGIN C0234 1790154203.908873
+MARK CELL_END C0234 1790154203.979839
+CELL {"seq":62,"id":"C0234","group":"C","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":8,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":10625573,"iter_ns_p95":10934167,"per_op_ns_p50":1328196,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154203.908873,1790154203.979839],"iter_ns":[10580365,10934167,10625573]}
+MARK CELL_BEGIN A0086 1790154203.979871
+MARK CELL_END A0086 1790154203.995762
+CELL {"seq":63,"id":"A0086","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1472500,"iter_ns_p95":2174844,"per_op_ns_p50":1472500,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154203.979871,1790154203.995762],"iter_ns":[870937,2174844,1472500]}
+MARK CELL_BEGIN C0251 1790154203.995786
+MARK CELL_END C0251 1790154204.035428
+CELL {"seq":64,"id":"C0251","group":"C","rw":16,"rh":16,"sw":64,"sh":64,"ratio":"16x","reuse":1,"batch":8,"residency":"cold","readback":"immediate","iters":3,"iter_ns_p50":7104010,"iter_ns_p95":7991667,"per_op_ns_p50":888001,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154203.995786,1790154204.035428],"iter_ns":[7104010,6717500,7991667]}
+MARK CELL_BEGIN A0101 1790154204.035454
+MARK CELL_END A0101 1790154204.118283
+CELL {"seq":65,"id":"A0101","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":7990677,"iter_ns_p95":8574323,"per_op_ns_p50":1997669,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154204.035454,1790154204.118283],"iter_ns":[7990677,8574323,7628854]}
+MARK CELL_BEGIN B0163 1790154204.118330
+MARK CELL_END B0163 1790154204.133528
+CELL {"seq":66,"id":"B0163","group":"B","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1914219,"iter_ns_p95":2031718,"per_op_ns_p50":1914219,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.118330,1790154204.133528],"iter_ns":[2031718,1742031,1914219]}
+MARK CELL_BEGIN B0215 1790154204.133547
+MARK CELL_END B0215 1790154204.392890
+CELL {"seq":67,"id":"B0215","group":"B","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":13466458,"iter_ns_p95":14426667,"per_op_ns_p50":13466458,"x_cpu_ticks":15,"errors":0,"pixel_ok":true,"wall":[1790154204.133547,1790154204.392890],"iter_ns":[13466458,12875677,14426667]}
+MARK CELL_BEGIN B0183 1790154204.392981
+MARK CELL_END B0183 1790154204.414307
+CELL {"seq":68,"id":"B0183","group":"B","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2014583,"iter_ns_p95":7441094,"per_op_ns_p50":2014583,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.392981,1790154204.414307],"iter_ns":[1922812,2014583,7441094]}
+MARK CELL_BEGIN A0055 1790154204.414328
+MARK CELL_END A0055 1790154204.451956
+CELL {"seq":69,"id":"A0055","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":7542500,"iter_ns_p95":8304791,"per_op_ns_p50":942812,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.414328,1790154204.451956],"iter_ns":[7542500,5135156,8304791]}
+MARK CELL_BEGIN B0182 1790154204.451979
+MARK CELL_END B0182 1790154204.480033
+CELL {"seq":70,"id":"B0182","group":"B","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2123542,"iter_ns_p95":2669843,"per_op_ns_p50":2123542,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154204.451979,1790154204.480033],"iter_ns":[2123542,2669843,1947969]}
+MARK CELL_BEGIN A0059 1790154204.480054
+MARK CELL_END A0059 1790154204.548494
+CELL {"seq":71,"id":"A0059","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":12814792,"iter_ns_p95":12946562,"per_op_ns_p50":800924,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.480054,1790154204.548494],"iter_ns":[12946562,12194167,12814792]}
+MARK CELL_BEGIN A0090 1790154204.548521
+MARK CELL_END A0090 1790154204.603064
+CELL {"seq":72,"id":"A0090","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":8857604,"iter_ns_p95":9109167,"per_op_ns_p50":1107200,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.548521,1790154204.603064],"iter_ns":[8857604,9109167,8574531]}
+MARK CELL_BEGIN B0177 1790154204.603094
+MARK CELL_END B0177 1790154204.614304
+CELL {"seq":73,"id":"B0177","group":"B","rw":128,"rh":128,"sw":256,"sh":256,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1010416,"iter_ns_p95":1016667,"per_op_ns_p50":1010416,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154204.603094,1790154204.614304],"iter_ns":[761250,1016667,1010416]}
+MARK CELL_BEGIN B0158 1790154204.614320
+MARK CELL_END B0158 1790154204.628864
+CELL {"seq":74,"id":"B0158","group":"B","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":2597916,"iter_ns_p95":3485000,"per_op_ns_p50":2597916,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.614320,1790154204.628864],"iter_ns":[2597916,3485000,2494531]}
+MARK CELL_BEGIN A0107 1790154204.628880
+MARK CELL_END A0107 1790154204.900005
+CELL {"seq":75,"id":"A0107","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":44988541,"iter_ns_p95":46045469,"per_op_ns_p50":2811783,"x_cpu_ticks":8,"errors":0,"pixel_ok":true,"wall":[1790154204.628880,1790154204.900005],"iter_ns":[41647760,46045469,44988541]}
+MARK CELL_BEGIN A0015 1790154204.900068
+MARK CELL_END A0015 1790154204.932197
+CELL {"seq":76,"id":"A0015","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":4438177,"iter_ns_p95":5693907,"per_op_ns_p50":1109544,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.900068,1790154204.932197],"iter_ns":[4325833,4438177,5693907]}
+MARK CELL_BEGIN B0187 1790154204.932228
+MARK CELL_END B0187 1790154204.967141
+CELL {"seq":77,"id":"B0187","group":"B","rw":256,"rh":256,"sw":1024,"sh":1024,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1191875,"iter_ns_p95":1721094,"per_op_ns_p50":1191875,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154204.932228,1790154204.967141],"iter_ns":[1721094,1191875,1127084]}
+MARK CELL_BEGIN N0000 1790154204.967168
+MARK CELL_END N0000 1790154205.011751
+CELL {"seq":78,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1796927,"iter_ns_p95":2682292,"per_op_ns_p50":1796927,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154204.967168,1790154205.011751],"iter_ns":[2682292,1583750,1796927]}
+MARK CELL_BEGIN A0076 1790154205.011780
+MARK CELL_END A0076 1790154205.045734
+CELL {"seq":79,"id":"A0076","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":4659948,"iter_ns_p95":4962292,"per_op_ns_p50":1164987,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154205.011780,1790154205.045734],"iter_ns":[4962292,4244479,4659948]}
+MARK CELL_BEGIN A0060 1790154205.045775
+MARK CELL_END A0060 1790154205.055899
+CELL {"seq":80,"id":"A0060","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":800677,"iter_ns_p95":1041198,"per_op_ns_p50":800677,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154205.045775,1790154205.055899],"iter_ns":[764427,800677,1041198]}
+MARK CELL_BEGIN A0064 1790154205.055917
+MARK CELL_END A0064 1790154205.081783
+CELL {"seq":81,"id":"A0064","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":3680625,"iter_ns_p95":7466302,"per_op_ns_p50":920156,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154205.055917,1790154205.081783],"iter_ns":[3680625,2990365,7466302]}
+MARK CELL_BEGIN A0131 1790154205.081806
+MARK CELL_END A0131 1790154205.906781
+CELL {"seq":82,"id":"A0131","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":137251615,"iter_ns_p95":141050833,"per_op_ns_p50":8578225,"x_cpu_ticks":36,"errors":0,"pixel_ok":true,"wall":[1790154205.081806,1790154205.906781],"iter_ns":[141050833,137251615,127866146]}
+MARK CELL_BEGIN C0258 1790154205.906840
+MARK CELL_END C0258 1790154206.042019
+CELL {"seq":83,"id":"C0258","group":"C","rw":512,"rh":512,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":25758542,"iter_ns_p95":26514271,"per_op_ns_p50":25758542,"x_cpu_ticks":7,"errors":0,"pixel_ok":true,"wall":[1790154205.906840,1790154206.042019],"iter_ns":[26514271,25758542,23972917]}
+MARK CELL_BEGIN A0126 1790154206.042063
+MARK CELL_END A0126 1790154206.552669
+CELL {"seq":84,"id":"A0126","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":68710416,"iter_ns_p95":72908959,"per_op_ns_p50":8588802,"x_cpu_ticks":20,"errors":0,"pixel_ok":true,"wall":[1790154206.042063,1790154206.552669],"iter_ns":[66304635,68710416,72908959]}
+MARK CELL_BEGIN A0018 1790154206.552710
+MARK CELL_END A0018 1790154206.579612
+CELL {"seq":85,"id":"A0018","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":3466041,"iter_ns_p95":5650885,"per_op_ns_p50":433255,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154206.552710,1790154206.579612],"iter_ns":[3466041,3441146,5650885]}
+MARK CELL_BEGIN C0227 1790154206.579637
+MARK CELL_END C0227 1790154206.615414
+CELL {"seq":86,"id":"C0227","group":"C","rw":32,"rh":32,"sw":64,"sh":64,"ratio":"4x","reuse":1,"batch":8,"residency":"resize","readback":"delayed","iters":3,"iter_ns_p50":6480261,"iter_ns_p95":8060156,"per_op_ns_p50":810032,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154206.579637,1790154206.615414],"iter_ns":[6051771,6480261,8060156]}
+MARK CELL_BEGIN C0238 1790154206.615437
+MARK CELL_END C0238 1790154206.687979
+CELL {"seq":87,"id":"C0238","group":"C","rw":1,"rh":1,"sw":4,"sh":4,"ratio":"16x","reuse":64,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":11702448,"iter_ns_p95":13648125,"per_op_ns_p50":731403,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154206.615437,1790154206.687979],"iter_ns":[13648125,10171822,11702448]}
+MARK CELL_BEGIN B0149 1790154206.688010
+MARK CELL_END B0149 1790154206.708922
+CELL {"seq":88,"id":"B0149","group":"B","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":4786250,"iter_ns_p95":5726719,"per_op_ns_p50":4786250,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154206.688010,1790154206.708922],"iter_ns":[5726719,2936667,4786250]}
+MARK CELL_BEGIN B0184 1790154206.708951
+MARK CELL_END B0184 1790154206.722403
+CELL {"seq":89,"id":"B0184","group":"B","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":1834948,"iter_ns_p95":2552865,"per_op_ns_p50":1834948,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154206.708951,1790154206.722403],"iter_ns":[1614219,1834948,2552865]}
+MARK CELL_BEGIN B0203 1790154206.722419
+MARK CELL_END B0203 1790154206.749773
+CELL {"seq":90,"id":"B0203","group":"B","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":4551250,"iter_ns_p95":7285468,"per_op_ns_p50":4551250,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154206.722419,1790154206.749773],"iter_ns":[4061563,7285468,4551250]}
+MARK CELL_BEGIN A0039 1790154206.749798
+MARK CELL_END A0039 1790154206.768542
+CELL {"seq":91,"id":"A0039","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2314480,"iter_ns_p95":2353958,"per_op_ns_p50":578620,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154206.749798,1790154206.768542],"iter_ns":[2353958,2075156,2314480]}
+MARK CELL_BEGIN A0099 1790154206.768559
+MARK CELL_END A0099 1790154206.854172
+CELL {"seq":92,"id":"A0099","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":7510677,"iter_ns_p95":8597187,"per_op_ns_p50":1877669,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154206.768559,1790154206.854172],"iter_ns":[7181250,8597187,7510677]}
+MARK CELL_BEGIN C0247 1790154206.854205
+MARK CELL_END C0247 1790154207.190153
+CELL {"seq":93,"id":"C0247","group":"C","rw":512,"rh":512,"sw":2048,"sh":2048,"ratio":"16x","reuse":1,"batch":16,"residency":"recreate","readback":"immediate","iters":3,"iter_ns_p50":69079895,"iter_ns_p95":71212916,"per_op_ns_p50":4317493,"x_cpu_ticks":19,"errors":0,"pixel_ok":true,"wall":[1790154206.854205,1790154207.190153],"iter_ns":[66150833,69079895,71212916]}
+MARK CELL_BEGIN B0201 1790154207.190209
+MARK CELL_END B0201 1790154207.215791
+CELL {"seq":94,"id":"B0201","group":"B","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2908125,"iter_ns_p95":3494739,"per_op_ns_p50":2908125,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.190209,1790154207.215791],"iter_ns":[2908125,3494739,2794739]}
+MARK CELL_BEGIN B0197 1790154207.215821
+MARK CELL_END B0197 1790154207.281124
+CELL {"seq":95,"id":"B0197","group":"B","rw":512,"rh":512,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1698698,"iter_ns_p95":2131875,"per_op_ns_p50":1698698,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.215821,1790154207.281124],"iter_ns":[1698698,1522864,2131875]}
+MARK CELL_BEGIN A0097 1790154207.281154
+MARK CELL_END A0097 1790154207.338639
+CELL {"seq":96,"id":"A0097","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":3375417,"iter_ns_p95":3982604,"per_op_ns_p50":3375417,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.281154,1790154207.338639],"iter_ns":[3982604,3375417,3238854]}
+MARK CELL_BEGIN C0228 1790154207.338671
+MARK CELL_END C0228 1790154207.372384
+CELL {"seq":97,"id":"C0228","group":"C","rw":128,"rh":128,"sw":512,"sh":512,"ratio":"16x","reuse":16,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":2244167,"iter_ns_p95":2966302,"per_op_ns_p50":2244167,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.338671,1790154207.372384],"iter_ns":[2244167,2966302,2203594]}
+MARK CELL_BEGIN A0109 1790154207.372410
+MARK CELL_END A0109 1790154207.508132
+CELL {"seq":98,"id":"A0109","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":9686197,"iter_ns_p95":10262552,"per_op_ns_p50":9686197,"x_cpu_ticks":6,"errors":0,"pixel_ok":true,"wall":[1790154207.372410,1790154207.508132],"iter_ns":[10262552,8982083,9686197]}
+MARK CELL_BEGIN B0180 1790154207.508182
+MARK CELL_END B0180 1790154207.523952
+CELL {"seq":99,"id":"B0180","group":"B","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2141042,"iter_ns_p95":2660156,"per_op_ns_p50":2141042,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154207.508182,1790154207.523952],"iter_ns":[2141042,2660156,1887032]}
+MARK CELL_BEGIN C0249 1790154207.523970
+MARK CELL_END C0249 1790154207.561815
+CELL {"seq":100,"id":"C0249","group":"C","rw":64,"rh":64,"sw":256,"sh":256,"ratio":"16x","reuse":1,"batch":8,"residency":"resize","readback":"delayed","iters":3,"iter_ns_p50":6634062,"iter_ns_p95":6751511,"per_op_ns_p50":829257,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154207.523970,1790154207.561815],"iter_ns":[6751511,6634062,6246354]}
+MARK CELL_BEGIN A0077 1790154207.561835
+MARK CELL_END A0077 1790154207.587642
+CELL {"seq":101,"id":"A0077","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":3796770,"iter_ns_p95":4983073,"per_op_ns_p50":949192,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154207.561835,1790154207.587642],"iter_ns":[4983073,3625885,3796770]}
+MARK CELL_BEGIN A0041 1790154207.587660
+MARK CELL_END A0041 1790154207.606812
+CELL {"seq":102,"id":"A0041","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":3103541,"iter_ns_p95":4266302,"per_op_ns_p50":775885,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154207.587660,1790154207.606812],"iter_ns":[1928385,3103541,4266302]}
+MARK CELL_BEGIN B0211 1790154207.606829
+MARK CELL_END B0211 1790154207.705079
+CELL {"seq":103,"id":"B0211","group":"B","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":17975364,"iter_ns_p95":17991875,"per_op_ns_p50":17975364,"x_cpu_ticks":5,"errors":0,"pixel_ok":true,"wall":[1790154207.606829,1790154207.705079],"iter_ns":[17991875,17975364,16697188]}
+MARK CELL_BEGIN N0000 1790154207.705128
+MARK CELL_END N0000 1790154207.758350
+CELL {"seq":104,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1810730,"iter_ns_p95":2677344,"per_op_ns_p50":1810730,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.705128,1790154207.758350],"iter_ns":[2677344,1600625,1810730]}
+MARK CELL_BEGIN B0138 1790154207.758391
+MARK CELL_END B0138 1790154207.778012
+CELL {"seq":105,"id":"B0138","group":"B","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2800000,"iter_ns_p95":5970833,"per_op_ns_p50":2800000,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.758391,1790154207.778012],"iter_ns":[5970833,2800000,1859271]}
+MARK CELL_BEGIN A0048 1790154207.778031
+MARK CELL_END A0048 1790154207.787685
+CELL {"seq":106,"id":"A0048","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1084531,"iter_ns_p95":1728229,"per_op_ns_p50":1084531,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154207.778031,1790154207.787685],"iter_ns":[1728229,786146,1084531]}
+MARK CELL_BEGIN B0133 1790154207.787700
+MARK CELL_END B0133 1790154207.795620
+CELL {"seq":107,"id":"B0133","group":"B","rw":1,"rh":1,"sw":4,"sh":4,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":764115,"iter_ns_p95":994740,"per_op_ns_p50":764115,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154207.787700,1790154207.795620],"iter_ns":[994740,752813,764115]}
+MARK CELL_BEGIN A0017 1790154207.795633
+MARK CELL_END A0017 1790154207.819511
+CELL {"seq":108,"id":"A0017","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":2924948,"iter_ns_p95":3889114,"per_op_ns_p50":731237,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154207.795633,1790154207.819511],"iter_ns":[3889114,2924948,2465886]}
+MARK CELL_BEGIN C0226 1790154207.819529
+MARK CELL_END C0226 1790154207.834442
+CELL {"seq":109,"id":"C0226","group":"C","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"delayed","iters":3,"iter_ns_p50":1838542,"iter_ns_p95":1940938,"per_op_ns_p50":1838542,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154207.819529,1790154207.834442],"iter_ns":[1722812,1838542,1940938]}
+MARK CELL_BEGIN B0172 1790154207.834458
+MARK CELL_END B0172 1790154207.850344
+CELL {"seq":110,"id":"B0172","group":"B","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1903438,"iter_ns_p95":1985261,"per_op_ns_p50":1903438,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154207.834458,1790154207.850344],"iter_ns":[1985261,1548177,1903438]}
+MARK CELL_BEGIN A0043 1790154207.850360
+MARK CELL_END A0043 1790154207.887891
+CELL {"seq":111,"id":"A0043","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":6179375,"iter_ns_p95":7142188,"per_op_ns_p50":772421,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154207.850360,1790154207.887891],"iter_ns":[5496146,6179375,7142188]}
+MARK CELL_BEGIN B0220 1790154207.887922
+MARK CELL_END B0220 1790154208.414112
+CELL {"seq":112,"id":"B0220","group":"B","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":42040312,"iter_ns_p95":47797656,"per_op_ns_p50":42040312,"x_cpu_ticks":28,"errors":0,"pixel_ok":true,"wall":[1790154207.887922,1790154208.414112],"iter_ns":[41213489,47797656,42040312]}
+MARK CELL_BEGIN A0115 1790154208.414169
+MARK CELL_END A0115 1790154208.691408
+CELL {"seq":113,"id":"A0115","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":35870156,"iter_ns_p95":46691146,"per_op_ns_p50":4483769,"x_cpu_ticks":12,"errors":0,"pixel_ok":true,"wall":[1790154208.414169,1790154208.691408],"iter_ns":[46691146,35870156,35245469]}
+MARK CELL_BEGIN B0137 1790154208.691467
+MARK CELL_END B0137 1790154208.714107
+CELL {"seq":114,"id":"B0137","group":"B","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2034844,"iter_ns_p95":2063541,"per_op_ns_p50":2034844,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154208.691467,1790154208.714107],"iter_ns":[2063541,1952500,2034844]}
+MARK CELL_BEGIN C0250 1790154208.714131
+MARK CELL_END C0250 1790154208.775605
+CELL {"seq":115,"id":"C0250","group":"C","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":16,"residency":"cold","readback":"immediate","iters":3,"iter_ns_p50":10221562,"iter_ns_p95":10575469,"per_op_ns_p50":638847,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154208.714131,1790154208.775605],"iter_ns":[9792032,10221562,10575469]}
+MARK CELL_BEGIN A0007 1790154208.775628
+MARK CELL_END A0007 1790154208.820577
+CELL {"seq":116,"id":"A0007","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":8564947,"iter_ns_p95":9052604,"per_op_ns_p50":1070618,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154208.775628,1790154208.820577],"iter_ns":[9052604,7663438,8564947]}
+MARK CELL_BEGIN A0019 1790154208.820606
+MARK CELL_END A0019 1790154208.860514
+CELL {"seq":117,"id":"A0019","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":7573646,"iter_ns_p95":7876875,"per_op_ns_p50":946705,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154208.820606,1790154208.860514],"iter_ns":[7876875,7573646,6557709]}
+MARK CELL_BEGIN B0153 1790154208.860538
+MARK CELL_END B0153 1790154208.874306
+CELL {"seq":118,"id":"B0153","group":"B","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2001563,"iter_ns_p95":2760260,"per_op_ns_p50":2001563,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154208.860538,1790154208.874306],"iter_ns":[2760260,2001563,1794843]}
+MARK CELL_BEGIN B0188 1790154208.874324
+MARK CELL_END B0188 1790154208.932166
+CELL {"seq":119,"id":"B0188","group":"B","rw":256,"rh":256,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1018698,"iter_ns_p95":2186979,"per_op_ns_p50":1018698,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154208.874324,1790154208.932166],"iter_ns":[2186979,794531,1018698]}
+MARK CELL_BEGIN C0241 1790154208.932214
+MARK CELL_END C0241 1790154209.443350
+CELL {"seq":120,"id":"C0241","group":"C","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":4,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":53147395,"iter_ns_p95":56322292,"per_op_ns_p50":13286848,"x_cpu_ticks":28,"errors":0,"pixel_ok":true,"wall":[1790154208.932214,1790154209.443350],"iter_ns":[49816250,53147395,56322292]}
+MARK CELL_BEGIN A0057 1790154209.443398
+MARK CELL_END A0057 1790154209.503469
+CELL {"seq":121,"id":"A0057","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":10378437,"iter_ns_p95":11739167,"per_op_ns_p50":648652,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154209.443398,1790154209.503469],"iter_ns":[11739167,10378437,8050156]}
+MARK CELL_BEGIN B0147 1790154209.503492
+MARK CELL_END B0147 1790154209.519230
+CELL {"seq":122,"id":"B0147","group":"B","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2032709,"iter_ns_p95":2650261,"per_op_ns_p50":2032709,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154209.503492,1790154209.519230],"iter_ns":[2032709,1896927,2650261]}
+MARK CELL_BEGIN B0216 1790154209.519248
+MARK CELL_END B0216 1790154209.724526
+CELL {"seq":123,"id":"B0216","group":"B","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":26695990,"iter_ns_p95":28654114,"per_op_ns_p50":26695990,"x_cpu_ticks":11,"errors":0,"pixel_ok":true,"wall":[1790154209.519248,1790154209.724526],"iter_ns":[26695990,28654114,26428542]}
+MARK CELL_BEGIN A0110 1790154209.724576
+MARK CELL_END A0110 1790154209.844698
+CELL {"seq":124,"id":"A0110","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":3718542,"iter_ns_p95":5193437,"per_op_ns_p50":3718542,"x_cpu_ticks":5,"errors":0,"pixel_ok":true,"wall":[1790154209.724576,1790154209.844698],"iter_ns":[3624063,5193437,3718542]}
+MARK CELL_BEGIN C0223 1790154209.844752
+MARK CELL_END C0223 1790154209.885319
+CELL {"seq":125,"id":"C0223","group":"C","rw":64,"rh":64,"sw":256,"sh":256,"ratio":"16x","reuse":4,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5487448,"iter_ns_p95":7857709,"per_op_ns_p50":685931,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154209.844752,1790154209.885319],"iter_ns":[5487448,7857709,5028333]}
+MARK CELL_BEGIN A0103 1790154209.885342
+MARK CELL_END A0103 1790154210.002207
+CELL {"seq":126,"id":"A0103","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":18086823,"iter_ns_p95":18282292,"per_op_ns_p50":2260852,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154209.885342,1790154210.002207],"iter_ns":[18086823,18282292,17360938]}
+MARK CELL_BEGIN A0073 1790154210.002244
+MARK CELL_END A0073 1790154210.016005
+CELL {"seq":127,"id":"A0073","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":1274792,"iter_ns_p95":1385313,"per_op_ns_p50":1274792,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154210.002244,1790154210.016005],"iter_ns":[1157708,1274792,1385313]}
+MARK CELL_BEGIN A0047 1790154210.016026
+MARK CELL_END A0047 1790154210.078934
+CELL {"seq":128,"id":"A0047","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":11542500,"iter_ns_p95":12116979,"per_op_ns_p50":721406,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154210.016026,1790154210.078934],"iter_ns":[8029011,12116979,11542500]}
+MARK CELL_BEGIN C0243 1790154210.078962
+MARK CELL_END C0243 1790154210.143425
+CELL {"seq":129,"id":"C0243","group":"C","rw":1,"rh":1,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":4,"residency":"resize","readback":"delayed","iters":3,"iter_ns_p50":4534688,"iter_ns_p95":5766094,"per_op_ns_p50":1133672,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154210.078962,1790154210.143425],"iter_ns":[4534688,4105782,5766094]}
+MARK CELL_BEGIN N0000 1790154210.143476
+MARK CELL_END N0000 1790154210.182981
+CELL {"seq":130,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1858802,"iter_ns_p95":2705625,"per_op_ns_p50":1858802,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154210.143476,1790154210.182981],"iter_ns":[1800261,2705625,1858802]}
+MARK CELL_BEGIN A0111 1790154210.183014
+MARK CELL_END A0111 1790154210.381779
+CELL {"seq":131,"id":"A0111","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":24318021,"iter_ns_p95":26807656,"per_op_ns_p50":6079505,"x_cpu_ticks":7,"errors":0,"pixel_ok":true,"wall":[1790154210.183014,1790154210.381779],"iter_ns":[16808906,24318021,26807656]}
+MARK CELL_BEGIN A0106 1790154210.381829
+MARK CELL_END A0106 1790154210.604888
+CELL {"seq":132,"id":"A0106","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":37619219,"iter_ns_p95":44222761,"per_op_ns_p50":2351201,"x_cpu_ticks":7,"errors":0,"pixel_ok":true,"wall":[1790154210.381829,1790154210.604888],"iter_ns":[37619219,33844791,44222761]}
+MARK CELL_BEGIN C0248 1790154210.604952
+MARK CELL_END C0248 1790154210.891718
+CELL {"seq":133,"id":"C0248","group":"C","rw":64,"rh":64,"sw":1200,"sh":2191,"ratio":"redirected","reuse":16,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":11993698,"iter_ns_p95":12915937,"per_op_ns_p50":1499212,"x_cpu_ticks":18,"errors":0,"pixel_ok":true,"wall":[1790154210.604952,1790154210.891718],"iter_ns":[11408229,12915937,11993698]}
+MARK CELL_BEGIN B0159 1790154210.891750
+MARK CELL_END B0159 1790154210.901265
+CELL {"seq":134,"id":"B0159","group":"B","rw":32,"rh":32,"sw":64,"sh":64,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":773542,"iter_ns_p95":998020,"per_op_ns_p50":773542,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154210.891750,1790154210.901265],"iter_ns":[773542,716041,998020]}
+MARK CELL_BEGIN A0024 1790154210.901284
+MARK CELL_END A0024 1790154210.909244
+CELL {"seq":135,"id":"A0024","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":753125,"iter_ns_p95":804011,"per_op_ns_p50":753125,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154210.901284,1790154210.909244],"iter_ns":[748698,804011,753125]}
+MARK CELL_BEGIN A0121 1790154210.909258
+MARK CELL_END A0121 1790154211.165828
+CELL {"seq":136,"id":"A0121","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":12177292,"iter_ns_p95":15951094,"per_op_ns_p50":12177292,"x_cpu_ticks":10,"errors":0,"pixel_ok":true,"wall":[1790154210.909258,1790154211.165828],"iter_ns":[15951094,12177292,11522864]}
+MARK CELL_BEGIN A0078 1790154211.165862
+MARK CELL_END A0078 1790154211.216982
+CELL {"seq":137,"id":"A0078","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":7286614,"iter_ns_p95":8491146,"per_op_ns_p50":910826,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154211.165862,1790154211.216982],"iter_ns":[6190521,7286614,8491146]}
+MARK CELL_BEGIN C0225 1790154211.217011
+MARK CELL_END C0225 1790154211.386832
+CELL {"seq":138,"id":"C0225","group":"C","rw":32,"rh":32,"sw":1200,"sh":2191,"ratio":"redirected","reuse":4,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":19763698,"iter_ns_p95":20514844,"per_op_ns_p50":1235231,"x_cpu_ticks":8,"errors":0,"pixel_ok":true,"wall":[1790154211.217011,1790154211.386832],"iter_ns":[20514844,11621979,19763698]}
+MARK CELL_BEGIN C0244 1790154211.386874
+MARK CELL_END C0244 1790154211.408942
+CELL {"seq":139,"id":"C0244","group":"C","rw":64,"rh":64,"sw":128,"sh":128,"ratio":"4x","reuse":64,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":2015833,"iter_ns_p95":2045000,"per_op_ns_p50":2015833,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154211.386874,1790154211.408942],"iter_ns":[1897500,2045000,2015833]}
+MARK CELL_BEGIN A0016 1790154211.408967
+MARK CELL_END A0016 1790154211.431542
+CELL {"seq":140,"id":"A0016","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":3139635,"iter_ns_p95":3206302,"per_op_ns_p50":784908,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154211.408967,1790154211.431542],"iter_ns":[3139635,3206302,2864375]}
+MARK CELL_BEGIN B0221 1790154211.431561
+MARK CELL_END B0221 1790154211.838013
+CELL {"seq":141,"id":"B0221","group":"B","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":55687552,"iter_ns_p95":59584479,"per_op_ns_p50":55687552,"x_cpu_ticks":24,"errors":0,"pixel_ok":true,"wall":[1790154211.431561,1790154211.838013],"iter_ns":[59584479,55687552,52911718]}
+MARK CELL_BEGIN C0255 1790154211.838059
+MARK CELL_END C0255 1790154211.865027
+CELL {"seq":142,"id":"C0255","group":"C","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":1932604,"iter_ns_p95":2191719,"per_op_ns_p50":1932604,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154211.838059,1790154211.865027],"iter_ns":[1928229,2191719,1932604]}
+MARK CELL_BEGIN A0118 1790154211.865054
+MARK CELL_END A0118 1790154212.453338
+CELL {"seq":143,"id":"A0118","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":97489167,"iter_ns_p95":98128125,"per_op_ns_p50":6093072,"x_cpu_ticks":28,"errors":0,"pixel_ok":true,"wall":[1790154211.865054,1790154212.453338],"iter_ns":[98128125,97374167,97489167]}
+MARK CELL_BEGIN C0230 1790154212.453396
+MARK CELL_END C0230 1790154212.494909
+CELL {"seq":144,"id":"C0230","group":"C","rw":16,"rh":16,"sw":64,"sh":64,"ratio":"16x","reuse":64,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":5658645,"iter_ns_p95":7534792,"per_op_ns_p50":707330,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154212.453396,1790154212.494909],"iter_ns":[5561719,5658645,7534792]}
+MARK CELL_BEGIN A0044 1790154212.494943
+MARK CELL_END A0044 1790154212.525574
+CELL {"seq":145,"id":"A0044","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":5446511,"iter_ns_p95":5945469,"per_op_ns_p50":680813,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154212.494943,1790154212.525574],"iter_ns":[5446511,5945469,3574115]}
+MARK CELL_BEGIN B0141 1790154212.525596
+MARK CELL_END B0141 1790154212.535531
+CELL {"seq":146,"id":"B0141","group":"B","rw":5,"rh":24,"sw":10,"sh":48,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":999427,"iter_ns_p95":1269323,"per_op_ns_p50":999427,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154212.525596,1790154212.535531],"iter_ns":[1269323,694270,999427]}
+MARK CELL_BEGIN B0195 1790154212.535548
+MARK CELL_END B0195 1790154212.568020
+CELL {"seq":147,"id":"B0195","group":"B","rw":512,"rh":512,"sw":1024,"sh":1024,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1104115,"iter_ns_p95":1468646,"per_op_ns_p50":1104115,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154212.535548,1790154212.568020],"iter_ns":[1468646,1104115,1055937]}
+MARK CELL_BEGIN A0091 1790154212.568061
+MARK CELL_END A0091 1790154212.628991
+CELL {"seq":148,"id":"A0091","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":10487240,"iter_ns_p95":10556927,"per_op_ns_p50":1310905,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154212.568061,1790154212.628991],"iter_ns":[10487240,10556927,9606823]}
+MARK CELL_BEGIN B0209 1790154212.629022
+MARK CELL_END B0209 1790154212.728853
+CELL {"seq":149,"id":"B0209","group":"B","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":6905677,"iter_ns_p95":6957761,"per_op_ns_p50":6905677,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154212.629022,1790154212.728853],"iter_ns":[6957761,6465885,6905677]}
+MARK CELL_BEGIN A0089 1790154212.728882
+MARK CELL_END A0089 1790154212.761471
+CELL {"seq":150,"id":"A0089","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":4528021,"iter_ns_p95":5455000,"per_op_ns_p50":1132005,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154212.728882,1790154212.761471],"iter_ns":[4368646,5455000,4528021]}
+MARK CELL_BEGIN A0037 1790154212.761498
+MARK CELL_END A0037 1790154212.771832
+CELL {"seq":151,"id":"A0037","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":1116771,"iter_ns_p95":1136563,"per_op_ns_p50":1116771,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154212.761498,1790154212.771832],"iter_ns":[1116771,769584,1136563]}
+MARK CELL_BEGIN B0173 1790154212.771852
+MARK CELL_END B0173 1790154212.792646
+CELL {"seq":152,"id":"B0173","group":"B","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1763437,"iter_ns_p95":2024843,"per_op_ns_p50":1763437,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154212.771852,1790154212.792646],"iter_ns":[1732864,2024843,1763437]}
+MARK CELL_BEGIN C0260 1790154212.792672
+MARK CELL_END C0260 1790154213.119061
+CELL {"seq":153,"id":"C0260","group":"C","rw":1024,"rh":1024,"sw":2048,"sh":2048,"ratio":"4x","reuse":1,"batch":4,"residency":"cold","readback":"delayed","iters":3,"iter_ns_p50":27473593,"iter_ns_p95":28799687,"per_op_ns_p50":6868398,"x_cpu_ticks":20,"errors":0,"pixel_ok":true,"wall":[1790154212.792672,1790154213.119061],"iter_ns":[24508906,27473593,28799687]}
+MARK CELL_BEGIN B0142 1790154213.119109
+MARK CELL_END B0142 1790154213.130494
+CELL {"seq":154,"id":"B0142","group":"B","rw":5,"rh":24,"sw":20,"sh":96,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":838333,"iter_ns_p95":1725260,"per_op_ns_p50":838333,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154213.119109,1790154213.130494],"iter_ns":[1725260,838333,785938]}
+MARK CELL_BEGIN B0136 1790154213.130515
+MARK CELL_END B0136 1790154213.146367
+CELL {"seq":155,"id":"B0136","group":"B","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2026302,"iter_ns_p95":2253437,"per_op_ns_p50":2026302,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154213.130515,1790154213.146367],"iter_ns":[1976927,2253437,2026302]}
+MARK CELL_BEGIN N0000 1790154213.146385
+MARK CELL_END N0000 1790154213.195791
+CELL {"seq":156,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1970260,"iter_ns_p95":2009844,"per_op_ns_p50":1970260,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154213.146385,1790154213.195791],"iter_ns":[1970260,1950469,2009844]}
+MARK CELL_BEGIN B0190 1790154213.195836
+MARK CELL_END B0190 1790154213.222038
+CELL {"seq":157,"id":"B0190","group":"B","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2197812,"iter_ns_p95":2938645,"per_op_ns_p50":2197812,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154213.195836,1790154213.222038],"iter_ns":[2938645,2197812,2021354]}
+MARK CELL_BEGIN A0035 1790154213.222064
+MARK CELL_END A0035 1790154213.285016
+CELL {"seq":158,"id":"A0035","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":11498125,"iter_ns_p95":13294843,"per_op_ns_p50":718632,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154213.222064,1790154213.285016],"iter_ns":[10991667,13294843,11498125]}
+MARK CELL_BEGIN B0150 1790154213.285051
+MARK CELL_END B0150 1790154213.295151
+CELL {"seq":159,"id":"B0150","group":"B","rw":16,"rh":16,"sw":32,"sh":32,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1230052,"iter_ns_p95":1696458,"per_op_ns_p50":1230052,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154213.285051,1790154213.295151],"iter_ns":[779636,1696458,1230052]}
+MARK CELL_BEGIN B0134 1790154213.295171
+MARK CELL_END B0134 1790154213.350805
+CELL {"seq":160,"id":"B0134","group":"B","rw":1,"rh":1,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":804635,"iter_ns_p95":1713542,"per_op_ns_p50":804635,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154213.295171,1790154213.350805],"iter_ns":[779479,804635,1713542]}
+MARK CELL_BEGIN B0189 1790154213.350855
+MARK CELL_END B0189 1790154213.367964
+CELL {"seq":161,"id":"B0189","group":"B","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2121927,"iter_ns_p95":3183489,"per_op_ns_p50":2121927,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154213.350855,1790154213.367964],"iter_ns":[3183489,2081094,2121927]}
+MARK CELL_BEGIN B0179 1790154213.367990
+MARK CELL_END B0179 1790154213.422318
+CELL {"seq":162,"id":"B0179","group":"B","rw":128,"rh":128,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1080469,"iter_ns_p95":2060000,"per_op_ns_p50":1080469,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154213.367990,1790154213.422318],"iter_ns":[2060000,736093,1080469]}
+MARK CELL_BEGIN B0212 1790154213.422354
+MARK CELL_END B0212 1790154213.705502
+CELL {"seq":163,"id":"B0212","group":"B","rw":1200,"rh":2608,"sw":2400,"sh":5216,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":6533490,"iter_ns_p95":6624687,"per_op_ns_p50":6533490,"x_cpu_ticks":10,"errors":0,"pixel_ok":true,"wall":[1790154213.422354,1790154213.705502],"iter_ns":[6533490,5519219,6624687]}
+MARK CELL_BEGIN A0020 1790154213.705553
+MARK CELL_END A0020 1790154213.738346
+CELL {"seq":164,"id":"A0020","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":4922656,"iter_ns_p95":5512292,"per_op_ns_p50":615332,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154213.705553,1790154213.738346],"iter_ns":[4896979,4922656,5512292]}
+MARK CELL_BEGIN A0025 1790154213.738373
+MARK CELL_END A0025 1790154213.748013
+CELL {"seq":165,"id":"A0025","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":747604,"iter_ns_p95":1311875,"per_op_ns_p50":747604,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154213.738373,1790154213.748013],"iter_ns":[1311875,717708,747604]}
+MARK CELL_BEGIN B0169 1790154213.748029
+MARK CELL_END B0169 1790154213.758357
+CELL {"seq":166,"id":"B0169","group":"B","rw":64,"rh":64,"sw":256,"sh":256,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":825156,"iter_ns_p95":1049532,"per_op_ns_p50":825156,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154213.748029,1790154213.758357],"iter_ns":[825156,776197,1049532]}
+MARK CELL_BEGIN B0200 1790154213.758374
+MARK CELL_END B0200 1790154213.937452
+CELL {"seq":167,"id":"B0200","group":"B","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":3173750,"iter_ns_p95":3481511,"per_op_ns_p50":3173750,"x_cpu_ticks":12,"errors":0,"pixel_ok":true,"wall":[1790154213.758374,1790154213.937452],"iter_ns":[3173750,2536615,3481511]}
+MARK CELL_BEGIN A0003 1790154213.937484
+MARK CELL_END A0003 1790154213.957722
+CELL {"seq":168,"id":"A0003","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2845625,"iter_ns_p95":3007084,"per_op_ns_p50":711406,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154213.937484,1790154213.957722],"iter_ns":[3007084,2149375,2845625]}
+MARK CELL_BEGIN A0051 1790154213.957748
+MARK CELL_END A0051 1790154213.979907
+CELL {"seq":169,"id":"A0051","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":3420261,"iter_ns_p95":3443490,"per_op_ns_p50":855065,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154213.957748,1790154213.979907],"iter_ns":[3420261,3046615,3443490]}
+MARK CELL_BEGIN A0069 1790154213.979925
+MARK CELL_END A0069 1790154214.105448
+CELL {"seq":170,"id":"A0069","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":15267344,"iter_ns_p95":20145677,"per_op_ns_p50":954209,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154213.979925,1790154214.105448],"iter_ns":[20145677,13694896,15267344]}
+MARK CELL_BEGIN A0012 1790154214.105508
+MARK CELL_END A0012 1790154214.164440
+CELL {"seq":171,"id":"A0012","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2439219,"iter_ns_p95":20127709,"per_op_ns_p50":2439219,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154214.105508,1790154214.164440],"iter_ns":[20127709,2439219,1789739]}
+MARK CELL_BEGIN B0160 1790154214.164491
+MARK CELL_END B0160 1790154214.230899
+CELL {"seq":172,"id":"B0160","group":"B","rw":32,"rh":32,"sw":128,"sh":128,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":3199219,"iter_ns_p95":26946042,"per_op_ns_p50":3199219,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154214.164491,1790154214.230899],"iter_ns":[26946042,3199219,1652083]}
+MARK CELL_BEGIN A0129 1790154214.230996
+MARK CELL_END A0129 1790154215.243109
+CELL {"seq":173,"id":"A0129","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":144687865,"iter_ns_p95":165355677,"per_op_ns_p50":9042991,"x_cpu_ticks":42,"errors":0,"pixel_ok":true,"wall":[1790154214.230996,1790154215.243109],"iter_ns":[165355677,133540677,144687865]}
+MARK CELL_BEGIN C0224 1790154215.243156
+MARK CELL_END C0224 1790154215.325866
+CELL {"seq":174,"id":"C0224","group":"C","rw":32,"rh":32,"sw":64,"sh":64,"ratio":"4x","reuse":1,"batch":16,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":14745572,"iter_ns_p95":14920677,"per_op_ns_p50":921598,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154215.243156,1790154215.325866],"iter_ns":[11683230,14745572,14920677]}
+MARK CELL_BEGIN A0002 1790154215.325897
+MARK CELL_END A0002 1790154215.336797
+CELL {"seq":175,"id":"A0002","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1142708,"iter_ns_p95":1159427,"per_op_ns_p50":1142708,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.325897,1790154215.336797],"iter_ns":[1159427,1142708,930312]}
+MARK CELL_BEGIN C0262 1790154215.336813
+MARK CELL_END C0262 1790154215.347992
+CELL {"seq":176,"id":"C0262","group":"C","rw":32,"rh":32,"sw":128,"sh":128,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1051563,"iter_ns_p95":1252032,"per_op_ns_p50":1051563,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154215.336813,1790154215.347992],"iter_ns":[1252032,1051563,1026928]}
+MARK CELL_BEGIN B0176 1790154215.348008
+MARK CELL_END B0176 1790154215.366130
+CELL {"seq":177,"id":"B0176","group":"B","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":2788177,"iter_ns_p95":6604739,"per_op_ns_p50":2788177,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.348008,1790154215.366130],"iter_ns":[2788177,6604739,2586250]}
+MARK CELL_BEGIN B0166 1790154215.366151
+MARK CELL_END B0166 1790154215.380154
+CELL {"seq":178,"id":"B0166","group":"B","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":2702084,"iter_ns_p95":2711198,"per_op_ns_p50":2702084,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154215.366151,1790154215.380154],"iter_ns":[2702084,2711198,1861979]}
+MARK CELL_BEGIN C0239 1790154215.380178
+MARK CELL_END C0239 1790154215.432268
+CELL {"seq":179,"id":"C0239","group":"C","rw":256,"rh":256,"sw":1024,"sh":1024,"ratio":"16x","reuse":1,"batch":4,"residency":"resize","readback":"delayed","iters":3,"iter_ns_p50":5796928,"iter_ns_p95":7036458,"per_op_ns_p50":1449232,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154215.380178,1790154215.432268],"iter_ns":[5308020,7036458,5796928]}
+MARK CELL_BEGIN A0087 1790154215.432313
+MARK CELL_END A0087 1790154215.470958
+CELL {"seq":180,"id":"A0087","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5816979,"iter_ns_p95":6068906,"per_op_ns_p50":1454244,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154215.432313,1790154215.470958],"iter_ns":[5816979,4739271,6068906]}
+MARK CELL_BEGIN B0165 1790154215.470993
+MARK CELL_END B0165 1790154215.489316
+CELL {"seq":181,"id":"B0165","group":"B","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2132396,"iter_ns_p95":2218698,"per_op_ns_p50":2132396,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.470993,1790154215.489316],"iter_ns":[2218698,2132396,2008229]}
+MARK CELL_BEGIN N0000 1790154215.489337
+MARK CELL_END N0000 1790154215.538580
+CELL {"seq":182,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1905938,"iter_ns_p95":1931770,"per_op_ns_p50":1905938,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154215.489337,1790154215.538580],"iter_ns":[1931770,1816146,1905938]}
+MARK CELL_BEGIN B0151 1790154215.538612
+MARK CELL_END B0151 1790154215.548513
+CELL {"seq":183,"id":"B0151","group":"B","rw":16,"rh":16,"sw":64,"sh":64,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":956511,"iter_ns_p95":1085364,"per_op_ns_p50":956511,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.538612,1790154215.548513],"iter_ns":[754218,1085364,956511]}
+MARK CELL_BEGIN A0084 1790154215.548529
+MARK CELL_END A0084 1790154215.564494
+CELL {"seq":184,"id":"A0084","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1329115,"iter_ns_p95":2029583,"per_op_ns_p50":1329115,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.548529,1790154215.564494],"iter_ns":[2029583,1329115,1125468]}
+MARK CELL_BEGIN B0181 1790154215.564516
+MARK CELL_END B0181 1790154215.581955
+CELL {"seq":185,"id":"B0181","group":"B","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2104479,"iter_ns_p95":3209948,"per_op_ns_p50":2104479,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.564516,1790154215.581955],"iter_ns":[3209948,2104479,1861510]}
+MARK CELL_BEGIN B0174 1790154215.581973
+MARK CELL_END B0174 1790154215.598587
+CELL {"seq":186,"id":"B0174","group":"B","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":2019010,"iter_ns_p95":4101250,"per_op_ns_p50":2019010,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154215.581973,1790154215.598587],"iter_ns":[2019010,4101250,1862709]}
+MARK CELL_BEGIN B0175 1790154215.598603
+MARK CELL_END B0175 1790154215.610622
+CELL {"seq":187,"id":"B0175","group":"B","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":1581042,"iter_ns_p95":3182084,"per_op_ns_p50":1581042,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.598603,1790154215.610622],"iter_ns":[1208906,1581042,3182084]}
+MARK CELL_BEGIN B0208 1790154215.610638
+MARK CELL_END B0208 1790154215.796181
+CELL {"seq":188,"id":"B0208","group":"B","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5793073,"iter_ns_p95":5921198,"per_op_ns_p50":5793073,"x_cpu_ticks":11,"errors":0,"pixel_ok":true,"wall":[1790154215.610638,1790154215.796181],"iter_ns":[5921198,5793073,5440469]}
+MARK CELL_BEGIN A0068 1790154215.796214
+MARK CELL_END A0068 1790154215.833083
+CELL {"seq":189,"id":"A0068","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":6215938,"iter_ns_p95":6851875,"per_op_ns_p50":776992,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154215.796214,1790154215.833083],"iter_ns":[6851875,5227083,6215938]}
+MARK CELL_BEGIN A0050 1790154215.833109
+MARK CELL_END A0050 1790154215.842788
+CELL {"seq":190,"id":"A0050","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":992031,"iter_ns_p95":1704896,"per_op_ns_p50":992031,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.833109,1790154215.842788],"iter_ns":[1704896,820208,992031]}
+MARK CELL_BEGIN A0008 1790154215.842803
+MARK CELL_END A0008 1790154215.876977
+CELL {"seq":191,"id":"A0008","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":5085416,"iter_ns_p95":7879011,"per_op_ns_p50":635677,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154215.842803,1790154215.876977],"iter_ns":[4998281,7879011,5085416]}
+MARK CELL_BEGIN B0152 1790154215.876997
+MARK CELL_END B0152 1790154215.909488
+CELL {"seq":192,"id":"B0152","group":"B","rw":16,"rh":16,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":789740,"iter_ns_p95":1845260,"per_op_ns_p50":789740,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154215.876997,1790154215.909488],"iter_ns":[1845260,789740,761614]}
+MARK CELL_BEGIN A0100 1790154215.909532
+MARK CELL_END A0100 1790154215.981928
+CELL {"seq":193,"id":"A0100","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":10411302,"iter_ns_p95":10521615,"per_op_ns_p50":2602825,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154215.909532,1790154215.981928],"iter_ns":[10521615,10411302,9924322]}
+MARK CELL_BEGIN A0070 1790154215.981963
+MARK CELL_END A0070 1790154216.062931
+CELL {"seq":194,"id":"A0070","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":15121563,"iter_ns_p95":17877604,"per_op_ns_p50":945097,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154215.981963,1790154216.062931],"iter_ns":[15121563,17877604,14255417]}
+MARK CELL_BEGIN A0049 1790154216.062960
+MARK CELL_END A0049 1790154216.073716
+CELL {"seq":195,"id":"A0049","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":910364,"iter_ns_p95":1805625,"per_op_ns_p50":910364,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154216.062960,1790154216.073716],"iter_ns":[815781,910364,1805625]}
+MARK CELL_BEGIN B0196 1790154216.073734
+MARK CELL_END B0196 1790154216.143578
+CELL {"seq":196,"id":"B0196","group":"B","rw":512,"rh":512,"sw":2048,"sh":2048,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1246667,"iter_ns_p95":2139479,"per_op_ns_p50":1246667,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154216.073734,1790154216.143578],"iter_ns":[2139479,1246667,1087708]}
+MARK CELL_BEGIN A0081 1790154216.143625
+MARK CELL_END A0081 1790154216.243113
+CELL {"seq":197,"id":"A0081","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":16060104,"iter_ns_p95":18037240,"per_op_ns_p50":1003756,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154216.143625,1790154216.243113],"iter_ns":[15978281,18037240,16060104]}
+MARK CELL_BEGIN A0105 1790154216.243145
+MARK CELL_END A0105 1790154216.466617
+CELL {"seq":198,"id":"A0105","group":"A","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":38516562,"iter_ns_p95":44572448,"per_op_ns_p50":2407285,"x_cpu_ticks":7,"errors":0,"pixel_ok":true,"wall":[1790154216.243145,1790154216.466617],"iter_ns":[35708385,38516562,44572448]}
+MARK CELL_BEGIN A0085 1790154216.466658
+MARK CELL_END A0085 1790154216.485083
+CELL {"seq":199,"id":"A0085","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":1709531,"iter_ns_p95":1866354,"per_op_ns_p50":1709531,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154216.466658,1790154216.485083],"iter_ns":[1343333,1709531,1866354]}
+MARK CELL_BEGIN B0145 1790154216.485139
+MARK CELL_END B0145 1790154216.498799
+CELL {"seq":200,"id":"B0145","group":"B","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1619010,"iter_ns_p95":1800000,"per_op_ns_p50":1619010,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154216.485139,1790154216.498799],"iter_ns":[1800000,1580260,1619010]}
+MARK CELL_BEGIN A0117 1790154216.498816
+MARK CELL_END A0117 1790154217.018407
+CELL {"seq":201,"id":"A0117","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":93944271,"iter_ns_p95":101668333,"per_op_ns_p50":5871516,"x_cpu_ticks":23,"errors":0,"pixel_ok":true,"wall":[1790154216.498816,1790154217.018407],"iter_ns":[101668333,80773854,93944271]}
+MARK CELL_BEGIN A0067 1790154217.018447
+MARK CELL_END A0067 1790154217.064521
+CELL {"seq":202,"id":"A0067","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":7402135,"iter_ns_p95":7827292,"per_op_ns_p50":925266,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154217.018447,1790154217.064521],"iter_ns":[7827292,7402135,6930625]}
+MARK CELL_BEGIN A0028 1790154217.064550
+MARK CELL_END A0028 1790154217.091431
+CELL {"seq":203,"id":"A0028","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":3945573,"iter_ns_p95":5584740,"per_op_ns_p50":986393,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154217.064550,1790154217.091431],"iter_ns":[5584740,3794791,3945573]}
+MARK CELL_BEGIN C0237 1790154217.091472
+MARK CELL_END C0237 1790154217.192591
+CELL {"seq":204,"id":"C0237","group":"C","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":4,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":12057709,"iter_ns_p95":12764896,"per_op_ns_p50":3014427,"x_cpu_ticks":4,"errors":0,"pixel_ok":true,"wall":[1790154217.091472,1790154217.192591],"iter_ns":[12764896,12057709,11157031]}
+MARK CELL_BEGIN A0065 1790154217.192635
+MARK CELL_END A0065 1790154217.215827
+CELL {"seq":205,"id":"A0065","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":3174271,"iter_ns_p95":4662604,"per_op_ns_p50":793567,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154217.192635,1790154217.215827],"iter_ns":[2571823,4662604,3174271]}
+MARK CELL_BEGIN A0072 1790154217.215846
+MARK CELL_END A0072 1790154217.226688
+CELL {"seq":206,"id":"A0072","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1048958,"iter_ns_p95":1054636,"per_op_ns_p50":1048958,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154217.215846,1790154217.226688],"iter_ns":[1048958,1054636,1039687]}
+MARK CELL_BEGIN A0095 1790154217.226705
+MARK CELL_END A0095 1790154217.349785
+CELL {"seq":207,"id":"A0095","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":22634740,"iter_ns_p95":23785000,"per_op_ns_p50":1414671,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154217.226705,1790154217.349785],"iter_ns":[18256042,22634740,23785000]}
+MARK CELL_BEGIN N0000 1790154217.349828
+MARK CELL_END N0000 1790154217.390366
+CELL {"seq":208,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2365313,"iter_ns_p95":2971511,"per_op_ns_p50":2365313,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154217.349828,1790154217.390366],"iter_ns":[2365313,2971511,2265313]}
+MARK CELL_BEGIN A0030 1790154217.390404
+MARK CELL_END A0030 1790154217.428282
+CELL {"seq":209,"id":"A0030","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":6604167,"iter_ns_p95":6805521,"per_op_ns_p50":825520,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154217.390404,1790154217.428282],"iter_ns":[4886198,6604167,6805521]}
+MARK CELL_BEGIN A0127 1790154217.428304
+MARK CELL_END A0127 1790154217.899248
+CELL {"seq":210,"id":"A0127","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":66825989,"iter_ns_p95":70626666,"per_op_ns_p50":8353248,"x_cpu_ticks":22,"errors":0,"pixel_ok":true,"wall":[1790154217.428304,1790154217.899248],"iter_ns":[66073334,70626666,66825989]}
+MARK CELL_BEGIN A0005 1790154217.899300
+MARK CELL_END A0005 1790154217.922034
+CELL {"seq":211,"id":"A0005","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":3031094,"iter_ns_p95":3246928,"per_op_ns_p50":757773,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154217.899300,1790154217.922034],"iter_ns":[2516979,3031094,3246928]}
+MARK CELL_BEGIN B0193 1790154217.922054
+MARK CELL_END B0193 1790154217.937803
+CELL {"seq":212,"id":"B0193","group":"B","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":2092187,"iter_ns_p95":2111719,"per_op_ns_p50":2092187,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154217.922054,1790154217.937803],"iter_ns":[1882239,2111719,2092187]}
+MARK CELL_BEGIN B0155 1790154217.937823
+MARK CELL_END B0155 1790154217.955840
+CELL {"seq":213,"id":"B0155","group":"B","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1776615,"iter_ns_p95":1841771,"per_op_ns_p50":1776615,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154217.937823,1790154217.955840],"iter_ns":[1841771,1600729,1776615]}
+MARK CELL_BEGIN A0061 1790154217.955861
+MARK CELL_END A0061 1790154217.964653
+CELL {"seq":214,"id":"A0061","group":"A","rw":128,"rh":128,"sw":128,"sh":128,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":832917,"iter_ns_p95":1024948,"per_op_ns_p50":832917,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154217.955861,1790154217.964653],"iter_ns":[1024948,832917,765625]}
+MARK CELL_BEGIN B0186 1790154217.964669
+MARK CELL_END B0186 1790154217.977213
+CELL {"seq":215,"id":"B0186","group":"B","rw":256,"rh":256,"sw":512,"sh":512,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1037604,"iter_ns_p95":1289844,"per_op_ns_p50":1037604,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154217.964669,1790154217.977213],"iter_ns":[1289844,974115,1037604]}
+MARK CELL_BEGIN C0256 1790154217.977233
+MARK CELL_END C0256 1790154218.059187
+CELL {"seq":216,"id":"C0256","group":"C","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":4,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":14148593,"iter_ns_p95":14507344,"per_op_ns_p50":1768574,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154217.977233,1790154218.059187],"iter_ns":[13373907,14507344,14148593]}
+MARK CELL_BEGIN C0233 1790154218.059224
+MARK CELL_END C0233 1790154218.152883
+CELL {"seq":217,"id":"C0233","group":"C","rw":1,"rh":1,"sw":2,"sh":2,"ratio":"4x","reuse":16,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":17845000,"iter_ns_p95":19131927,"per_op_ns_p50":1115312,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154218.059224,1790154218.152883],"iter_ns":[14415990,19131927,17845000]}
+MARK CELL_BEGIN A0108 1790154218.152915
+MARK CELL_END A0108 1790154218.252393
+CELL {"seq":218,"id":"A0108","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":4369479,"iter_ns_p95":4706615,"per_op_ns_p50":4369479,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154218.152915,1790154218.252393],"iter_ns":[4369479,3675364,4706615]}
+MARK CELL_BEGIN B0206 1790154218.252440
+MARK CELL_END B0206 1790154218.301227
+CELL {"seq":219,"id":"B0206","group":"B","rw":1024,"rh":1024,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1865625,"iter_ns_p95":2694375,"per_op_ns_p50":1865625,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154218.252440,1790154218.301227],"iter_ns":[2694375,1783906,1865625]}
+MARK CELL_BEGIN A0022 1790154218.301293
+MARK CELL_END A0022 1790154218.362078
+CELL {"seq":220,"id":"A0022","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":10340573,"iter_ns_p95":11641614,"per_op_ns_p50":646285,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154218.301293,1790154218.362078],"iter_ns":[9946927,10340573,11641614]}
+MARK CELL_BEGIN A0045 1790154218.362106
+MARK CELL_END A0045 1790154218.427774
+CELL {"seq":221,"id":"A0045","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":9638802,"iter_ns_p95":13218698,"per_op_ns_p50":602425,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154218.362106,1790154218.427774],"iter_ns":[13218698,9584687,9638802]}
+MARK CELL_BEGIN A0038 1790154218.427800
+MARK CELL_END A0038 1790154218.437500
+CELL {"seq":222,"id":"A0038","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":849427,"iter_ns_p95":1708750,"per_op_ns_p50":849427,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154218.427800,1790154218.437500],"iter_ns":[849427,1708750,718750]}
+MARK CELL_BEGIN B0135 1790154218.437521
+MARK CELL_END B0135 1790154218.450045
+CELL {"seq":223,"id":"B0135","group":"B","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1830573,"iter_ns_p95":1855364,"per_op_ns_p50":1830573,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154218.437521,1790154218.450045],"iter_ns":[1830573,1609635,1855364]}
+MARK CELL_BEGIN A0036 1790154218.450064
+MARK CELL_END A0036 1790154218.459200
+CELL {"seq":224,"id":"A0036","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":757709,"iter_ns_p95":1013281,"per_op_ns_p50":757709,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154218.450064,1790154218.459200],"iter_ns":[757709,1013281,723906]}
+MARK CELL_BEGIN A0029 1790154218.459214
+MARK CELL_END A0029 1790154218.477588
+CELL {"seq":225,"id":"A0029","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":2509531,"iter_ns_p95":3768854,"per_op_ns_p50":627382,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154218.459214,1790154218.477588],"iter_ns":[2509531,3768854,2371822]}
+MARK CELL_BEGIN B0171 1790154218.477606
+MARK CELL_END B0171 1790154218.491709
+CELL {"seq":226,"id":"B0171","group":"B","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1835573,"iter_ns_p95":3037188,"per_op_ns_p50":1835573,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154218.477606,1790154218.491709],"iter_ns":[1824427,3037188,1835573]}
+MARK CELL_BEGIN B0222 1790154218.491724
+MARK CELL_END B0222 1790154218.888360
+CELL {"seq":227,"id":"B0222","group":"B","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":77423958,"iter_ns_p95":78210677,"per_op_ns_p50":77423958,"x_cpu_ticks":24,"errors":0,"pixel_ok":true,"wall":[1790154218.491724,1790154218.888360],"iter_ns":[77423958,78210677,76423333]}
+MARK CELL_BEGIN C0231 1790154218.888406
+MARK CELL_END C0231 1790154218.960336
+CELL {"seq":228,"id":"C0231","group":"C","rw":1,"rh":1,"sw":2,"sh":2,"ratio":"4x","reuse":1,"batch":16,"residency":"recreate","readback":"immediate","iters":3,"iter_ns_p50":14399479,"iter_ns_p95":17282708,"per_op_ns_p50":899967,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154218.888406,1790154218.960336],"iter_ns":[11948021,17282708,14399479]}
+MARK CELL_BEGIN C0236 1790154218.960366
+MARK CELL_END C0236 1790154218.982018
+CELL {"seq":229,"id":"C0236","group":"C","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"delayed","iters":3,"iter_ns_p50":2665261,"iter_ns_p95":3289427,"per_op_ns_p50":2665261,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154218.960366,1790154218.982018],"iter_ns":[3289427,2665261,2606562]}
+MARK CELL_BEGIN A0075 1790154218.982042
+MARK CELL_END A0075 1790154219.013013
+CELL {"seq":230,"id":"A0075","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5446094,"iter_ns_p95":6074271,"per_op_ns_p50":1361523,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154218.982042,1790154219.013013],"iter_ns":[3939896,6074271,5446094]}
+MARK CELL_BEGIN B0204 1790154219.013038
+MARK CELL_END B0204 1790154219.094579
+CELL {"seq":231,"id":"B0204","group":"B","rw":1024,"rh":1024,"sw":2048,"sh":2048,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1961979,"iter_ns_p95":2582031,"per_op_ns_p50":1961979,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154219.013038,1790154219.094579],"iter_ns":[2582031,1747291,1961979]}
+MARK CELL_BEGIN A0034 1790154219.094633
+MARK CELL_END A0034 1790154219.174730
+CELL {"seq":232,"id":"A0034","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":13524375,"iter_ns_p95":16153177,"per_op_ns_p50":845273,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154219.094633,1790154219.174730],"iter_ns":[12053490,16153177,13524375]}
+MARK CELL_BEGIN A0009 1790154219.174766
+MARK CELL_END A0009 1790154219.264289
+CELL {"seq":233,"id":"A0009","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":15790885,"iter_ns_p95":18316094,"per_op_ns_p50":986930,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.174766,1790154219.264289],"iter_ns":[14971249,18316094,15790885]}
+MARK CELL_BEGIN N0000 1790154219.264338
+MARK CELL_END N0000 1790154219.299892
+CELL {"seq":234,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1999687,"iter_ns_p95":2612031,"per_op_ns_p50":1999687,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.264338,1790154219.299892],"iter_ns":[1999687,1817395,2612031]}
+MARK CELL_BEGIN C0257 1790154219.299923
+MARK CELL_END C0257 1790154219.317849
+CELL {"seq":235,"id":"C0257","group":"C","rw":64,"rh":64,"sw":256,"sh":256,"ratio":"16x","reuse":1,"batch":1,"residency":"cold","readback":"immediate","iters":3,"iter_ns_p50":2044740,"iter_ns_p95":2110573,"per_op_ns_p50":2044740,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154219.299923,1790154219.317849],"iter_ns":[2044740,2110573,1899167]}
+MARK CELL_BEGIN A0088 1790154219.317880
+MARK CELL_END A0088 1790154219.354000
+CELL {"seq":236,"id":"A0088","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":6475938,"iter_ns_p95":7461042,"per_op_ns_p50":1618984,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.317880,1790154219.354000],"iter_ns":[4222240,7461042,6475938]}
+MARK CELL_BEGIN C0254 1790154219.354027
+MARK CELL_END C0254 1790154219.547696
+CELL {"seq":237,"id":"C0254","group":"C","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"immediate","iters":3,"iter_ns_p50":15557083,"iter_ns_p95":18584740,"per_op_ns_p50":15557083,"x_cpu_ticks":9,"errors":0,"pixel_ok":true,"wall":[1790154219.354027,1790154219.547696],"iter_ns":[15557083,18584740,15098490]}
+MARK CELL_BEGIN A0046 1790154219.547765
+MARK CELL_END A0046 1790154219.621490
+CELL {"seq":238,"id":"A0046","group":"A","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":12658438,"iter_ns_p95":13570313,"per_op_ns_p50":791152,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154219.547765,1790154219.621490],"iter_ns":[13570313,12658438,10571927]}
+MARK CELL_BEGIN B0178 1790154219.621516
+MARK CELL_END B0178 1790154219.634485
+CELL {"seq":239,"id":"B0178","group":"B","rw":128,"rh":128,"sw":512,"sh":512,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1046563,"iter_ns_p95":1303229,"per_op_ns_p50":1046563,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154219.621516,1790154219.634485],"iter_ns":[1303229,767656,1046563]}
+MARK CELL_BEGIN B0143 1790154219.634506
+MARK CELL_END B0143 1790154219.671852
+CELL {"seq":240,"id":"B0143","group":"B","rw":5,"rh":24,"sw":1200,"sh":2191,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1115469,"iter_ns_p95":2028855,"per_op_ns_p50":1115469,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.634506,1790154219.671852],"iter_ns":[2028855,1115469,1000834]}
+MARK CELL_BEGIN B0217 1790154219.671895
+MARK CELL_END B0217 1790154219.834710
+CELL {"seq":241,"id":"B0217","group":"B","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":32812708,"iter_ns_p95":33308646,"per_op_ns_p50":32812708,"x_cpu_ticks":7,"errors":0,"pixel_ok":true,"wall":[1790154219.671895,1790154219.834710],"iter_ns":[33308646,26117760,32812708]}
+MARK CELL_BEGIN B0162 1790154219.834758
+MARK CELL_END B0162 1790154219.850374
+CELL {"seq":242,"id":"B0162","group":"B","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":4,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1812604,"iter_ns_p95":2004062,"per_op_ns_p50":1812604,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154219.834758,1790154219.850374],"iter_ns":[1790834,1812604,2004062]}
+MARK CELL_BEGIN A0011 1790154219.850396
+MARK CELL_END A0011 1790154219.911209
+CELL {"seq":243,"id":"A0011","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":11675625,"iter_ns_p95":14445834,"per_op_ns_p50":729726,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.850396,1790154219.911209],"iter_ns":[11675625,14445834,10807968]}
+MARK CELL_BEGIN A0010 1790154219.911234
+MARK CELL_END A0010 1790154219.979908
+CELL {"seq":244,"id":"A0010","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":12619895,"iter_ns_p95":12620364,"per_op_ns_p50":788743,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.911234,1790154219.979908],"iter_ns":[12619895,12620364,10582344]}
+MARK CELL_BEGIN B0199 1790154219.979942
+MARK CELL_END B0199 1790154220.021489
+CELL {"seq":245,"id":"B0199","group":"B","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":2595156,"iter_ns_p95":2645417,"per_op_ns_p50":2595156,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154219.979942,1790154220.021489],"iter_ns":[2645417,2460000,2595156]}
+MARK CELL_BEGIN A0092 1790154220.021523
+MARK CELL_END A0092 1790154220.082672
+CELL {"seq":246,"id":"A0092","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":10125781,"iter_ns_p95":11263958,"per_op_ns_p50":1265722,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154220.021523,1790154220.082672],"iter_ns":[10125781,9194896,11263958]}
+MARK CELL_BEGIN A0027 1790154220.082713
+MARK CELL_END A0027 1790154220.108469
+CELL {"seq":247,"id":"A0027","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":3801927,"iter_ns_p95":5037395,"per_op_ns_p50":950481,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154220.082713,1790154220.108469],"iter_ns":[3688230,3801927,5037395]}
+MARK CELL_BEGIN A0004 1790154220.108490
+MARK CELL_END A0004 1790154220.128603
+CELL {"seq":248,"id":"A0004","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":3046042,"iter_ns_p95":3937813,"per_op_ns_p50":761510,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154220.108490,1790154220.128603],"iter_ns":[3937813,3046042,2003698]}
+MARK CELL_BEGIN A0014 1790154220.128627
+MARK CELL_END A0014 1790154220.139228
+CELL {"seq":249,"id":"A0014","group":"A","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1021510,"iter_ns_p95":1825521,"per_op_ns_p50":1021510,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154220.128627,1790154220.139228],"iter_ns":[1825521,730416,1021510]}
+MARK CELL_BEGIN C0259 1790154220.139245
+MARK CELL_END C0259 1790154220.231593
+CELL {"seq":250,"id":"C0259","group":"C","rw":128,"rh":128,"sw":512,"sh":512,"ratio":"16x","reuse":1,"batch":16,"residency":"resize","readback":"delayed","iters":3,"iter_ns_p50":18154635,"iter_ns_p95":18710781,"per_op_ns_p50":1134664,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154220.139245,1790154220.231593],"iter_ns":[18710781,15887657,18154635]}
+MARK CELL_BEGIN A0054 1790154220.231623
+MARK CELL_END A0054 1790154220.276727
+CELL {"seq":251,"id":"A0054","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":7960678,"iter_ns_p95":10281823,"per_op_ns_p50":995084,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154220.231623,1790154220.276727],"iter_ns":[5742916,10281823,7960678]}
+MARK CELL_BEGIN A0116 1790154220.276755
+MARK CELL_END A0116 1790154220.589345
+CELL {"seq":252,"id":"A0116","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":45826250,"iter_ns_p95":54401562,"per_op_ns_p50":5728281,"x_cpu_ticks":13,"errors":0,"pixel_ok":true,"wall":[1790154220.276755,1790154220.589345],"iter_ns":[45344427,45826250,54401562]}
+MARK CELL_BEGIN A0026 1790154220.589389
+MARK CELL_END A0026 1790154220.600153
+CELL {"seq":253,"id":"A0026","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":795208,"iter_ns_p95":964011,"per_op_ns_p50":795208,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154220.589389,1790154220.600153],"iter_ns":[795208,749115,964011]}
+MARK CELL_BEGIN A0093 1790154220.600170
+MARK CELL_END A0093 1790154220.730829
+CELL {"seq":254,"id":"A0093","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":24745990,"iter_ns_p95":27691563,"per_op_ns_p50":1546624,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154220.600170,1790154220.730829],"iter_ns":[22110729,24745990,27691563]}
+MARK CELL_BEGIN B0164 1790154220.730872
+MARK CELL_END B0164 1790154220.751710
+CELL {"seq":255,"id":"B0164","group":"B","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":64,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1974375,"iter_ns_p95":1998646,"per_op_ns_p50":1974375,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154220.730872,1790154220.751710],"iter_ns":[1974375,1998646,1931511]}
+MARK CELL_BEGIN A0080 1790154220.751731
+MARK CELL_END A0080 1790154220.799047
+CELL {"seq":256,"id":"A0080","group":"A","rw":256,"rh":256,"sw":256,"sh":256,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":8199063,"iter_ns_p95":8469323,"per_op_ns_p50":1024882,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154220.751731,1790154220.799047],"iter_ns":[8469323,7745938,8199063]}
+MARK CELL_BEGIN A0113 1790154220.799081
+MARK CELL_END A0113 1790154220.982178
+CELL {"seq":257,"id":"A0113","group":"A","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":24294479,"iter_ns_p95":25903802,"per_op_ns_p50":6073619,"x_cpu_ticks":8,"errors":0,"pixel_ok":true,"wall":[1790154220.799081,1790154220.982178],"iter_ns":[24294479,25903802,23587187]}
+MARK CELL_BEGIN B0132 1790154220.982222
+MARK CELL_END B0132 1790154220.991789
+CELL {"seq":258,"id":"B0132","group":"B","rw":1,"rh":1,"sw":2,"sh":2,"ratio":"4x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":723229,"iter_ns_p95":731302,"per_op_ns_p50":723229,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154220.982222,1790154220.991789],"iter_ns":[723229,731302,702916]}
+MARK CELL_BEGIN A0122 1790154220.991805
+MARK CELL_END A0122 1790154221.172989
+CELL {"seq":259,"id":"A0122","group":"A","rw":3440,"rh":1440,"sw":3440,"sh":1440,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":6412135,"iter_ns_p95":6473438,"per_op_ns_p50":6412135,"x_cpu_ticks":7,"errors":0,"pixel_ok":true,"wall":[1790154220.991805,1790154221.172989],"iter_ns":[6412135,5730625,6473438]}
+MARK CELL_BEGIN N0000 1790154221.173033
+MARK CELL_END N0000 1790154221.207007
+CELL {"seq":260,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1963750,"iter_ns_p95":2116042,"per_op_ns_p50":1963750,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154221.173033,1790154221.207007],"iter_ns":[2116042,1891146,1963750]}
+MARK CELL_BEGIN B0156 1790154221.207039
+MARK CELL_END B0156 1790154221.221930
+CELL {"seq":261,"id":"B0156","group":"B","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":1,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":1862083,"iter_ns_p95":2856562,"per_op_ns_p50":1862083,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154221.207039,1790154221.221930],"iter_ns":[1862083,2856562,1847448]}
+MARK CELL_BEGIN B0205 1790154221.221960
+MARK CELL_END B0205 1790154221.484344
+CELL {"seq":262,"id":"B0205","group":"B","rw":1024,"rh":1024,"sw":4096,"sh":4096,"ratio":"16x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1731719,"iter_ns_p95":2354323,"per_op_ns_p50":1731719,"x_cpu_ticks":9,"errors":0,"pixel_ok":true,"wall":[1790154221.221960,1790154221.484344],"iter_ns":[2354323,1731719,1688177]}
+MARK CELL_BEGIN B0213 1790154221.484388
+MARK CELL_END B0213 1790154221.570472
+CELL {"seq":263,"id":"B0213","group":"B","rw":1200,"rh":2608,"sw":1200,"sh":2608,"ratio":"redirected","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":3059948,"iter_ns_p95":3541927,"per_op_ns_p50":3059948,"x_cpu_ticks":2,"errors":0,"pixel_ok":true,"wall":[1790154221.484388,1790154221.570472],"iter_ns":[3541927,3059948,2837656]}
+MARK CELL_BEGIN A0094 1790154221.570527
+MARK CELL_END A0094 1790154221.677062
+CELL {"seq":264,"id":"A0094","group":"A","rw":512,"rh":512,"sw":512,"sh":512,"ratio":"1x","reuse":1,"batch":16,"residency":"warm","readback":"immediate","iters":3,"iter_ns_p50":17789062,"iter_ns_p95":19386302,"per_op_ns_p50":1111816,"x_cpu_ticks":3,"errors":0,"pixel_ok":true,"wall":[1790154221.570527,1790154221.677062],"iter_ns":[19386302,17740000,17789062]}
+MARK CELL_BEGIN C0246 1790154221.677095
+MARK CELL_END C0246 1790154221.691271
+CELL {"seq":265,"id":"C0246","group":"C","rw":1,"rh":1,"sw":2,"sh":2,"ratio":"4x","reuse":16,"batch":1,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":1821145,"iter_ns_p95":1848333,"per_op_ns_p50":1821145,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154221.677095,1790154221.691271],"iter_ns":[1530469,1848333,1821145]}
+MARK CELL_BEGIN B0157 1790154221.691297
+MARK CELL_END B0157 1790154221.716946
+CELL {"seq":266,"id":"B0157","group":"B","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":1,"residency":"resize","readback":"none","iters":3,"iter_ns_p50":2284687,"iter_ns_p95":11296042,"per_op_ns_p50":2284687,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.691297,1790154221.716946],"iter_ns":[2284687,1819271,11296042]}
+MARK CELL_BEGIN B0154 1790154221.716980
+MARK CELL_END B0154 1790154221.733875
+CELL {"seq":267,"id":"B0154","group":"B","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":16,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1631302,"iter_ns_p95":1899479,"per_op_ns_p50":1631302,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154221.716980,1790154221.733875],"iter_ns":[1596666,1899479,1631302]}
+MARK CELL_BEGIN C0242 1790154221.733898
+MARK CELL_END C0242 1790154221.772554
+CELL {"seq":268,"id":"C0242","group":"C","rw":5,"rh":24,"sw":5,"sh":24,"ratio":"1x","reuse":4,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5545312,"iter_ns_p95":8010469,"per_op_ns_p50":693164,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.733898,1790154221.772554],"iter_ns":[5545312,8010469,5336875]}
+MARK CELL_BEGIN A0053 1790154221.772577
+MARK CELL_END A0053 1790154221.792264
+CELL {"seq":269,"id":"A0053","group":"A","rw":64,"rh":64,"sw":64,"sh":64,"ratio":"1x","reuse":1,"batch":4,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":2364583,"iter_ns_p95":4037969,"per_op_ns_p50":591145,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.772577,1790154221.792264],"iter_ns":[4037969,2364583,1924688]}
+MARK CELL_BEGIN A0032 1790154221.792288
+MARK CELL_END A0032 1790154221.829041
+CELL {"seq":270,"id":"A0032","group":"A","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"delayed","iters":3,"iter_ns_p50":6805781,"iter_ns_p95":10866770,"per_op_ns_p50":850722,"x_cpu_ticks":0,"errors":0,"pixel_ok":true,"wall":[1790154221.792288,1790154221.829041],"iter_ns":[6805781,4076198,10866770]}
+MARK CELL_BEGIN C0261 1790154221.829067
+MARK CELL_END C0261 1790154221.854485
+CELL {"seq":271,"id":"C0261","group":"C","rw":16,"rh":16,"sw":16,"sh":16,"ratio":"1x","reuse":1,"batch":4,"residency":"cold","readback":"none","iters":3,"iter_ns_p50":4042187,"iter_ns_p95":4863646,"per_op_ns_p50":1010546,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.829067,1790154221.854485],"iter_ns":[4042187,3875989,4863646]}
+MARK CELL_BEGIN B0167 1790154221.854506
+MARK CELL_END B0167 1790154221.868353
+CELL {"seq":272,"id":"B0167","group":"B","rw":32,"rh":32,"sw":32,"sh":32,"ratio":"1x","reuse":1,"batch":1,"residency":"recreate","readback":"none","iters":3,"iter_ns_p50":2509844,"iter_ns_p95":3302552,"per_op_ns_p50":2509844,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.854506,1790154221.868353],"iter_ns":[2451666,2509844,3302552]}
+MARK CELL_BEGIN A0006 1790154221.868375
+MARK CELL_END A0006 1790154221.898037
+CELL {"seq":273,"id":"A0006","group":"A","rw":1,"rh":1,"sw":1,"sh":1,"ratio":"1x","reuse":1,"batch":8,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":5150521,"iter_ns_p95":6191146,"per_op_ns_p50":643815,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.868375,1790154221.898037],"iter_ns":[5150521,6191146,4807760]}
+MARK CELL_BEGIN N0000 1790154221.898054
+MARK CELL_END N0000 1790154221.932447
+CELL {"seq":274,"id":"N0000","group":"N","rw":1024,"rh":1024,"sw":1024,"sh":1024,"ratio":"1x","reuse":1,"batch":1,"residency":"warm","readback":"none","iters":3,"iter_ns_p50":1867969,"iter_ns_p95":2650573,"per_op_ns_p50":1867969,"x_cpu_ticks":1,"errors":0,"pixel_ok":true,"wall":[1790154221.898054,1790154221.932447],"iter_ns":[2650573,1465000,1867969]}
+RUN_END 1790154221.932486

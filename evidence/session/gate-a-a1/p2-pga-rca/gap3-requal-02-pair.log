@@ -1,0 +1,5 @@
+START S 18:12:35
+CAPTURE S rc=0 GAP3_CAPTURED mode=S evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-83d45a9/gap3-requal-02-s cells=22
+START C 18:14:12
+CAPTURE C rc=0 GAP3_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-83d45a9/gap3-requal-02-c cells=22
+GAP3_PAIR_DONE

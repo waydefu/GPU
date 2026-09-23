@@ -1,0 +1,2 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5780 floor_mb=4500 disk_free_gb=39
+GAP3_CAPTURED mode=S evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-83d45a9/gap3-requal-02-s cells=22

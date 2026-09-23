@@ -1,0 +1,1 @@
+SAFE_RUN_CHECK_OK mem_available_mb=6778 floor_mb=3072 disk_free_gb=36

@@ -1,0 +1,61 @@
+{
+  "R1": {
+    "cells": {
+      "copy_pix/1024/burst16": true,
+      "copy_pix/1024/single": true,
+      "copy_pix/16/burst16": true,
+      "copy_pix/16/single": true,
+      "copy_pix/256/burst16": true,
+      "copy_pix/256/single": true,
+      "copy_pix/64/burst16": true,
+      "copy_pix/64/single": true,
+      "over_argb/1024/burst16": true,
+      "over_argb/1024/single": true,
+      "over_argb/16/burst16": true,
+      "over_argb/16/single": true,
+      "over_argb/256/burst16": true,
+      "over_argb/256/single": true,
+      "over_argb/64/burst16": true,
+      "over_argb/64/single": true,
+      "solid/1024/burst16": true,
+      "solid/1024/single": true,
+      "solid/16/burst16": true,
+      "solid/16/single": true,
+      "solid/256/burst16": true,
+      "solid/256/single": true,
+      "solid/64/burst16": true,
+      "solid/64/single": true
+    },
+    "holds": true
+  },
+  "R2": {
+    "cells": {
+      "copy_pix/16": true,
+      "copy_pix/64": true,
+      "over_argb/16": true,
+      "over_argb/64": true,
+      "solid/16": true,
+      "solid/64": true
+    },
+    "holds": true
+  },
+  "R3": {
+    "cells": {
+      "copy_win/1024/burst16": true,
+      "copy_win/1024/single": true,
+      "copy_win/16/burst16": true,
+      "copy_win/16/single": true,
+      "copy_win/256/burst16": true,
+      "copy_win/256/single": true,
+      "copy_win/64/burst16": true,
+      "copy_win/64/single": true
+    },
+    "holds": true
+  },
+  "c": "oplat-c-02",
+  "c_loaded": true,
+  "g": "oplat-g-02",
+  "g_loaded": true,
+  "reading": "O1_O2_CONFIRMED",
+  "schema": "oplat-replication/1"
+}

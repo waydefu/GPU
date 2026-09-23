@@ -1,0 +1,31 @@
+MARK persistent BEGIN 1790157281.435333
+MARK persistent END 1790157283.019296
+PHASE_RESULT persistent cases=1298 fail=0 maxd=0 exact_px=1197392 xnz_px=0
+MARK fresh BEGIN 1790157283.119426
+MARK fresh END 1790157283.257781
+PHASE_RESULT fresh cases=36 fail=0 maxd=0 exact_px=33204 xnz_px=0
+MARK negative BEGIN 1790157283.357912
+MARK neg-src-op BEGIN 1790157283.458138
+NEG src-op OK
+MARK neg-src-op END 1790157283.460403
+MARK neg-mask-a8 BEGIN 1790157283.560497
+NEG mask-a8 OK
+MARK neg-mask-a8 END 1790157283.561347
+MARK neg-dst-argb BEGIN 1790157283.661502
+NEG dst-argb OK
+MARK neg-dst-argb END 1790157283.663369
+MARK neg-bilinear BEGIN 1790157283.763511
+NEG bilinear OK
+MARK neg-bilinear END 1790157283.764448
+MARK neg-repeat BEGIN 1790157283.864879
+NEG repeat OK
+MARK neg-repeat END 1790157283.866130
+MARK neg-transform BEGIN 1790157283.966236
+NEG transform OK
+MARK neg-transform END 1790157283.968010
+MARK neg-component-alpha BEGIN 1790157284.068179
+NEG component-alpha OK
+MARK neg-component-alpha END 1790157284.069277
+MARK negative END 1790157284.169403
+PHASE_RESULT negative cases=7 fail=0 maxd=0 exact_px=0 xnz_px=0
+RESULT p_v1_oracle PASS

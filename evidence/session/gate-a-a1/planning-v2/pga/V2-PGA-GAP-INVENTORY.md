@@ -34,6 +34,45 @@ predicate  「XFCE workload 能照凍結時間表執行」為假
            兩格 logcat 的 stamp 行數 = 0；XFCE-FREEZE-V2 系列執行中
 ```
 
+### PGA-GAP-2 — 同步的 legacy EXA GPU offload 讓 X 在桌面負載下變慢　**狀態：第 1 步完成（op 層已證明），第 2 步等 B.3**
+
+```
+evidence   p2-xfce-runtime/runtime-bfb5769/xfce3-c1-01 INVALID；RCA pair rca3-g-01 INVALID / rca3-c-01 BASELINE_VALID
+           p2-pga-rca/runtime-bfb5769/oplat-{g,c}-{01,02}（op 層，預測先凍結，02 為 replication）
+predicate  「凍結的 production GPU 設定（PROTO=1）下，XFCE choreography 能在凍結時限內找到視窗」為假
+1 RCA      planning-v2/xfce-baseline/RCA-XFCE-3.md：每個走 GPU 的 EXA op 在 Done* 同步等 renderer 完成，
+           單發 1–3 ms、比 CPU 慢 3–20x（16..1024 全部尺寸）、連發不 pipeline；XFCE ~190 op/s
+           -> 往返 p50 1.5→8.9 ms、p99 11.6→181 ms。否定：timer slack、frame-coupled p50。
+2 design   未開始。兩條路互斥、影響面差很多：
+             (a) production 不把 legacy EXA solid/copy 送 GPU（CPU 在所有量過的尺寸都較快）——路由決策，
+                 與 Gate H 重疊；composite / Gate A direct 的去留由 B.3 + Gate H 決定
+             (b) Done* 改非同步完成——動 ownership / fence semantics，屬「大改架構」停止條件，需先拆 1–3 ms 組成
+           先跑 B.3（凍結、Gate H 唯一合法輸入）再選；不在 B.3 之前改產品
+3–8        未開始
+```
+
+### PGA-GAP-3 — staging 的 FD 複本註冊給 renderer 後永不註銷（記憶體洩漏）　**狀態：第 1 步完成（原始碼證明＋量化）**
+
+```
+evidence   p2-b3-runtime/runtime-bfb5769/b3-s-02（S 模式 45 s 註冊 1518 個 / 7.4 GB -> lmkd 殺 Stable 與 com.termux）
+           INCIDENT-20260923-2-LMK-B3-S.md；XFCE G：xfce3-c1-01 3348 個 / 4.1 GB、rca3-g-01 3225 個；C：0
+predicate  「production 設定下，一個 session 的 renderer 記憶體不隨 composite 數量無界成長」為假
+1 RCA      PGA-GAP-3-RCA.md：InitOutput.c:1855 註冊、3759-3801 只 release 不 unregister；__LorieBuffer_free 不送
+           EVENT_REMOVE_BUFFER；renderer 只在 remove 或斷線（removeAllBuffers）時釋放
+2 design   PGA-GAP-3-DESIGN.md：Done 在等待完成後 lorieUnregisterBuffer(upload)，排除 D0a cache
+3 host     tests/pga/test_gap3_unregister.py：對 bfb5769 紅、修補後綠；3 個 mutant 被抓（e6432a9，先於 patch）
+4 patch    fork 83d45a9（InitOutput.c +7；bfb5769..83d45a9 其餘只動 tests/）
+5 CI       35845935317 success
+6 artifact APK f4c98b8a…230f · Build ID 67e8ad53… · signer 不變（p2-pga-artifact/artifact-83d45a9/）
+7 install  INSTALL_83D45A9_BIND_PASS（裝置讀回 sha / signer / build-id 相符，Stable pid 不變）
+8 requal   requal-01 **GAP3_REQUAL_FAIL**（frozen）：記憶體全過（staged 15.8 GB、swap +0、MemAvailable −169 MB、
+           mem-guard 未觸發、22/22 像素正確），但 Activity maps +19 > 16——門檻當初沒有基準。
+           requal-02（設計附錄 A，先凍結）：**GAP3_REQUAL_FAIL**：S +22、C −7，殘差 29 > 16（記憶體再次全過）
+           → 依凍結規則 PGA-GAP-3 **未完整**：GB 級洩漏已修（兩次證明），每筆 staging 仍殘留 ~0.01 個 mapping；
+           下一步：2 倍輪數區分線性洩漏或驅動 pool 上限（判準先凍結）
+關聯       R10 D-04（Activity maps_count 上飄）：修補前每次註冊殘留 0.166 個 mapping，修補後 0.0068
+```
+
 ## C. 評估過但**不入列**的項目（沒有 predicate 為假的證據）
 
 | 項目 | 為什麼不入列 | 去處 |
@@ -54,4 +93,4 @@ predicate  「XFCE workload 能照凍結時間表執行」為假
 ## 關閉條件（§13.5）
 
 inventory 內每個缺口八步完成、每個 requal PASS、carry-forward 皆有裁決、沒有「暫時接受」。
-目前唯一的缺口 PGA-GAP-1 卡在第 8 步（XFCE-FREEZE-V2 系列）。
+PGA-GAP-1 卡在第 8 步（XFCE 系列需要 G 設定下可執行，被 PGA-GAP-2 擋住）；PGA-GAP-2 在第 2 步前等 B.3；PGA-GAP-3 第 8 步兩次 FAIL（只剩 mapping 殘差；記憶體已修）。B.3 mode S 在 PGA-GAP-3 修補前暫停（會觸發 mem-guard，且資料被記憶體壓力污染）。

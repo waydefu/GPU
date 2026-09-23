@@ -1,0 +1,6 @@
+oracle-02 runner exit 1 (no ORACLE_CAPTURED line) - TOOLING, after the capture was complete.
+The runner had written close.json, stable-after, screen-post, capture-end and sha256sums.txt; then
+mg_stop() ran `[ -n "$MG" ] && kill "$MG"` on the memory guard, which had already exited (X3 was
+gone). kill returned 1 as the last command of an && list -> set -e ended the runner.
+mem-guard.log: never tripped (MemAvailable 4928-4979 MB, swap flat, X3 RSS 216-225 MB).
+Fix: mg_stop tolerates every step (all four runners, 2026-09-23 17:5x). The capture is judged as is.

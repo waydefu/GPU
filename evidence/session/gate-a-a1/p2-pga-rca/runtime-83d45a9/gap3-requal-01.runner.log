@@ -1,0 +1,4 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5689 floor_mb=4500 disk_free_gb=39
+STOP logcat pid 25876 still alive after TERM
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-terminal-runtime/harness-lib.sh: line 33: /proc/28530/cmdline: No such file or directory
+GAP3_CAPTURED evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-83d45a9/gap3-requal-01 cells=22

@@ -23,7 +23,9 @@
 set -euo pipefail
 LOG=${X3_LAUNCH_LOG:?X3_LAUNCH_LOG}
 case "$LOG" in /data/data/com.termux/files/usr/*) ;; *) echo "LAUNCH_REFUSE log_path_not_shared $LOG"; exit 3;; esac
-VARS=$(env | grep -E '^TERMUX_X11_[A-Z0-9_]+=[A-Za-z0-9_.:-]*$' | sort | tr '\n' ' ')
+# '|| true': with NO TERMUX_X11_* variable (B.3 mode S) grep exits 1 and, under pipefail,
+# set -e ended this script silently (b3-s-01 BLOCKED untraced_launch_failed, 2026-09-23).
+VARS=$(env | grep -E '^TERMUX_X11_[A-Z0-9_]+=[A-Za-z0-9_.:-]*$' | sort | tr '\n' ' ' || true)
 # values must be plain tokens: the command travels through --esa, where ',' splits
 if env | grep -E '^TERMUX_X11_' | grep -qv -E '^TERMUX_X11_[A-Z0-9_]+=[A-Za-z0-9_.:-]*$'; then
   echo "LAUNCH_REFUSE env_value_not_plain"; exit 3

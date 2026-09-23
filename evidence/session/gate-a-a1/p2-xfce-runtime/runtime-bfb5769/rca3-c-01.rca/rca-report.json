@@ -1,0 +1,225 @@
+{
+  "run": "rca3-c-01",
+  "t0": 1790151085.2840858,
+  "threads": {
+    "11571": {
+      "comm": "main",
+      "samples": 1473,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.9525
+        ],
+        [
+          "S:0",
+          0.0319
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0136
+        ],
+        [
+          "R:0",
+          0.0007
+        ],
+        [
+          "S:walt_detach_task",
+          0.0007
+        ],
+        [
+          "Z:0",
+          0.0007
+        ]
+      ]
+    },
+    "11811": {
+      "comm": "binder:11571_3",
+      "samples": 1473,
+      "top": [
+        [
+          "S:binder_thread_read",
+          0.9993
+        ],
+        [
+          "R:0",
+          0.0007
+        ]
+      ]
+    },
+    "11775": {
+      "comm": "Jit thread pool",
+      "samples": 1472,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "11779": {
+      "comm": "Signal Catcher",
+      "samples": 1472,
+      "top": [
+        [
+          "S:do_sigtimedwait",
+          1.0
+        ]
+      ]
+    },
+    "11780": {
+      "comm": "perfetto_hprof_",
+      "samples": 1472,
+      "top": [
+        [
+          "S:pipe_read",
+          1.0
+        ]
+      ]
+    },
+    "11781": {
+      "comm": "HeapTaskDaemon",
+      "samples": 1472,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "11782": {
+      "comm": "ReferenceQueueD",
+      "samples": 1472,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "11783": {
+      "comm": "FinalizerDaemon",
+      "samples": 1472,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "11784": {
+      "comm": "FinalizerWatchd",
+      "samples": 1472,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "11785": {
+      "comm": "binder:11571_1",
+      "samples": 1472,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "11786": {
+      "comm": "binder:11571_2",
+      "samples": 1472,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "11791": {
+      "comm": "main",
+      "samples": 1472,
+      "top": [
+        [
+          "R:0",
+          0.5292
+        ],
+        [
+          "S:do_epoll_wait",
+          0.4389
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0183
+        ],
+        [
+          "S:0",
+          0.0136
+        ]
+      ]
+    },
+    "11792": {
+      "comm": "Thread-1",
+      "samples": 1472,
+      "top": [
+        [
+          "S:inet_csk_accept",
+          1.0
+        ]
+      ]
+    }
+  },
+  "rtt_ms_window": {
+    "n": 600,
+    "p50": 1.499,
+    "p90": 5.88,
+    "p99": 11.596,
+    "max": 99.206,
+    "over_100ms": 0,
+    "over_1000ms": 0
+  },
+  "rtt_ms_all": {
+    "n": 771,
+    "p50": 0.632,
+    "p99": 11.148
+  },
+  "xdotool_search_window": {
+    "n": 48,
+    "p50_s": 0.199,
+    "p90_s": 0.549,
+    "max_s": 0.8199,
+    "over_3s": 0,
+    "found": 44
+  },
+  "cpu_cores_window": {
+    "proot-tracer": 0.651,
+    "X3": 0.648,
+    "xfce4-terminal": 0.04,
+    "bash": 0.013,
+    "xfwm4": 0.01,
+    "xfconfd": 0.008,
+    "dbus-daemon": 0.007,
+    "xfce4-panel": 0.002,
+    "python3": 0.001,
+    "dbus-run-sessio": 0.0,
+    "xfce4-session": 0.0,
+    "gvfsd": 0.0,
+    "xfsettingsd": 0.0,
+    "Thunar": 0.0,
+    "xfdesktop": 0.0,
+    "tumblerd": 0.0,
+    "panel-6-systray": 0.0,
+    "panel-10-notifi": 0.0,
+    "panel-14-action": 0.0,
+    "gvfs-udisks2-vo": 0.0,
+    "gvfs-afc-volume": 0.0,
+    "gvfs-mtp-volume": 0.0,
+    "gvfs-gphoto2-vo": 0.0,
+    "gvfs-goa-volume": 0.0,
+    "xfce4-notifyd": 0.0,
+    "gvfsd-trash": 0.0,
+    "gvfsd-metadata": 0.0,
+    "sleep": 0.0
+  },
+  "cpu_span_s": 147.1
+}

@@ -1,0 +1,8 @@
+17c7d18a88a1a8bca8c1675d3223f360d856e1a33b1a4263cbd59a679bff52aa  ./run-oracle.sh
+afe0ab92f3a9942f14f2be874f3ff3e901cc6a494cb7f61ab0e20d65b50e6563  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/oracle/oracle-freeze.json
+de840363eeb8a02bcb62ff18ab3848aba73a21419795cb7017f2e38924b44e32  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/oracle/p_v1_oracle.c
+1c3e3323e57c8e3c56b7114f5762fc59e70e422a975d82e280ff3d6603c76d2c  /tmp/p_v1_oracle
+c41dc068a49deede7d83093304b838a649883be25136be70393d38c037078603  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/oracle/judge-oracle.py
+8c04d2a2c34d7063bef32ad9d4f9bdcd6898dd02e6090b78626e8bb8ad3d4028  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/xfce3/xfce_collect.py
+2aca8ae15d536065168b3a819de1414c5520792712ea56ce254efbdde05ae50b  /tmp/p_r10_ledger
+6ab1645a592c4160efca6f1880fe1ea325ae2e77faa5387e8a2e87ae87b71ae1  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/mem-guard.sh

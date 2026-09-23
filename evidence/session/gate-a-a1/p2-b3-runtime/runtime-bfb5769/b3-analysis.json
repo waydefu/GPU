@@ -1,0 +1,4042 @@
+{
+  "crossover": {
+    "16|delayed|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          35.451
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          130.405
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          70.656
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          72.775
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          93.497
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          52.65
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          35.133
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          14.866
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          8.172
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          4.638
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.297
+        ]
+      ]
+    },
+    "16|immediate|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          81.064
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          61.496
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          38.642
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          47.96
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          55.718
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          31.922
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          28.035
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          9.847
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          3.912
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          2.119
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          2.613
+        ]
+      ]
+    },
+    "16|none|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          58.068
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          83.628
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          144.275
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          48.98
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          51.753
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          58.031
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          25.482
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          14.544
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          7.424
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          4.633
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.258
+        ]
+      ]
+    },
+    "1|delayed|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          8.535
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          9.811
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          20.85
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          24.37
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          18.49
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          7.011
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          16.422
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          4.216
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          5.085
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          3.696
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          2.434
+        ]
+      ]
+    },
+    "1|immediate|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          9.819
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          9.849
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          8.729
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          3.58
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          10.325
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          5.431
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          3.888
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          3.91
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          1.89
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          0.724
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          0.163
+        ]
+      ]
+    },
+    "1|none|16x|1|warm": {
+      "crossover": null,
+      "n": 9,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          6.739
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          9.718
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          23.213
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          3.02
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          20.351
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          7.764
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          8.173
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          4.641
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          3.711
+        ]
+      ]
+    },
+    "1|none|1x|16|warm": {
+      "crossover": null,
+      "n": 9,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          14.386
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          21.346
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          37.37
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          39.645
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          23.648
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          32.763
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          16.757
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          25.168
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          10.422
+        ]
+      ]
+    },
+    "1|none|1x|1|cold": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          36.684
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          37.473
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          15.131
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          29.868
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          44.439
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          21.056
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          17.49
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          20.924
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          12.0
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          5.372
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          8.513
+        ]
+      ]
+    },
+    "1|none|1x|1|recreate": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          55.041
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          14.92
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          16.078
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          18.597
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          26.634
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          7.244
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          5.553
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          3.904
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          3.246
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          2.396
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          1.29
+        ]
+      ]
+    },
+    "1|none|1x|1|resize": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          12.523
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          10.71
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          65.493
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          18.806
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          43.694
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          6.942
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          13.258
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          3.719
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          3.325
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          2.501
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          1.334
+        ]
+      ]
+    },
+    "1|none|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          19.115
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          9.162
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          23.161
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          3.68
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          15.045
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          16.209
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          7.75
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          5.351
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          4.955
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          5.631
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.061
+        ]
+      ]
+    },
+    "1|none|1x|4|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          9.585
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          18.167
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          4.681
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          7.213
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          17.245
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          2.81
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          7.205
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          3.702
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          4.123
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          2.919
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          2.775
+        ]
+      ]
+    },
+    "1|none|1x|64|warm": {
+      "crossover": null,
+      "n": 8,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          176.077
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          187.723
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          182.503
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          15.403
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          68.423
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          103.869
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          59.85
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          48.118
+        ]
+      ]
+    },
+    "1|none|4x|1|warm": {
+      "crossover": null,
+      "n": 10,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          3.957
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          23.49
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          18.412
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          19.821
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          15.945
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          15.828
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          18.739
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          4.993
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          4.116
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          3.176
+        ]
+      ]
+    },
+    "1|none|redirected|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          2.662
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          6.178
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          4.921
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          21.43
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          8.086
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          20.262
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          6.272
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          5.063
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          3.61
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          4.441
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.154
+        ]
+      ]
+    },
+    "4|delayed|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          56.929
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          49.409
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          65.114
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          25.197
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          34.445
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          25.403
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          18.772
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          18.239
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          7.113
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          4.253
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.253
+        ]
+      ]
+    },
+    "4|immediate|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          53.66
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          9.962
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          40.829
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          17.603
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          15.005
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          12.61
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          16.245
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          6.424
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          1.151
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          0.587
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          0.478
+        ]
+      ]
+    },
+    "4|none|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          65.635
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          35.523
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          46.386
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          59.643
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          56.967
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          47.277
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          18.484
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          6.866
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          5.85
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          4.757
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.165
+        ]
+      ]
+    },
+    "8|delayed|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          25.518
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          64.265
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          61.922
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          41.693
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          65.633
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          39.196
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          18.231
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          13.239
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          7.395
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          4.474
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.541
+        ]
+      ]
+    },
+    "8|immediate|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          48.987
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          45.713
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          42.816
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          48.511
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          159.338
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          53.142
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          14.483
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          10.025
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          2.341
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          2.778
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          1.09
+        ]
+      ]
+    },
+    "8|none|1x|1|warm": {
+      "crossover": null,
+      "n": 11,
+      "winners": [
+        [
+          "1x1",
+          "UNJUDGED",
+          52.573
+        ],
+        [
+          "5x24",
+          "UNJUDGED",
+          52.561
+        ],
+        [
+          "16x16",
+          "UNJUDGED",
+          35.7
+        ],
+        [
+          "32x32",
+          "UNJUDGED",
+          95.066
+        ],
+        [
+          "64x64",
+          "UNJUDGED",
+          59.025
+        ],
+        [
+          "128x128",
+          "UNJUDGED",
+          71.573
+        ],
+        [
+          "256x256",
+          "UNJUDGED",
+          27.562
+        ],
+        [
+          "512x512",
+          "UNJUDGED",
+          13.447
+        ],
+        [
+          "1024x1024",
+          "UNJUDGED",
+          6.958
+        ],
+        [
+          "1200x2608",
+          "UNJUDGED",
+          3.994
+        ],
+        [
+          "3440x1440",
+          "UNJUDGED",
+          3.235
+        ]
+      ]
+    }
+  },
+  "freeze_status": "B3_FROZEN_V1",
+  "holdout": {
+    "cells": 40,
+    "decisive": 38,
+    "median_abs_log_error": 0.6865789225989687,
+    "pruning_valid": false,
+    "rows": [
+      {
+        "id": "C0261",
+        "measured_log_ratio": 4.7947192186748655,
+        "predicted_log_ratio": 3.4112531302307634,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0234",
+        "measured_log_ratio": 2.9088893353867604,
+        "predicted_log_ratio": 3.96234997672366,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0233",
+        "measured_log_ratio": 4.978982020608395,
+        "predicted_log_ratio": 2.20231482055733,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0232",
+        "measured_log_ratio": 1.3808669131504487,
+        "predicted_log_ratio": 1.4872519504752262,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0230",
+        "measured_log_ratio": 5.3485783343338,
+        "predicted_log_ratio": 6.192424215328671,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0254",
+        "measured_log_ratio": -0.2484579002405276,
+        "predicted_log_ratio": -0.370376021509248
+      },
+      {
+        "id": "C0249",
+        "measured_log_ratio": 3.6869383516336303,
+        "predicted_log_ratio": 5.5523241697528505,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0243",
+        "measured_log_ratio": 2.8552244796845034,
+        "predicted_log_ratio": 1.6474452388531926,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0257",
+        "measured_log_ratio": 3.609521149669108,
+        "predicted_log_ratio": 3.719753674610047,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0247",
+        "measured_log_ratio": 0.9085465688199772,
+        "predicted_log_ratio": 1.8295861881637805,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0248",
+        "measured_log_ratio": 4.444122229853891,
+        "predicted_log_ratio": 4.015401239578104,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0244",
+        "measured_log_ratio": 4.6375642018520935,
+        "predicted_log_ratio": 4.48997852704983,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0231",
+        "measured_log_ratio": 4.2487751584823545,
+        "predicted_log_ratio": 3.8777856836214166,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0236",
+        "measured_log_ratio": 1.266421002361266,
+        "predicted_log_ratio": 1.0750359763594624,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0262",
+        "measured_log_ratio": 2.7438151013270087,
+        "predicted_log_ratio": 2.9957781688524054,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0229",
+        "measured_log_ratio": 2.8669066309172777,
+        "predicted_log_ratio": 2.653263357904743,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0235",
+        "measured_log_ratio": 1.2321525162230316,
+        "predicted_log_ratio": 1.9229528944976764,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0239",
+        "measured_log_ratio": 3.0031635662284373,
+        "predicted_log_ratio": 3.5225446616819625,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0240",
+        "measured_log_ratio": 0.548305822958719,
+        "predicted_log_ratio": -0.633486575490597
+      },
+      {
+        "id": "C0259",
+        "measured_log_ratio": 4.330612112802811,
+        "predicted_log_ratio": 2.379715501304265,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0228",
+        "measured_log_ratio": 2.942896929214548,
+        "predicted_log_ratio": 1.915111004467855,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0255",
+        "measured_log_ratio": 4.651128020808935,
+        "predicted_log_ratio": 3.5495925084771436,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0260",
+        "measured_log_ratio": 2.216568064424413,
+        "predicted_log_ratio": 2.660709586969894,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0242",
+        "measured_log_ratio": 3.6769558149586743,
+        "predicted_log_ratio": 4.646522145178698,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0253",
+        "measured_log_ratio": 0.7900501597965803,
+        "predicted_log_ratio": 0.11080987161107458,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0251",
+        "measured_log_ratio": 4.270510405914125,
+        "predicted_log_ratio": 3.3334273309602,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0224",
+        "measured_log_ratio": 4.393055768134392,
+        "predicted_log_ratio": 7.669329306011656,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0250",
+        "measured_log_ratio": 4.519928843480754,
+        "predicted_log_ratio": 5.047103987496795,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0256",
+        "measured_log_ratio": 2.6895686341485003,
+        "predicted_log_ratio": 2.2303607749650283,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0227",
+        "measured_log_ratio": 4.153363058611765,
+        "predicted_log_ratio": 7.045635302966435,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0226",
+        "measured_log_ratio": 3.6734490424218826,
+        "predicted_log_ratio": 2.209050691057463,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0258",
+        "measured_log_ratio": 1.0047543187617762,
+        "predicted_log_ratio": 1.3066749823412582,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0223",
+        "measured_log_ratio": 3.248241688631394,
+        "predicted_log_ratio": 4.516509686237592,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0241",
+        "measured_log_ratio": 1.1917308570522014,
+        "predicted_log_ratio": 1.0813649927945814,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0246",
+        "measured_log_ratio": 4.530373994890644,
+        "predicted_log_ratio": 0.2848263505275703,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0252",
+        "measured_log_ratio": 1.50355731035709,
+        "predicted_log_ratio": 2.125624091231604,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0238",
+        "measured_log_ratio": 6.068272223026316,
+        "predicted_log_ratio": 5.573182493604552,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0245",
+        "measured_log_ratio": 3.8338987923485686,
+        "predicted_log_ratio": 4.488280968190738,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0225",
+        "measured_log_ratio": 4.555577764088548,
+        "predicted_log_ratio": 6.7223707171008815,
+        "winner_agrees": true
+      },
+      {
+        "id": "C0237",
+        "measured_log_ratio": 2.121740258463541,
+        "predicted_log_ratio": 2.6509658191859096,
+        "winner_agrees": true
+      }
+    ],
+    "winner_agreement": 1.0
+  },
+  "runs": {
+    "C": {
+      "cells": 263,
+      "excluded": [],
+      "judgeable": false,
+      "noise_band": 1.9557785848018139,
+      "noise_center_ns": [
+        800000,
+        551667,
+        517500,
+        435208,
+        427500,
+        441771,
+        425156,
+        565521,
+        519844,
+        567031,
+        831511,
+        438489
+      ]
+    },
+    "G": {
+      "cells": 263,
+      "excluded": [],
+      "judgeable": false,
+      "noise_band": 1.444925020368916,
+      "noise_center_ns": [
+        2293125,
+        3149636,
+        2553542,
+        2771198,
+        2562187,
+        2299323,
+        2633437,
+        2179792,
+        2370572,
+        2557813,
+        2705937,
+        2427500
+      ]
+    },
+    "G2": {
+      "cells": 263,
+      "excluded": [],
+      "judgeable": false,
+      "noise_band": 1.8078605368324994,
+      "noise_center_ns": [
+        1708386,
+        1922760,
+        2256563,
+        1620729,
+        2054636,
+        2166302,
+        2608073,
+        2410365,
+        2375208,
+        2853698,
+        2435417,
+        2930052
+      ]
+    }
+  },
+  "schema": "b3-analysis/1",
+  "stability_g2": {
+    "judgeable": false,
+    "lines": 21,
+    "lines_changed": [
+      "1|none|1x|16|warm",
+      "1|none|1x|1|resize",
+      "1|none|1x|1|warm",
+      "16|none|1x|1|warm",
+      "1|delayed|1x|1|warm",
+      "1|none|1x|4|warm",
+      "1|none|1x|1|recreate",
+      "4|immediate|1x|1|warm",
+      "4|none|1x|1|warm",
+      "8|none|1x|1|warm",
+      "16|immediate|1x|1|warm",
+      "16|delayed|1x|1|warm",
+      "4|delayed|1x|1|warm",
+      "1|none|16x|1|warm",
+      "1|none|redirected|1|warm",
+      "1|none|4x|1|warm",
+      "8|immediate|1x|1|warm",
+      "1|immediate|1x|1|warm",
+      "8|delayed|1x|1|warm",
+      "1|none|1x|1|cold",
+      "1|none|1x|64|warm"
+    ]
+  },
+  "verdict": "UNJUDGED_NOISE",
+  "winner_counts": {
+    "UNJUDGED": 223
+  },
+  "winner_map": {
+    "A0000": {
+      "area": 1,
+      "batch": 1,
+      "r": 19.11518192803437,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0001": {
+      "area": 1,
+      "batch": 1,
+      "r": 9.81877271513101,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0002": {
+      "area": 1,
+      "batch": 1,
+      "r": 8.53458922685359,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0003": {
+      "area": 1,
+      "batch": 4,
+      "r": 65.63522139353626,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0004": {
+      "area": 1,
+      "batch": 4,
+      "r": 53.65994741454864,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0005": {
+      "area": 1,
+      "batch": 4,
+      "r": 56.92918907877715,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0006": {
+      "area": 1,
+      "batch": 8,
+      "r": 52.573248084437004,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0007": {
+      "area": 1,
+      "batch": 8,
+      "r": 48.986666666666665,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0008": {
+      "area": 1,
+      "batch": 8,
+      "r": 25.517809832204886,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0009": {
+      "area": 1,
+      "batch": 16,
+      "r": 58.0680557128298,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0010": {
+      "area": 1,
+      "batch": 16,
+      "r": 81.06422769776808,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0011": {
+      "area": 1,
+      "batch": 16,
+      "r": 35.450574365175335,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0012": {
+      "area": 120,
+      "batch": 1,
+      "r": 9.16192,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0013": {
+      "area": 120,
+      "batch": 1,
+      "r": 9.849082925695072,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0014": {
+      "area": 120,
+      "batch": 1,
+      "r": 9.811267628425558,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0015": {
+      "area": 120,
+      "batch": 4,
+      "r": 35.52263350740025,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0016": {
+      "area": 120,
+      "batch": 4,
+      "r": 9.961701879983703,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0017": {
+      "area": 120,
+      "batch": 4,
+      "r": 49.409312719478265,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0018": {
+      "area": 120,
+      "batch": 8,
+      "r": 52.56066047652418,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0019": {
+      "area": 120,
+      "batch": 8,
+      "r": 45.71348845196188,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0020": {
+      "area": 120,
+      "batch": 8,
+      "r": 64.26532302595251,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0021": {
+      "area": 120,
+      "batch": 16,
+      "r": 83.62837185108123,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0022": {
+      "area": 120,
+      "batch": 16,
+      "r": 61.49642790582096,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0023": {
+      "area": 120,
+      "batch": 16,
+      "r": 130.40547373049023,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0024": {
+      "area": 256,
+      "batch": 1,
+      "r": 23.160897642081302,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0025": {
+      "area": 256,
+      "batch": 1,
+      "r": 8.72937756115529,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0026": {
+      "area": 256,
+      "batch": 1,
+      "r": 20.850418101328085,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0027": {
+      "area": 256,
+      "batch": 4,
+      "r": 46.3858664944709,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0028": {
+      "area": 256,
+      "batch": 4,
+      "r": 40.82949450044073,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0029": {
+      "area": 256,
+      "batch": 4,
+      "r": 65.11389805190764,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0030": {
+      "area": 256,
+      "batch": 8,
+      "r": 35.70005807200929,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0031": {
+      "area": 256,
+      "batch": 8,
+      "r": 42.81605997372285,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0032": {
+      "area": 256,
+      "batch": 8,
+      "r": 61.921523542937116,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0033": {
+      "area": 256,
+      "batch": 16,
+      "r": 144.27468069120962,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0034": {
+      "area": 256,
+      "batch": 16,
+      "r": 38.6416003504417,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0035": {
+      "area": 256,
+      "batch": 16,
+      "r": 70.65567674764502,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0036": {
+      "area": 1024,
+      "batch": 1,
+      "r": 3.6796464699035742,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0037": {
+      "area": 1024,
+      "batch": 1,
+      "r": 3.5804290268547034,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0038": {
+      "area": 1024,
+      "batch": 1,
+      "r": 24.369570929081025,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0039": {
+      "area": 1024,
+      "batch": 4,
+      "r": 59.64318283415288,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0040": {
+      "area": 1024,
+      "batch": 4,
+      "r": 17.603460575244746,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0041": {
+      "area": 1024,
+      "batch": 4,
+      "r": 25.19713781516668,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0042": {
+      "area": 1024,
+      "batch": 8,
+      "r": 95.06634446397189,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0043": {
+      "area": 1024,
+      "batch": 8,
+      "r": 48.510598503740646,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0044": {
+      "area": 1024,
+      "batch": 8,
+      "r": 41.692786844400146,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0045": {
+      "area": 1024,
+      "batch": 16,
+      "r": 48.979897435897435,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0046": {
+      "area": 1024,
+      "batch": 16,
+      "r": 47.960188467191145,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0047": {
+      "area": 1024,
+      "batch": 16,
+      "r": 72.77487061529615,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0048": {
+      "area": 4096,
+      "batch": 1,
+      "r": 15.045045940610931,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0049": {
+      "area": 4096,
+      "batch": 1,
+      "r": 10.325302963936341,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0050": {
+      "area": 4096,
+      "batch": 1,
+      "r": 18.490022833316786,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0051": {
+      "area": 4096,
+      "batch": 4,
+      "r": 56.96728481455563,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0052": {
+      "area": 4096,
+      "batch": 4,
+      "r": 15.00475314546391,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0053": {
+      "area": 4096,
+      "batch": 4,
+      "r": 34.44518331601603,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0054": {
+      "area": 4096,
+      "batch": 8,
+      "r": 59.02464177698448,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0055": {
+      "area": 4096,
+      "batch": 8,
+      "r": 159.3382843420643,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0056": {
+      "area": 4096,
+      "batch": 8,
+      "r": 65.63314627759073,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0057": {
+      "area": 4096,
+      "batch": 16,
+      "r": 51.75322322113039,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0058": {
+      "area": 4096,
+      "batch": 16,
+      "r": 55.71831747404844,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0059": {
+      "area": 4096,
+      "batch": 16,
+      "r": 93.49674409563612,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0060": {
+      "area": 16384,
+      "batch": 1,
+      "r": 16.208977912903514,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0061": {
+      "area": 16384,
+      "batch": 1,
+      "r": 5.430502516464667,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0062": {
+      "area": 16384,
+      "batch": 1,
+      "r": 7.010631136944002,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0063": {
+      "area": 16384,
+      "batch": 4,
+      "r": 47.27742873218305,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0064": {
+      "area": 16384,
+      "batch": 4,
+      "r": 12.609556883217765,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0065": {
+      "area": 16384,
+      "batch": 4,
+      "r": 25.402806521629397,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0066": {
+      "area": 16384,
+      "batch": 8,
+      "r": 71.57312203643623,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0067": {
+      "area": 16384,
+      "batch": 8,
+      "r": 53.14160361731656,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0068": {
+      "area": 16384,
+      "batch": 8,
+      "r": 39.1956829312534,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0069": {
+      "area": 16384,
+      "batch": 16,
+      "r": 58.030701099666615,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0070": {
+      "area": 16384,
+      "batch": 16,
+      "r": 31.922427530089845,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0071": {
+      "area": 16384,
+      "batch": 16,
+      "r": 52.65047701647875,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0072": {
+      "area": 65536,
+      "batch": 1,
+      "r": 7.749686287696736,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0073": {
+      "area": 65536,
+      "batch": 1,
+      "r": 3.887664090015094,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0074": {
+      "area": 65536,
+      "batch": 1,
+      "r": 16.42196462536131,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0075": {
+      "area": 65536,
+      "batch": 4,
+      "r": 18.483555717710832,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0076": {
+      "area": 65536,
+      "batch": 4,
+      "r": 16.244541892144056,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0077": {
+      "area": 65536,
+      "batch": 4,
+      "r": 18.772347967359597,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0078": {
+      "area": 65536,
+      "batch": 8,
+      "r": 27.56234482178176,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0079": {
+      "area": 65536,
+      "batch": 8,
+      "r": 14.483036737949254,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0080": {
+      "area": 65536,
+      "batch": 8,
+      "r": 18.2313129706992,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0081": {
+      "area": 65536,
+      "batch": 16,
+      "r": 25.48228302080131,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0082": {
+      "area": 65536,
+      "batch": 16,
+      "r": 28.0350326859989,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0083": {
+      "area": 65536,
+      "batch": 16,
+      "r": 35.1332068500674,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0084": {
+      "area": 262144,
+      "batch": 1,
+      "r": 5.350895483870968,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0085": {
+      "area": 262144,
+      "batch": 1,
+      "r": 3.9100815560505944,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0086": {
+      "area": 262144,
+      "batch": 1,
+      "r": 4.215597234517635,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0087": {
+      "area": 262144,
+      "batch": 4,
+      "r": 6.866358176166772,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0088": {
+      "area": 262144,
+      "batch": 4,
+      "r": 6.423988671046506,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0089": {
+      "area": 262144,
+      "batch": 4,
+      "r": 18.238918491495117,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0090": {
+      "area": 262144,
+      "batch": 8,
+      "r": 13.446560038441078,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0091": {
+      "area": 262144,
+      "batch": 8,
+      "r": 10.024842319976381,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0092": {
+      "area": 262144,
+      "batch": 8,
+      "r": 13.239125793200044,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0093": {
+      "area": 262144,
+      "batch": 16,
+      "r": 14.544478790227373,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0094": {
+      "area": 262144,
+      "batch": 16,
+      "r": 9.846722094911273,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0095": {
+      "area": 262144,
+      "batch": 16,
+      "r": 14.86576977287881,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0096": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 4.955175974769042,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0097": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 1.8902935483227234,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0098": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 5.085372997574183,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0099": {
+      "area": 1048576,
+      "batch": 4,
+      "r": 5.850439970843947,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0100": {
+      "area": 1048576,
+      "batch": 4,
+      "r": 1.1510559850402795,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0101": {
+      "area": 1048576,
+      "batch": 4,
+      "r": 7.112705748609556,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0102": {
+      "area": 1048576,
+      "batch": 8,
+      "r": 6.957713864694893,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0103": {
+      "area": 1048576,
+      "batch": 8,
+      "r": 2.340967533659208,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0104": {
+      "area": 1048576,
+      "batch": 8,
+      "r": 7.395020874758784,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0105": {
+      "area": 1048576,
+      "batch": 16,
+      "r": 7.424360911545679,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0106": {
+      "area": 1048576,
+      "batch": 16,
+      "r": 3.9120684708807496,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0107": {
+      "area": 1048576,
+      "batch": 16,
+      "r": 8.172204562162834,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0108": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 5.631366901829535,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0109": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 0.723793334051947,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0110": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 3.6960902535970686,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0111": {
+      "area": 3129600,
+      "batch": 4,
+      "r": 4.757393396594407,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0112": {
+      "area": 3129600,
+      "batch": 4,
+      "r": 0.5873726455331051,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0113": {
+      "area": 3129600,
+      "batch": 4,
+      "r": 4.252724736810287,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0114": {
+      "area": 3129600,
+      "batch": 8,
+      "r": 3.9943844392667724,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0115": {
+      "area": 3129600,
+      "batch": 8,
+      "r": 2.7779213316968185,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0116": {
+      "area": 3129600,
+      "batch": 8,
+      "r": 4.473588442049939,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0117": {
+      "area": 3129600,
+      "batch": 16,
+      "r": 4.632947480533443,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0118": {
+      "area": 3129600,
+      "batch": 16,
+      "r": 2.1188729456670137,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0119": {
+      "area": 3129600,
+      "batch": 16,
+      "r": 4.6384422803666325,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0120": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 3.060716259844751,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0121": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 0.16286261100587932,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0122": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 2.4337944921322374,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0123": {
+      "area": 4953600,
+      "batch": 4,
+      "r": 3.16476569317882,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0124": {
+      "area": 4953600,
+      "batch": 4,
+      "r": 0.47785384743590853,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0125": {
+      "area": 4953600,
+      "batch": 4,
+      "r": 3.2528764209450407,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0126": {
+      "area": 4953600,
+      "batch": 8,
+      "r": 3.2349886535917416,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0127": {
+      "area": 4953600,
+      "batch": 8,
+      "r": 1.0900851938721154,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0128": {
+      "area": 4953600,
+      "batch": 8,
+      "r": 3.540989965954172,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0129": {
+      "area": 4953600,
+      "batch": 16,
+      "r": 3.2580603699944746,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0130": {
+      "area": 4953600,
+      "batch": 16,
+      "r": 2.613193595591597,
+      "ratio": "1x",
+      "readback": "immediate",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "A0131": {
+      "area": 4953600,
+      "batch": 16,
+      "r": 3.2974725370971467,
+      "ratio": "1x",
+      "readback": "delayed",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0132": {
+      "area": 1,
+      "batch": 1,
+      "r": 3.95677942667527,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0133": {
+      "area": 1,
+      "batch": 1,
+      "r": 6.739477400291915,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0134": {
+      "area": 1,
+      "batch": 1,
+      "r": 2.6619266253112452,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0135": {
+      "area": 1,
+      "batch": 1,
+      "r": 9.585468717948718,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0136": {
+      "area": 1,
+      "batch": 1,
+      "r": 14.385697366332524,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0137": {
+      "area": 1,
+      "batch": 1,
+      "r": 176.077476056338,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0138": {
+      "area": 1,
+      "batch": 1,
+      "r": 36.68416157321286,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0139": {
+      "area": 1,
+      "batch": 1,
+      "r": 12.522820923076923,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0140": {
+      "area": 1,
+      "batch": 1,
+      "r": 55.041049403594215,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1x1",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0141": {
+      "area": 120,
+      "batch": 1,
+      "r": 23.490356196772993,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0142": {
+      "area": 120,
+      "batch": 1,
+      "r": 9.71765991825872,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0143": {
+      "area": 120,
+      "batch": 1,
+      "r": 6.177529508788207,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0144": {
+      "area": 120,
+      "batch": 1,
+      "r": 18.167058265100273,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0145": {
+      "area": 120,
+      "batch": 1,
+      "r": 21.34616638907977,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0146": {
+      "area": 120,
+      "batch": 1,
+      "r": 187.72251097662277,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0147": {
+      "area": 120,
+      "batch": 1,
+      "r": 37.47313133096463,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0148": {
+      "area": 120,
+      "batch": 1,
+      "r": 10.709708018583783,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0149": {
+      "area": 120,
+      "batch": 1,
+      "r": 14.920265754453958,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "5x24",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0150": {
+      "area": 256,
+      "batch": 1,
+      "r": 18.412151787672734,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0151": {
+      "area": 256,
+      "batch": 1,
+      "r": 23.213201735650532,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0152": {
+      "area": 256,
+      "batch": 1,
+      "r": 4.920757142857143,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0153": {
+      "area": 256,
+      "batch": 1,
+      "r": 4.680713481083167,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0154": {
+      "area": 256,
+      "batch": 1,
+      "r": 37.36990414768357,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0155": {
+      "area": 256,
+      "batch": 1,
+      "r": 182.5028965973848,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0156": {
+      "area": 256,
+      "batch": 1,
+      "r": 15.130668779819391,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0157": {
+      "area": 256,
+      "batch": 1,
+      "r": 65.49305756436216,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0158": {
+      "area": 256,
+      "batch": 1,
+      "r": 16.077591884094332,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "16x16",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0159": {
+      "area": 1024,
+      "batch": 1,
+      "r": 19.82114161365919,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0160": {
+      "area": 1024,
+      "batch": 1,
+      "r": 3.0200083234625605,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0161": {
+      "area": 1024,
+      "batch": 1,
+      "r": 21.429532646195383,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0162": {
+      "area": 1024,
+      "batch": 1,
+      "r": 7.212844274272608,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0163": {
+      "area": 1024,
+      "batch": 1,
+      "r": 39.644576835970746,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0164": {
+      "area": 1024,
+      "batch": 1,
+      "r": 15.40281003909127,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0165": {
+      "area": 1024,
+      "batch": 1,
+      "r": 29.868475150147123,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0166": {
+      "area": 1024,
+      "batch": 1,
+      "r": 18.80629020729092,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0167": {
+      "area": 1024,
+      "batch": 1,
+      "r": 18.597034666666666,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "32x32",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0168": {
+      "area": 4096,
+      "batch": 1,
+      "r": 15.944803404544105,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0169": {
+      "area": 4096,
+      "batch": 1,
+      "r": 20.350940167372748,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0170": {
+      "area": 4096,
+      "batch": 1,
+      "r": 8.086157257907637,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0171": {
+      "area": 4096,
+      "batch": 1,
+      "r": 17.245049018230848,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0172": {
+      "area": 4096,
+      "batch": 1,
+      "r": 23.647663157894737,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0173": {
+      "area": 4096,
+      "batch": 1,
+      "r": 68.42319006534916,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0174": {
+      "area": 4096,
+      "batch": 1,
+      "r": 44.43940651770732,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0175": {
+      "area": 4096,
+      "batch": 1,
+      "r": 43.69412874208057,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0176": {
+      "area": 4096,
+      "batch": 1,
+      "r": 26.63404113156007,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "64x64",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0177": {
+      "area": 16384,
+      "batch": 1,
+      "r": 15.827827827827829,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0178": {
+      "area": 16384,
+      "batch": 1,
+      "r": 7.764098461538461,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0179": {
+      "area": 16384,
+      "batch": 1,
+      "r": 20.261643139248427,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0180": {
+      "area": 16384,
+      "batch": 1,
+      "r": 2.810402599564327,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0181": {
+      "area": 16384,
+      "batch": 1,
+      "r": 32.76311986456914,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0182": {
+      "area": 16384,
+      "batch": 1,
+      "r": 103.86854562140752,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0183": {
+      "area": 16384,
+      "batch": 1,
+      "r": 21.056056556599707,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0184": {
+      "area": 16384,
+      "batch": 1,
+      "r": 6.942489427710574,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0185": {
+      "area": 16384,
+      "batch": 1,
+      "r": 7.243883391459609,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "128x128",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0186": {
+      "area": 65536,
+      "batch": 1,
+      "r": 18.739001357580822,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0187": {
+      "area": 65536,
+      "batch": 1,
+      "r": 8.172936251972827,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0188": {
+      "area": 65536,
+      "batch": 1,
+      "r": 6.271584255786296,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0189": {
+      "area": 65536,
+      "batch": 1,
+      "r": 7.204902966730396,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0190": {
+      "area": 65536,
+      "batch": 1,
+      "r": 16.757396707322382,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0191": {
+      "area": 65536,
+      "batch": 1,
+      "r": 59.85032400821874,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0192": {
+      "area": 65536,
+      "batch": 1,
+      "r": 17.49035267388423,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0193": {
+      "area": 65536,
+      "batch": 1,
+      "r": 13.25846499272138,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0194": {
+      "area": 65536,
+      "batch": 1,
+      "r": 5.5533393008001575,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "256x256",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0195": {
+      "area": 262144,
+      "batch": 1,
+      "r": 4.993202101229507,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0196": {
+      "area": 262144,
+      "batch": 1,
+      "r": 4.641353067006842,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0197": {
+      "area": 262144,
+      "batch": 1,
+      "r": 5.0630517678186955,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0198": {
+      "area": 262144,
+      "batch": 1,
+      "r": 3.7021043007501477,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0199": {
+      "area": 262144,
+      "batch": 1,
+      "r": 25.167676052401095,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0200": {
+      "area": 262144,
+      "batch": 1,
+      "r": 48.118138456367475,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "warm",
+      "reuse": 64,
+      "winner": "UNJUDGED"
+    },
+    "B0201": {
+      "area": 262144,
+      "batch": 1,
+      "r": 20.923869521844296,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0202": {
+      "area": 262144,
+      "batch": 1,
+      "r": 3.7192001411941464,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0203": {
+      "area": 262144,
+      "batch": 1,
+      "r": 3.903874383743075,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "512x512",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0204": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 4.115706835471266,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0205": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 3.711477181801592,
+      "ratio": "16x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0206": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 3.609682272274372,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0207": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 4.123483511289871,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0208": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 10.422134027078863,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "warm",
+      "reuse": 16,
+      "winner": "UNJUDGED"
+    },
+    "B0209": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 11.999699812082364,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0210": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 3.325015422885572,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0211": {
+      "area": 1048576,
+      "batch": 1,
+      "r": 3.24621973211684,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1024x1024",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0212": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 3.176286483853184,
+      "ratio": "4x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0213": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 4.441057202251844,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0214": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 2.9185352802272853,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0215": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 5.372135800610582,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0216": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 2.5008252260649217,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0217": {
+      "area": 3129600,
+      "batch": 1,
+      "r": 2.3955459171044415,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "1200x2608",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0218": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 3.1542851897811377,
+      "ratio": "redirected",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0219": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 2.774510390292204,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "warm",
+      "reuse": 4,
+      "winner": "UNJUDGED"
+    },
+    "B0220": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 8.512658823529412,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "cold",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0221": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 1.3337252283619294,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "resize",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    },
+    "B0222": {
+      "area": 4953600,
+      "batch": 1,
+      "r": 1.2897084995092614,
+      "ratio": "1x",
+      "readback": "none",
+      "rect": "3440x1440",
+      "residency": "recreate",
+      "reuse": 1,
+      "winner": "UNJUDGED"
+    }
+  }
+}
