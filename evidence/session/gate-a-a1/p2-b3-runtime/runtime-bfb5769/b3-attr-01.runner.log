@@ -1,0 +1,5 @@
+SAFE_RUN_CHECK_OK mem_available_mb=6265 floor_mb=3072 disk_free_gb=36
+./run-b3.sh: line 88: /proc/13863/cmdline: No such file or directory
+STOP logcat pid 13769 still alive after TERM
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-terminal-runtime/harness-lib.sh: line 33: /proc/14597/cmdline: No such file or directory
+B3_CAPTURED mode=ATTR evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-b3-runtime/runtime-bfb5769/b3-attr-01 cells=275

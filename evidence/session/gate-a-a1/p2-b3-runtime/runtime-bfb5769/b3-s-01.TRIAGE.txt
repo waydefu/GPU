@@ -1,0 +1,7 @@
+b3-s-01  B3_BLOCKED untraced_launch_failed (runner exit 3, NOT consumed; no X3 was started)
+cause    tooling: p2-runtime-phase1/runner/start-x3-untraced.sh ran
+         VARS=$(env | grep -E '^TERMUX_X11_...' | sort | tr ...) under set -euo pipefail.
+         Mode S sets NO TERMUX_X11_* variable -> grep exit 1 -> pipefail -> set -e ended the
+         launcher silently (empty start-x3.out). Modes G/C/ATTR always had one, so it never showed.
+fix      '|| true' on that assignment (launcher sha 7b88d3bd... -> new, comment in the file).
+retry    one retry of the same mode in a NEW directory: b3-s-02 (b3-s-01 stays as captured).

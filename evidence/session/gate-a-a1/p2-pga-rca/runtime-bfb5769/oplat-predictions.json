@@ -1,0 +1,52 @@
+{
+  "P1": {
+    "detail": {
+      "copy_win": {
+        "c_p50_us": 77,
+        "g_p50_us": 123,
+        "holds": false
+      },
+      "solid": {
+        "c_p50_us": 69,
+        "g_p50_us": 941,
+        "holds": false
+      }
+    },
+    "holds": false
+  },
+  "P2": {
+    "g_p50_us": 80,
+    "holds": true
+  },
+  "P3": {
+    "detail": {
+      "copy_win": {
+        "g_burst16_p50_us": 195,
+        "g_single_p50_us": 123,
+        "holds": false
+      },
+      "solid": {
+        "g_burst16_p50_us": 14566,
+        "g_single_p50_us": 941,
+        "holds": true
+      }
+    },
+    "holds": false
+  },
+  "P4": {
+    "g_p50_us": 1455,
+    "holds": false
+  },
+  "P5": {
+    "c_p50_us": 72,
+    "g_p50_us": 184,
+    "holds": false,
+    "ratio": 2.5555555555555554
+  },
+  "c": "oplat-c-01",
+  "c_loaded": true,
+  "g": "oplat-g-01",
+  "g_loaded": true,
+  "reading": "SOLID_COPY_NOT_THE_SOURCE",
+  "schema": "oplat-predictions/1"
+}

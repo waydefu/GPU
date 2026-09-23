@@ -1,0 +1,218 @@
+{
+  "checks": {
+    "attribution": [
+      {
+        "check": "persistent_all_direct",
+        "detail": {
+          "cases": 1298,
+          "event5": 1298
+        },
+        "ok": true
+      },
+      {
+        "check": "negative_no_direct",
+        "detail": {
+          "negative_window": 0,
+          "per_case": {
+            "neg-bilinear": 0,
+            "neg-component-alpha": 0,
+            "neg-dst-argb": 0,
+            "neg-mask-a8": 0,
+            "neg-repeat": 0,
+            "neg-src-op": 0,
+            "neg-transform": 0
+          }
+        },
+        "ok": true
+      }
+    ],
+    "correctness": [
+      {
+        "check": "persistent_exact",
+        "detail": {
+          "cases": 1298,
+          "exact_px": 1197392,
+          "fail": 0,
+          "maxd": 0,
+          "xnz_px": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "fresh_exact",
+        "detail": {
+          "cases": 36,
+          "exact_px": 33204,
+          "fail": 0,
+          "maxd": 0,
+          "xnz_px": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "negative_exact",
+        "detail": {
+          "cases": 7,
+          "exact_px": 0,
+          "fail": 0,
+          "maxd": 0,
+          "xnz_px": 0
+        },
+        "ok": true
+      },
+      {
+        "check": "oracle_result_pass",
+        "detail": {
+          "fail_lines": [],
+          "result": "PASS"
+        },
+        "ok": true
+      },
+      {
+        "check": "lifecycle_balanced",
+        "detail": {
+          "c12": 88,
+          "c13": 88,
+          "c18": 0,
+          "c19": 0,
+          "c20": 0,
+          "c24": 0,
+          "c27": 1,
+          "where": "x-close-screen"
+        },
+        "ok": true
+      },
+      {
+        "check": "no_fatal",
+        "detail": [],
+        "ok": true
+      },
+      {
+        "check": "x_ends_only_by_terminate",
+        "detail": {
+          "x_alive_after_terminate": false
+        },
+        "ok": true
+      },
+      {
+        "check": "activity_survives_close",
+        "detail": [
+          28796,
+          28796
+        ],
+        "ok": true
+      }
+    ],
+    "validity": [
+      {
+        "check": "persistent_case_count",
+        "detail": 1298,
+        "ok": true
+      },
+      {
+        "check": "fresh_case_count",
+        "detail": 36,
+        "ok": true
+      },
+      {
+        "check": "negative_case_count",
+        "detail": 7,
+        "ok": true
+      },
+      {
+        "check": "x3_untraced",
+        "detail": "0",
+        "ok": true
+      },
+      {
+        "check": "screen_awake_throughout",
+        "detail": [
+          {
+            "awake": true,
+            "keyguard": false,
+            "wakefulness": "Awake"
+          },
+          {
+            "awake": true,
+            "keyguard": false,
+            "wakefulness": "Awake"
+          }
+        ],
+        "ok": true
+      },
+      {
+        "check": "stable_unchanged",
+        "detail": null,
+        "ok": true
+      },
+      {
+        "check": "logcat_alive_at_end",
+        "detail": {
+          "logcat_alive": true
+        },
+        "ok": true
+      },
+      {
+        "check": "phase_gaps_quiet",
+        "detail": {
+          "gaps_s": [
+            0.1001,
+            0.1001
+          ],
+          "min_s": 0.05,
+          "negative_case_marks": 7
+        },
+        "ok": true
+      },
+      {
+        "check": "event5_stream_complete",
+        "detail": {
+          "all_events_complete": false,
+          "c0_direct_publish": 1334,
+          "event5_lines": 1334,
+          "lines": 34062,
+          "nextSequence": 34064,
+          "no_fatal": true
+        },
+        "ok": true
+      }
+    ]
+  },
+  "failed": {
+    "attribution": [],
+    "correctness": [],
+    "validity": []
+  },
+  "freeze_status": "ORACLE_FROZEN_V3",
+  "fresh_direct_reported": 36,
+  "phases": {
+    "fresh": {
+      "cases": 36,
+      "exact_px": 33204,
+      "fail": 0,
+      "maxd": 0,
+      "xnz_px": 0
+    },
+    "negative": {
+      "cases": 7,
+      "exact_px": 0,
+      "fail": 0,
+      "maxd": 0,
+      "xnz_px": 0
+    },
+    "persistent": {
+      "cases": 1298,
+      "exact_px": 1197392,
+      "fail": 0,
+      "maxd": 0,
+      "xnz_px": 0
+    }
+  },
+  "schema": "oracle-verdict/1",
+  "unjudged": {
+    "attribution": [],
+    "correctness": [],
+    "validity": []
+  },
+  "verdict": "PASS"
+}

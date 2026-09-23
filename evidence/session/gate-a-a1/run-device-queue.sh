@@ -18,7 +18,10 @@ T=/root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests
 LOG=$G/device-queue.log
 say() { echo "$(date +%T) $*" | tee -a "$LOG"; }
 
+SAFE=$T/common/safe-run.sh           # every analysis capped (INCIDENT-20260923)
 say "QUEUE_START serial=$SERIAL"
+"$SAFE" --disk-min-gb 20 --disk-path "$G" --check-only 2>&1 | tee -a "$LOG"
+[ "${PIPESTATUS[0]}" -eq 0 ] || { say "QUEUE_STOP host_resources"; exit 1; }
 say "STEP xfce-v3-series"
 (cd "$G/p2-xfce-runtime" && SERIAL=$SERIAL ./series-v3.sh > series-v3.log 2>&1)
 tail -1 "$G/p2-xfce-runtime/series-v3.log" | tee -a "$LOG"
@@ -29,7 +32,7 @@ EV=$G/p2-oracle-runtime/runtime-bfb5769/oracle-01
 mkdir -p "$(dirname "$EV")"
 (cd "$G/p2-oracle-runtime" && SERIAL=$SERIAL EVIDENCE=$EV ./run-oracle.sh > "$EV.runner.log" 2>&1)
 tail -1 "$EV.runner.log" | tee -a "$LOG"
-python3 "$T/oracle/judge-oracle.py" --evidence "$EV" --freeze "$T/oracle/oracle-freeze.json" \
+"$SAFE" -- python3 "$T/oracle/judge-oracle.py" --evidence "$EV" --freeze "$T/oracle/oracle-freeze.json" \
   --out "$EV/oracle-verdict.json" | tee -a "$LOG"
 
 for m in ATTR G C S G2; do

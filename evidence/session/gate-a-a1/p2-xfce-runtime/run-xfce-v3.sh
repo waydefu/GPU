@@ -43,7 +43,9 @@ EXPECT_VERSION=1.03.01-bfb5769-23.09.26
 EXPECT_APK_SHA256=ff7b9309c405b07245bc352911867a66e8498464e515e09dbd645b3a1ec18472
 EXPECT_HEAD=bfb576940ded333f49d29a8910a785f8d680261c
 EXPECT_FIXTURE_BIN_SHA=2aca8ae15d536065168b3a819de1414c5520792712ea56ce254efbdde05ae50b
-EXPECT_MANIFEST_SHA=79e733cd88d5edfdcf9b67da0a40c8debdbd579533a59e25e3f35da6eb882d89
+# 79e733cd... -> 66e37b23...: streaming collector + safe-run.sh (INCIDENT-20260923), same freeze
+# 66e37b23... -> cdae546d...: + mem-guard.sh (INCIDENT-20260923-2), same freeze
+EXPECT_MANIFEST_SHA=cdae546de616de21011103510ddbac7fe77fd41866427ef8d0c290cdb283e559
 EXPECT_ROOT=1200x2191
 
 refuse() { echo "XFCE_BLOCKED $*"; [ -n "${EVIDENCE:-}" ] && [ -d "$EVIDENCE" ] && echo "$*" > "$EVIDENCE/BLOCKED.txt"; exit 3; }
@@ -62,6 +64,10 @@ fi
 
 [ -n "${SERIAL:-}" ] || refuse "SERIAL"
 [ -e "$EVIDENCE" ] && refuse "evidence_exists $EVIDENCE"
+# host resources (INCIDENT-20260923): the capture is ~0.9 GB and every analysis shares the
+# phone with Stable / the daily desktop
+"/root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/safe-run.sh" --disk-min-gb 15 --disk-path "$(dirname "$EVIDENCE")" --floor-mb 4500 --check-only \
+  || refuse "host_resources"
 GOT=$(sha256sum "$FIXTURE" | awk '{print $1}')
 [ "$GOT" = "$EXPECT_FIXTURE_BIN_SHA" ] || refuse "fixture_bin_sha $GOT"
 python3 "$XFCE/verify-xfce-support.py" >/dev/null || refuse "verify_xfce_support"
@@ -231,7 +237,11 @@ xfce_cleanup() {
   [ -d "$RUN_ROOT" ] && rm -rf "$RUN_ROOT"
   return "$rc"
 }
-trap 'cleanup; xfce_cleanup' EXIT
+MG=""
+# our own child, exact pid. Every step tolerates failure: under set -e a failing kill of an
+# already-exited guard ended the runner after its capture (oracle-02, 2026-09-23).
+mg_stop() { if [ -n "${MG:-}" ]; then kill "$MG" 2>/dev/null || true; wait "$MG" 2>/dev/null || true; fi; MG=""; return 0; }
+trap 'cleanup; xfce_cleanup; mg_stop' EXIT
 
 # ---------------------------------------------------------------- preflight --
 for pkg in $(python3 -c "import json;print(' '.join(json.load(open('$FREEZE'))['pinned_packages']))"); do
@@ -295,6 +305,12 @@ for i in $(seq 1 40); do X3=$(x3pid_now) && break || sleep 0.5; done
 echo "x3_pid=$X3" > "$EVIDENCE/x3-pid.txt"
 grep -E 'TracerPid|PPid' "/proc/$X3/status" > "$EVIDENCE/x3-tracer.txt" || true
 grep -q 'TracerPid:[[:space:]]*0$' "$EVIDENCE/x3-tracer.txt" || refuse "x3_traced $(tr '\n' ' ' < "$EVIDENCE/x3-tracer.txt")"
+# memory watchdog (INCIDENT-20260923-2-LMK-B3-S): trips -> X3 SIGTERM + force-stop -> exit 5 below
+MEMGUARD=/root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/mem-guard.sh
+"$MEMGUARD" --x3-pid "$X3" --log "$EVIDENCE/mem-guard.log" --flag "$EVIDENCE/MEM-GUARD-TRIPPED.txt" \
+  --serial "$SERIAL" --floor-mb 3000 --swap-growth-mb 1536 --x3-max-mb 3072 </dev/null &
+MG=$!
+sha256sum "$MEMGUARD" >> "$EVIDENCE/tools.sha256.txt"
 tr '\0' ' ' < "/proc/$X3/cmdline" > "$EVIDENCE/x3-cmdline.txt"
 grep -q -- '-noreset' "$EVIDENCE/x3-cmdline.txt" || refuse "noreset_absent"
 ADB shell 'am start --display 0 -W -n com.waydefu.x11gpu/com.termux.x11.MainActivity' \
@@ -434,4 +450,10 @@ stable_json "$EVIDENCE/stable-after.json"
 ls /tmp/.X11-unix/ > "$EVIDENCE/x11-unix-after.txt" 2>&1 || true
 mkdir -p "$EVIDENCE/state"
 cp -a "$STATE/." "$EVIDENCE/state/" 2>/dev/null || true
+mg_stop
+if [ -e "$EVIDENCE/MEM-GUARD-TRIPPED.txt" ]; then
+  (cd "$EVIDENCE" && find . -type f ! -name sha256sums.txt | sort | xargs sha256sum > sha256sums.txt)
+  echo "XFCE_ABORTED_MEM_GUARD evidence=$EVIDENCE $(head -1 "$EVIDENCE/MEM-GUARD-TRIPPED.txt")"
+  exit 5
+fi
 echo "XFCE_CAPTURED variant=$VARIANT evidence=$EVIDENCE"

@@ -1,0 +1,4 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5568 floor_mb=4500 disk_free_gb=35
+./run-b3.sh: line 93: /proc/2077/cmdline: No such file or directory
+STOP logcat pid 2027 still alive after TERM
+B3_CAPTURED mode=G2 evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-b3-runtime/runtime-bfb5769/b3-g2-01 cells=275

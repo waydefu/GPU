@@ -1,0 +1,4 @@
+SAFE_RUN_CHECK_OK mem_available_mb=6184 floor_mb=3072 disk_free_gb=36
+./run-oracle.sh: line 85: /proc/12217/cmdline: No such file or directory
+STOP logcat pid 12146 still alive after TERM
+ORACLE_CAPTURED evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-oracle-runtime/runtime-bfb5769/oracle-01

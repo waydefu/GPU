@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=6232 floor_mb=3072 disk_free_gb=36
+STOP logcat pid 7972 still alive after TERM
+OPLAT_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-bfb5769/oplat-g-02 cases=49

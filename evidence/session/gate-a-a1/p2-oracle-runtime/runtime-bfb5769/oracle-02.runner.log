@@ -1,0 +1,2 @@
+SAFE_RUN_CHECK_OK mem_available_mb=4956 floor_mb=4500 disk_free_gb=35
+STOP logcat pid 28383 still alive after TERM

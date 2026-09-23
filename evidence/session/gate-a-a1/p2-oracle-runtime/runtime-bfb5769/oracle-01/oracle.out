@@ -1,0 +1,17 @@
+MARK persistent BEGIN 1790154175.541549
+MARK persistent END 1790154177.031831
+PHASE_RESULT persistent cases=1298 fail=0 maxd=0 exact_px=1197392 xnz_px=0
+MARK fresh BEGIN 1790154177.031848
+MARK fresh END 1790154177.131105
+PHASE_RESULT fresh cases=36 fail=0 maxd=0 exact_px=33204 xnz_px=0
+MARK negative BEGIN 1790154177.131122
+NEG src-op OK
+NEG mask-a8 OK
+NEG dst-argb OK
+NEG bilinear OK
+NEG repeat OK
+NEG transform OK
+NEG component-alpha OK
+MARK negative END 1790154177.136085
+PHASE_RESULT negative cases=7 fail=0 maxd=0 exact_px=0 xnz_px=0
+RESULT p_v1_oracle PASS

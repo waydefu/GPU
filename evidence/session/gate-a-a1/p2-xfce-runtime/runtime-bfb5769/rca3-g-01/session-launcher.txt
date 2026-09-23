@@ -1,0 +1,2 @@
+dbus_run_session_pid=29976
+dbus_run_session_exit=0

@@ -1,0 +1,5 @@
+START G 16:59:49
+CAPTURE G rc=0 OPLAT_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-bfb5769/oplat-g-02 cases=49
+START C 17:00:40
+CAPTURE C rc=0 OPLAT_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-bfb5769/oplat-c-02 cases=49
+OPLAT_PAIR_DONE

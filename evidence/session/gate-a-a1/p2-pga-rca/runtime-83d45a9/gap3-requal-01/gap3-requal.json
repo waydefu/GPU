@@ -1,0 +1,19 @@
+{
+  "schema": "gap3-requal/1",
+  "staged_bytes": 15818767872,
+  "mem_guard_tripped": false,
+  "swap_growth_mb": 0,
+  "avail_drop_mb": 169,
+  "guard_samples": 187,
+  "maps_before": 4035,
+  "maps_after": 4054,
+  "maps_delta": 19,
+  "checks": {
+    "staged": true,
+    "no_trip": true,
+    "swap": true,
+    "avail": true,
+    "maps": false
+  },
+  "verdict": "GAP3_REQUAL_FAIL"
+}

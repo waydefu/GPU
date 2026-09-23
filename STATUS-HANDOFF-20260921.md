@@ -1,4 +1,25 @@
-# Gate A P2 — P2 RUNTIME CLOSED（17/17）· **PGA-GAP-1 修補中（bfb5769）** — 2026-09-21, updated 2026-09-23 晚
+# Gate A P2 — P2 RUNTIME CLOSED（17/17）· **PGA-GAP-2/3 已證明；GAP-3 修補 83d45a9 已安裝** — 2026-09-21, updated 2026-09-23 夜
+
+```
+STATUS 2026-09-23 夜（先讀這一段，再讀 §6.11）:
+        **INSTALLED ARTIFACT 83d45a9**（PGA-GAP-3 修補）CI 35845935317 · APK f4c98b8a…230f · Build ID 67e8ad53…
+          parent bfb5769；產品差異只有 InitOutput.c +7；requal-01 / -02 = GAP3_REQUAL_FAIL（GB 級記憶體洩漏已修、兩次證明；Activity mapping 殘差 ~0.01/筆未解）
+        **兩次 lmkd 事故**（Stable :1 與 com.termux 被殺）：INCIDENT-20260923-LMK-KILLED-TERMUX.md（主機分析吃爆）、
+          INCIDENT-20260923-2-LMK-B3-S.md（B.3 S 模式 = PGA-GAP-3 洩漏）。防護：tests/common/safe-run.sh（主機分析）、
+          tests/common/mem-guard.sh（每個裝置 runner 內建）、所有 logcat consumer 串流化。**不得移除**
+        **PGA-GAP-2**（RCA-XFCE-3，op 層已證明、有 replication）：每個 GPU EXA op 在 Done* 同步等，
+          單發 1–3 ms、比 CPU 慢 3–20x、不 pipeline → G 設定下 XFCE INVALID（C 設定 BASELINE_VALID）。未修
+        **PGA-GAP-3**（staging 上傳註冊給 renderer 永不註銷，S 模式 45 s 漏 7.4 GB）→ 83d45a9 修補，requal 見上
+        **oracle**：oracle-01 FAIL_CORRECTNESS（V1，構造錯誤，ORACLE-01-TRIAGE.md）· oracle-02 INVALID（V2，logd 掉 1 行）
+          · **oracle-03 ORACLE_PASS（V3，bfb5769）**：1298/1298 direct、36/36 fresh、7 個 negative 0 direct、全 exact
+        **B.3（bfb5769）**：G / C / G2 / ATTR-02 擷取完成；凍結判讀 **UNJUDGED_NOISE**（雜訊帶 C 1.96 / G 1.44 / G2 1.81 ≥ 1.25）；
+          描述：223 格中 219 格 G 慢於 C（中位 15x）；只有 4 格（全螢幕／外接尺寸＋immediate readback）G 較快。
+          ATTR-02：275 格全 DIRECT（event=5 == c0 == 6790）；G/G2 另有 25 格 reuse≥16 在穩態走 staging（790 次）
+          S 模式：b3-s-01 BLOCKED（launcher bug，已修）、b3-s-02 partial（lmkd 事故）；S 在 83d45a9 以 requal 形式重跑
+        **方向性問題待使用者決定**：GPU 路徑在幾乎所有形狀都比 CPU 慢（OPLAT 已證明＋B.3 描述）。Gate H / production
+          預設是否送 GPU，需使用者（Astra）決策；不得由 executor 自行決定
+        ADB SERIAL 10.191.48.13:39997（mdns 用 python zeroconf 查；41637 是舊的）
+```
 
 ```
 STATUS 2026-09-23 晚（先讀 §6.10）:

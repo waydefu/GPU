@@ -1,0 +1,226 @@
+{
+  "run": "rca3-g-01",
+  "t0": 1790150875.2042954,
+  "threads": {
+    "29452": {
+      "comm": "main",
+      "samples": 505,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.9584
+        ],
+        [
+          "S:0",
+          0.0198
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0198
+        ],
+        [
+          "Z:0",
+          0.002
+        ]
+      ]
+    },
+    "29654": {
+      "comm": "Jit thread pool",
+      "samples": 505,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          0.998
+        ],
+        [
+          "R:0",
+          0.002
+        ]
+      ]
+    },
+    "29656": {
+      "comm": "Signal Catcher",
+      "samples": 504,
+      "top": [
+        [
+          "S:do_sigtimedwait",
+          1.0
+        ]
+      ]
+    },
+    "29660": {
+      "comm": "perfetto_hprof_",
+      "samples": 504,
+      "top": [
+        [
+          "S:pipe_read",
+          1.0
+        ]
+      ]
+    },
+    "29661": {
+      "comm": "HeapTaskDaemon",
+      "samples": 504,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "29662": {
+      "comm": "ReferenceQueueD",
+      "samples": 504,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "29663": {
+      "comm": "FinalizerDaemon",
+      "samples": 504,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "29664": {
+      "comm": "FinalizerWatchd",
+      "samples": 504,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "29668": {
+      "comm": "binder:29452_1",
+      "samples": 504,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "29669": {
+      "comm": "binder:29452_2",
+      "samples": 504,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "29767": {
+      "comm": "main",
+      "samples": 504,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.756
+        ],
+        [
+          "S:hrtimer_nanosleep",
+          0.1091
+        ],
+        [
+          "R:0",
+          0.0734
+        ],
+        [
+          "S:0",
+          0.0357
+        ],
+        [
+          "R:hrtimer_nanosleep",
+          0.0099
+        ],
+        [
+          "R:do_epoll_wait",
+          0.006
+        ]
+      ]
+    },
+    "29768": {
+      "comm": "Thread-1",
+      "samples": 504,
+      "top": [
+        [
+          "S:inet_csk_accept",
+          1.0
+        ]
+      ]
+    },
+    "29773": {
+      "comm": "binder:29452_3",
+      "samples": 504,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    }
+  },
+  "rtt_ms_window": {
+    "n": 599,
+    "p50": 8.879,
+    "p90": 28.96,
+    "p99": 181.453,
+    "max": 281.975,
+    "over_100ms": 20,
+    "over_1000ms": 0
+  },
+  "rtt_ms_all": {
+    "n": 780,
+    "p50": 5.713,
+    "p99": 221.924
+  },
+  "xdotool_search_window": {
+    "n": 25,
+    "p50_s": 3.737,
+    "p90_s": 10.375,
+    "max_s": 11.5769,
+    "over_3s": 17,
+    "found": 17
+  },
+  "cpu_cores_window": {
+    "proot-tracer": 0.568,
+    "X3": 0.548,
+    "xfce4-terminal": 0.025,
+    "xfwm4": 0.01,
+    "bash": 0.01,
+    "xfconfd": 0.006,
+    "dbus-daemon": 0.005,
+    "xfce4-panel": 0.001,
+    "python3": 0.001,
+    "dbus-run-sessio": 0.0,
+    "xfce4-session": 0.0,
+    "gvfsd": 0.0,
+    "xfsettingsd": 0.0,
+    "Thunar": 0.0,
+    "xfdesktop": 0.0,
+    "tumblerd": 0.0,
+    "panel-6-systray": 0.0,
+    "panel-10-notifi": 0.0,
+    "panel-14-action": 0.0,
+    "gvfs-udisks2-vo": 0.0,
+    "gvfs-afc-volume": 0.0,
+    "gvfs-mtp-volume": 0.0,
+    "gvfs-gphoto2-vo": 0.0,
+    "gvfs-goa-volume": 0.0,
+    "gvfsd-trash": 0.0,
+    "xfce4-notifyd": 0.0,
+    "gvfsd-metadata": 0.0,
+    "sleep": 0.0,
+    "xdotool": 0.0
+  },
+  "cpu_span_s": 145.8
+}

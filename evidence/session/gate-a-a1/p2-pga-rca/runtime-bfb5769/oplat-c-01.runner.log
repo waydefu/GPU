@@ -1,0 +1,4 @@
+SAFE_RUN_CHECK_OK mem_available_mb=6157 floor_mb=3072 disk_free_gb=36
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/run-oplat.sh: line 79: /proc/2978/cmdline: No such file or directory
+STOP logcat pid 2913 still alive after TERM
+OPLAT_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-bfb5769/oplat-c-01 cases=49
