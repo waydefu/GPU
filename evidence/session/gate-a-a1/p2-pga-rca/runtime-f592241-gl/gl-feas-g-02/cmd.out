@@ -1,0 +1,15 @@
+== renderer strings
+llvmpipe: OpenGL renderer string: llvmpipe (LLVM 21.1.8, 128 bits)
+zink: OpenGL renderer string: zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))
+default: OpenGL renderer string: zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))
+== glxgears 12 s (vblank_mode=0)
+RUN gears-llvmpipe wall_s=12.01 user_s=9.19 sys_s=0.65 rc=timeout
+RUN gears-zink wall_s=12.02 user_s=1.34 sys_s=3.40 rc=timeout
+gears-llvmpipe: 2418 frames in 5.0 seconds = 483.584 FPS 2404 frames in 5.0 seconds = 480.679 FPS 
+gears-zink: 2687 frames in 5.0 seconds = 537.248 FPS 2683 frames in 5.0 seconds = 536.583 FPS 
+== vkcube 600 frames
+RUN vkcube-turnip wall_s=10.11 user_s=0.15 sys_s=0.68 rc=0
+RUN vkcube-lavapipe wall_s=10.28 user_s=4.16 sys_s=0.52 rc=0
+vkcube-turnip: Selected WSI platform: xcb Selected GPU 0: Adreno (TM) 840, type: IntegratedGpu, apiVersion: 4211023 (1.4.335), driverVersion: 109051910 (26.0.6)  
+vkcube-lavapipe: Selected WSI platform: xcb Selected GPU 0: llvmpipe (LLVM 21.1.8, 128 bits), type: Cpu, apiVersion: 4211023 (1.4.335), driverVersion: 109051910 (26.0.6)  
+GL_FEASIBILITY_DONE

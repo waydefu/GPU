@@ -1,0 +1,50 @@
+# check_devptr_contract.py run 2026-09-24T14:14:23+08:00 (host only; inputs by sha256 below)
+RED InitOutput.f592241.c violations=24 D=20 W=4
+  D line=2166 fn=lorieExaAsyncFlushPixmap loriePrepareAccess
+  D line=2167 fn=lorieExaAsyncFlushPixmap lorieFinishAccess
+  D line=2181 fn=lorieExaAsyncFlushAll loriePrepareAccess
+  D line=2186 fn=lorieExaAsyncFlushAll lorieFinishAccess
+  D line=2302 fn=lorieExaCpuSolidRect loriePrepareAccess
+  D line=2316 fn=lorieExaCpuSolidRect lorieFinishAccess
+  D line=2326 fn=lorieExaRepairSolidXByte loriePrepareAccess
+  D line=2344 fn=lorieExaRepairSolidXByte lorieFinishAccess
+  D line=2491 fn=lorieExaCpuCopyRect loriePrepareAccess
+  D line=2493 fn=lorieExaCpuCopyRect loriePrepareAccess
+  D line=2494 fn=lorieExaCpuCopyRect lorieFinishAccess
+  D line=2508 fn=lorieExaCpuCopyRect lorieFinishAccess
+  D line=2509 fn=lorieExaCpuCopyRect lorieFinishAccess
+  W line=3383 fn=gateADirectTryPrepare sp->locked
+  W line=3389 fn=gateADirectTryPrepare dp->locked
+  W line=3788 fn=gateAPairRelockCpu sp->locked
+  W line=3796 fn=gateAPairRelockCpu dp->locked
+  D line=3881 fn=lorieExaCpuOverRect loriePrepareAccess
+  D line=3883 fn=lorieExaCpuOverRect loriePrepareAccess
+  D line=3884 fn=lorieExaCpuOverRect lorieFinishAccess
+  D line=3897 fn=lorieExaCpuOverRect lorieFinishAccess
+  D line=3898 fn=lorieExaCpuOverRect lorieFinishAccess
+  D line=3910 fn=lorieExaRepairDestXByteZero loriePrepareAccess
+  D line=3930 fn=lorieExaRepairDestXByteZero lorieFinishAccess
+rc=1
+GREEN InitOutput.upstream.c violations=0 D=0 W=0
+rc=0
+RED m/InitOutput.M1-fix2.c violations=4 D=0 W=4
+  W line=3394 fn=gateADirectTryPrepare sp->locked
+  W line=3400 fn=gateADirectTryPrepare dp->locked
+  W line=3799 fn=gateAPairRelockCpu sp->locked
+  W line=3807 fn=gateAPairRelockCpu dp->locked
+rc=1
+GREEN m/InitOutput.M2-fix2-fix3.c violations=0 D=0 W=0
+rc=0
+RED m/InitOutput.M3-must-red.c violations=1 D=1 W=0
+  D line=2313 fn=lorieExaCpuSolidRect loriePrepareAccess
+rc=1
+
+# inputs
+InitOutput.f592241.c = git show f592241:lorie/src/main/cpp/lorie/InitOutput.c (waydefu/termux-x11)
+InitOutput.upstream.c = git show 11b82d96f07b69df1f6dca5f6be926524920bc43:lorie/src/main/cpp/lorie/InitOutput.c (src/upstream control)
+M* = make_mutants.py InitOutput.f592241.c (never compiled; checker validation only)
+01ac42d8ec766a16e399066bd880f71fda382d217a2686595895e9997c0453b8  InitOutput.f592241.c
+84d671c33d6815111b63953809881c5e2fba379aa612128f38e2cdbc27202203  InitOutput.upstream.c
+903d040c73539cb6650cb0f6feb21cd6d9a0fb9cc475c3d3d2f47d0168523501  m/InitOutput.M1-fix2.c
+1633c6d1ec086813efaf8e76ab00df17efe939a46f3272bba8c34801db0c2677  m/InitOutput.M2-fix2-fix3.c
+70f511e679fb841ca12e74e689cc8da743935467ec834dd575d95c0cf87cd1b7  m/InitOutput.M3-must-red.c

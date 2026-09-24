@@ -1,0 +1,10 @@
+  r01-1-v0 v0: S=70.52s idle=0.338 cores p95=25.0ms over50=7
+  r01-2-v2 v2: S=68.47s idle=0.348 cores p95=25.0ms over50=4 correct=True {'dominant': 0.936, 'colors': 1273, 'gpu_crashes': 0}
+  r01-3-v0 v0: S=71.66s idle=0.358 cores p95=25.0ms over50=0
+  r02-1-v2 v2: S=70.65s idle=0.349 cores p95=25.0ms over50=6 correct=True {'dominant': 0.936, 'colors': 1273, 'gpu_crashes': 0}
+  r02-2-v0 v0: S=71.27s idle=0.350 cores p95=25.0ms over50=3
+  r02-3-v2 v2: S=67.05s idle=0.360 cores p95=25.0ms over50=3 correct=True {'dominant': 0.936, 'colors': 1273, 'gpu_crashes': 0}
+  A/A noise=0.051 -> required CPU reduction 0.200
+  rep01: S v0=71.09 v2=68.47 (0.963x) CPU_BETTER=False | p95 v0=25.0 v2=25.0 over50 v0=3.5 v2=4.0 FRAMES_NOT_WORSE=True | idle v0=0.348 v2=0.348 IDLE_OK=True
+  rep02: S v0=71.27 v2=68.85 (0.966x) CPU_BETTER=False | p95 v0=25.0 v2=25.0 over50 v0=3.0 v2=4.5 FRAMES_NOT_WORSE=True | idle v0=0.350 v2=0.354 IDLE_OK=True
+VERDICT ELECTRON_GPU_NO_BENEFIT (rep01:CPU_BETTER, rep02:CPU_BETTER)

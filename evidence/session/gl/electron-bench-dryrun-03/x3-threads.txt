@@ -1,0 +1,13 @@
+385 main
+540 Jit thread pool
+541 Signal Catcher
+542 perfetto_hprof_
+543 HeapTaskDaemon
+544 ReferenceQueueD
+545 FinalizerDaemon
+547 FinalizerWatchd
+577 binder:385_1
+578 binder:385_2
+614 main
+615 Thread-1
+630 binder:385_3

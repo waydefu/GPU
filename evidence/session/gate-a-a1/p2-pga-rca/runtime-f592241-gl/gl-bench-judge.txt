@@ -1,0 +1,11 @@
+== GL: GL_INVALID
+  rep01 score gpu 481.9 cpu 142.0 (x3.39, need >= 1.5) FASTER=True | cpu ms/frame gpu 1.136 cpu 6.885 (x0.17, need <= 0.5) EFFICIENT=True | common 33/33
+    describe: client+X3 cpu_s gpu 180.7 cpu 322.7; activity cpu_s gpu 20.97 cpu 24.55
+  rep02 INVALID: gl-gpu: touch_events=80; gl-cpu: touch_events=289
+== VK: VK_INVALID
+  rep01 INVALID: vk-cpu: touch_events=1013
+  rep02 INVALID: vk-cpu: touch_events=8
+  describe rep01 gl-gpu-off: score 610.2121212121212 cpu_ms/frame 0.593037691811094 INVALID(gl-gpu-off: touch_events=310)
+  describe rep01 vk-gpu-hl: score 1189.8461538461538 cpu_ms/frame 0.3368244116886475 INVALID(vk-gpu-hl: touch_events=94)
+  describe rep02 gl-gpu-off: score 579.3030303030303 cpu_ms/frame 0.641680179944552 valid
+  describe rep02 vk-gpu-hl: score 1251.1538461538462 cpu_ms/frame 0.306855210574854 INVALID(vk-gpu-hl: touch_events=183)

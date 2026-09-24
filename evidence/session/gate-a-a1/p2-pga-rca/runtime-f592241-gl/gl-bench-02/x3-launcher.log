@@ -1,0 +1,4 @@
+EXA bug: pPixmap->devPrivate.ptr was 0x7770acb000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x7770acb000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x7770acb000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x7770acb000, but should have been NULL.

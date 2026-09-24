@@ -1,0 +1,6 @@
+2026-09-24: the first `restore` hit a stdin bug (am broadcast consumed the loop input) and restored only
+showAdditionalKbd; the next `apply` then saved swipeDownAction / backButtonAction as "no action".
+exp-pocket-prefs.saved was corrected by hand to the values read by the very first `apply`:
+  showAdditionalKbd=true, swipeDownAction=toggle additional key bar, backButtonAction=toggle soft keyboard,
+  screenIdleTimeout=System (read by the second apply; the first apply did not include this key).
+Script fixed (bc() now reads </dev/null).

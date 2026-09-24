@@ -1,0 +1,90 @@
+[20996:0924/125656.751800:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+Error: Unable to retrieve mac address (unexpected format)
+    at uJe (file:///usr/share/cursor/resources/app/out/main.js:385:1979)
+    at mJe (file:///usr/share/cursor/resources/app/out/main.js:385:2071)
+    at file:///usr/share/cursor/resources/app/out/main.js:385:7270
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:639:26)
+    at async node:electron/js2c/browser_init:2:144690
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+(node:20996) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `cursor --trace-deprecation ...` to show where the warning was created)
+[20996:0924/125659.658035:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[20996:0924/125659.658376:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[20996:0924/125659.658769:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[20996:0924/125659.661028:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[20996:0924/125659.661543:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[20996:0924/125659.691628:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+
+DevTools listening on ws://127.0.0.1:9232/devtools/browser/aeb95835-90eb-409f-b3ca-b7211d1a11fc
+[20996:0924/125659.786415:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[20996:0924/125659.786778:WARNING:electron/shell/browser/lib/power_observer_linux.cc:181] Failed to connect to PrepareForShutdown
+[20996:0924/125659.786909:WARNING:electron/shell/browser/lib/power_observer_linux.cc:181] Failed to connect to PrepareForSleep
+[20996:0924/125659.787140:WARNING:electron/shell/browser/lib/power_observer_linux.cc:70] org.freedesktop.login1 not available
+pcilib: Cannot open /proc/bus/pci/devices
+[20996:0924/125659.823160:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125659.823187:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 1 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+Warning: 'remote-debugging-port' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'enable-logging' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'ignore-gpu-blocklist' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'use-gl' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'use-angle' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'enable-features' is not in the list of known options, but still passed to Electron/Chromium.
+[20996:0924/125700.014635:WARNING:components/dbus/xdg/portal.cc:122] Failed to register with org.freedesktop.host.portal.Registry
+[20996:0924/125700.018069:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.018079:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 2 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+[20996:0924/125700.233830:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.233856:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 3 time(s)
+[20996:0924/125700.321102:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+pcilib: Cannot open /proc/bus/pci/devices
+[91m[main 2026-09-24T04:57:00.335Z][0m [uncaught exception in main]: Error: EFAULT: bad address in system call argument, write Error: EFAULT: bad address in system call argument, write
+    at writeSync (node:fs:917:3)
+    at SyncWriteStream._write (node:internal/fs/sync_write_stream:27:5)
+    at writeOrBuffer (node:internal/streams/writable:570:12)
+    at _write (node:internal/streams/writable:499:10)
+    at Writable.write (node:internal/streams/writable:508:10)
+    at execSync (node:child_process:1009:20)
+    at K6 (file:///usr/share/cursor/resources/app/out/main.js:66:391)
+    at $w._getTrueMachineId (file:///usr/share/cursor/resources/app/out/main.js:201:32229)
+    at new $w (file:///usr/share/cursor/resources/app/out/main.js:201:31887)
+    at GO._createInstance (file:///usr/share/cursor/resources/app/out/main.js:367:1498)
+    at GO._createServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:5220)
+    at GO._createServiceInstanceWithOwner (file:///usr/share/cursor/resources/app/out/main.js:367:3719)
+    at GO._createAndCacheServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:3366)
+    at GO._safeCreateAndCacheServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:2413)
+    at GO._getOrCreateServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:2134)
+    at Object.get (file:///usr/share/cursor/resources/app/out/main.js:367:552)
+    at ou.initChannels (file:///usr/share/cursor/resources/app/out/main.js:331:19896)
+    at file:///usr/share/cursor/resources/app/out/main.js:331:7827
+    at GO.invokeFunction (file:///usr/share/cursor/resources/app/out/main.js:367:437)
+    at ou.startup (file:///usr/share/cursor/resources/app/out/main.js:331:7804)
+    at async sCe.startup (file:///usr/share/cursor/resources/app/out/main.js:371:43868) {
+  errno: -14,
+  syscall: 'write',
+  code: 'EFAULT'
+}
+[20996:0924/125700.338006:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.login1.Manager.Inhibit: object_path= /org/freedesktop/login1: unknown error type: 
+[20996:0924/125700.338734:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.338743:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 4 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+[90m[main 2026-09-24T04:57:00.593Z][0m update#ctor - updates are managed by the deb package manager
+[90m[main 2026-09-24T04:57:00.593Z][0m update#setState disabled
+[90m[main 2026-09-24T04:57:00.593Z][0m update#ctor - updates are disabled by the platform installation method
+[20996:0924/125700.609733:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.609771:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 5 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+[20996:0924/125700.739247:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.739271:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 6 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+[20996:0924/125700.818355:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.818377:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 7 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+[20996:0924/125700.896629:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.896644:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 8 time(s)
+pcilib: Cannot open /proc/bus/pci/devices
+[20996:0924/125700.991975:ERROR:content/browser/gpu/gpu_process_host.cc:1004] GPU process exited unexpectedly: exit_code=256
+[20996:0924/125700.992019:WARNING:content/browser/gpu/gpu_process_host.cc:1446] The GPU process has crashed 9 time(s)
+[20996:0924/125700.992037:FATAL:content/browser/gpu/gpu_data_manager_impl_private.cc:415] GPU process isn't usable. Goodbye.

@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=6267 floor_mb=4500 disk_free_gb=30
+STOP logcat pid 28778 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-f592241-gl/gl-feas-g-01 GL_FEASIBILITY_DONE

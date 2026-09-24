@@ -1,0 +1,9 @@
+PRESENT_MODE immediate
+TOOLS glmark2=2023.01 vkmark_sha256=6d459e310fedda3f glmark2_sha256=8309a87c9184a760
+SEG gl-cpu wall_s=333.76 user_s=299.60 sys_s=7.64 rc=0 x3_t0=79 x3_t1=1537 act_t0=65 act_t1=2015 touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 focus_pre=true awake_pre=true keyguard_pre=false focus_post=true awake_post=true keyguard_post=false
+SEG gl-gpu wall_s=332.02 user_s=37.88 sys_s=87.48 rc=0 x3_t0=1582 x3_t1=7179 act_t0=2023 act_t1=3869 touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 focus_pre=true awake_pre=true keyguard_pre=false focus_post=true awake_post=true keyguard_post=false
+SEG vk-cpu wall_s=130.76 user_s=109.43 sys_s=12.77 rc=0 x3_t0=7227 x3_t1=8753 act_t0=3880 act_t1=4718 touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 focus_pre=true awake_pre=true keyguard_pre=false focus_post=true awake_post=true keyguard_post=false
+SEG vk-gpu wall_s=130.40 user_s=5.61 sys_s=52.86 rc=0 x3_t0=8800 x3_t1=12600 act_t0=4730 act_t1=5418 touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 focus_pre=true awake_pre=true keyguard_pre=false focus_post=true awake_post=true keyguard_post=false
+SEG gl-gpu-off wall_s=332.24 user_s=42.71 sys_s=71.80 rc=0 x3_t0=12645 x3_t1=12965 act_t0=5429 act_t1=5537 touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 focus_pre=true awake_pre=true keyguard_pre=false focus_post=true awake_post=true keyguard_post=false
+SEG vk-gpu-hl wall_s=130.48 user_s=4.63 sys_s=53.95 rc=0 x3_t0=13014 x3_t1=13117 act_t0=5548 act_t1=5598 touch_selftest=true touch_events=16 thermal_start=0 thermal_waited_s=0 thermal_end=0 focus_pre=true awake_pre=true keyguard_pre=false focus_post=true awake_post=true keyguard_post=false
+GL_BENCH_DONE rep=01

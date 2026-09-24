@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5302 floor_mb=4500 disk_free_gb=39
+STOP logcat pid 22345 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gate-a-a1/p2-pga-rca/runtime-f592241-gl/gl-bench-01 GL_BENCH_DONE rep=01

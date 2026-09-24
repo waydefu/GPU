@@ -1,0 +1,13 @@
+VARIANT v0-control pgid=17191 flags=--disable-gpu
+INFO v0-control {"browser":"Chrome/144.0.7559.236","devices":[""],"glRenderer":"Disabled","glVendor":"Disabled","glImplementationParts":"(gl=disabled,angle=none)","displayType":"","featureStatus":{"2d_canvas":"disabled_software","direct_rendering_display_compositor":"disabled_off_ok","gpu_compositing":"disabled_software","multiple_raster_threads":"disabled_off","opengl":"disabled_off","rasterization":"disabled_software","raw_draw":"disabled_off_ok","skia_graphite":"disabled_off","trees_in_viz":"disabled_off","video_decode":"disabled_software","video_encode":"disabled_software","vulkan":"disabled_off","webgl":"disabled_off","webgpu":"disabled_off","webnn":"disabled_off"}}
+IDLE v0-control gpu_pid=17333 gpu_cpu_s_20s=0.00
+/root/projects/GPU加速/evidence/session/gl/electron-gpu-probe.sh: line 54: 17191 Killed                  setsid env "${envs[@]}" "$BIN" "${COMMON[@]}" --user-data-dir="$dir" --remote-debugging-port="$port" --enable-logging=stderr "$@" > "$OUT/$name.stderr" 2>&1 < /dev/null
+VARIANT v1-angle-gl pgid=19454 flags=--ignore-gpu-blocklist --use-gl=angle --use-angle=gl-egl
+/root/projects/GPU加速/evidence/session/gl/electron-gpu-probe.sh: line 54: 19454 Trace/breakpoint trap   setsid env "${envs[@]}" "$BIN" "${COMMON[@]}" --user-data-dir="$dir" --remote-debugging-port="$port" --enable-logging=stderr "$@" > "$OUT/$name.stderr" 2>&1 < /dev/null
+INFO v1-angle-gl {"error":"TypeError: fetch failed"}
+IDLE v1-angle-gl gpu_pid=none gpu_cpu_s_20s=null
+VARIANT v2-angle-vk pgid=20996 flags=--ignore-gpu-blocklist --use-gl=angle --use-angle=vulkan --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan
+/root/projects/GPU加速/evidence/session/gl/electron-gpu-probe.sh: line 54: 20996 Trace/breakpoint trap   setsid env "${envs[@]}" "$BIN" "${COMMON[@]}" --user-data-dir="$dir" --remote-debugging-port="$port" --enable-logging=stderr "$@" > "$OUT/$name.stderr" 2>&1 < /dev/null
+INFO v2-angle-vk {"error":"TypeError: fetch failed"}
+IDLE v2-angle-vk gpu_pid=none gpu_cpu_s_20s=null
+ELECTRON_GPU_PROBE_DONE

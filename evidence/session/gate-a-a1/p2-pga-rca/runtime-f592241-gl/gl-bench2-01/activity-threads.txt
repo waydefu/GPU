@@ -1,0 +1,32 @@
+13231 Signal Catcher
+13232 perfetto_hprof_
+13233 ADB-JDWP Connec
+13236 Jit thread pool
+13237 HeapTaskDaemon
+13238 ReferenceQueueD
+13239 FinalizerDaemon
+13240 FinalizerWatchd
+13241 binder:22771_1
+13243 dex_preload_t
+13244 binder:22771_2
+13250 ActivityHelper
+13252 binder:22771_3
+13253 22771-ScoutStat
+13254 Profile Saver
+13256 MiuiMonitorThre
+13259 Timer-0
+13260 Timer-1
+13261 AppCustomScenar
+13268 RenderThread
+13275 AICollector
+13285 SharedPreferenc
+13301 RenderThread
+13310 Thread-7
+13321 TracingMuxer
+13322 hwuiTask0
+13325 hwuiTask1
+13333 VsyncReceiver
+13338 ImageReader-1x1
+13360 SurfaceSyncGrou
+13362 blastAsyncWork
+22771 .waydefu.x11gpu

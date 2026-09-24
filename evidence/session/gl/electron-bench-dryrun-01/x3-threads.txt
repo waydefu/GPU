@@ -1,0 +1,14 @@
+30569 main
+30756 Jit thread pool
+30758 Signal Catcher
+30759 perfetto_hprof_
+30760 HeapTaskDaemon
+30761 ReferenceQueueD
+30762 FinalizerDaemon
+30763 FinalizerWatchd
+30789 binder:30569_1
+30790 binder:30569_2
+30805 main
+30806 Thread-1
+30913 binder:30569_3
+30914 binder:30569_4

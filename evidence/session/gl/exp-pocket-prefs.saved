@@ -1,0 +1,4 @@
+showAdditionalKbd	true
+swipeDownAction	toggle additional key bar
+backButtonAction	toggle soft keyboard
+screenIdleTimeout	System

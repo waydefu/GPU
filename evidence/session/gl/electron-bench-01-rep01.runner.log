@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=4995 floor_mb=4500 disk_free_gb=38
+STOP logcat pid 18738 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gl/electron-bench-01-rep01 ELECTRON_BENCH_DONE rep=01

@@ -1,0 +1,6 @@
+touch_recorder_stopped pid=14392 file=vk-gpu.touch
+touch_recorder_stopped pid=18582 file=vk-cpu.touch
+touch_recorder_stopped pid=24510 file=gl-gpu.touch
+touch_recorder_stopped pid=5801 file=gl-cpu.touch
+touch_recorder_stopped pid=17759 file=gl-gpu-off.touch
+touch_recorder_stopped pid=29868 file=vk-gpu-hl.touch

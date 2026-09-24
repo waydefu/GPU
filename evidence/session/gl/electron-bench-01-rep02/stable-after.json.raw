@@ -1,0 +1,289 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        4a45cbd com.termux.x11/.MainActivity filter 56b42b2
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+        4a9d203 com.termux.x11/.LoriePreferences filter b9d8580
+          Action: "android.intent.action.MAIN"
+          Action: "android.intent.action.APPLICATION_PREFERENCES"
+      android.intent.action.APPLICATION_PREFERENCES:
+        4a9d203 com.termux.x11/.LoriePreferences filter b9d8580
+          Action: "android.intent.action.MAIN"
+          Action: "android.intent.action.APPLICATION_PREFERENCES"
+
+Receiver Resolver Table:
+  Non-Data Actions:
+      com.termux.x11.CmdEntryPoint.ACTION_START:
+        aed8b5f com.termux.x11/.LorieBroadcastReceiver filter 21579ac
+          Action: "com.termux.x11.CmdEntryPoint.ACTION_START"
+          Action: "com.termux.x11.ACTION_STOP"
+          Action: "com.termux.x11.ACTION_CUSTOM"
+          Action: "com.termux.x11.ACTION_PREFERENCES_CHANGED"
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        53f6675 com.termux.x11/androidx.profileinstaller.ProfileInstallReceiver filter 3368498
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      com.termux.x11.ACTION_STOP:
+        aed8b5f com.termux.x11/.LorieBroadcastReceiver filter 21579ac
+          Action: "com.termux.x11.CmdEntryPoint.ACTION_START"
+          Action: "com.termux.x11.ACTION_STOP"
+          Action: "com.termux.x11.ACTION_CUSTOM"
+          Action: "com.termux.x11.ACTION_PREFERENCES_CHANGED"
+      com.termux.x11.CHANGE_PREFERENCE:
+        1bf07b9 com.termux.x11/.LoriePreferences$Receiver filter 4c6d7fe
+          Action: "com.termux.x11.CHANGE_PREFERENCE"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        53f6675 com.termux.x11/androidx.profileinstaller.ProfileInstallReceiver filter b4760a
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        53f6675 com.termux.x11/androidx.profileinstaller.ProfileInstallReceiver filter e897e7b
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        53f6675 com.termux.x11/androidx.profileinstaller.ProfileInstallReceiver filter 2cf4f1
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+      com.termux.x11.ACTION_CUSTOM:
+        aed8b5f com.termux.x11/.LorieBroadcastReceiver filter 21579ac
+          Action: "com.termux.x11.CmdEntryPoint.ACTION_START"
+          Action: "com.termux.x11.ACTION_STOP"
+          Action: "com.termux.x11.ACTION_CUSTOM"
+          Action: "com.termux.x11.ACTION_PREFERENCES_CHANGED"
+      com.termux.x11.ACTION_PREFERENCES_CHANGED:
+        aed8b5f com.termux.x11/.LorieBroadcastReceiver filter 21579ac
+          Action: "com.termux.x11.CmdEntryPoint.ACTION_START"
+          Action: "com.termux.x11.ACTION_STOP"
+          Action: "com.termux.x11.ACTION_CUSTOM"
+          Action: "com.termux.x11.ACTION_PREFERENCES_CHANGED"
+
+Service Resolver Table:
+  Non-Data Actions:
+      android.accessibilityservice.AccessibilityService:
+        92be8d6 com.termux.x11/.utils.KeyInterceptor filter 4278757 permission android.permission.BIND_ACCESSIBILITY_SERVICE
+          Action: "android.accessibilityservice.AccessibilityService"
+
+Domain verification status:
+
+Permissions:
+  Permission [com.termux.x11.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (ee04407):
+    sourcePackage=com.termux.x11
+    uid=10368 gids=[] type=0 prot=signature
+    perm=PermissionInfo{69b6253 com.termux.x11.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  com.termux.x11/androidx.startup.InitializationProvider:
+    Provider{7505790 com.termux.x11/androidx.startup.InitializationProvider}
+
+ContentProvider Authorities:
+  [com.termux.x11.androidx-startup]:
+    Provider{7505790 com.termux.x11/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{ea14934 com.termux.x11}
+
+Key Set Manager:
+  [com.termux.x11]
+      Signing KeySets: 293
+
+Packages:
+  Package [com.termux.x11] (b3c566b):
+    appId=10368
+    pkg=Package{19ca08e com.termux.x11}
+    codePath=/data/app/~~KOjLp2cPTEX6XY1wJyCGag==/com.termux.x11-mpN-u9Ytix90Pcnb6AzGJg==
+    resourcePath=/data/app/~~KOjLp2cPTEX6XY1wJyCGag==/com.termux.x11-mpN-u9Ytix90Pcnb6AzGJg==
+    legacyNativeLibraryDir=/data/app/~~KOjLp2cPTEX6XY1wJyCGag==/com.termux.x11-mpN-u9Ytix90Pcnb6AzGJg==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=15 minSdk=24 targetSdk=34
+    minExtensionVersions=[]
+    versionName=1.03.01-11b82d9-06.09.26
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    isMiuiPreinstall=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    queriesPackages=[com.termux]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.window.extensions
+      androidx.window.sidecar
+    usesLibraryFiles:
+      /system_ext/framework/androidx.window.extensions.jar
+      /system_ext/framework/androidx.window.sidecar.jar
+    timeStamp=2026-09-07 22:54:58
+    lastUpdateTime=2026-09-07 22:55:03
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{46fd0af version:2, signatures:[db86cf3c], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      com.termux.x11.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      android.permission.POST_NOTIFICATIONS
+      android.permission.FOREGROUND_SERVICE
+      android.permission.INTERNET
+      android.permission.WRITE_SECURE_SETTINGS
+      com.termux.x11.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+    install permissions:
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.INTERNET: granted=true
+      com.termux.x11.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+    User 0: ceDataInode=982157 deDataInode=982268 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=4
+      dataDir=/data/user/0/com.termux.x11
+      firstInstallTime=2026-09-03 22:35:10
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/GestureLineOverlay.apk
+        /product/overlay/TransparentNavigationBar/TransparentNavigationBarOverlay.apk
+        /data/resource-cache/com.android.systemui-neutral-AX4X.frro
+        /data/resource-cache/com.android.systemui-accent-fxrs.frro
+        /data/resource-cache/com.android.systemui-dynamic-uN2l.frro
+      legacy overlay paths:
+        /product/overlay/GestureLineOverlay.apk
+        /product/overlay/TransparentNavigationBar/TransparentNavigationBarOverlay.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+    com.termux.x11:
+      [com.termux.widget,com.termux.api,com.termux]
+  queries via component:
+    [com.miui.notification,com.miui.daemon,com.xiaomi.barrage,com.novatek.novavis,com.miui.powerkeeper,com.xiaomi.misettings,com.android.dynsystem,com.miui.audiomonitor,com.xiaomi.aon,com.bsp.catchlog,com.android.settings,com.miui.cit,com.miui.bugreport,miui.systemui.plugin,com.miui.misightservice,com.xiaomi.trustservice,com.qualcomm.qti.xrvd.service,com.android.keychain,com.xiaomi.touchservice,com.miui.aod,com.android.localtransport,android,com.android.provision,com.android.providers.settings,com.android.server.telecom,com.miui.qr,com.xiaomi.joyose,com.qualcomm.qti.services.systemhelper,com.xiaomi.aiasst.vision,com.xiaomi.mirror,com.miui.securitycenter,vendor.qti.frameworks.utils,com.miui.touchassistant,com.android.DeviceAsWebcam,com.android.inputdevices,com.android.location.fused,com.xiaomi.mi_connect_service,com.xiaomi.mtb,com.miui.securitycore]:
+      com.termux.x11
+    [com.miui.huanji,com.miui.backup]:
+      com.termux.x11
+    com.miui.euicc:
+      com.termux.x11
+    com.miui.player:
+      com.termux.x11
+    com.android.settings.intelligence:
+      com.termux.x11
+    com.google.android.as.oss:
+      com.termux.x11
+    com.miui.tsmclient:
+      com.termux.x11
+    com.miui.notes:
+      com.termux.x11
+    com.miui.weather2:
+      com.termux.x11
+    com.miui.android.fashiongallery:
+      com.termux.x11
+    com.mi.global.shop:
+      com.termux.x11
+    com.android.soundrecorder:
+      com.termux.x11
+    com.mi.global.pocobbs:
+      com.termux.x11
+    com.duokan.phone.remotecontroller:
+      com.termux.x11
+    com.xiaomi.smarthome:
+      com.termux.x11
+    com.fitbit.FitbitMobile:
+      com.termux.x11
+    com.facebook.katana:
+      com.termux.x11
+    com.instagram.android:
+      com.termux.x11
+    com.kurogame.wutheringwaves.global:
+      com.termux.x11
+    com.antutu.ABenchMark:
+      com.termux.x11
+    io.github.jqssun.displayextend:
+      com.termux.x11
+    com.sparkslab.dcardreader:
+      com.termux.x11
+    com.taobao.taobao:
+      com.termux.x11
+    com.spaceship.screen.textcopy:
+      com.termux.x11
+    jp.naver.line.android:
+      com.termux.x11
+    com.starbucks.tw:
+      com.termux.x11
+    cc.relive.reliveapp:
+      com.termux.x11
+    co.xoss:
+      com.termux.x11
+    com.autonavi.minimap:
+      com.termux.x11
+    com.lemon.lvoverseas:
+      com.termux.x11
+    com.google.android.play.games:
+      com.termux.x11
+    com.gryphline.endfield.gp:
+      com.termux.x11
+    com.kardz.overseas:
+      com.termux.x11
+    com.lelaer.yshelper:
+      com.termux.x11
+    com.linepaytw.upay:
+      com.termux.x11
+    com.mcdonalds.mobileapp:
+      com.termux.x11
+    com.mi.earphone:
+      com.termux.x11
+    com.moonshot.kimichat:
+      com.termux.x11
+    com.naver.linewebtoon:
+      com.termux.x11
+    com.sony.songpal.mdr:
+      com.termux.x11
+    com.tencent.mm:
+      com.termux.x11
+    com.whatsapp:
+      com.termux.x11
+    gogolook.callgogolook2:
+      com.termux.x11
+    jp.pxv.android:
+      com.termux.x11
+    ru.zdevs.zarchiver:
+      com.termux.x11
+    tw.com.feebee:
+      com.termux.x11
+    com.ChillyRoom.DungeonShooter:
+      com.termux.x11
+    com.facebook.orca:
+      com.termux.x11
+  queryable via interaction:
+    User 0:
+      [com.miui.notification,com.miui.daemon,com.xiaomi.barrage,com.novatek.novavis,com.miui.powerkeeper,com.xiaomi.misettings,com.android.dynsystem,com.miui.audiomonitor,com.xiaomi.aon,com.bsp.catchlog,com.android.settings,com.miui.cit,com.miui.bugreport,miui.systemui.plugin,com.miui.misightservice,com.xiaomi.trustservice,com.qualcomm.qti.xrvd.service,com.android.keychain,com.xiaomi.touchservice,com.miui.aod,com.android.localtransport,android,com.android.provision,com.android.providers.settings,com.android.server.telecom,com.miui.qr,com.xiaomi.joyose,com.qualcomm.qti.services.systemhelper,com.xiaomi.aiasst.vision,com.xiaomi.mirror,com.miui.securitycenter,vendor.qti.frameworks.utils,com.miui.touchassistant,com.android.DeviceAsWebcam,com.android.inputdevices,com.android.location.fused,com.xiaomi.mi_connect_service,com.xiaomi.mtb,com.miui.securitycore]:
+        com.termux.x11
+      com.google.android.inputmethod.latin:
+        com.termux.x11
+      com.android.systemui:
+        com.termux.x11
+      com.google.android.ext.services:
+        com.termux.x11
+      com.xiaomi.wearable:
+        com.termux.x11
+      com.xiaomi.xmsf:
+        com.termux.x11
+  queryable via uses-library:
+
+Dexopt state:
+  [com.termux.x11]
+    path: /data/app/~~KOjLp2cPTEX6XY1wJyCGag==/com.termux.x11-mpN-u9Ytix90Pcnb6AzGJg==/base.apk
+      arm64: [status=verify] [reason=vdex] [primary-abi]
+        [location is /data/app/~~KOjLp2cPTEX6XY1wJyCGag==/com.termux.x11-mpN-u9Ytix90Pcnb6AzGJg==/oat/arm64/base.vdex]
+    base APK odex file size: Oops,Some thing wrong when get dex file output paths!
+
+Compiler stats:
+  [com.termux.x11]
+    (No recorded stats)

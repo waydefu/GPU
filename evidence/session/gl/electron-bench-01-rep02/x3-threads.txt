@@ -1,0 +1,13 @@
+23806 main
+23918 Jit thread pool
+23919 Signal Catcher
+23920 perfetto_hprof_
+23921 HeapTaskDaemon
+23922 ReferenceQueueD
+23923 FinalizerDaemon
+23925 FinalizerWatchd
+23927 binder:23806_1
+23928 binder:23806_2
+24051 main
+24052 Thread-1
+24074 binder:23806_3

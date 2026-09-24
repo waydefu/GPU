@@ -1,0 +1,82 @@
+dbus-daemon[16114]: [session uid=0 pid=16114] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+[16115:0924/134424.364533:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+Error: Unable to retrieve mac address (unexpected format)
+    at uJe (file:///usr/share/cursor/resources/app/out/main.js:385:1979)
+    at mJe (file:///usr/share/cursor/resources/app/out/main.js:385:2071)
+    at file:///usr/share/cursor/resources/app/out/main.js:385:7270
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:639:26)
+    at async node:electron/js2c/browser_init:2:144690
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5)
+(node:16115) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `cursor --trace-deprecation ...` to show where the warning was created)
+dbus-daemon[16114]: [session uid=0 pid=16114] Activating service name='org.gtk.vfs.Daemon' requested by ':1.0' (uid=0 pid=16115 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[16114]: [session uid=0 pid=16114] Successfully activated service 'org.gtk.vfs.Daemon'
+[16115:0924/134428.043279:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[16115:0924/134428.044752:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[16115:0924/134428.045642:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[16115:0924/134428.045984:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[16115:0924/134428.046138:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[16115:0924/134428.083642:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+
+DevTools listening on ws://127.0.0.1:9250/devtools/browser/f07bb5da-707c-4180-bee1-12ec7ae28077
+[16115:0924/134428.206152:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[16115:0924/134428.206495:WARNING:electron/shell/browser/lib/power_observer_linux.cc:181] Failed to connect to PrepareForShutdown
+[16115:0924/134428.206708:WARNING:electron/shell/browser/lib/power_observer_linux.cc:181] Failed to connect to PrepareForSleep
+[16115:0924/134428.207073:WARNING:electron/shell/browser/lib/power_observer_linux.cc:70] org.freedesktop.login1 not available
+dbus-daemon[16114]: [session uid=0 pid=16114] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.3' (uid=0 pid=16115 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[16114]: [session uid=0 pid=16114] Activating service name='org.freedesktop.portal.Documents' requested by ':1.4' (uid=0 pid=16317 comm="/usr/libexec/xdg-desktop-portal" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[16114]: [session uid=0 pid=16114] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.5' (uid=0 pid=16338 comm="/usr/libexec/xdg-document-portal" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[16114]: [session uid=0 pid=16114] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[16114]: [session uid=0 pid=16114] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /root/build/electron-bench/home-dry-v0/runtime/doc
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.357: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.358: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[16114]: [session uid=0 pid=16114] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.4' (uid=0 pid=16317 comm="/usr/libexec/xdg-desktop-portal" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[16114]: [session uid=0 pid=16114] Activating service name='org.a11y.Bus' requested by ':1.7' (uid=0 pid=16355 comm="/usr/libexec/xdg-desktop-portal-gtk" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[16114]: [session uid=0 pid=16114] Successfully activated service 'org.a11y.Bus'
+Warning: 'remote-debugging-port' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'enable-logging' is not in the list of known options, but still passed to Electron/Chromium.
+dbus-daemon[16364]: org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[16364]: Activating service name='org.a11y.atspi.Registry' requested by ':1.0' (uid=0 pid=16355 comm="/usr/libexec/xdg-desktop-portal-gtk" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+
+(xdg-desktop-portal-gtk:16355): xdg-desktop-portal-gtk-WARNING **: 13:44:28.493: error: Could not connect: No such file or directory
+
+dbus-daemon[16364]: Successfully activated service 'org.a11y.atspi.Registry'
+SpiRegistry daemon is running with well-known name - org.a11y.atspi.Registry
+dbus-daemon[16114]: [session uid=0 pid=16114] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.706: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.707: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.707: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.711: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.716: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.724: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.728: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.731: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][65106.526142] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][65106.526155] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.743: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.743: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.745: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:16317): xdg-desktop-portal-WARNING **: 13:44:28.748: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[16114]: [session uid=0 pid=16114] Successfully activated service 'org.freedesktop.portal.Desktop'
+X connection to :3 broken (explicit kill or server shutdown).
+[16292:0924/134614.789407:ERROR:ui/gfx/x/connection.cc:66] X connection error received.
+[16115:0924/134614.790207:FATAL:electron/shell/browser/electron_browser_main_parts.cc:504] Failed to shutdown.
+A connection to the bus can't be made

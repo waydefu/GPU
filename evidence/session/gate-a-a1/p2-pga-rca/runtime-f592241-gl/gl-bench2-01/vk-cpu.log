@@ -1,0 +1,25 @@
+=======================================================
+    vkmark 2025.01
+=======================================================
+    Vendor ID:      0x10005
+    Device ID:      0x0
+    Device Name:    llvmpipe (LLVM 21.1.8, 128 bits)
+    Driver Version: 109051910
+    Device UUID:    32362e302e3661616161616161616161
+=======================================================
+[vertex] device-local=true:interleave=true:duration=10.0: FPS: 234 FrameTime: 4.274 ms
+[vertex] device-local=false:interleave=true:duration=10.0: FPS: 232 FrameTime: 4.310 ms
+[texture] anisotropy=0:texture-filter=linear:duration=10.0: FPS: 279 FrameTime: 3.584 ms
+[texture] anisotropy=16:texture-filter=linear:duration=10.0: FPS: 200 FrameTime: 5.000 ms
+[shading] shading=gouraud:duration=10.0: FPS: 178 FrameTime: 5.618 ms
+[shading] shading=blinn-phong-inf:duration=10.0: FPS: 106 FrameTime: 9.434 ms
+[shading] shading=phong:duration=10.0: FPS: 71 FrameTime: 14.085 ms
+[shading] shading=cel:duration=10.0: FPS: 73 FrameTime: 13.699 ms
+[effect2d] background-resolution=800x600:kernel=edge:duration=10.0: FPS: 66 FrameTime: 15.152 ms
+[effect2d] background-resolution=800x600:kernel=blur:duration=10.0: FPS: 29 FrameTime: 34.483 ms
+[desktop] background-resolution=800x600:windows=4:window-size=0.35:duration=10.0: FPS: 61 FrameTime: 16.393 ms
+[cube] duration=10.0: FPS: 668 FrameTime: 1.497 ms
+[clear] color=cycle:duration=10.0: FPS: 1601 FrameTime: 0.625 ms
+=======================================================
+                                   vkmark Score: 292
+=======================================================

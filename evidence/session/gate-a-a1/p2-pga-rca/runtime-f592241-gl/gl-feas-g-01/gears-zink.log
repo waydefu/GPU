@@ -1,0 +1,5 @@
+ATTENTION: default value of option vblank_mode overridden by environment.
+MESA: error: ZINK: vkCreateInstance failed (VK_ERROR_LAYER_NOT_PRESENT)
+glx: failed to create drisw screen
+failed to load driver: zink
+Error: couldn't get an RGB, Double-buffered visual
