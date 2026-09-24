@@ -1,0 +1,26 @@
+end_begin sid=23205 tracer=23203 members=24
+term sid=23205 pid=23205 cmd=/usr/bin/dbus-run-session -- /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-
+term sid=23205 pid=23206 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=23205 pid=23218 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/root/build/proot-bench/p
+term sid=23205 pid=23232 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox --enable-logging=stderr 
+term sid=23205 pid=23233 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=23205 pid=23317 cmd=/usr/libexec/gvfsd 
+term sid=23205 pid=23336 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=23205 pid=23341 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=23205 pid=23352 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=23205 pid=23374 cmd=/usr/libexec/xdg-permission-store 
+term sid=23205 pid=23384 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=23205 pid=23411 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=23205 pid=23419 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=23205 pid=23421 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=23205 pid=23650 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=23205 pid=23654 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=23205 pid=23874 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=23205 pid=24147 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=23205 pid=24224 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=23205 pid=24245 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=23205 pid=24281 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=23205 pid=24311 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=23205 pid=24744 cmd=/usr/share/cursor/cursor /usr/share/cursor/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=23650 
+term sid=23205 pid=24992 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+END survivors=0 tracer_gone=true

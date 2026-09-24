@@ -1,0 +1,10 @@
+  r01-1-p0 p0: S=109.68s (tracer 25.15s) idle=0.848 cores p95=25.0 over50=2
+  r01-2-pf pf: S=82.62s (tracer 1.52s) idle=0.202 cores p95=25.0 over50=1
+  r01-3-p0 p0: S=107.30s (tracer 24.27s) idle=0.801 cores p95=25.0 over50=1
+  r02-1-pf pf: S=82.60s (tracer 1.54s) idle=0.188 cores p95=25.0 over50=0
+  r02-2-p0 p0: S=107.99s (tracer 24.64s) idle=0.846 cores p95=25.0 over50=3
+  r02-3-pf pf: S=83.11s (tracer 1.48s) idle=0.198 cores p95=33.3 over50=1
+  A/A noise=0.022 -> required reduction 0.100
+  rep01: S p0=108.49 pf=82.62 (0.762x) CPU_BETTER=True | tracer p0=24.71 pf=1.52 | idle p0=0.825 pf=0.202 IDLE_OK=True | FRAMES_NOT_WORSE=True
+  rep02: S p0=107.99 pf=82.85 (0.767x) CPU_BETTER=True | tracer p0=24.64 pf=1.51 | idle p0=0.846 pf=0.193 IDLE_OK=True | FRAMES_NOT_WORSE=False
+VERDICT PROOT_FAST_NO_BENEFIT (rep02:FRAMES_NOT_WORSE)

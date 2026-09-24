@@ -1,0 +1,13 @@
+16869 main
+17020 Jit thread pool
+17023 Signal Catcher
+17024 perfetto_hprof_
+17025 HeapTaskDaemon
+17026 ReferenceQueueD
+17029 FinalizerDaemon
+17030 FinalizerWatchd
+17053 binder:16869_1
+17054 binder:16869_2
+17112 main
+17114 Thread-1
+17129 binder:16869_3

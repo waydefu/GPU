@@ -1,0 +1,27 @@
+end_begin sid=5978 tracer=5976 members=25
+term sid=5978 pid=5978 cmd=/usr/bin/dbus-run-session -- /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-
+term sid=5978 pid=5981 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=5978 pid=6027 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/root/build/proot-bench/p
+term sid=5978 pid=6046 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox --enable-logging=stderr 
+term sid=5978 pid=6047 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=5978 pid=6348 cmd=/usr/libexec/gvfsd 
+term sid=5978 pid=6367 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=5978 pid=6379 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=5978 pid=6389 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=5978 pid=6420 cmd=/usr/libexec/xdg-permission-store 
+term sid=5978 pid=6430 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=5978 pid=6432 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=5978 pid=6450 cmd=/usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 11 --address=unix:path=/root/build/proot-bench/home-r
+term sid=5978 pid=6461 cmd=/usr/libexec/at-spi2-registryd --use-gnome-session 
+term sid=5978 pid=6477 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=5978 pid=6479 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=5978 pid=6714 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=5978 pid=6725 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=5978 pid=6840 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=5978 pid=6865 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=5978 pid=6965 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=5978 pid=6967 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=5978 pid=6974 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=5978 pid=7258 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=5978 pid=7318 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+END survivors=0 tracer_gone=true

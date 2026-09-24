@@ -1,0 +1,3 @@
+adb_client_killed dry-p0 pid=29972
+touch_recorder_stopped pid=29928 file=dry-p0.touch
+touch_recorder_stopped pid=11808 file=dry-pf.touch

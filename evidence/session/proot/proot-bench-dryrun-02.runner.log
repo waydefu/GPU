@@ -1,0 +1,2 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5080 floor_mb=4500 disk_free_gb=45
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-dryrun-02 PROOT_BENCH_DRYRUN_DONE

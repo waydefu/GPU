@@ -1,0 +1,88 @@
+== stock#1
+uname_release   6.17.0-PRoot-Distro
+vdso            absent
+getpid             0.20 us/call
+futex_wake        31.58 us/call
+epoll_pwait(0)    31.93 us/call
+clock_gettime      0.22 us/call
+fcntl(GETFL)      63.49 us/call
+fstat             67.42 us/call
+open+close       128.51 us/pair
+sock send+recv    62.15 us/pair
+== fast1#1
+uname_release   6.17.0-PRoot-Distro
+vdso            absent
+getpid             0.20 us/call
+futex_wake        31.70 us/call
+epoll_pwait(0)    29.03 us/call
+clock_gettime      0.24 us/call
+fcntl(GETFL)      62.25 us/call
+fstat             73.70 us/call
+open+close       119.56 us/pair
+sock send+recv     1.55 us/pair
+== fast2#1
+uname_release   6.17.0-PRoot-Distro
+vdso            present
+getpid             0.18 us/call
+futex_wake         0.23 us/call
+epoll_pwait(0)     0.21 us/call
+clock_gettime      0.06 us/call
+fcntl(GETFL)       0.22 us/call
+fstat             69.67 us/call
+open+close        82.87 us/pair
+sock send+recv     1.27 us/pair
+== fast2+kompatfull#1
+uname_release   6.17.0-PRoot-Distro
+vdso            absent
+getpid             0.21 us/call
+futex_wake        29.38 us/call
+epoll_pwait(0)    33.45 us/call
+clock_gettime      0.27 us/call
+fcntl(GETFL)      66.39 us/call
+fstat             71.29 us/call
+open+close       127.14 us/pair
+sock send+recv     1.13 us/pair
+== stock#2
+uname_release   6.17.0-PRoot-Distro
+vdso            absent
+getpid             0.18 us/call
+futex_wake        31.00 us/call
+epoll_pwait(0)    32.10 us/call
+clock_gettime      0.23 us/call
+fcntl(GETFL)      66.87 us/call
+fstat             62.78 us/call
+open+close       108.86 us/pair
+sock send+recv    58.24 us/pair
+== fast1#2
+uname_release   6.17.0-PRoot-Distro
+vdso            absent
+getpid             0.18 us/call
+futex_wake        28.62 us/call
+epoll_pwait(0)    29.72 us/call
+clock_gettime      0.22 us/call
+fcntl(GETFL)      60.04 us/call
+fstat             68.99 us/call
+open+close       111.67 us/pair
+sock send+recv     1.14 us/pair
+== fast2#2
+uname_release   6.17.0-PRoot-Distro
+vdso            present
+getpid             0.16 us/call
+futex_wake         0.22 us/call
+epoll_pwait(0)     0.18 us/call
+clock_gettime      0.04 us/call
+fcntl(GETFL)       0.19 us/call
+fstat             65.89 us/call
+open+close        82.93 us/pair
+sock send+recv     1.34 us/pair
+== fast2+kompatfull#2
+uname_release   6.17.0-PRoot-Distro
+vdso            absent
+getpid             0.17 us/call
+futex_wake        31.88 us/call
+epoll_pwait(0)    30.40 us/call
+clock_gettime      0.24 us/call
+fcntl(GETFL)      64.95 us/call
+fstat             71.59 us/call
+open+close       129.28 us/pair
+sock send+recv     1.17 us/pair

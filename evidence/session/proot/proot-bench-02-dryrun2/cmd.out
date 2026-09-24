@@ -1,0 +1,6 @@
+WS_FILE 879dd353e9710ef2886c3bbd1de0f3059016c8e22decd7d896c14af7c59b2e3e  /root/build/electron-bench/ws/bench.cc
+TOOLS drive=f2c6b96be3ab21b0 launch=ff6fdce5644866ab args=e2865fb8a53fce44 meter=74ee1cdfb8f3e8d2 end=102df646589aca59
+PROOTS p0=ea47e17da8e6ff48 pf=8a30e9d63aead905
+RUN dry-p0 variant=p0 sid=8140 tracer_pid=8137 tracer_arg0=/data/data/com.termux/files/usr/bin/proot drive_rc=0 json=dry-p0.json meter=dry-p0.meter.csv touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 mem_avail_mb=4701 mem_waited_s=20 survivors_after_kill=0 tracer_gone=true
+RUN dry-pf variant=pf sid=21336 tracer_pid=21334 tracer_arg0=/data/data/com.termux/files/home/build/proot-fast/out2/bin/proot-fast2 drive_rc=0 json=dry-pf.json meter=dry-pf.meter.csv touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 mem_avail_mb=5299 mem_waited_s=20 survivors_after_kill=0 tracer_gone=true
+PROOT_BENCH_DRYRUN_DONE

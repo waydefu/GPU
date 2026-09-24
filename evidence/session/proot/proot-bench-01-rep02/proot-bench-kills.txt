@@ -1,0 +1,83 @@
+end_begin sid=13755 tracer=13749 members=26
+term sid=13755 pid=13755 cmd=/usr/bin/dbus-run-session -- /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-
+term sid=13755 pid=13756 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=13755 pid=13768 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/root/build/proot-bench/p
+term sid=13755 pid=13783 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox --enable-logging=stderr 
+term sid=13755 pid=13784 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=13755 pid=13896 cmd=/usr/libexec/gvfsd 
+term sid=13755 pid=13916 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=13755 pid=13925 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=13755 pid=13951 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=13755 pid=13978 cmd=/usr/libexec/xdg-permission-store 
+term sid=13755 pid=14005 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=13755 pid=14030 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=13755 pid=14053 cmd=/usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 11 --address=unix:path=/root/build/proot-bench/home-r
+term sid=13755 pid=14067 cmd=/usr/libexec/at-spi2-registryd --use-gnome-session 
+term sid=13755 pid=14129 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=13755 pid=14138 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=13755 pid=14370 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=13755 pid=14407 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=13755 pid=14447 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=13755 pid=14468 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=13755 pid=14508 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=13755 pid=14510 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=13755 pid=14515 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=13755 pid=15079 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=13755 pid=15202 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+term sid=13755 pid=15321 cmd=/usr/share/cursor/cursor /usr/share/cursor/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=14370 
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=13679 file=r02-1-pf.touch
+end_begin sid=22313 tracer=22311 members=24
+term sid=22313 pid=22313 cmd=/usr/bin/dbus-run-session -- /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-
+term sid=22313 pid=22314 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=22313 pid=22325 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/root/build/proot-bench/p
+term sid=22313 pid=22338 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox --enable-logging=stderr 
+term sid=22313 pid=22339 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=22313 pid=22404 cmd=/usr/libexec/gvfsd 
+term sid=22313 pid=22427 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=22313 pid=22432 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=22313 pid=22441 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=22313 pid=22468 cmd=/usr/libexec/xdg-permission-store 
+term sid=22313 pid=22478 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=22313 pid=22509 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=22313 pid=22518 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=22313 pid=22521 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=22313 pid=22622 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=22313 pid=22623 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=22313 pid=22660 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=22313 pid=22696 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=22313 pid=22748 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=22313 pid=22749 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=22313 pid=22750 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=22313 pid=22972 cmd=/usr/share/cursor/cursor /usr/share/cursor/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=22622 
+term sid=22313 pid=23035 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=22313 pid=23060 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=22213 file=r02-2-p0.touch
+end_begin sid=30375 tracer=30372 members=24
+term sid=30375 pid=30375 cmd=/usr/bin/dbus-run-session -- /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-
+term sid=30375 pid=30376 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=30375 pid=30383 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/root/build/proot-bench/p
+term sid=30375 pid=30397 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox --enable-logging=stderr 
+term sid=30375 pid=30398 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=30375 pid=30497 cmd=/usr/libexec/gvfsd 
+term sid=30375 pid=30512 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=30375 pid=30532 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=30375 pid=30544 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=30375 pid=30570 cmd=/usr/libexec/xdg-permission-store 
+term sid=30375 pid=30581 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=30375 pid=30615 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=30375 pid=30623 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=30375 pid=30626 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox --enable-logging=stderr 
+term sid=30375 pid=30724 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=30375 pid=30733 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=30375 pid=30780 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=30375 pid=30828 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=30375 pid=30889 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=30375 pid=30896 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=30375 pid=30900 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=30375 pid=31286 cmd=/usr/share/cursor/cursor /usr/share/cursor/resources/app/extensions/json-language-features/server/dist/node/jsonServerMain --node-ipc --clientProcessId=30724 
+term sid=30375 pid=31296 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=30375 pid=31345 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=30278 file=r02-3-pf.touch

@@ -1,0 +1,13 @@
+27182 main
+27309 Jit thread pool
+27310 Signal Catcher
+27311 perfetto_hprof_
+27312 HeapTaskDaemon
+27313 ReferenceQueueD
+27314 FinalizerDaemon
+27315 FinalizerWatchd
+27328 binder:27182_1
+27329 binder:27182_2
+27400 main
+27401 Thread-1
+27406 binder:27182_3

@@ -1,0 +1,2 @@
+SAFE_RUN_CHECK_OK mem_available_mb=4643 floor_mb=4500 disk_free_gb=45
+OPSTREAM_BLOCKED screen_not_awake_or_locked

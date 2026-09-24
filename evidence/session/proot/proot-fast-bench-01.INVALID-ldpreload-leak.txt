@@ -1,0 +1,36 @@
+== stock#1
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+/root/build/proot-bench/sysbench: error while loading shared libraries: /lib/aarch64-linux-gnu/libc.so: invalid ELF header
+== fast#1
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+/root/build/proot-bench/sysbench: error while loading shared libraries: /lib/aarch64-linux-gnu/libc.so: invalid ELF header
+== fast+compat#1
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+/root/build/proot-bench/sysbench: error while loading shared libraries: /lib/aarch64-linux-gnu/libc.so: invalid ELF header
+== stock#2
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+/root/build/proot-bench/sysbench: error while loading shared libraries: /lib/aarch64-linux-gnu/libc.so: invalid ELF header
+== fast#2
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+/root/build/proot-bench/sysbench: error while loading shared libraries: /lib/aarch64-linux-gnu/libc.so: invalid ELF header
+== fast+compat#2
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+/root/build/proot-bench/sysbench: error while loading shared libraries: /lib/aarch64-linux-gnu/libc.so: invalid ELF header

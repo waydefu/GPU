@@ -1,0 +1,36 @@
+== stock#1
+getpid             0.29 us/call
+pipe write+read    0.85 us/pair
+sock send+recv    54.83 us/pair
+sock write+read    1.48 us/pair
+sock sendmsg+recvmsg   55.80 us/pair
+== fast#1
+getpid             0.16 us/call
+pipe write+read    0.78 us/pair
+sock send+recv     0.85 us/pair
+sock write+read    0.88 us/pair
+sock sendmsg+recvmsg   28.66 us/pair
+== fast+compat#1
+getpid             0.22 us/call
+pipe write+read    0.97 us/pair
+sock send+recv    55.53 us/pair
+sock write+read    1.06 us/pair
+sock sendmsg+recvmsg   55.94 us/pair
+== stock#2
+getpid             0.29 us/call
+pipe write+read    0.86 us/pair
+sock send+recv    55.13 us/pair
+sock write+read    1.10 us/pair
+sock sendmsg+recvmsg   55.81 us/pair
+== fast#2
+getpid             0.17 us/call
+pipe write+read    0.88 us/pair
+sock send+recv     1.05 us/pair
+sock write+read    1.10 us/pair
+sock sendmsg+recvmsg   29.53 us/pair
+== fast+compat#2
+getpid             0.17 us/call
+pipe write+read    0.97 us/pair
+sock send+recv    54.71 us/pair
+sock write+read    1.13 us/pair
+sock sendmsg+recvmsg   55.75 us/pair

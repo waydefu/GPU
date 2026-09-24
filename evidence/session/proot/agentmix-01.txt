@@ -1,0 +1,65 @@
+== stock#1
+git_status       1407 ms
+git_log          2297 ms
+grep_tree         111 ms
+find_tree         274 ms
+python_start      846 ms
+node_start        491 ms
+bash_pipes        162 ms
+py_threads       1300 ms
+node_async       8602 ms
+0m0.000000s 0m0.000000s
+0m3.200000s 0m13.050000s
+wall_total_ms 15593
+== fast2#1
+git_status       1329 ms
+git_log          2273 ms
+grep_tree         106 ms
+find_tree         213 ms
+python_start      790 ms
+node_start        442 ms
+bash_pipes        141 ms
+py_threads       1017 ms
+node_async        826 ms
+0m0.000000s 0m0.000000s
+0m2.480000s 0m5.040000s
+wall_total_ms 7257
+== stock#2
+git_status       1373 ms
+git_log          2271 ms
+grep_tree         140 ms
+find_tree         313 ms
+python_start      832 ms
+node_start        481 ms
+bash_pipes        162 ms
+py_threads       1289 ms
+node_async       8720 ms
+0m0.000000s 0m0.010000s
+0m3.220000s 0m13.110000s
+wall_total_ms 15711
+== fast2#2
+git_status       1337 ms
+git_log          2295 ms
+grep_tree          95 ms
+find_tree         224 ms
+python_start      803 ms
+node_start        551 ms
+bash_pipes        151 ms
+py_threads       1036 ms
+node_async        791 ms
+0m0.010000s 0m0.000000s
+0m2.490000s 0m5.190000s
+wall_total_ms 7424
+== fast2+kompatfull
+git_status       1383 ms
+git_log          2335 ms
+grep_tree         123 ms
+find_tree         314 ms
+python_start      894 ms
+node_start        501 ms
+bash_pipes        169 ms
+py_threads       1290 ms
+node_async      11208 ms
+0m0.000000s 0m0.010000s
+0m3.260000s 0m11.000000s
+wall_total_ms 18349

@@ -1,0 +1,10 @@
+WS_FILE 879dd353e9710ef2886c3bbd1de0f3059016c8e22decd7d896c14af7c59b2e3e  /root/build/electron-bench/ws/bench.cc
+TOOLS drive=f2c6b96be3ab21b0 launch=ff6fdce5644866ab args=e2865fb8a53fce44
+PROOTS p0=ea47e17da8e6ff48 pf=2a5139922f4c1533
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/proot_bench.sh: line 92: /proc/29997/cmdline: No such file or directory
+RUN dry-p0 variant=p0 sid=30000 tracer_pid=29997 tracer_arg0=null drive_rc=0 json=dry-p0.json touch_selftest=true touch_events=0 thermal_start=0 thermal_waited_s=0 thermal_end=0 survivors_after_kill=0
+null tracer_gone=true
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/proot_bench.sh: line 92: /proc/11915/cmdline: No such file or directory
+RUN dry-pf variant=pf sid=11919 tracer_pid=11915 tracer_arg0=null drive_rc=0 json=dry-pf.json touch_selftest=true touch_events=1457 thermal_start=0 thermal_waited_s=0 thermal_end=0 survivors_after_kill=0
+null tracer_gone=true
+PROOT_BENCH_DRYRUN_DONE
