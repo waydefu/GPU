@@ -1,0 +1,31 @@
+ATTENTION: default value of option vblank_mode overridden by environment.
+MESA: error: ZINK: vkCreateInstance failed (VK_ERROR_LAYER_NOT_PRESENT)
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+Error: couldn't find RGB GLX visual or fbconfig
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+ATTENTION: default value of option vblank_mode overridden by environment.
+glx: failed to create drisw screen
+failed to load driver: zink
+name of display: :3
+

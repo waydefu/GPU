@@ -1,0 +1,72 @@
+{
+ "id": 1,
+ "result": {
+  "gpu": {
+   "devices": [
+    {
+     "vendorId": 0,
+     "deviceId": 0,
+     "vendorString": "",
+     "deviceString": "",
+     "driverVendor": "",
+     "driverVersion": ""
+    }
+   ],
+   "auxAttributes": {
+    "amdSwitchable": false,
+    "canSupportThreadedTextureMailbox": false,
+    "directRenderingVersion": "",
+    "displayType": "",
+    "glExtensions": "",
+    "glImplementationParts": "(gl=disabled,angle=none)",
+    "glRenderer": "Disabled",
+    "glResetNotificationStrategy": 0,
+    "glVendor": "Disabled",
+    "glVersion": "Disabled",
+    "glWsExtensions": "",
+    "glWsVendor": "",
+    "glWsVersion": "",
+    "hardwareSupportsVulkan": false,
+    "inProcessGpu": false,
+    "initializationTime": 0,
+    "isAsan": false,
+    "isClangCoverage": false,
+    "jpegDecodeAcceleratorSupported": false,
+    "maxMsaaSamples": "",
+    "optimus": false,
+    "passthroughCmdDecoder": true,
+    "pixelShaderVersion": "",
+    "processCrashCount": 0,
+    "sandboxed": false,
+    "skiaBackendType": "None",
+    "subpixelFontRendering": true,
+    "targetCpuBits": 64,
+    "vertexShaderVersion": "",
+    "visibilityCallbackCallCount": 0
+   },
+   "featureStatus": {
+    "2d_canvas": "disabled_software",
+    "direct_rendering_display_compositor": "disabled_off_ok",
+    "gpu_compositing": "disabled_software",
+    "multiple_raster_threads": "disabled_off",
+    "opengl": "disabled_off",
+    "rasterization": "disabled_software",
+    "raw_draw": "disabled_off_ok",
+    "skia_graphite": "disabled_off",
+    "trees_in_viz": "disabled_off",
+    "video_decode": "disabled_software",
+    "video_encode": "disabled_software",
+    "vulkan": "disabled_off",
+    "webgl": "disabled_off",
+    "webgpu": "disabled_off",
+    "webnn": "disabled_off"
+   },
+   "driverBugWorkarounds": [],
+   "videoDecoding": [],
+   "videoEncoding": []
+  },
+  "modelName": "",
+  "modelVersion": "",
+  "commandLine": "/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-updates --skip-welcome --disable-workspace-trust --new-window --user-data-dir=/root/build/electron-probe/v0-control --remote-debugging-port=9230 --enable-logging=stderr --disable-gpu --allow-file-access-from-files --secure-schemes=sentry-ipc --bypasscsp-schemes=sentry-ipc --cors-schemes=sentry-ipc --fetch-schemes=sentry-ipc --password-store=basic --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports, AlwaysLogLOAFURL,  --disable-features=CalculateNativeWinOcclusion --disable-blink-features=FontMatchingCTMigration,StandardizedBrowserZoom, --js-flags=--nodecommit_pooled_pages --xdg-portal-required-version=4 --no-sandbox --disable-gpu-sandbox --force-gpu-mem-available-mb=1024 --secure-schemes=vscode-webview,vscode-file,vscode-remote-resource,vscode-managed-remote-resource,cursor-rpc-devtools,sentry-ipc --bypasscsp-schemes=sentry-ipc --cors-schemes=vscode-webview,vscode-file,vscode-remote-resource,vscode-managed-remote-resource,cursor-rpc-devtools,sentry-ipc --fetch-schemes=vscode-webview,vscode-file,vscode-remote-resource,vscode-managed-remote-resource,cursor-rpc-devtools,sentry-ipc --service-worker-schemes=vscode-webview --standard-schemes=vscode-webview,vscode-file,cursor-rpc-devtools --code-cache-schemes=vscode-webview,vscode-file --lang=en"
+ }
+}

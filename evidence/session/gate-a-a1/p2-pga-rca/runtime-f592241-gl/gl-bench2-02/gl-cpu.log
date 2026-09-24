@@ -1,0 +1,115 @@
+ATTENTION: default value of option vblank_mode overridden by environment.
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+=======================================================
+    glmark2 2023.01
+=======================================================
+    OpenGL Information
+    GL_VENDOR:      Mesa
+    GL_RENDERER:    llvmpipe (LLVM 21.1.8, 128 bits)
+    GL_VERSION:     4.5 (Compatibility Profile) Mesa 26.0.6
+    Surface Config: buf=32 r=8 g=8 b=8 a=8 depth=32 stencil=0 samples=0
+    Surface Size:   800x600 windowed
+=======================================================
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[build] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:interleave=false:model=horse:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:use-vbo=false:vertex-precision=default,default,default,default: FPS: 131 FrameTime: 7.652 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[build] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:interleave=false:model=horse:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:use-vbo=true:vertex-precision=default,default,default,default: FPS: 132 FrameTime: 7.620 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[texture] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cube:nframes=:show-fps=false:texgen=false:texture=crate-base:texture-filter=nearest:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 261 FrameTime: 3.840 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[texture] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cube:nframes=:show-fps=false:texgen=false:texture=crate-base:texture-filter=linear:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 185 FrameTime: 5.430 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[texture] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cube:nframes=:show-fps=false:texgen=false:texture=crate-base:texture-filter=mipmap:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 109 FrameTime: 9.225 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[shading] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cat:nframes=:num-lights=1:shading=gouraud:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 86 FrameTime: 11.714 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[shading] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cat:nframes=:num-lights=1:shading=blinn-phong-inf:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 77 FrameTime: 13.078 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[shading] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cat:nframes=:num-lights=1:shading=phong:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 71 FrameTime: 14.176 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[shading] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:model=cat:nframes=:num-lights=1:shading=cel:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 69 FrameTime: 14.604 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[bump] bump-render=high-poly:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 34 FrameTime: 30.280 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[bump] bump-render=normals:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 205 FrameTime: 4.879 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[bump] bump-render=height:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 195 FrameTime: 5.152 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[effect2d] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:kernel=0,1,0;1,-4,1;0,1,0;:nframes=:normalize=true:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 87 FrameTime: 11.603 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[effect2d] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:kernel=1,1,1,1,1;1,1,1,1,1;1,1,1,1,1;:nframes=:normalize=true:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 62 FrameTime: 16.177 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[pulsar] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:light=false:nframes=:quads=5:random=false:show-fps=false:texture=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 162 FrameTime: 6.176 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[desktop] blur-radius=5:duration=10.0:effect=blur:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:passes=1:separable=true:shadow-size=20:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default:window-size=0.35:windows=4: FPS: 16 FrameTime: 65.841 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[desktop] blur-radius=5:duration=10.0:effect=shadow:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:passes=1:separable=true:shadow-size=20:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default:window-size=0.35:windows=4: FPS: 34 FrameTime: 29.774 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[buffer] buffer-usage=static:columns=200:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:interleave=false:nframes=:rows=20:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:update-dispersion=0.9:update-fraction=0.5:update-method=map:vertex-precision=default,default,default,default: FPS: 56 FrameTime: 17.975 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[buffer] buffer-usage=static:columns=200:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:interleave=false:nframes=:rows=20:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:update-dispersion=0.9:update-fraction=0.5:update-method=subdata:vertex-precision=default,default,default,default: FPS: 55 FrameTime: 18.204 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[buffer] buffer-usage=static:columns=200:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:interleave=true:nframes=:rows=20:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:update-dispersion=0.9:update-fraction=0.5:update-method=map:vertex-precision=default,default,default,default: FPS: 57 FrameTime: 17.729 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[ideas] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:show-fps=false:speed=duration:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 82 FrameTime: 12.244 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[jellyfish] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 28 FrameTime: 36.700 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[terrain] bloom=true:duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:nframes=:repeat-overlay=6.0:show-fps=false:tilt-shift=true:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-precision=default,default,default,default: FPS: 3 FrameTime: 430.578 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[shadow] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:interleave=false:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:use-vbo=true:vertex-precision=default,default,default,default: FPS: 55 FrameTime: 18.252 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[refract] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-precision=default,default,default,default:index=1.2:interleave=false:model=bunny:nframes=:show-fps=false:texture=nasa1:title=:title-pos=-0.7,-1.0:title-size=0.03:use-vbo=true:vertex-precision=default,default,default,default: FPS: 6 FrameTime: 198.917 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[conditionals] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-conditionals=true:fragment-precision=default,default,default,default:fragment-steps=0:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-conditionals=true:vertex-precision=default,default,default,default:vertex-steps=0: FPS: 102 FrameTime: 9.854 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[conditionals] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-conditionals=true:fragment-precision=default,default,default,default:fragment-steps=5:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-conditionals=true:vertex-precision=default,default,default,default:vertex-steps=0: FPS: 94 FrameTime: 10.649 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[conditionals] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-conditionals=true:fragment-precision=default,default,default,default:fragment-steps=0:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-conditionals=true:vertex-precision=default,default,default,default:vertex-steps=5: FPS: 102 FrameTime: 9.890 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[function] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-complexity=low:fragment-function=true:fragment-precision=default,default,default,default:fragment-steps=5:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-complexity=low:vertex-function=true:vertex-precision=default,default,default,default:vertex-steps=1: FPS: 98 FrameTime: 10.285 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[function] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-complexity=medium:fragment-function=true:fragment-precision=default,default,default,default:fragment-steps=5:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-complexity=low:vertex-function=true:vertex-precision=default,default,default,default:vertex-steps=1: FPS: 86 FrameTime: 11.727 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[loop] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-loop=false:fragment-precision=default,default,default,default:fragment-steps=5:fragment-uniform=true:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-loop=true:vertex-precision=default,default,default,default:vertex-steps=5:vertex-uniform=true: FPS: 96 FrameTime: 10.422 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[loop] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-loop=true:fragment-precision=default,default,default,default:fragment-steps=5:fragment-uniform=false:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-loop=true:vertex-precision=default,default,default,default:vertex-steps=5:vertex-uniform=true: FPS: 97 FrameTime: 10.375 ms
+** GLX does not support GLX_EXT_swap_control or GLX_MESA_swap_control!
+** Failed to set swap interval. Results may be bounded above by refresh rate.
+[loop] duration=10.0:fps-pos=-1.0,-1.0:fps-size=0.03:fragment-loop=true:fragment-precision=default,default,default,default:fragment-steps=5:fragment-uniform=true:grid-length=5.0:grid-size=32:nframes=:show-fps=false:title=:title-pos=-0.7,-1.0:title-size=0.03:vertex-loop=true:vertex-precision=default,default,default,default:vertex-steps=5:vertex-uniform=true: FPS: 64 FrameTime: 15.735 ms
+=======================================================
+                                  glmark2 Score: 89 
+=======================================================

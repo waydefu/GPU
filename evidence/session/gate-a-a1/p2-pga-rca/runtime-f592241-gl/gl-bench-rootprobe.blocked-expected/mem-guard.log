@@ -1,0 +1,14 @@
+# mem-guard start x3=14480 floor_mb=3000 swap_growth_mb=1536 x3_max_mb=3072 swap_used0_mb=4584
+1790214293.819001800 mem_available_mb=5113 swap_used_mb=4584 x3_rss_mb=105 x3_swap_mb=0
+1790214294.353327790 mem_available_mb=5103 swap_used_mb=4546 x3_rss_mb=222 x3_swap_mb=0
+1790214294.892359508 mem_available_mb=5148 swap_used_mb=4555 x3_rss_mb=223 x3_swap_mb=0
+1790214295.432765029 mem_available_mb=5158 swap_used_mb=4555 x3_rss_mb=223 x3_swap_mb=0
+1790214295.955741487 mem_available_mb=5149 swap_used_mb=4555 x3_rss_mb=223 x3_swap_mb=0
+1790214296.508993987 mem_available_mb=5127 swap_used_mb=4570 x3_rss_mb=223 x3_swap_mb=0
+1790214297.048639976 mem_available_mb=5118 swap_used_mb=4571 x3_rss_mb=223 x3_swap_mb=0
+1790214297.590688257 mem_available_mb=5106 swap_used_mb=4599 x3_rss_mb=223 x3_swap_mb=0
+1790214298.136412111 mem_available_mb=5106 swap_used_mb=4605 x3_rss_mb=223 x3_swap_mb=0
+1790214298.677661382 mem_available_mb=5106 swap_used_mb=4606 x3_rss_mb=223 x3_swap_mb=0
+1790214299.215775705 mem_available_mb=5104 swap_used_mb=4605 x3_rss_mb=223 x3_swap_mb=0
+1790214299.762618309 mem_available_mb=5106 swap_used_mb=4605 x3_rss_mb=223 x3_swap_mb=0
+1790214300.300338517 mem_available_mb=5107 swap_used_mb=4611 x3_rss_mb=223 x3_swap_mb=0

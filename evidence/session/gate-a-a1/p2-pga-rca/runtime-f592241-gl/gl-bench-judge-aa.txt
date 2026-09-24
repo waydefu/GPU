@@ -1,0 +1,6 @@
+== GL_AA: GL_AA_INVALID
+  rep01 INVALID: gl-cpu: touch_events=289
+  rep02 INVALID: gl-cpu: touch_events=289
+== VK_AA: VK_AA_INVALID
+  rep01 INVALID: vk-cpu: touch_events=1013; vk-cpu: touch_events=8
+  rep02 INVALID: vk-cpu: touch_events=8; vk-cpu: touch_events=1013

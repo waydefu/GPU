@@ -1,0 +1,1 @@
+touch_recorder_stopped pid=16049 file=dry-v0.touch

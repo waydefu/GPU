@@ -1,0 +1,2 @@
+/root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/safe-run.sh: line 50: $1: unbound variable
+OPSTREAM_BLOCKED host_resources

@@ -1,0 +1,14 @@
+# join_warn_ptr_to_format.py 2026-09-24T14:15:00+08:00
+gate-a-a1/p2-oracle-runtime/runtime-f592241/oracle-g0-01/x3-launcher.log: total=2624 distinct_ptr=6 by_format={'2': 1333, '2+5': 646, '5': 645}
+gate-a-a1/p2-pga-rca/runtime-f592241/oracle-g-s11-01/x3-launcher.log: total=534 distinct_ptr=3 by_format={'2': 288, 'unmatched': 246}
+gate-a-a1/p2-pga-rca/runtime-f592241/oracle-g-s12-01/x3-launcher.log: total=469 distinct_ptr=3 by_format={'2': 270, 'unmatched': 199}
+gate-a-a1/p2-pga-rca/runtime-f592241/oracle-ga-s11-01/x3-launcher.log: total=362 distinct_ptr=3 by_format={'2': 224, 'unmatched': 138}
+gate-a-a1/p2-pga-rca/runtime-f592241/oracle-ga-s12-01/x3-launcher.log: total=319 distinct_ptr=3 by_format={'2': 213, 'unmatched': 106}
+gl/electron-gpu-probe-02/x3-launcher.log: total=219 distinct_ptr=5 by_format={'2': 216, 'unmatched': 3}
+gl/electron-bench-dryrun-01/x3-launcher.log: total=2 distinct_ptr=1 by_format={'unmatched': 2}
+gl/electron-bench-dryrun-02/x3-launcher.log: total=1 distinct_ptr=1 by_format={'2': 1}
+gl/electron-bench-dryrun-03/x3-launcher.log: total=33 distinct_ptr=3 by_format={'2': 31, 'unmatched': 2}
+gate-a-a1/p2-pga-rca/runtime-f592241-gl/gl-bench-01/x3-launcher.log: total=4 distinct_ptr=1 by_format={'unmatched': 4}
+gate-a-a1/p2-pga-rca/runtime-f592241-gl/gl-feas-g-02/x3-launcher.log: total=6 distinct_ptr=1 by_format={'unmatched': 6}
+gate-a-a1/p2-xfce-runtime/runtime-f592241/xfce-c0-g0-01/x3-launcher.log: total=105 distinct_ptr=67 by_format={'2': 101, '2+5': 1, 'unmatched': 3}
+gate-a-a1/p2-xfce-runtime/runtime-f592241/xfce-c0-gt-01/x3-launcher.log: total=54 distinct_ptr=17 by_format={'2': 51, 'unmatched': 3}

@@ -1,0 +1,1 @@
+Deliberate BLOCKED probe (2026-09-24): measured portrait X root with the extra-key bar hidden = 1200x2416. Not a bench cell; never judged.

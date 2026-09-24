@@ -1,0 +1,14 @@
+== GL: GL_GPU_BENEFIT
+  rep01 score gpu 480.4 cpu 89.3 (x5.38, need >= 1.5) FASTER=True | cpu ms/frame gpu 1.144 cpu 10.920 (x0.10, need <= 0.5) EFFICIENT=True | common 33/33
+    describe: client+X3 cpu_s gpu 181.3 cpu 321.8; activity cpu_s gpu 18.46 cpu 19.5
+  rep02 score gpu 441.5 cpu 90.8 (x4.86, need >= 1.5) FASTER=True | cpu ms/frame gpu 1.197 cpu 10.729 (x0.11, need <= 0.5) EFFICIENT=True | common 33/33
+    describe: client+X3 cpu_s gpu 174.4 cpu 321.5; activity cpu_s gpu 18.37 cpu 18.77
+== VK: VK_GPU_BENEFIT
+  rep01 score gpu 1146.9 cpu 292.2 (x3.93, need >= 1.5) FASTER=True | cpu ms/frame gpu 0.647 cpu 3.619 (x0.18, need <= 0.5) EFFICIENT=True | common 13/13
+    describe: client+X3 cpu_s gpu 96.5 cpu 137.5; activity cpu_s gpu 6.88 cpu 8.38
+  rep02 score gpu 903.5 cpu 181.2 (x4.99, need >= 1.5) FASTER=True | cpu ms/frame gpu 0.878 cpu 4.868 (x0.18, need <= 0.5) EFFICIENT=True | common 13/13
+    describe: client+X3 cpu_s gpu 103.1 cpu 114.6; activity cpu_s gpu 8.19 cpu 6.41
+  describe rep01 gl-gpu-off: score 575.7272727272727 cpu_ms/frame 0.6195589241539028 valid
+  describe rep01 vk-gpu-hl: score 976.1538461538462 cpu_ms/frame 0.4697399527186762 INVALID(vk-gpu-hl: touch_events=16)
+  describe rep02 gl-gpu-off: score 564.7272727272727 cpu_ms/frame 0.6335050440008586 valid
+  describe rep02 vk-gpu-hl: score 1258.0 cpu_ms/frame 0.3081203375321022 valid

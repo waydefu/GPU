@@ -1,0 +1,3 @@
+x_alive_after_fixture=true
+end=SIGTERM (construction) target_pid=22410
+termux-x11gpu com.waydefu.x11gpu :3 -noreset                                                                                           

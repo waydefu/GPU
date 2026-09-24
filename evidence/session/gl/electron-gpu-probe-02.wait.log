@@ -1,0 +1,4 @@
+WAIT_OK after 20s avail=6188
+STOP logcat pid 21698 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gl/electron-gpu-probe-02 ELECTRON_GPU_PROBE_DONE
+PROBE_CHAIN_DONE

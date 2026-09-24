@@ -1,0 +1,13 @@
+22410 main
+22543 Jit thread pool
+22544 Signal Catcher
+22545 perfetto_hprof_
+22546 HeapTaskDaemon
+22547 ReferenceQueueD
+22548 FinalizerDaemon
+22549 FinalizerWatchd
+22561 binder:22410_1
+22562 binder:22410_2
+22675 main
+22676 Thread-1
+22681 binder:22410_3

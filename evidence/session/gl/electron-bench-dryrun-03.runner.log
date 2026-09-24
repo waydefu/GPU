@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5161 floor_mb=4500 disk_free_gb=38
+STOP logcat pid 32720 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gl/electron-bench-dryrun-03 ELECTRON_BENCH_DRYRUN_DONE

@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=4624 floor_mb=4500 disk_free_gb=38
+STOP logcat pid 16064 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gl/electron-gpu-probe-01 ELECTRON_GPU_PROBE_DONE

@@ -1,0 +1,25 @@
+=======================================================
+    vkmark 2025.01
+=======================================================
+    Vendor ID:      0x5143
+    Device ID:      0x44050A31
+    Device Name:    Adreno (TM) 840
+    Driver Version: 109051910
+    Device UUID:    7f4bce943437cac6fc1921e23cef4bc3
+=======================================================
+[vertex] device-local=true:interleave=true:duration=10.0: FPS: 1161 FrameTime: 0.861 ms
+[vertex] device-local=false:interleave=true:duration=10.0: FPS: 1163 FrameTime: 0.860 ms
+[texture] anisotropy=0:texture-filter=linear:duration=10.0: FPS: 1119 FrameTime: 0.894 ms
+[texture] anisotropy=16:texture-filter=linear:duration=10.0: FPS: 1126 FrameTime: 0.888 ms
+[shading] shading=gouraud:duration=10.0: FPS: 1157 FrameTime: 0.864 ms
+[shading] shading=blinn-phong-inf:duration=10.0: FPS: 1161 FrameTime: 0.861 ms
+[shading] shading=phong:duration=10.0: FPS: 1174 FrameTime: 0.852 ms
+[shading] shading=cel:duration=10.0: FPS: 1197 FrameTime: 0.835 ms
+[effect2d] background-resolution=800x600:kernel=edge:duration=10.0: FPS: 1164 FrameTime: 0.859 ms
+[effect2d] background-resolution=800x600:kernel=blur:duration=10.0: FPS: 1174 FrameTime: 0.852 ms
+[desktop] background-resolution=800x600:windows=4:window-size=0.35:duration=10.0: FPS: 1158 FrameTime: 0.864 ms
+[cube] duration=10.0: FPS: 1202 FrameTime: 0.832 ms
+[clear] color=cycle:duration=10.0: FPS: 1035 FrameTime: 0.966 ms
+=======================================================
+                                   vkmark Score: 1153
+=======================================================

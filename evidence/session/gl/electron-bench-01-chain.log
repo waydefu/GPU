@@ -1,0 +1,7 @@
+REP_START 01 14:01:04 avail=4995
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gl/electron-bench-01-rep01 ELECTRON_BENCH_DONE rep=01
+REP_DONE 01 14:12:12
+REP_START 02 14:12:33 avail=5724
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/gl/electron-bench-01-rep02 ELECTRON_BENCH_DONE rep=02
+REP_DONE 02 14:23:43
+CHAIN_DONE

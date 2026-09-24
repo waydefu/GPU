@@ -1,0 +1,5 @@
+DESCRIPTIVE ONLY - touch check ignored in memory; frozen verdicts remain GL_INVALID / VK_INVALID
+GL rep01: score gpu 481.9 cpu 142.0 x3.39 | cpu ms/frame gpu 1.136 cpu 6.885 x0.17 | common 33/33 | client+X3 cpu_s gpu 181 cpu 323
+GL rep02: score gpu 413.9 cpu 82.7 x5.00 | cpu ms/frame gpu 1.565 cpu 12.047 x0.13 | common 33/33 | client+X3 cpu_s gpu 214 cpu 329
+VK rep01: score gpu 1114.8 cpu 269.9 x4.13 | cpu ms/frame gpu 0.675 cpu 3.945 x0.17 | common 13/13 | client+X3 cpu_s gpu 98 cpu 138
+VK rep02: score gpu 1153.2 cpu 244.2 x4.72 | cpu ms/frame gpu 0.651 cpu 4.288 x0.15 | common 13/13 | client+X3 cpu_s gpu 98 cpu 136

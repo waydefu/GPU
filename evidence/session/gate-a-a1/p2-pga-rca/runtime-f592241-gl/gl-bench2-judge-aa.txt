@@ -1,0 +1,10 @@
+== GL_AA: GL_AA_GPU_NO_BENEFIT
+  rep01 score gpu 89.3 cpu 90.8 (x0.98, need >= 1.5) FASTER=False | cpu ms/frame gpu 10.920 cpu 10.729 (x1.02, need <= 0.5) EFFICIENT=False | common 33/33
+    describe: client+X3 cpu_s gpu 321.8 cpu 321.5; activity cpu_s gpu 19.5 cpu 18.77
+  rep02 score gpu 90.8 cpu 89.3 (x1.02, need >= 1.5) FASTER=False | cpu ms/frame gpu 10.729 cpu 10.920 (x0.98, need <= 0.5) EFFICIENT=False | common 33/33
+    describe: client+X3 cpu_s gpu 321.5 cpu 321.8; activity cpu_s gpu 18.77 cpu 19.5
+== VK_AA: VK_AA_GPU_NO_BENEFIT
+  rep01 score gpu 292.2 cpu 181.2 (x1.61, need >= 1.5) FASTER=True | cpu ms/frame gpu 3.619 cpu 4.868 (x0.74, need <= 0.5) EFFICIENT=False | common 13/13
+    describe: client+X3 cpu_s gpu 137.5 cpu 114.6; activity cpu_s gpu 8.38 cpu 6.41
+  rep02 score gpu 181.2 cpu 292.2 (x0.62, need >= 1.5) FASTER=False | cpu ms/frame gpu 4.868 cpu 3.619 (x1.35, need <= 0.5) EFFICIENT=False | common 13/13
+    describe: client+X3 cpu_s gpu 114.6 cpu 137.5; activity cpu_s gpu 6.41 cpu 8.38

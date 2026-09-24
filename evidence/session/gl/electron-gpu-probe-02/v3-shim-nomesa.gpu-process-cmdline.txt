@@ -1,0 +1,17 @@
+/proc/self/exe
+--type=gpu-process
+--disable-gpu-sandbox
+--no-sandbox
+--disable-dev-shm-usage
+--ozone-platform=x11
+--crashpad-handler-pid=0
+--enable-crash-reporter=4b4fe553-68e0-41af-98f6-6d45769cd6e1,no_channel
+--user-data-dir=/root/build/electron-probe/v3-shim-nomesa
+--gpu-preferences=UAAAAAAAAAAgAQAMAAAAAAAAAAAAAGAAAQAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAYAAAAAAAAABgAAAAAAAAAAQAAAAAAAAAIAAAAAAAAAAgAAAAAAAAA
+--shared-files
+--field-trial-handle=3,i,3406133589830545471,1487807470866950560,262144
+--enable-features=AlwaysLogLOAFURL,DocumentPolicyIncludeJSCallStacksInCrashReports,PdfUseShowSaveFilePicker
+--disable-features=CalculateNativeWinOcclusion,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation
+--variations-seed-version
+--trace-process-track-uuid=3190708988185955192
+--enable-logging=stderr

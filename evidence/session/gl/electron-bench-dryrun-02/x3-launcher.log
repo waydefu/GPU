@@ -1,0 +1,3 @@
+R3 S1_AHB buffer=0xb400007821421ee0 src=0xb4000076bc7cd930 ahb=0xb400007911433290 dst=0x76bc6a0000 w=646 h=435 srcStride=646 dstStride=704 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400007821421ee0 src=0xb4000076bc7cd930 ahb=0xb400007911433290 dst=0x76bc6a0000 w=646 h=435 srcStride=646 dstStride=704 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x76bc6a0000, but should have been NULL.
