@@ -1,0 +1,13 @@
+1507 main
+2051 Jit thread pool
+2053 Signal Catcher
+2054 perfetto_hprof_
+2056 HeapTaskDaemon
+2063 ReferenceQueueD
+2064 FinalizerDaemon
+2070 FinalizerWatchd
+2071 binder:1507_1
+2075 binder:1507_2
+2080 main
+2081 Thread-1
+2139 binder:1507_3

@@ -1,0 +1,116 @@
+{
+ "tracer": "20095",
+ "seconds": 30.048743963241577,
+ "samples": 531,
+ "tracer_busy_frac": 0.2655367231638418,
+ "queue_len_hist": {
+  "0": 413,
+  "1": 76,
+  "2": 30,
+  "3": 5,
+  "10": 1,
+  "4": 3,
+  "5": 1,
+  "6": 1,
+  "7": 1
+ },
+ "waiting_by_process": [
+  [
+   "Claude --gpu-preferences=YAAAAAAAAAAgAQA",
+   79
+  ],
+  [
+   "claude",
+   64
+  ],
+  [
+   "app.asar --enable-sandbox --no-sandbox -",
+   40
+  ],
+  [
+   "claude-desktop --password-store=gnome-li",
+   7
+  ],
+  [
+   "dbus-daemon",
+   1
+  ]
+ ],
+ "waiting_by_process_syscall": [
+  [
+   "Claude --gpu-preferences=YAAAAAAAAAAgAQA",
+   "recvmsg",
+   64
+  ],
+  [
+   "claude",
+   "futex",
+   58
+  ],
+  [
+   "app.asar --enable-sandbox --no-sandbox -",
+   "epoll_pwait",
+   17
+  ],
+  [
+   "app.asar --enable-sandbox --no-sandbox -",
+   "futex",
+   14
+  ],
+  [
+   "Claude --gpu-preferences=YAAAAAAAAAAgAQA",
+   "epoll_pwait",
+   9
+  ],
+  [
+   "app.asar --enable-sandbox --no-sandbox -",
+   "recvmsg",
+   6
+  ],
+  [
+   "claude-desktop --password-store=gnome-li",
+   "futex",
+   4
+  ],
+  [
+   "Claude --gpu-preferences=YAAAAAAAAAAgAQA",
+   "nr206",
+   4
+  ],
+  [
+   "claude",
+   "statx",
+   4
+  ],
+  [
+   "app.asar --enable-sandbox --no-sandbox -",
+   "nr206",
+   3
+  ],
+  [
+   "Claude --gpu-preferences=YAAAAAAAAAAgAQA",
+   "ppoll",
+   2
+  ],
+  [
+   "claude-desktop --password-store=gnome-li",
+   "epoll_pwait",
+   2
+  ],
+  [
+   "claude",
+   "openat",
+   2
+  ],
+  [
+   "dbus-daemon",
+   "epoll_pwait",
+   1
+  ],
+  [
+   "claude-desktop --password-store=gnome-li",
+   "openat",
+   1
+  ]
+ ]
+}

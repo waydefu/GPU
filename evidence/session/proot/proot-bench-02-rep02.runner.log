@@ -1,0 +1,4 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5410 floor_mb=4500 disk_free_gb=45
+gl/run-gl-bench.sh: line 107: /proc/1512/cmdline: No such file or directory
+STOP logcat pid 1326 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-02-rep02 PROOT_BENCH_DONE rep=02

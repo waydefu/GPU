@@ -1,0 +1,3 @@
+MEM_GUARD_TRIPPED reason=mem_available_mb=2995<3000 at=1790232933.240539482
+construction: SIGTERM target_pid=28677 cmdline=termux-x11gpu com.waydefu.x11gpu :3 -noreset                                                                                           
+construction: am force-stop com.waydefu.x11gpu

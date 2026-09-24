@@ -1,0 +1,8 @@
+UNLOCKED_AT 20:15:54
+CELL proot-bench-02-dryrun2 rc=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-02-dryrun2 PROOT_BENCH_DRYRUN_DONE
+GATE dry-p0 []
+GATE dry-pf []
+DRYRUN_GATE_OK
+CELL proot-bench-02-rep01 rc=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-02-rep01 PROOT_BENCH_DONE rep=01
+CELL proot-bench-02-rep02 rc=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-02-rep02 PROOT_BENCH_DONE rep=02
+PB02_CHAIN_DONE

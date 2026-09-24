@@ -1,0 +1,14 @@
+28677 main
+28838 Jit thread pool
+28839 Signal Catcher
+28840 perfetto_hprof_
+28841 HeapTaskDaemon
+28842 ReferenceQueueD
+28843 FinalizerDaemon
+28844 FinalizerWatchd
+28868 binder:28677_1
+28869 binder:28677_2
+28911 main
+28912 Thread-1
+29131 binder:28677_3
+29132 binder:28677_4

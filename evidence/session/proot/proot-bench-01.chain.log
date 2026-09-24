@@ -1,0 +1,3 @@
+REP01 RUNNER_RC=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-01-rep01 PROOT_BENCH_DONE rep=01
+REP02 RUNNER_RC=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/proot-bench-01-rep02 PROOT_BENCH_DONE rep=02
+FORMAL_CHAIN_DONE

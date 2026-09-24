@@ -1,0 +1,272 @@
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+dbus-daemon[30376]: [session uid=0 pid=30376] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+[30383:0924/191101.214191:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+SystemError [ERR_SYSTEM_ERROR]: A system error occurred: uv_interface_addresses returned Unknown system error 22 (Unknown system error 22)
+    at networkInterfaces (node:os:218:16)
+    at uJe (file:///usr/share/cursor/resources/app/out/main.js:385:1889)
+    at mJe (file:///usr/share/cursor/resources/app/out/main.js:385:2071)
+    at file:///usr/share/cursor/resources/app/out/main.js:385:7270
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:639:26)
+    at async node:electron/js2c/browser_init:2:144690
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:116:5) {
+  code: 'ERR_SYSTEM_ERROR',
+  info: {
+    errno: 22,
+    code: 'Unknown system error 22',
+    message: 'Unknown system error 22',
+    syscall: 'uv_interface_addresses'
+  },
+  errno: [Getter/Setter: 22],
+  syscall: [Getter/Setter: 'uv_interface_addresses']
+}
+(node:30383) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `cursor --trace-deprecation ...` to show where the warning was created)
+dbus-daemon[30376]: [session uid=0 pid=30376] Activating service name='org.gtk.vfs.Daemon' requested by ':1.0' (uid=0 pid=30383 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30376]: [session uid=0 pid=30376] Successfully activated service 'org.gtk.vfs.Daemon'
+[30383:0924/191103.738525:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30383:0924/191103.738735:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30383:0924/191103.738903:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30383:0924/191103.739105:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30383:0924/191103.739238:ERROR:net/base/address_tracker_linux.cc:363] Could not send NETLINK request: Invalid argument (22)
+[30383:0924/191103.739390:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30383:0924/191103.753824:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+
+DevTools listening on ws://127.0.0.1:9266/devtools/browser/bc8d8332-5b4a-439d-b638-bb6c42a0d3da
+[30383:0924/191103.842082:WARNING:device/bluetooth/dbus/bluez_dbus_manager.cc:209] Floss manager service not available, cannot set Floss enable/disable.
+[30383:0924/191103.842144:WARNING:electron/shell/browser/lib/power_observer_linux.cc:181] Failed to connect to PrepareForShutdown
+[30383:0924/191103.842183:WARNING:electron/shell/browser/lib/power_observer_linux.cc:181] Failed to connect to PrepareForSleep
+[30383:0924/191103.842211:WARNING:electron/shell/browser/lib/power_observer_linux.cc:70] org.freedesktop.login1 not available
+dbus-daemon[30376]: [session uid=0 pid=30376] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.3' (uid=0 pid=30383 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30376]: [session uid=0 pid=30376] Activating service name='org.freedesktop.portal.Documents' requested by ':1.4' (uid=0 pid=30544 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30376]: [session uid=0 pid=30376] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.5' (uid=0 pid=30550 comm="/usr/libexec/xdg-document-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30376]: [session uid=0 pid=30376] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[30376]: [session uid=0 pid=30376] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /root/build/proot-bench/home-r02-3-pf/runtime/doc
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:03.947: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:03.948: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[30376]: [session uid=0 pid=30376] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.4' (uid=0 pid=30544 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+Warning: 'remote-debugging-port' is not in the list of known options, but still passed to Electron/Chromium.
+Warning: 'enable-logging' is not in the list of known options, but still passed to Electron/Chromium.
+
+(xdg-desktop-portal-gtk:30581): dbind-WARNING **: 19:11:04.013: Couldn't connect to accessibility bus: Failed to connect to socket /root/build/proot-bench/home-r02-1-pf/runtime/at-spi/bus_3: No such file or directory
+
+(xdg-desktop-portal-gtk:30581): xdg-desktop-portal-gtk-WARNING **: 19:11:04.027: error: Could not connect: No such file or directory
+
+dbus-daemon[30376]: [session uid=0 pid=30376] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.197: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.197: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.198: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.200: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.203: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.208: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.210: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.215: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][03750.061793] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][03750.061808] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.226: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.226: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.228: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+[30383:0924/191104.228582:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:30544): xdg-desktop-portal-WARNING **: 19:11:04.231: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[30376]: [session uid=0 pid=30376] Successfully activated service 'org.freedesktop.portal.Desktop'
+[91m[main 2026-09-24T11:11:04.238Z][0m [uncaught exception in main]: Error: write EFAULT Error: write EFAULT
+    at afterWriteDispatched (node:internal/stream_base_commons:159:15)
+    at writeGeneric (node:internal/stream_base_commons:150:3)
+    at Socket._writeGeneric (node:net:1025:11)
+    at Socket._write (node:net:1037:8)
+    at writeOrBuffer (node:internal/streams/writable:570:12)
+    at _write (node:internal/streams/writable:499:10)
+    at Writable.write (node:internal/streams/writable:508:10)
+    at execSync (node:child_process:1009:20)
+    at K6 (file:///usr/share/cursor/resources/app/out/main.js:66:391)
+    at $w._getTrueMachineId (file:///usr/share/cursor/resources/app/out/main.js:201:32229)
+    at new $w (file:///usr/share/cursor/resources/app/out/main.js:201:31887)
+    at GO._createInstance (file:///usr/share/cursor/resources/app/out/main.js:367:1498)
+    at GO._createServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:5220)
+    at GO._createServiceInstanceWithOwner (file:///usr/share/cursor/resources/app/out/main.js:367:3719)
+    at GO._createAndCacheServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:3366)
+    at GO._safeCreateAndCacheServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:2413)
+    at GO._getOrCreateServiceInstance (file:///usr/share/cursor/resources/app/out/main.js:367:2134)
+    at Object.get (file:///usr/share/cursor/resources/app/out/main.js:367:552)
+    at ou.initChannels (file:///usr/share/cursor/resources/app/out/main.js:331:19896)
+    at file:///usr/share/cursor/resources/app/out/main.js:331:7827
+    at GO.invokeFunction (file:///usr/share/cursor/resources/app/out/main.js:367:437)
+    at ou.startup (file:///usr/share/cursor/resources/app/out/main.js:331:7804)
+    at async sCe.startup (file:///usr/share/cursor/resources/app/out/main.js:371:43868) {
+  errno: -14,
+  code: 'EFAULT',
+  syscall: 'write'
+}
+[30383:0924/191104.240719:ERROR:dbus/object_proxy.cc:573] Failed to call method: org.freedesktop.login1.Manager.Inhibit: object_path= /org/freedesktop/login1: unknown error type: 
+[30383:0924/191104.253700:WARNING:components/dbus/xdg/portal.cc:122] Failed to register with org.freedesktop.host.portal.Registry
+dbus-daemon[30376]: [session uid=0 pid=30376] Activating service name='org.a11y.Bus' requested by ':1.0' (uid=0 pid=30383 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30376]: [session uid=0 pid=30376] Successfully activated service 'org.a11y.Bus'
+[90m[main 2026-09-24T11:11:04.457Z][0m update#ctor - updates are managed by the deb package manager
+[90m[main 2026-09-24T11:11:04.457Z][0m update#setState disabled
+[90m[main 2026-09-24T11:11:04.457Z][0m update#ctor - updates are disabled by the platform installation method
+[30383:0924/191105.261199:INFO:CONSOLE:702] "This document requires 'TrustedScript' assignment. The action has been blocked.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (702)
+[30383:0924/191105.261259:INFO:CONSOLE:702] "The JavaScript Function constructor does not accept TrustedString arguments. See https://github.com/w3c/webappsec-trusted-types/wiki/Trusted-Types-for-function-constructor for more information.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (702)
+[30383:0924/191105.375884:INFO:CONSOLE:6693] "This document requires 'TrustedScript' assignment. The action has been blocked.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (6693)
+[30383:0924/191105.375936:INFO:CONSOLE:6693] "The JavaScript Function constructor does not accept TrustedString arguments. See https://github.com/w3c/webappsec-trusted-types/wiki/Trusted-Types-for-function-constructor for more information.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (6693)
+[30383:0924/191105.846174:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "alwaysKeepComposerInBound" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846225:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "defaultCapabilities" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846407:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "autoApplyFilesOutsideContext" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846518:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "yoloCommandAllowlist" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846554:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "yoloCommandDenylist" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846596:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "smartAllowlistDenylist" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846613:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "yoloMcpToolsDisabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846633:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "doNotShowYoloModeWarningAgain" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846706:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "doNotShowFullYoloModeWarningAgain" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846742:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "selectedFakeStreamerId" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846763:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "yoloDeleteFileDisabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846838:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "yoloOutsideWorkspaceDisabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.846860:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "yoloEnableRunEverything" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847021:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "enableSmartAuto" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847068:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "isWebSearchToolEnabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847448:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "isWebSearchToolEnabled2" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847470:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "isWebSearchToolEnabled3" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847488:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "autoAcceptWebSearchTool" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847507:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "isWebFetchToolEnabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847544:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "webFetchDomainAllowlist" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847558:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "autoApproveModeTransitions" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847575:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "mcpAuthBlocking" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847589:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "autoApprovedModeTransitions" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847606:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "autoRejectedModeTransitions" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847692:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "backgroundComposerEnv" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847739:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "useLegacyTerminalTool" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847826:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "modes4" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847854:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "codeBlockDisplayPreference" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847876:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "thinkingLevel" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847969:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "composerMigrationVersion" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.847998:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "mcpServers" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848020:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "mcpDisabledTools" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848037:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "availableDefaultModels2" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848209:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "featureModelConfigs" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848252:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "backgroundComposerState" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848280:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "dialogDontAskAgainPreferences" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848294:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cursorIgnore" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848347:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "teamAdminSettings" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848371:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "shouldShowViewZoneWhenPreviewBoxIsClipped6" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848512:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppModelsState" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848540:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "aiSettings" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848569:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "authenticationSettings" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848590:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "websiteUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848637:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "backendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.848652:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "authClientId" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849042:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "authDomain" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849067:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "repoBackendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849091:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "telemBackendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849116:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cmdkBackendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849152:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "geoCppBackendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849188:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppConfigBackendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849366:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "originBackendUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849392:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "bcProxyUrl" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849411:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "agentBackendUrlPrivacy" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849425:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "agentBackendUrlNonPrivacy" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849444:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "credentialsDisplayName" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849458:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cmdLineHookState" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849476:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "shouldOnlyImportOnAccept" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849490:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppAutoImportDecorationStyle" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849507:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "newUserData" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849521:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "azureState" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849538:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "personalDocs" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849552:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppInCmdF" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849571:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppTriggerInComments" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849584:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppShowWhitespaceOnlyChanges" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849604:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "cppConfig" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849762:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "indexRepository" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849844:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "haveNotImportedFromVSC" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849873:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "shouldAutoParseCmdKLinks" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849934:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "isFileSyncClientEnabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849964:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "membershipType" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.849985:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "fastApplyModelType" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850063:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "explicitlyEnableSemanticSearch" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850093:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "backgroundComposerEnv" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850112:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "preferredEmbeddingModel" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850126:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "oneTimeSettings" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850306:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "eligibleForSnippetLearning" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850359:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "goneThroughCodeSnippetOnboarding" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850389:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "goneThroughCodeSnippetChangeManagement" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850413:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "hasResetModelOnce" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191105.850432:INFO:CONSOLE:64] "%c WARN color: #993 Missing property "rpcFileLoggerEnabled" in oldValue. Filling with value from initValue. Please add a migration if necessary.", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191106.058496:INFO:CONSOLE:17393] "[layout] AgentLayoutService constructor initialized missing SIDEBAR_LOCATION from primary config fallback undefined [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191106.955830:INFO:CONSOLE:19410] "Extension Host", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191106.956061:INFO:CONSOLE:19410] "console.groupEnd", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30780:0924/191107.106684:WARNING:media/audio/linux/audio_manager_linux.cc:54] Falling back to ALSA for audio output. PulseAudio is not available or could not be initialized.
+[30383:0924/191109.632332:INFO:CONSOLE:19410] "Extension Host", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191109.632425:INFO:CONSOLE:19410] "console.groupEnd", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191109.632462:INFO:CONSOLE:19410] "Extension Host", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191109.632493:INFO:CONSOLE:19410] "console.groupEnd", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191109.632529:INFO:CONSOLE:19410] "Extension Host", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191109.632554:INFO:CONSOLE:19410] "console.groupEnd", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (19410)
+[30383:0924/191112.238154:INFO:CONSOLE:17393] "[github_auth] Provider registered [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191112.238575:INFO:CONSOLE:17393] "[github_auth] Provider registered [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191112.814498:INFO:CONSOLE:7004] "[PluginsProviderService] getPluginMcpServers took 6273.9ms", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (7004)
+[30383:0924/191112.820060:INFO:CONSOLE:7004] "[PluginsProviderService] getPluginHooks took 5511.4ms", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (7004)
+[30383:0924/191112.866164:INFO:CONSOLE:7004] "[PluginsProviderService] getPluginComponentFiles took 1013.2ms", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (7004)
+[30383:0924/191112.905510:INFO:CONSOLE:64] "%c  ERR color: #f33 [Extension Host:retrieval] (node:30889) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `exe --trace-deprecation ...` to show where the warning was created)", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191112.907515:INFO:CONSOLE:11845] "%c[Extension Host:retrieval] %c(node:30889) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `exe --trace-deprecation ...` to show where the warning was created) color: blue color: ", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (11845)
+[30383:0924/191113.079241:INFO:CONSOLE:17566] "Failed to get git telemetry attributes: Error: Failed to execute git", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17566)
+[30383:0924/191113.237893:INFO:CONSOLE:64] "%c  ERR color: #f33 [Extension Host:user] 11:11:13.236 ERROR [sandboxPreflight] Preflight failed: Command failed: /usr/share/cursor/resources/app/resources/helpers/cursorsandbox --policy /root/build/proot-bench/home-r02-3-pf/.cursor/sandbox-policies/sandbox-policy-f8fdcf3d5388eea8 --preflight-only -- /bin/true
+Error: Failed to resolve Linux sandbox backend: Unsupported sandbox configuration: Linux auto backend selection failed. Landlock error: Unsupported sandbox configuration: IO error: Step 2.5/7 (loopback setup) failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22). Bubblewrap error: Unsupported sandbox configuration: IO error: Bubblewrap loopback setup failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22)
+", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191113.238326:INFO:CONSOLE:11845] "%c[Extension Host:user] %c11:11:13.236 ERROR [sandboxPreflight] Preflight failed: Command failed: /usr/share/cursor/resources/app/resources/helpers/cursorsandbox --policy /root/build/proot-bench/home-r02-3-pf/.cursor/sandbox-policies/sandbox-policy-f8fdcf3d5388eea8 --preflight-only -- /bin/true
+Error: Failed to resolve Linux sandbox backend: Unsupported sandbox configuration: Linux auto backend selection failed. Landlock error: Unsupported sandbox configuration: IO error: Step 2.5/7 (loopback setup) failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22). Bubblewrap error: Unsupported sandbox configuration: IO error: Bubblewrap loopback setup failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22)
+ color: blue color: ", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (11845)
+[30383:0924/191113.238811:INFO:CONSOLE:64] "%c  ERR color: #f33 [Extension Host:user] 11:11:13.236 ERROR [sandboxPreflight] Exit status: 2", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191113.238888:INFO:CONSOLE:11845] "%c[Extension Host:user] %c11:11:13.236 ERROR [sandboxPreflight] Exit status: 2 color: blue color: ", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (11845)
+[30383:0924/191113.239524:INFO:CONSOLE:64] "%c  ERR color: #f33 [Extension Host:user] 11:11:13.236 ERROR [sandboxPreflight] Stderr: Error: Failed to resolve Linux sandbox backend: Unsupported sandbox configuration: Linux auto backend selection failed. Landlock error: Unsupported sandbox configuration: IO error: Step 2.5/7 (loopback setup) failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22). Bubblewrap error: Unsupported sandbox configuration: IO error: Bubblewrap loopback setup failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22)
+", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191113.239560:INFO:CONSOLE:11845] "%c[Extension Host:user] %c11:11:13.236 ERROR [sandboxPreflight] Stderr: Error: Failed to resolve Linux sandbox backend: Unsupported sandbox configuration: Linux auto backend selection failed. Landlock error: Unsupported sandbox configuration: IO error: Step 2.5/7 (loopback setup) failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22). Bubblewrap error: Unsupported sandbox configuration: IO error: Bubblewrap loopback setup failed: IO error: loopback: failed RTM_NEWADDR: Invalid argument (os error 22)
+ color: blue color: ", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (11845)
+[30383:0924/191113.619333:INFO:CONSOLE:17393] "[background_composer] Refreshing background composers [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191113.619690:INFO:CONSOLE:17393] "[background_composer] Background composer disabled, not refreshing background composers [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191115.090591:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [deadline_exceeded] the operation timed out [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191115.262122:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] No authorization header found [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191115.288052:INFO:CONSOLE:64] "%c  ERR color: #f33 [unauthenticated] No authorization header found: ConnectError: [unauthenticated] No authorization header found
+    at t (vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:11881:598847)
+    at async Object.cppConfig (vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:6752:60939)
+    at async wKo.loadCppConfigIncludingHandlingProAccess (vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:19463:1305) ConnectError: [unauthenticated] No authorization header found", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[30383:0924/191116.095268:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [deadline_exceeded] the operation timed out [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191118.104429:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [deadline_exceeded] the operation timed out [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191120.209955:INFO:CONSOLE:6750] "[browser-bridge] Initialized OTEL provider with collector callback", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (6750)
+[90m[main 2026-09-24T11:11:20.251Z][0m [RendererPing] enabled (intervalMs=5000, blockThresholdMs=15000, stacks=true)
+[30383:0924/191122.112806:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [deadline_exceeded] the operation timed out [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191122.113601:INFO:CONSOLE:17438] "ConnectError: [deadline_exceeded] the operation timed out", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17438)
+[90m[main 2026-09-24T11:11:22.152Z][0m [CursorProclistService] Config enabled feature (subsample every 10s; memoryPressureMonitorEnabled=true)
+[30383:0924/191122.818698:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] Error [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191122.820246:INFO:CONSOLE:7004] "[MCPWellKnownDetection] Failed to fetch known servers for icon pre-resolution: ConnectError: [unauthenticated] Error", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (7004)
+[30383:0924/191123.168900:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] Error [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191123.168989:INFO:CONSOLE:8098] "[KnowledgeBaseService] Failed to fetch knowledge: ConnectError: [unauthenticated] Error", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (8098)
+[30383:0924/191124.324976:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] No authorization header found [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191126.146154:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] Error [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[90m[main 2026-09-24T11:11:37.184Z][0m [WorktreeCleanupMainService] Granted cleanup lease id=1 owner=window:1 reason="startup-catchup-worktree-cleanup"
+[30383:0924/191142.202206:INFO:CONSOLE:64] "%c WARN color: #993 [WorktreeManager] Timed out after 5000ms waiting for local agent scan; orphan classification disabled this pass", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (64)
+[90m[main 2026-09-24T11:11:42.204Z][0m [WorktreeCleanupMainService] Releasing cleanup lease id=1 owner=window:1 reason="startup-catchup-worktree-cleanup" releaseReason="released" heldForMs=5020
+[30383:0924/191142.394321:INFO:CONSOLE:17393] "[agent_exec] Agent data cleanup completed [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191224.039383:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] Error [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+[30383:0924/191325.027204:INFO:CONSOLE:17393] "[transport] Connect error in unary AI connect ConnectError: [unauthenticated] Error [object Object]", source: vscode-file://vscode-app/usr/share/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js (17393)
+proot info: vpid 1: terminated with signal 15
+LAUNCH_EXIT rc=0

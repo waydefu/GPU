@@ -1,0 +1,244 @@
+{
+ "port": "9261",
+ "sid": 18586,
+ "x3pid": 16869,
+ "actpid": "8973",
+ "phases": {
+  "idle": {
+   "start": {
+    "t": 1790247138211,
+    "session_ticks": 0,
+    "session_procs": 0,
+    "x3_ticks": 168,
+    "extra_ticks": null,
+    "state": {
+     "focus": true,
+     "awake": true,
+     "keyguard": false
+    },
+    "act_ticks": 133
+   },
+   "end": {
+    "t": 1790247198233,
+    "session_ticks": 0,
+    "session_procs": 0,
+    "x3_ticks": 246,
+    "extra_ticks": null,
+    "act_ticks": 174,
+    "state": {
+     "focus": true,
+     "awake": true,
+     "keyguard": false
+    }
+   }
+  },
+  "scroll": {
+   "start": {
+    "t": 1790247199232,
+    "session_ticks": 0,
+    "session_procs": 0,
+    "x3_ticks": 247,
+    "extra_ticks": null,
+    "state": {
+     "focus": true,
+     "awake": true,
+     "keyguard": false
+    },
+    "act_ticks": 174
+   },
+   "end": {
+    "t": 1790247229258,
+    "session_ticks": 0,
+    "session_procs": 0,
+    "x3_ticks": 361,
+    "extra_ticks": null,
+    "act_ticks": 252,
+    "state": {
+     "focus": true,
+     "awake": true,
+     "keyguard": false
+    }
+   },
+   "keys_sent": 300,
+   "keys_acked": 300,
+   "frames": {
+    "n": 3026,
+    "p50": 8.300000000017462,
+    "p95": 25,
+    "over50": 3
+   },
+   "first_line_at_50": "1621",
+   "first_line_after": "29",
+   "refocused_before_type": true
+  },
+  "type": {
+   "start": {
+    "t": 1790247230211,
+    "session_ticks": 0,
+    "session_procs": 0,
+    "x3_ticks": 362,
+    "extra_ticks": null,
+    "state": {
+     "focus": true,
+     "awake": true,
+     "keyguard": false
+    },
+    "act_ticks": 252
+   },
+   "end": {
+    "t": 1790247260227,
+    "session_ticks": 0,
+    "session_procs": 0,
+    "x3_ticks": 650,
+    "extra_ticks": null,
+    "act_ticks": 450,
+    "state": {
+     "focus": true,
+     "awake": true,
+     "keyguard": false
+    }
+   },
+   "chars_sent": 600,
+   "chars_acked": 600,
+   "frames": {
+    "n": 3149,
+    "p50": 8.300000000017462,
+    "p95": 16.70000000001164,
+    "over50": 3
+   },
+   "typed_text_visible": true
+  }
+ },
+ "errors": [],
+ "browser": "Chrome/144.0.7559.236",
+ "identity": {
+  "glRenderer": "Disabled",
+  "gpu_compositing": "disabled_software",
+  "rasterization": "disabled_software"
+ },
+ "procs_start": [
+  {
+   "type": "browser",
+   "id": 18592
+  },
+  {
+   "type": "renderer",
+   "id": 18877
+  },
+  {
+   "type": "GPU",
+   "id": 18758
+  },
+  {
+   "type": "network.mojom.NetworkService",
+   "id": 18763
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 18872
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19105
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19136
+  },
+  {
+   "type": "audio.mojom.AudioService",
+   "id": 19171
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19211
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19252
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19253
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19261
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19513
+  }
+ ],
+ "editor_before": {
+  "firstLine": "1",
+  "active": "inputarea monaco-mouse-cursor-text",
+  "editors": 1,
+  "w": 1000,
+  "h": 800,
+  "editor_found": true,
+  "focused": true,
+  "first_state": {
+   "firstLine": "1",
+   "active": "inputarea monaco-mouse-cursor-text",
+   "editors": 1,
+   "w": 1000,
+   "h": 800
+  }
+ },
+ "screenshot": "/root/projects/GPU加速/evidence/session/proot/proot-bench-01-rep01/r01-1-p0.png",
+ "procs_end": [
+  {
+   "type": "browser",
+   "id": 18592
+  },
+  {
+   "type": "renderer",
+   "id": 18877
+  },
+  {
+   "type": "GPU",
+   "id": 18758
+  },
+  {
+   "type": "network.mojom.NetworkService",
+   "id": 18763
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 18872
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19105
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19136
+  },
+  {
+   "type": "audio.mojom.AudioService",
+   "id": 19171
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19211
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19252
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19253
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19261
+  },
+  {
+   "type": "node.mojom.NodeService",
+   "id": 19513
+  }
+ ]
+}
