@@ -1,0 +1,10 @@
+  PID  PPID   RSS COMMAND
+13956 13952 49700 /usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox
+13957 13952 49892 /usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox
+14076 13952 74180 /proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --enable-crash-rep
+14126 13952 70080 /proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox 
+14886 13952 25364 /usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile luna serve --host 127.0.0.1 --port 0
+15239 13952 29608 /usr/bin/gh auth status
+15258 13952 29864 /usr/bin/gh auth status
+15265 13952 29924 /usr/bin/gh auth status
+15357 13952  2388 /bin/bash /usr/local/bin/hermes --version

@@ -1,0 +1,59 @@
+file|root:root|640|2|5|regular file
+hard|root:root|640|2|5|regular file
+dir|root:root|700|3|3452|directory
+sym|root:root|777|1|4|symbolic link
+rc=0
+sym|root:root|640|2|5|regular file
+rc=0
+dangling|root:root|777|1|7|symbolic link
+rc=0
+stat: cannot statx 'dangling': No such file or directory
+rc=0
+stat: cannot statx 'missing': No such file or directory
+rc=0
+sub|root:root|700|2|3452|directory
+sub/x|root:root|600|1|0|regular empty file
+../file|root:root|640|2|5|regular file
+rc=0
+/dev/null|root:root|S|1|0|character special file
+/tmp|root:root|S|19|N|directory
+/proc/self/status|root:root|S|1|0|regular empty file
+rc=0
+py file True 0 0 0o100640 2 5
+py hard True 0 0 0o100640 2 5
+py sym False 0 0 0o120777 1 4
+py sym True 0 0 0o100640 2 5
+py dangling False 0 0 0o120777 1 7
+py dir/sub/x True 0 0 0o100600 1 0
+py dangling 2 No such file or directory
+py missing 2 No such file or directory
+fstat hardlink 0 0 0o100640 2 5
+fstat file 0 0 0o100600 1 0
+fstat dirfd 0 0 0o40700 3 3452
+fstat pipe 0 0 0o10600 1 -
+fstat socket 0 0 0o140777 1 0
+fstat devnull 0 0 0o20666 1 0
+fstat deleted 0 0 0o100600 0 1
+fstat bad 9
+node file 0 0 2 5
+node hard 0 0 2 5
+node dir 0 0 3 3452
+node lstat sym true
+drwx------. 3 root root .  
+drwxr-xr-x. 21 root root ..  
+lrwxrwxrwx. 1 root root dangling -> missing
+drwx------. 3 root root dir  
+-rw-r-----. 2 root root file  
+-rw-r-----. 2 root root hard  
+lrwxrwxrwx. 1 root root sym -> file
+.
+./dangling
+./dir
+./dir/sub
+./dir/sub/x
+./file
+./hard
+./sym
+git rc=0
+true
+STAT_SMOKE_DONE

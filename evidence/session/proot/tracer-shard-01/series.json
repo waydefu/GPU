@@ -1,0 +1,39 @@
+{
+  "captures": [
+    {
+      "name": "shard-p-01",
+      "group": "P",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-p-01"
+    },
+    {
+      "name": "shard-s-01",
+      "group": "S",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-s-01"
+    },
+    {
+      "name": "shard-s-02",
+      "group": "S",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-s-02"
+    },
+    {
+      "name": "shard-p-02",
+      "group": "P",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-p-02"
+    },
+    {
+      "name": "shard-p-03",
+      "group": "P",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-p-03"
+    },
+    {
+      "name": "shard-s-03",
+      "group": "S",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-s-03"
+    },
+    {
+      "name": "shard-p-r1",
+      "group": "P",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/proot/tracer-shard-01/shard-p-r1"
+    }
+  ]
+}

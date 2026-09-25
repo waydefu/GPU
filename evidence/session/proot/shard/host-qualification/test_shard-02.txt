@@ -1,0 +1,9 @@
+case1 verdict=SHARDED tracer=5453 daily=27459 shard_out=F8_SHARD tracer=5453 app=5491 job=/data/data/com.termux/files/usr/tmp/f8-shard/20260925-203507-5312
+ok same tracer sha 2d5596dc
+ok DISPLAY carried
+ok cwd carried
+ok rootfs visible
+ok SIGTERM forwarded (f8-shard rc=0)
+ok shard tracer gone
+case2 verdict=NOT_SHARDED (control, must be NOT_SHARDED)
+TEST_SHARD_PASS

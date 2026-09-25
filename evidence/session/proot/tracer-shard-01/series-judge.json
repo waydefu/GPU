@@ -1,0 +1,259 @@
+{
+  "captures": [
+    {
+      "name": "shard-p-01",
+      "group": "P",
+      "valid": false,
+      "why": [
+        "touch events 755"
+      ],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.099,
+          "p99": 2.56,
+          "max": 7.141,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 960,
+          "p50": 0.092,
+          "p99": 2.615,
+          "max": 6.591,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2373,
+          "over_100ms": 13,
+          "fstat_p99_us": 34317.2,
+          "getppid_p99_us": 4.8
+        },
+        "S1": 13,
+        "S2": 0,
+        "S3": 0,
+        "E": 13
+      }
+    },
+    {
+      "name": "shard-s-01",
+      "group": "S",
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.13,
+          "p99": 3.665,
+          "max": 6.496,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 959,
+          "p50": 0.114,
+          "p99": 2.487,
+          "max": 4.881,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2396,
+          "over_100ms": 0,
+          "fstat_p99_us": 1117.1,
+          "getppid_p99_us": 4.8
+        },
+        "S1": 0,
+        "S2": 0,
+        "S3": 0,
+        "E": 0
+      }
+    },
+    {
+      "name": "shard-s-02",
+      "group": "S",
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.129,
+          "p99": 3.975,
+          "max": 6.263,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 960,
+          "p50": 0.122,
+          "p99": 2.359,
+          "max": 5.341,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2395,
+          "over_100ms": 0,
+          "fstat_p99_us": 988.6,
+          "getppid_p99_us": 4.4
+        },
+        "S1": 0,
+        "S2": 0,
+        "S3": 0,
+        "E": 0
+      }
+    },
+    {
+      "name": "shard-p-02",
+      "group": "P",
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.137,
+          "p99": 2.241,
+          "max": 5.155,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 959,
+          "p50": 0.12,
+          "p99": 2.163,
+          "max": 7.955,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2366,
+          "over_100ms": 20,
+          "fstat_p99_us": 71386.8,
+          "getppid_p99_us": 6.7
+        },
+        "S1": 20,
+        "S2": 0,
+        "S3": 0,
+        "E": 20
+      }
+    },
+    {
+      "name": "shard-p-03",
+      "group": "P",
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.137,
+          "p99": 3.096,
+          "max": 12.068,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 960,
+          "p50": 0.114,
+          "p99": 2.019,
+          "max": 4.448,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2363,
+          "over_100ms": 20,
+          "fstat_p99_us": 79945.7,
+          "getppid_p99_us": 4.2
+        },
+        "S1": 20,
+        "S2": 0,
+        "S3": 0,
+        "E": 20
+      }
+    },
+    {
+      "name": "shard-s-03",
+      "group": "S",
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.147,
+          "p99": 2.82,
+          "max": 6.503,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 959,
+          "p50": 0.123,
+          "p99": 2.137,
+          "max": 4.542,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2394,
+          "over_100ms": 0,
+          "fstat_p99_us": 1374.9,
+          "getppid_p99_us": 5.2
+        },
+        "S1": 0,
+        "S2": 0,
+        "S3": 0,
+        "E": 0
+      }
+    },
+    {
+      "name": "shard-p-r1",
+      "group": "P",
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.157,
+          "p99": 3.255,
+          "max": 6.984,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 960,
+          "p50": 0.146,
+          "p99": 4.701,
+          "max": 6.73,
+          "over_100ms": 0
+        },
+        "traced_lat": {
+          "n": 2371,
+          "over_100ms": 18,
+          "fstat_p99_us": 77937.1,
+          "getppid_p99_us": 4.4
+        },
+        "S1": 18,
+        "S2": 0,
+        "S3": 0,
+        "E": 18
+      }
+    }
+  ],
+  "why": [],
+  "E": {
+    "P": [
+      20,
+      20,
+      18
+    ],
+    "S": [
+      0,
+      0,
+      0
+    ]
+  },
+  "S3": {
+    "P": [
+      0,
+      0,
+      0
+    ],
+    "S": [
+      0,
+      0,
+      0
+    ]
+  },
+  "T0": "CONTROL_REPRODUCES",
+  "T1": "SHARD_REMOVES_STUTTER",
+  "T2": "X_SERVER_NO_STALLS",
+  "verdict": "JUDGED"
+}

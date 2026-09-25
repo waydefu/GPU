@@ -1,0 +1,26 @@
+{
+  "kind": "v7",
+  "group": "S",
+  "client_tracer": {
+    "pid": 749,
+    "tracer_pid": 29525,
+    "tracer_comm": "proot-fast7",
+    "tracer_exe": "/data/data/com.termux/files/home/build/proot-fast/out7/bin/proot-fast7",
+    "tracer_sha256": "4f9d10ad2f78e1eef3907eea1ef761b4b8265c9d7cbd5779df48b4f8cb756058",
+    "proot_env": {
+      "PROOT_L2S_DIR": "/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs/.l2s"
+    }
+  },
+  "test_mode": false,
+  "display": ":1",
+  "launch": [
+    {
+      "app": "cursor",
+      "cmd": "/root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/cursor-gpu"
+    },
+    {
+      "app": "hermes",
+      "cmd": "/root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/hermes-gpu"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+control (unmutated) rc=0 OK
+mutant 'S apps on the daily tracer accepted': rc=1 caught
+mutant 'P apps elsewhere accepted': rc=1 caught
+mutant 'renderer check dropped': rc=1 caught
+mutant 'missing app accepted': rc=1 caught
+mutant 'client tracer = v6 accepted': rc=1 caught
+mutant 'unfrozen tools accepted': rc=1 caught
+mutant 'threshold 0.25 -> 0.5': rc=1 caught
+mutant 'control not required': rc=1 caught
+mutant 'cherry-picked replacement accepted': rc=1 caught
+mutant 'E counts S3': rc=1 caught
+MUTATION_CHECK_PASS

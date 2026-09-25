@@ -1,0 +1,31 @@
+test_app_not_launched_invalid (__main__.Capture.test_app_not_launched_invalid) ... ok
+test_apps_end_missing_fails_closed (__main__.Capture.test_apps_end_missing_fails_closed) ... ok
+test_good_p_and_s_valid (__main__.Capture.test_good_p_and_s_valid) ... ok
+test_group_mismatch_invalid (__main__.Capture.test_group_mismatch_invalid) ... ok
+test_off_switch_invalid (__main__.Capture.test_off_switch_invalid) ... ok
+test_p_but_apps_sharded_invalid (__main__.Capture.test_p_but_apps_sharded_invalid) ... ok
+test_part_a_capture_is_not_a_shard_capture (__main__.Capture.test_part_a_capture_is_not_a_shard_capture) ... ok
+test_precheck_apps_running_invalid (__main__.Capture.test_precheck_apps_running_invalid) ... ok
+test_s_but_apps_on_daily_tracer_invalid (__main__.Capture.test_s_but_apps_on_daily_tracer_invalid) ... ok
+test_s_main_tracer_not_the_recorded_shard_invalid (__main__.Capture.test_s_main_tracer_not_the_recorded_shard_invalid) ... ok
+test_shard_tools_mismatch_invalid (__main__.Capture.test_shard_tools_mismatch_invalid) ... ok
+test_shard_tracer_wrong_binary_invalid (__main__.Capture.test_shard_tracer_wrong_binary_invalid) ... ok
+test_test_mode_never_counts (__main__.Capture.test_test_mode_never_counts) ... ok
+test_touch_and_null_touch_invalid (__main__.Capture.test_touch_and_null_touch_invalid) ... ok
+test_unfrozen_shard_tools_invalid (__main__.Capture.test_unfrozen_shard_tools_invalid) ... ok
+test_v6_client_tracer_invalid (__main__.Capture.test_v6_client_tracer_invalid) ... ok
+test_control_must_reproduce (__main__.Series.test_control_must_reproduce) ... ok
+test_no_clear_effect (__main__.Series.test_no_clear_effect) ... ok
+test_reduces (__main__.Series.test_reduces) ... ok
+test_removes (__main__.Series.test_removes) ... ok
+test_replacement_restores_count (__main__.Series.test_replacement_restores_count) ... ok
+test_replacement_without_invalid_rejected (__main__.Series.test_replacement_without_invalid_rejected) ... ok
+test_too_few_valid_inconclusive (__main__.Series.test_too_few_valid_inconclusive) ... ok
+test_too_many_replacements (__main__.Series.test_too_many_replacements) ... ok
+test_wrong_order_inconclusive (__main__.Series.test_wrong_order_inconclusive) ... ok
+test_x_server_stalls (__main__.Series.test_x_server_stalls) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 1.560s
+
+OK

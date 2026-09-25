@@ -1,0 +1,26 @@
+{
+  "cursor": {
+    "main_pids_by_cmdline": [
+      24657,
+      26146,
+      26169
+    ],
+    "launched_pid": 24657,
+    "launched_cmdline": "/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --user-data-dir=/root/.cursor-data --disable-gpu",
+    "main_pid": 24657,
+    "tracer_pid": 29525,
+    "tracer_sha256": "4f9d10ad2f78e1eef3907eea1ef761b4b8265c9d7cbd5779df48b4f8cb756058",
+    "renderers": 2
+  },
+  "hermes": {
+    "main_pids_by_cmdline": [
+      24658
+    ],
+    "launched_pid": 24658,
+    "launched_cmdline": "/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --no-sandbox --disable-gpu-sandbox --ozone-platform=x11 --disable-dev-shm-usage --d",
+    "main_pid": 24658,
+    "tracer_pid": 29525,
+    "tracer_sha256": "4f9d10ad2f78e1eef3907eea1ef761b4b8265c9d7cbd5779df48b4f8cb756058",
+    "renderers": 2
+  }
+}

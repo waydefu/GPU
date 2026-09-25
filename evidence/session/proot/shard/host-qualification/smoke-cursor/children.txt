@@ -1,0 +1,6 @@
+  PID  PPID   RSS COMMAND
+12750 12748 50336 /usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox
+12751 12748 50664 /usr/share/cursor/cursor --type=zygote --no-sandbox
+13399 12748 75896 /proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler
+13413 12748 69632 /proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox 
+13441 12748 123308 /proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --dis
