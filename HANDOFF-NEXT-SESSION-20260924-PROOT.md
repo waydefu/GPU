@@ -84,3 +84,27 @@ fork commits  8b905a2（GL-BENCH）、a4440fa（ELECTRON-BENCH）、22137ff（PR
   但 r02-3-pf 一輪捲動 p95 33.3 ms（高一格 8.3 ms）使 rep02 幀條件失敗。判決凍結 → `PROOT-BENCH-02-RESULT.md`。
 - 日常：`f8desk`／`f8desk-external` 已有 PD_PROOT_BIN 區塊，但 `~/.f8-proot-stock` 預設關閉；捷徑 08 開、07 關，重開桌面生效。**要不要開是使用者的選擇。**
 - 可能的下一步：預先登記、專看捲動幀的 PROOT-BENCH-03（更多輪），釐清 p95 那一格是否真實。
+
+## 更新 2026-09-24 23:5x（session 8eb4b3ab）：APP-IDLE-01 → `DAILY_ENABLE false`
+- 四個日常程式閒置 CPU（P0 vs v2，ABBA）：chatgpt −50%、chatgptweb −10%（唯一 BENEFIT）、hermes −35%（差 0.2 pp）、cursor −58%；
+  16/16 兩兩比較都是 v2 較低，但凍結的 noise 項讓 3/4 未達標 → 日常維持原版（`~/.f8-proot-stock`）。`evidence/session/proot/APP-IDLE-01-RESULT.md`。
+- 實用發現：chatgpt-web（Chromium）閒置就吃 ~1 核；ChatGPT 桌面版只有 0.04–0.1 核。
+- 環境：使用者設了 `screen_optimize_mode=2`、`hide_gesture_line=1` → 實驗版 X root 現在是 **1200×2464**（runner 的 EXPECT_ROOT 要跟著改）。
+- ADB 這次是 `10.191.48.13:45503`（會變）；PRoot 內重起 adb server 要帶 `ADB_VENDOR_KEYS`。
+
+## 更新 2026-09-25：使用者已自行開啟加速版（捷徑 08＋重開桌面）
+- 日常追蹤器 = `proot-fast2`（pid 17477），`~/.f8-proot-stock` 已刪。日常 PRoot 內 sysbench2：vdso present、futex 0.24 µs、uname 仍假版本。
+- 日常實測（描述性，非對照測試）：追蹤器即時 0.013 核／30 s（切換前同情境 0.360）；累計 39 s／153 min（切換前 1345 s／79 min，平均 0.28 → 0.004 核）。
+- 切回：捷徑 07 ＋重開桌面。
+
+## 更新 2026-09-25 凌晨（session 8eb4b3ab，後段）
+- **getifaddrs 回歸**已修：`/etc/ld.so.preload` → `/usr/local/lib/libf8ifaddrs.so`（`PROOT-FAST-NETLINK-01.md`）；Python ifaddr 仍壞，ADB 探測改掃埠。
+- **小工具** 8 → 3：`F8 工作站`（開／切到／關）、`F8 外接`（外接 App／外接 Linux／滿版／滑鼠）、`F8 設定`（proot 加速／原版）；舊的在 `~/.shortcuts-backup-20260925/`，
+  06 的內嵌腳本搬成 `$PREFIX/bin/f8-mouse-external`。
+- **儲存**：logs/ zstd 無損（7.5 GB→85 MB，`logs/SHA256SUMS-before-zstd.txt`）、刪 `.cursor-test`、刪 `.cursor-data/snapshots`、VACUUM state.vscdb（只省 20 MB、筆數相同）→ 可用 45.0→55.2 GB。
+  證據 raw-logcat／logcat-follow（~9 GB）與 APK/.so 副本（~4 GB）壓縮／去重**未做**（需使用者同意，證據規則）。
+- **拖曳中文路徑關窗**：DND-PROBE-01（`proot/dnd-probe-02`）終端機 4/4、Cursor 3/3 有效格都沒關（1 格抓到 Cursor 的 Error 對話框＝無效）→ 未重現；需問使用者拖曳來源／目標是哪個程式。
+- **查檔案攔截**：v4 忙等假設被推翻（`PROOT-FAST4-SPIN-01.md`）。
+- 外接螢幕：`force_desktop_mode_on_external_displays=1`（所以不是鏡像）；`stay_on_while_plugged_in=15`；逾時 10 分。螢幕工具（觸控/按鍵才算活動、2 分鐘關面板）尚未做，待接外接螢幕＋搖桿實測。
+- **查檔案 v5**：成本拆解 `PROOT-STAT-COST-01.md`（每 stop ~30 µs、主因放行喚醒）；v5「進入時代答」`PROOT-FAST5-STAT-AT-ENTER-01.md`：
+  stat −41%、fstat −45%、不存在 −45%、整體工作 −29% wall／−28% CPU；smoke 逐字相同＋必紅對照抓得到。`out5/bin/proot-fast5`（adb3d6d6），**未部署**。

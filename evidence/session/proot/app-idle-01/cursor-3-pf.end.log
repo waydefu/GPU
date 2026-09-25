@@ -1,0 +1,24 @@
+end_begin sid=25668 tracer=25666 members=22
+term sid=25668 pid=25668 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh cursor /tmp/app-idle/run-cursor-3-pf 
+term sid=25668 pid=25669 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=25668 pid=25677 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/tmp/app-idle/run-cursor-
+term sid=25668 pid=25680 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=25668 pid=25681 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox 
+term sid=25668 pid=25757 cmd=/usr/libexec/gvfsd 
+term sid=25668 pid=25772 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=25668 pid=25782 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=25668 pid=25789 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=25668 pid=25822 cmd=/usr/libexec/xdg-permission-store 
+term sid=25668 pid=25834 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=25668 pid=25861 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=25668 pid=25869 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25668 pid=25872 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox 
+term sid=25668 pid=26048 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=25668 pid=26063 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=25668 pid=26087 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25668 pid=26088 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25668 pid=26254 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+term sid=25668 pid=26858 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25668 pid=27789 cmd=node /usr/bin/firebase mcp --dir /root/projects/clinic --only auth,firestore 
+term sid=25668 pid=28057 cmd=/root/.local/share/uv/tools/serena-agent/bin/python /root/.local/bin/serena start-mcp-server --context ide --project-from-cwd --enable-web-dashboard False --ope
+END survivors=0 tracer_gone=true

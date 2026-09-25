@@ -1,0 +1,60 @@
+PROFTRACE_LOADED pid=15939
+FSTATLOOP n=0 wall_us_per=inf tracee_user_us_per=nan tracee_sys_us_per=inf nvcsw=0 nivcsw=0
+== n=0
+PROFTRACE pid=15941
+  readlink(at)       n=68        total_ms=0.2       avg_us=3.08
+  lstat              n=1         total_ms=0.0       avg_us=1.67
+  stat               n=33        total_ms=0.1       avg_us=1.82
+  fstatat            n=34        total_ms=0.1       avg_us=1.63
+  open(at)           n=4         total_ms=0.2       avg_us=39.43
+  close              n=43        total_ms=0.0       avg_us=0.68
+  write              n=13        total_ms=0.1       avg_us=11.26
+PROFTRACE pid=15939
+  ptrace             n=309       total_ms=1.4       avg_us=4.62
+  waitpid/wait4      n=234       total_ms=14.7      avg_us=62.98
+  process_vm_readv   n=167       total_ms=0.2       avg_us=0.96
+  process_vm_writev  n=121       total_ms=0.1       avg_us=0.81
+  readlink(at)       n=174       total_ms=0.5       avg_us=2.99
+  lstat              n=202       total_ms=0.6       avg_us=2.95
+  stat               n=123       total_ms=0.3       avg_us=2.55
+  fstatat            n=325       total_ms=0.9       avg_us=2.69
+  open(at)           n=9         total_ms=0.1       avg_us=10.64
+  close              n=48        total_ms=0.0       avg_us=0.65
+  read               n=38        total_ms=0.0       avg_us=0.61
+  write              n=13        total_ms=0.1       avg_us=11.26
+  ptrace[0x0007]     n=50        total_ms=0.5       avg_us=10.20
+  ptrace[0x0018]     n=65        total_ms=0.8       avg_us=11.79
+  ptrace[0x4200]     n=1         total_ms=0.0       avg_us=1.67
+  ptrace[0x4201]     n=47        total_ms=0.0       avg_us=0.55
+  ptrace[0x4204]     n=109       total_ms=0.1       avg_us=0.92
+  ptrace[0x4205]     n=37        total_ms=0.0       avg_us=0.60
+PROFTRACE_LOADED pid=15944
+FSTATLOOP n=20000 wall_us_per=64.04 tracee_user_us_per=0.12 tracee_sys_us_per=27.36 nvcsw=40000 nivcsw=4
+== n=20000
+PROFTRACE pid=15947
+  readlink(at)       n=68        total_ms=0.1       avg_us=1.90
+  lstat              n=1         total_ms=0.0       avg_us=1.25
+  stat               n=33        total_ms=0.0       avg_us=1.26
+  fstatat            n=34        total_ms=0.0       avg_us=1.14
+  open(at)           n=4         total_ms=0.1       avg_us=28.45
+  close              n=43        total_ms=0.0       avg_us=0.44
+  write              n=13        total_ms=0.0       avg_us=1.45
+PROFTRACE pid=15944
+  ptrace             n=100309    total_ms=364.3     avg_us=3.63
+  waitpid/wait4      n=80234     total_ms=1446.3    avg_us=18.03
+  process_vm_readv   n=40162     total_ms=32.4      avg_us=0.81
+  process_vm_writev  n=40121     total_ms=28.0      avg_us=0.70
+  readlink(at)       n=40174     total_ms=86.3      avg_us=2.15
+  lstat              n=20202     total_ms=40.1      avg_us=1.98
+  stat               n=123       total_ms=0.3       avg_us=2.14
+  fstatat            n=20325     total_ms=38.6      avg_us=1.90
+  open(at)           n=9         total_ms=0.1       avg_us=8.57
+  close              n=48        total_ms=0.0       avg_us=0.45
+  read               n=38        total_ms=0.0       avg_us=0.48
+  write              n=13        total_ms=0.0       avg_us=1.45
+  ptrace[0x0007]     n=20050     total_ms=164.6     avg_us=8.21
+  ptrace[0x0018]     n=20065     total_ms=163.4     avg_us=8.15
+  ptrace[0x4200]     n=1         total_ms=0.0       avg_us=1.04
+  ptrace[0x4201]     n=20047     total_ms=10.4      avg_us=0.52
+  ptrace[0x4204]     n=40109     total_ms=25.8      avg_us=0.64
+  ptrace[0x4205]     n=37        total_ms=0.0       avg_us=0.55

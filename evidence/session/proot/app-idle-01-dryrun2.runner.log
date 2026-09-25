@@ -1,0 +1,4 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5561 floor_mb=4500 disk_free_gb=44
+gl/run-gl-bench.sh: line 107: /proc/14154/cmdline: No such file or directory
+STOP logcat pid 14096 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/app-idle-01-dryrun2 APP_IDLE_DRYRUN_DONE

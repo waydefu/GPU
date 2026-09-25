@@ -1,0 +1,138 @@
+== v2#1
+stat abs                112.94 us/call uid=0 nlink=1
+lstat abs               111.08 us/call uid=0 nlink=1
+stat rel                113.55 us/call uid=0 nlink=1
+stat missing            100.20 us/call uid=0 nlink=1
+git_status     1389 ms
+find_tree       207 ms
+stat_storm     2226 ms
+futex_wake         0.24 us/call
+fstat             84.32 us/call
+open+close       102.82 us/pair
+git_status       1297 ms
+git_log          2841 ms
+grep_tree         134 ms
+find_tree         233 ms
+python_start      861 ms
+node_start        448 ms
+bash_pipes        174 ms
+py_threads       1302 ms
+node_async        916 ms
+0m0.000000s 0m0.000000s
+0m3.810000s 0m20.040000s
+wall_total_ms 23189
+== v5#1
+stat abs                 65.21 us/call uid=0 nlink=1
+lstat abs                63.77 us/call uid=0 nlink=1
+stat rel                 64.31 us/call uid=0 nlink=1
+stat missing             56.12 us/call uid=0 nlink=1
+git_status     1048 ms
+find_tree       192 ms
+stat_storm     1687 ms
+futex_wake         0.21 us/call
+fstat             52.61 us/call
+open+close       108.66 us/pair
+git_status       1098 ms
+git_log          2032 ms
+grep_tree         132 ms
+find_tree         172 ms
+python_start      735 ms
+node_start        428 ms
+bash_pipes        162 ms
+py_threads       1377 ms
+node_async        939 ms
+0m0.010000s 0m0.010000s
+0m3.890000s 0m13.580000s
+wall_total_ms 16805
+== v5off#1
+stat abs                107.81 us/call uid=0 nlink=1
+lstat abs               103.20 us/call uid=0 nlink=1
+stat rel                109.05 us/call uid=0 nlink=1
+stat missing            101.45 us/call uid=0 nlink=1
+git_status     1358 ms
+find_tree       227 ms
+stat_storm     2416 ms
+futex_wake         0.26 us/call
+fstat             87.22 us/call
+open+close       106.54 us/pair
+git_status       1416 ms
+git_log          2241 ms
+grep_tree         159 ms
+find_tree         207 ms
+python_start      903 ms
+node_start        583 ms
+bash_pipes        183 ms
+py_threads        962 ms
+node_async        996 ms
+0m0.000000s 0m0.010000s
+0m3.850000s 0m19.860000s
+wall_total_ms 22550
+== v2#2
+stat abs                109.13 us/call uid=0 nlink=1
+lstat abs               106.73 us/call uid=0 nlink=1
+stat rel                110.59 us/call uid=0 nlink=1
+stat missing            101.82 us/call uid=0 nlink=1
+git_status     1465 ms
+find_tree       224 ms
+stat_storm     2421 ms
+futex_wake         0.35 us/call
+fstat             90.71 us/call
+open+close       109.83 us/pair
+git_status       1296 ms
+git_log          2275 ms
+grep_tree         177 ms
+find_tree         219 ms
+python_start      941 ms
+node_start        494 ms
+bash_pipes        194 ms
+py_threads       1207 ms
+node_async       1051 ms
+0m0.000000s 0m0.010000s
+0m4.040000s 0m20.120000s
+wall_total_ms 23097
+== v5#2
+stat abs                 66.68 us/call uid=0 nlink=1
+lstat abs                64.93 us/call uid=0 nlink=1
+stat rel                 58.97 us/call uid=0 nlink=1
+stat missing             55.79 us/call uid=0 nlink=1
+git_status     1073 ms
+find_tree       192 ms
+stat_storm     1705 ms
+futex_wake         0.20 us/call
+fstat             42.56 us/call
+open+close        96.45 us/pair
+git_status       1013 ms
+git_log          2007 ms
+grep_tree         144 ms
+find_tree         197 ms
+python_start      760 ms
+node_start        457 ms
+bash_pipes        163 ms
+py_threads       1304 ms
+node_async        855 ms
+0m0.000000s 0m0.000000s
+0m3.870000s 0m13.120000s
+wall_total_ms 16331
+== v5off#2
+stat abs                108.17 us/call uid=0 nlink=1
+lstat abs               110.07 us/call uid=0 nlink=1
+stat rel                108.78 us/call uid=0 nlink=1
+stat missing            102.82 us/call uid=0 nlink=1
+git_status     1396 ms
+find_tree       223 ms
+stat_storm     2324 ms
+futex_wake         0.20 us/call
+fstat             90.40 us/call
+open+close       106.01 us/pair
+git_status       1409 ms
+git_log          2230 ms
+grep_tree         167 ms
+find_tree         230 ms
+python_start      881 ms
+node_start        430 ms
+bash_pipes        191 ms
+py_threads       1242 ms
+node_async        986 ms
+0m0.010000s 0m0.010000s
+0m3.930000s 0m20.010000s
+wall_total_ms 22880

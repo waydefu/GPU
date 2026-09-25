@@ -1,0 +1,84 @@
+== v2#1
+stat abs                 90.74 us/call uid=0 nlink=1
+lstat abs                93.06 us/call uid=0 nlink=1
+stat rel                 91.95 us/call uid=0 nlink=1
+stat missing             78.55 us/call uid=0 nlink=1
+git_status     1335 ms
+find_tree       185 ms
+stat_storm     2008 ms
+futex_wake         0.35 us/call
+fstat             79.16 us/call
+open+close        85.87 us/pair
+0m0.000000s 0m0.000000s
+0m0.970000s 0m12.080000s
+wall_total_ms 12747
+== v5#1
+stat abs                 92.30 us/call uid=0 nlink=1
+lstat abs                95.34 us/call uid=0 nlink=1
+stat rel                 92.76 us/call uid=0 nlink=1
+stat missing             83.15 us/call uid=0 nlink=1
+git_status     1182 ms
+find_tree       199 ms
+stat_storm     2188 ms
+futex_wake         0.33 us/call
+fstat             73.50 us/call
+open+close       105.99 us/pair
+0m0.000000s 0m0.000000s
+0m1.000000s 0m12.330000s
+wall_total_ms 12957
+== v5off#1
+stat abs                 90.76 us/call uid=0 nlink=1
+lstat abs                96.39 us/call uid=0 nlink=1
+stat rel                 94.98 us/call uid=0 nlink=1
+stat missing             85.22 us/call uid=0 nlink=1
+git_status     1261 ms
+find_tree       222 ms
+stat_storm     2145 ms
+futex_wake         0.35 us/call
+fstat             78.96 us/call
+open+close        86.73 us/pair
+0m0.000000s 0m0.000000s
+0m0.930000s 0m12.570000s
+wall_total_ms 13104
+== v2#2
+stat abs                 92.16 us/call uid=0 nlink=1
+lstat abs                87.94 us/call uid=0 nlink=1
+stat rel                 97.03 us/call uid=0 nlink=1
+stat missing             78.97 us/call uid=0 nlink=1
+git_status     1339 ms
+find_tree       211 ms
+stat_storm     2106 ms
+futex_wake         0.27 us/call
+fstat             83.41 us/call
+open+close        88.05 us/pair
+0m0.000000s 0m0.010000s
+0m1.150000s 0m12.200000s
+wall_total_ms 12998
+== v5#2
+stat abs                 91.91 us/call uid=0 nlink=1
+lstat abs                93.76 us/call uid=0 nlink=1
+stat rel                 96.92 us/call uid=0 nlink=1
+stat missing             86.20 us/call uid=0 nlink=1
+git_status     1254 ms
+find_tree       219 ms
+stat_storm     2122 ms
+futex_wake         0.25 us/call
+fstat             80.79 us/call
+open+close        94.36 us/pair
+0m0.000000s 0m0.000000s
+0m1.040000s 0m12.490000s
+wall_total_ms 13166
+== v5off#2
+stat abs                 89.36 us/call uid=0 nlink=1
+lstat abs                98.48 us/call uid=0 nlink=1
+stat rel                 90.57 us/call uid=0 nlink=1
+stat missing             86.17 us/call uid=0 nlink=1
+git_status     1290 ms
+find_tree       187 ms
+stat_storm     2138 ms
+futex_wake         0.22 us/call
+fstat             68.14 us/call
+open+close        84.19 us/pair
+0m0.000000s 0m0.000000s
+0m0.940000s 0m12.200000s
+wall_total_ms 12792

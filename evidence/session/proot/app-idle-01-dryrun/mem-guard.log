@@ -1,0 +1,14 @@
+# mem-guard start x3=12199 floor_mb=3000 swap_growth_mb=1536 x3_max_mb=3072 swap_used0_mb=4180
+1790260190.611383135 mem_available_mb=5489 swap_used_mb=4180 x3_rss_mb=224 x3_swap_mb=0
+1790260191.136000062 mem_available_mb=5444 swap_used_mb=4177 x3_rss_mb=224 x3_swap_mb=0
+1790260191.678602250 mem_available_mb=5470 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260192.213318031 mem_available_mb=5483 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260192.754005322 mem_available_mb=5482 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260193.285485374 mem_available_mb=5476 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260193.829125634 mem_available_mb=5479 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260194.365506155 mem_available_mb=5479 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260194.906132040 mem_available_mb=5478 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260195.432981727 mem_available_mb=5462 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260195.971311519 mem_available_mb=5464 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260196.518926519 mem_available_mb=5459 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0
+1790260197.061266466 mem_available_mb=5459 swap_used_mb=4176 x3_rss_mb=224 x3_swap_mb=0

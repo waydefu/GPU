@@ -1,0 +1,13 @@
+14147 main
+14256 Jit thread pool
+14257 Signal Catcher
+14259 perfetto_hprof_
+14260 HeapTaskDaemon
+14261 ReferenceQueueD
+14262 FinalizerDaemon
+14263 FinalizerWatchd
+14299 binder:14147_1
+14300 binder:14147_2
+14341 main
+14345 Thread-1
+14364 binder:14147_3

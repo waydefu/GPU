@@ -1,0 +1,23 @@
+end_begin sid=24734 tracer=24732 members=21
+term sid=24734 pid=24734 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh chatgptweb /tmp/app-idle/run-chatgptweb-1-p0 
+term sid=24734 pid=24735 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=24734 pid=24736 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --no-sandbox --disable-dev-shm-usage --disable-gpu --remote-debugging-port=9222 --user-data-dir=/ro
+term sid=24734 pid=24755 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=zygote --no-zygote-sandbox --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, -
+term sid=24734 pid=24756 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=zygote --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root
+term sid=24734 pid=24772 cmd=/usr/libexec/gvfsd 
+term sid=24734 pid=24813 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid
+term sid=24734 pid=24818 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=
+term sid=24734 pid=24842 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=
+term sid=24734 pid=24904 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=24734 pid=24914 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+term sid=24734 pid=24917 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+term sid=24734 pid=24938 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+term sid=24734 pid=24956 cmd=/usr/bin/gnome-keyring-daemon --start --foreground --components=secrets 
+term sid=24734 pid=24958 cmd=/usr/lib/aarch64-linux-gnu/xfce4/notifyd/xfce4-notifyd 
+term sid=24734 pid=24970 cmd=/usr/lib/aarch64-linux-gnu/xfce4/xfconf/xfconfd 
+term sid=24734 pid=24976 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=24734 pid=24997 cmd=/usr/libexec/xdg-permission-store 
+term sid=24734 pid=25007 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=24734 pid=25011 cmd=/usr/libexec/gcr-prompter 
+term sid=24734 pid=25100 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+END survivors=0 tracer_gone=true

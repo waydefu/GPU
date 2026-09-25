@@ -1,0 +1,978 @@
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f3a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a272c0 src=0xb400006ea812dc00 ahb=0xb400006f91a463a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a272c0 src=0xb400006ea812dc00 ahb=0xb400006f91a463a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26ed0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25fa0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a229a0 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a230f0 src=0xb400006ea812dc00 ahb=0xb400006f91a43370 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a230f0 src=0xb400006ea812dc00 ahb=0xb400006f91a43370 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24890 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25c40 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23ba0 src=0xb400006ea812dc00 ahb=0xb400006f91a2d210 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23ba0 src=0xb400006ea812dc00 ahb=0xb400006f91a2d210 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a29480 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23c30 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23d50 src=0xb400006ea812dc00 ahb=0xb400006f91a3c300 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26810 src=0xb400006ea812dc00 ahb=0xb400006f91a271b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26810 src=0xb400006ea812dc00 ahb=0xb400006f91a271b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26390 src=0xb400006ea812dc00 ahb=0xb400006f91a584c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a1f670 src=0xb400006ea5a0fa70 ahb=0xb400006f91a594d0 dst=0x6ea58a3000 w=585 h=580 srcStride=585 dstStride=640 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a1f670 src=0xb400006ea5a0fa70 ahb=0xb400006f91a594d0 dst=0x6ea58a3000 w=585 h=580 srcStride=585 dstStride=640 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea58a3000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22250 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22250 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea5707900 ahb=0xb400006f91a483c0 dst=0x6ea53cd000 w=660 h=1200 srcStride=660 dstStride=704 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea5707900 ahb=0xb400006f91a483c0 dst=0x6ea53cd000 w=660 h=1200 srcStride=660 dstStride=704 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea53cd000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a260c0 src=0xb400006ea812dc00 ahb=0xb400006f91a483c0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a4d410 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a21b00 src=0xb400006ea812dc00 ahb=0xb400006f91a4d410 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a269c0 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24a40 src=0xb400006ea812dc00 ahb=0xb400006f91a62560 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25a00 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24da0 src=0xb400006ea812dc00 ahb=0xb400006f91a5f530 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24da0 src=0xb400006ea812dc00 ahb=0xb400006f91a5f530 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22c70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26f60 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a26db0 src=0xb400006ea812dc00 ahb=0xb400006f91a3f330 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23210 src=0xb400006ea812dc00 ahb=0xb400006f91a5f530 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23210 src=0xb400006ea812dc00 ahb=0xb400006f91a5f530 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a24770 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a22d90 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a23e70 src=0xb400006ea812dc00 ahb=0xb400006f91a372b0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a25850 src=0xb400006ea812dc00 ahb=0xb400006f91a5f530 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a25850 src=0xb400006ea812dc00 ahb=0xb400006f91a5f530 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a20f30 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+R3 S1_AHB buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+R3 S2_AHB_COPY buffer=0xb400006f81a28f70 src=0xb400006ea812dc00 ahb=0xb400006f91a665a0 dst=0x6ea7ca7000 w=400 h=400 srcStride=400 dstStride=448 format=2 req=0,0 srcPx=00000000 dstPx=00000000 hash=4b95f515
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea7ca7000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.
+EXA bug: pPixmap->devPrivate.ptr was 0x6ea5e92000, but should have been NULL.

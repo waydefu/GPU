@@ -1,0 +1,22 @@
+end_begin sid=20297 tracer=20294 members=20
+term sid=20297 pid=20297 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh cursor /tmp/app-idle/run-cursor-2-pf 
+term sid=20297 pid=20298 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=20297 pid=20304 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/tmp/app-idle/run-cursor-
+term sid=20297 pid=20306 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=20297 pid=20308 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox 
+term sid=20297 pid=20402 cmd=/usr/libexec/gvfsd 
+term sid=20297 pid=20415 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=20297 pid=20421 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=20297 pid=20437 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=20297 pid=20468 cmd=/usr/libexec/xdg-permission-store 
+term sid=20297 pid=20478 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=20297 pid=20498 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=20297 pid=20513 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=20297 pid=20515 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox 
+term sid=20297 pid=20644 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=20297 pid=20677 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=20297 pid=20690 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=20297 pid=20691 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=20297 pid=20930 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+term sid=20297 pid=21581 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+END survivors=0 tracer_gone=true

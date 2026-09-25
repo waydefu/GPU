@@ -1,0 +1,18 @@
+TOOLS probe=d40f8e9d286151e0 source=9c62eedbeeb0ee8e
+CASE terminal-nolang-ascii lang=unset file=ascii-test.txt target=terminal target_alive=true target_window=true sent=1 drag_end=1 title_before=dnd-target title_after=dnd-target
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/4347/cmdline: No such file or directory
+CASE terminal-nolang-cjk lang=unset file=中文測試.txt target=terminal target_alive=true target_window=true sent=1 drag_end=1 title_before=dnd-target title_after=dnd-target
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/8941/cmdline: No such file or directory
+CASE terminal-utf8-ascii lang=C.UTF-8 file=ascii-test.txt target=terminal target_alive=true target_window=true sent=1 drag_end=1 title_before=dnd-target title_after=dnd-target
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/13177/cmdline: No such file or directory
+CASE terminal-utf8-cjk lang=C.UTF-8 file=中文測試.txt target=terminal target_alive=true target_window=true sent=1 drag_end=1 title_before=dnd-target title_after=dnd-target
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/16203/cmdline: No such file or directory
+CASE cursor-nolang-ascii lang=unset file=ascii-test.txt target=cursor target_alive=true target_window=true sent=0 drag_end=1 title_before=Error title_after=Error
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/19057/cmdline: No such file or directory
+CASE cursor-nolang-cjk lang=unset file=中文測試.txt target=cursor target_alive=true target_window=true sent=1 drag_end=1 title_before=Cursor_Agents title_after=Cursor_Agents
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/21970/cmdline: No such file or directory
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/22092/cmdline: No such file or directory
+CASE cursor-utf8-ascii lang=C.UTF-8 file=ascii-test.txt target=cursor target_alive=true target_window=true sent=1 drag_end=1 title_before=Cursor_Agents title_after=Cursor_Agents
+CASE cursor-utf8-cjk lang=C.UTF-8 file=中文測試.txt target=cursor target_alive=true target_window=true sent=1 drag_end=1 title_before=Cursor_Agents title_after=Cursor_Agents
+/root/projects/GPU加速/src/f8-ahb-exa-async/tests/proot/dnd_probe.sh: line 21: /proc/29015/cmdline: No such file or directory
+DND_PROBE_DONE

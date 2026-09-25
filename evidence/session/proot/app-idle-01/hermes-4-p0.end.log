@@ -1,0 +1,18 @@
+end_begin sid=4758 tracer=4756 members=16
+term sid=4758 pid=4758 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh hermes /tmp/app-idle/run-hermes-4-p0 
+term sid=4758 pid=4761 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=4758 pid=4777 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --no-sandbox --ozone-platform=x11 --disable-gpu --disable-dev-shm-usage 
+term sid=4758 pid=4844 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=4758 pid=4845 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox 
+term sid=4758 pid=4907 cmd=/usr/libexec/gvfsd 
+term sid=4758 pid=4963 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=4758 pid=5108 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --en
+term sid=4758 pid=5398 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=4758 pid=5575 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox 
+term sid=4758 pid=5977 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=4758 pid=6046 cmd=/usr/libexec/xdg-permission-store 
+term sid=4758 pid=6215 cmd=/usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile luna serve --host 127.0.0.1 --port 0 
+term sid=4758 pid=6221 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=4758 pid=6384 cmd=/usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile default serve --host 127.0.0.1 --port 0 
+term sid=4758 pid=6471 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --enable
+END survivors=0 tracer_gone=true
