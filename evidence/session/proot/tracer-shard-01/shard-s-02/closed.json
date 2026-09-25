@@ -1,0 +1,25 @@
+{
+  "closed": [
+    {
+      "app": "cursor",
+      "cmd": "/root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/cursor-gpu",
+      "pid": 1559,
+      "cmdline": "/bin/bash /root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/cursor-gpu",
+      "action": "sigterm_f8_shard",
+      "gone_after_s": 1.5
+    },
+    {
+      "app": "hermes",
+      "cmd": "/root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/hermes-gpu",
+      "pid": 1560,
+      "cmdline": "/bin/bash /root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/hermes-gpu",
+      "action": "sigterm_f8_shard",
+      "gone_after_s": 8.0
+    }
+  ],
+  "electron_left": {
+    "claude": [
+      30149
+    ]
+  }
+}

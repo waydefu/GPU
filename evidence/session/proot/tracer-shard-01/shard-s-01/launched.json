@@ -1,0 +1,12 @@
+[
+  {
+    "app": "cursor",
+    "cmd": "/root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/cursor-gpu",
+    "pid": 28933
+  },
+  {
+    "app": "hermes",
+    "cmd": "/root/projects/GPU\u52a0\u901f/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/hermes-gpu",
+    "pid": 28934
+  }
+]

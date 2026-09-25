@@ -1,0 +1,10 @@
+untraced_started=True traced_pid=28125 traced_lat_pid=28126
+launched ['/root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/cursor-gpu', '/root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/hermes-gpu'] at 1790355454.756
+traced_sigterm pid=28125 (own child)
+traced_lat_sigterm pid=28126 (own child)
+touch_recorder_stopped pid=28092
+launch attempt=1 rc=0 r/tmp/xfce-v6-shard-28078-1790355393-untraced-1.log 2>&1 < /dev/null
+Starting service: Intent { act=com.termux.service_execute dat=com.termux.file:/... cmp=com.termux/.app.TermuxService (has extras) }
+close_shard sigterm f8-shard pid=28933 cmdline=/bin/bash /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/cursor-gpu
+close_shard sigterm f8-shard pid=28934 cmdline=/bin/bash /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard /root/.local/bin/hermes-gpu
+reason=completed

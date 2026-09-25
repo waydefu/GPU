@@ -1,0 +1,16 @@
+00:50:45 START shard-p-01 group=P
+00:56:11 CAPTURE shard-p-01 rc=0 SHARD_SAMPLER_DONE group=P reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-p-01
+00:56:30 START shard-s-01 group=S
+01:01:57 CAPTURE shard-s-01 rc=0 SHARD_SAMPLER_DONE group=S reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-s-01
+01:02:17 START shard-s-02 group=S
+01:07:44 CAPTURE shard-s-02 rc=0 SHARD_SAMPLER_DONE group=S reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-s-02
+01:08:03 START shard-p-02 group=P
+01:13:30 CAPTURE shard-p-02 rc=0 SHARD_SAMPLER_DONE group=P reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-p-02
+01:13:50 START shard-p-03 group=P
+01:19:17 CAPTURE shard-p-03 rc=0 SHARD_SAMPLER_DONE group=P reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-p-03
+01:19:36 START shard-s-03 group=S
+01:25:04 CAPTURE shard-s-03 rc=0 SHARD_SAMPLER_DONE group=S reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-s-03
+01:25:04 INVALID shard-p-01 -> replacement r1
+01:25:24 START shard-p-r1 group=P
+01:30:51 CAPTURE shard-p-r1 rc=0 SHARD_SAMPLER_DONE group=P reason=completed out=/root/projects/GPU加速/evidence/session/proot/tracer-shard-01/shard-p-r1
+01:30:52 SHARD_SERIES JUDGED CONTROL_REPRODUCES SHARD_REMOVES_STUTTER X_SERVER_NO_STALLS {'P': [20, 20, 18], 'S': [0, 0, 0]}

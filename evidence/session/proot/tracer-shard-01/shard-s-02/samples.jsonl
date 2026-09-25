@@ -1,0 +1,299 @@
+{"epoch": 1790355741.9372892, "phase": "baseline", "cores": {"tracer": 0.08, "x1": 0.05, "shard": {}}, "mem_available_mb": 5684, "swap_used_mb": 7333}
+{"epoch": 1790355742.9398687, "phase": "baseline", "cores": {"tracer": 0.05, "x1": 0.09, "shard": {}}, "mem_available_mb": 5682, "swap_used_mb": 7333}
+{"epoch": 1790355743.9437296, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.11, "shard": {}}, "mem_available_mb": 5682, "swap_used_mb": 7333}
+{"epoch": 1790355744.9474573, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.07, "shard": {}}, "mem_available_mb": 5684, "swap_used_mb": 7333}
+{"epoch": 1790355745.9518878, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {}}, "mem_available_mb": 5687, "swap_used_mb": 7333}
+{"epoch": 1790355746.9563193, "phase": "baseline", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {}}, "mem_available_mb": 5682, "swap_used_mb": 7333}
+{"epoch": 1790355747.9612384, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {}}, "mem_available_mb": 5673, "swap_used_mb": 7333}
+{"epoch": 1790355748.9654772, "phase": "baseline", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {}}, "mem_available_mb": 5669, "swap_used_mb": 7333}
+{"epoch": 1790355749.9690986, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.1, "shard": {}}, "mem_available_mb": 5674, "swap_used_mb": 7333}
+{"epoch": 1790355750.9736814, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {}}, "mem_available_mb": 5673, "swap_used_mb": 7333}
+{"epoch": 1790355751.976914, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.209, "shard": {}}, "mem_available_mb": 5681, "swap_used_mb": 7333}
+{"epoch": 1790355752.980254, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.12, "shard": {}}, "mem_available_mb": 5680, "swap_used_mb": 7333}
+{"epoch": 1790355753.984292, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.08, "shard": {}}, "mem_available_mb": 5679, "swap_used_mb": 7333}
+{"epoch": 1790355754.9883902, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {}}, "mem_available_mb": 5678, "swap_used_mb": 7333}
+{"epoch": 1790355755.991725, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {}}, "mem_available_mb": 5677, "swap_used_mb": 7333}
+{"epoch": 1790355756.996284, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5676, "swap_used_mb": 7333}
+{"epoch": 1790355758.0011475, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.1, "shard": {}}, "mem_available_mb": 5675, "swap_used_mb": 7333}
+{"epoch": 1790355759.0057702, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.199, "shard": {}}, "mem_available_mb": 5673, "swap_used_mb": 7332}
+{"epoch": 1790355760.0115519, "phase": "baseline", "cores": {"tracer": 0.05, "x1": 0.099, "shard": {}}, "mem_available_mb": 5671, "swap_used_mb": 7332}
+{"epoch": 1790355761.0162299, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {}}, "mem_available_mb": 5666, "swap_used_mb": 7330}
+{"epoch": 1790355762.0208116, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5664, "swap_used_mb": 7330}
+{"epoch": 1790355763.0251076, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {}}, "mem_available_mb": 5661, "swap_used_mb": 7330}
+{"epoch": 1790355764.0285313, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5660, "swap_used_mb": 7330}
+{"epoch": 1790355765.0323148, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {}}, "mem_available_mb": 5658, "swap_used_mb": 7330}
+{"epoch": 1790355766.0363443, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.07, "shard": {}}, "mem_available_mb": 5654, "swap_used_mb": 7330}
+{"epoch": 1790355767.0411143, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.119, "shard": {}}, "mem_available_mb": 5653, "swap_used_mb": 7330}
+{"epoch": 1790355768.0465295, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {}}, "mem_available_mb": 5655, "swap_used_mb": 7330}
+{"epoch": 1790355769.0510793, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {}}, "mem_available_mb": 5655, "swap_used_mb": 7330}
+{"epoch": 1790355770.05532, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5654, "swap_used_mb": 7330}
+{"epoch": 1790355771.0590491, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {}}, "mem_available_mb": 5653, "swap_used_mb": 7330}
+{"epoch": 1790355772.062957, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.1, "shard": {}}, "mem_available_mb": 5653, "swap_used_mb": 7330}
+{"epoch": 1790355773.0694947, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.119, "shard": {}}, "mem_available_mb": 5652, "swap_used_mb": 7330}
+{"epoch": 1790355774.0744023, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5652, "swap_used_mb": 7330}
+{"epoch": 1790355775.0793974, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.08, "shard": {}}, "mem_available_mb": 5651, "swap_used_mb": 7330}
+{"epoch": 1790355776.0838737, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {}}, "mem_available_mb": 5650, "swap_used_mb": 7330}
+{"epoch": 1790355777.0876439, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5649, "swap_used_mb": 7330}
+{"epoch": 1790355778.0920236, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.08, "shard": {}}, "mem_available_mb": 5647, "swap_used_mb": 7328}
+{"epoch": 1790355779.096795, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.219, "shard": {}}, "mem_available_mb": 5643, "swap_used_mb": 7328}
+{"epoch": 1790355780.1013005, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.1, "shard": {}}, "mem_available_mb": 5647, "swap_used_mb": 7328}
+{"epoch": 1790355781.105081, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.07, "shard": {}}, "mem_available_mb": 5647, "swap_used_mb": 7328}
+{"epoch": 1790355782.1090174, "phase": "baseline", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {}}, "mem_available_mb": 5640, "swap_used_mb": 7328}
+{"epoch": 1790355783.1116476, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {}}, "mem_available_mb": 5640, "swap_used_mb": 7328}
+{"epoch": 1790355784.1152189, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.07, "shard": {}}, "mem_available_mb": 5641, "swap_used_mb": 7328}
+{"epoch": 1790355785.120886, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.109, "shard": {}}, "mem_available_mb": 5642, "swap_used_mb": 7328}
+{"epoch": 1790355786.1241653, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.219, "shard": {}}, "mem_available_mb": 5641, "swap_used_mb": 7328}
+{"epoch": 1790355787.1275582, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.09, "shard": {}}, "mem_available_mb": 5639, "swap_used_mb": 7323}
+{"epoch": 1790355788.1317255, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.09, "shard": {}}, "mem_available_mb": 5639, "swap_used_mb": 7323}
+{"epoch": 1790355789.137343, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {}}, "mem_available_mb": 5638, "swap_used_mb": 7323}
+{"epoch": 1790355790.1424987, "phase": "baseline", "cores": {"tracer": 0.02, "x1": 0.09, "shard": {}}, "mem_available_mb": 5639, "swap_used_mb": 7323}
+{"epoch": 1790355791.1481135, "phase": "baseline", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {}}, "mem_available_mb": 5639, "swap_used_mb": 7323}
+{"epoch": 1790355792.1518114, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {}}, "mem_available_mb": 5638, "swap_used_mb": 7323}
+{"epoch": 1790355793.1559772, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.1, "shard": {}}, "mem_available_mb": 5638, "swap_used_mb": 7323}
+{"epoch": 1790355794.1602173, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.199, "shard": {}}, "mem_available_mb": 5637, "swap_used_mb": 7322}
+{"epoch": 1790355795.164981, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.1, "shard": {}}, "mem_available_mb": 5644, "swap_used_mb": 7322}
+{"epoch": 1790355796.17033, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.07, "shard": {}}, "mem_available_mb": 5641, "swap_used_mb": 7322}
+{"epoch": 1790355797.1724653, "phase": "baseline", "cores": {"tracer": 0.12, "x1": 0.05, "shard": {}}, "mem_available_mb": 5635, "swap_used_mb": 7322}
+{"epoch": 1790355798.1758907, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {}}, "mem_available_mb": 5688, "swap_used_mb": 7322}
+{"epoch": 1790355799.1798635, "phase": "baseline", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {}}, "mem_available_mb": 5686, "swap_used_mb": 7322}
+{"epoch": 1790355800.183248, "phase": "baseline", "cores": {"tracer": 0.04, "x1": 0.13, "shard": {}}, "mem_available_mb": 5678, "swap_used_mb": 7322}
+{"epoch": 1790355801.1944923, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.268, "shard": {}}, "mem_available_mb": 5677, "swap_used_mb": 7322}
+{"epoch": 1790355802.2011566, "phase": "loaded", "cores": {"tracer": 0.437, "x1": 0.05, "shard": {}}, "mem_available_mb": 5613, "swap_used_mb": 7318}
+{"epoch": 1790355803.205356, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.1, "shard": {"cursor": 0.468, "hermes": 0.458}}, "mem_available_mb": 5463, "swap_used_mb": 7320}
+{"epoch": 1790355804.2100086, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.568, "hermes": 0.448}}, "mem_available_mb": 5413, "swap_used_mb": 7320}
+{"epoch": 1790355805.2152374, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.03, "shard": {"cursor": 0.597, "hermes": 0.199}}, "mem_available_mb": 5379, "swap_used_mb": 7320}
+{"epoch": 1790355806.2187333, "phase": "loaded", "cores": {"tracer": 0.07, "x1": 0.1, "shard": {"cursor": 0.408, "hermes": 0.0}}, "mem_available_mb": 5061, "swap_used_mb": 7320}
+{"epoch": 1790355807.2224367, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.688, "hermes": 0.0}}, "mem_available_mb": 4933, "swap_used_mb": 7319}
+{"epoch": 1790355808.2261138, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.02, "shard": {"cursor": 0.857, "hermes": 0.0}}, "mem_available_mb": 4730, "swap_used_mb": 7317}
+{"epoch": 1790355809.2334468, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.945, "hermes": 0.0}}, "mem_available_mb": 4592, "swap_used_mb": 7317}
+{"epoch": 1790355810.2375126, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.01, "shard": {"cursor": 0.954, "hermes": 0.03}}, "mem_available_mb": 4489, "swap_used_mb": 7317}
+{"epoch": 1790355811.2424004, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.935, "hermes": 0.0}}, "mem_available_mb": 4441, "swap_used_mb": 7320}
+{"epoch": 1790355812.2464187, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.02, "shard": {"cursor": 0.876, "hermes": 0.0}}, "mem_available_mb": 4169, "swap_used_mb": 7320}
+{"epoch": 1790355813.2503414, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.02, "shard": {"cursor": 0.817, "hermes": 0.0}}, "mem_available_mb": 4065, "swap_used_mb": 7320}
+{"epoch": 1790355814.2555287, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.766, "hermes": 0.0}}, "mem_available_mb": 4351, "swap_used_mb": 7320}
+{"epoch": 1790355815.262999, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.846, "hermes": 0.0}}, "mem_available_mb": 4128, "swap_used_mb": 7320}
+{"epoch": 1790355816.26786, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.02, "shard": {"cursor": 0.914, "hermes": 0.0}}, "mem_available_mb": 4051, "swap_used_mb": 7320}
+{"epoch": 1790355817.2741213, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.01, "shard": {"cursor": 0.905, "hermes": 0.0}}, "mem_available_mb": 3960, "swap_used_mb": 7320}
+{"epoch": 1790355818.2811263, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.01, "shard": {"cursor": 0.892, "hermes": 0.0}}, "mem_available_mb": 3962, "swap_used_mb": 7320}
+{"epoch": 1790355819.2845488, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.847, "hermes": 0.349}}, "mem_available_mb": 4007, "swap_used_mb": 7332}
+{"epoch": 1790355820.2908258, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.01, "shard": {"cursor": 0.905, "hermes": 0.189}}, "mem_available_mb": 3990, "swap_used_mb": 7378}
+{"epoch": 1790355821.2946908, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.01, "shard": {"cursor": 0.717, "hermes": 0.0}}, "mem_available_mb": 3916, "swap_used_mb": 7391}
+{"epoch": 1790355822.3012593, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.457, "hermes": 0.0}}, "mem_available_mb": 3893, "swap_used_mb": 7391}
+{"epoch": 1790355823.3063667, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.04, "hermes": 0.0}}, "mem_available_mb": 3889, "swap_used_mb": 7406}
+{"epoch": 1790355824.318804, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.03, "shard": {"cursor": 0.069, "hermes": 0.0}}, "mem_available_mb": 3857, "swap_used_mb": 7446}
+{"epoch": 1790355825.3239472, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.059, "hermes": 0.0}}, "mem_available_mb": 3867, "swap_used_mb": 7439}
+{"epoch": 1790355826.3306415, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.07, "hermes": 0.03}}, "mem_available_mb": 3866, "swap_used_mb": 7439}
+{"epoch": 1790355827.3350732, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {"cursor": 0.05, "hermes": 0.0}}, "mem_available_mb": 3860, "swap_used_mb": 7439}
+{"epoch": 1790355828.3394556, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.139, "shard": {"cursor": 0.06, "hermes": 0.0}}, "mem_available_mb": 3856, "swap_used_mb": 7439}
+{"epoch": 1790355829.3482676, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.04, "hermes": 0.0}}, "mem_available_mb": 3909, "swap_used_mb": 7439}
+{"epoch": 1790355830.3561578, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.06, "hermes": 0.0}}, "mem_available_mb": 4029, "swap_used_mb": 7439}
+{"epoch": 1790355831.3654594, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.089, "hermes": 0.0}}, "mem_available_mb": 4025, "swap_used_mb": 7439}
+{"epoch": 1790355832.3737648, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.228, "hermes": 0.0}}, "mem_available_mb": 4020, "swap_used_mb": 7439}
+{"epoch": 1790355833.3811243, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.327, "hermes": 0.0}}, "mem_available_mb": 3987, "swap_used_mb": 7439}
+{"epoch": 1790355834.3893225, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.02, "shard": {"cursor": 0.159, "hermes": 0.457}}, "mem_available_mb": 3972, "swap_used_mb": 7439}
+{"epoch": 1790355835.3936682, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.109, "shard": {"cursor": 0.07, "hermes": 0.278}}, "mem_available_mb": 3924, "swap_used_mb": 7439}
+{"epoch": 1790355836.4000154, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.03, "hermes": 0.497}}, "mem_available_mb": 3916, "swap_used_mb": 7439}
+{"epoch": 1790355837.4055226, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.199, "hermes": 0.06}}, "mem_available_mb": 3893, "swap_used_mb": 7438}
+{"epoch": 1790355838.4105892, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.756, "hermes": 0.0}}, "mem_available_mb": 3949, "swap_used_mb": 7438}
+{"epoch": 1790355839.416953, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.099, "shard": {"cursor": 0.766, "hermes": 0.0}}, "mem_available_mb": 3889, "swap_used_mb": 7438}
+{"epoch": 1790355840.4221244, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.209, "shard": {"cursor": 0.805, "hermes": 0.0}}, "mem_available_mb": 3880, "swap_used_mb": 7438}
+{"epoch": 1790355841.427832, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.08, "shard": {"cursor": 0.736, "hermes": 0.0}}, "mem_available_mb": 3833, "swap_used_mb": 7438}
+{"epoch": 1790355842.4377403, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.706, "hermes": 0.03}}, "mem_available_mb": 3844, "swap_used_mb": 7462}
+{"epoch": 1790355843.4432771, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.812, "hermes": 0.01}}, "mem_available_mb": 3826, "swap_used_mb": 7540}
+{"epoch": 1790355844.4483993, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.717, "hermes": 0.0}}, "mem_available_mb": 3828, "swap_used_mb": 7613}
+{"epoch": 1790355845.4545283, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.815, "hermes": 0.0}}, "mem_available_mb": 3823, "swap_used_mb": 7626}
+{"epoch": 1790355846.4594727, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.139, "shard": {"cursor": 0.776, "hermes": 0.0}}, "mem_available_mb": 3793, "swap_used_mb": 7627}
+{"epoch": 1790355847.4646387, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.159, "shard": {"cursor": 0.706, "hermes": 0.0}}, "mem_available_mb": 3759, "swap_used_mb": 7626}
+{"epoch": 1790355848.4696918, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.09, "shard": {"cursor": 0.677, "hermes": 0.0}}, "mem_available_mb": 3778, "swap_used_mb": 7642}
+{"epoch": 1790355849.4755158, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.388, "hermes": 0.0}}, "mem_available_mb": 3819, "swap_used_mb": 7715}
+{"epoch": 1790355850.4805844, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.249, "hermes": 0.159}}, "mem_available_mb": 3809, "swap_used_mb": 7717}
+{"epoch": 1790355851.4856696, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.348, "hermes": 0.487}}, "mem_available_mb": 3754, "swap_used_mb": 7717}
+{"epoch": 1790355852.4917521, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.07, "shard": {"cursor": 0.587, "hermes": 0.07}}, "mem_available_mb": 3707, "swap_used_mb": 7728}
+{"epoch": 1790355853.496885, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.189, "shard": {"cursor": 0.716, "hermes": 0.0}}, "mem_available_mb": 3635, "swap_used_mb": 7701}
+{"epoch": 1790355854.5021443, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.099, "shard": {"cursor": 0.746, "hermes": 0.0}}, "mem_available_mb": 3775, "swap_used_mb": 7701}
+{"epoch": 1790355855.507185, "phase": "loaded", "cores": {"tracer": 0.07, "x1": 0.04, "shard": {"cursor": 0.647, "hermes": 0.0}}, "mem_available_mb": 3736, "swap_used_mb": 7701}
+{"epoch": 1790355856.5135014, "phase": "loaded", "cores": {"tracer": 0.089, "x1": 0.03, "shard": {"cursor": 0.804, "hermes": 0.0}}, "mem_available_mb": 3724, "swap_used_mb": 7699}
+{"epoch": 1790355857.520732, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.716, "hermes": 0.04}}, "mem_available_mb": 3712, "swap_used_mb": 7699}
+{"epoch": 1790355858.5266974, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.864, "hermes": 0.0}}, "mem_available_mb": 3710, "swap_used_mb": 7699}
+{"epoch": 1790355859.5313437, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.09, "shard": {"cursor": 0.716, "hermes": 0.0}}, "mem_available_mb": 3904, "swap_used_mb": 7684}
+{"epoch": 1790355860.5363288, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.189, "shard": {"cursor": 0.767, "hermes": 0.0}}, "mem_available_mb": 3900, "swap_used_mb": 7683}
+{"epoch": 1790355861.5417168, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.099, "shard": {"cursor": 0.517, "hermes": 0.0}}, "mem_available_mb": 3834, "swap_used_mb": 7683}
+{"epoch": 1790355862.5465488, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.518, "hermes": 0.0}}, "mem_available_mb": 3947, "swap_used_mb": 7683}
+{"epoch": 1790355863.5510879, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.607, "hermes": 0.0}}, "mem_available_mb": 3920, "swap_used_mb": 7683}
+{"epoch": 1790355864.5557084, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.468, "hermes": 0.0}}, "mem_available_mb": 3912, "swap_used_mb": 7683}
+{"epoch": 1790355865.5607846, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.328, "hermes": 0.139}}, "mem_available_mb": 3920, "swap_used_mb": 7683}
+{"epoch": 1790355866.5658405, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.03, "hermes": 0.398}}, "mem_available_mb": 3834, "swap_used_mb": 7682}
+{"epoch": 1790355867.5705135, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.02, "hermes": 0.02}}, "mem_available_mb": 3834, "swap_used_mb": 7681}
+{"epoch": 1790355868.5746431, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.08, "hermes": 0.02}}, "mem_available_mb": 3845, "swap_used_mb": 7681}
+{"epoch": 1790355869.5814881, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.02, "hermes": 0.03}}, "mem_available_mb": 3847, "swap_used_mb": 7681}
+{"epoch": 1790355870.587513, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 3880, "swap_used_mb": 7680}
+{"epoch": 1790355871.592808, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.03}}, "mem_available_mb": 3884, "swap_used_mb": 7680}
+{"epoch": 1790355872.5981977, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.07, "hermes": 0.179}}, "mem_available_mb": 3879, "swap_used_mb": 7680}
+{"epoch": 1790355873.6027386, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.04, "hermes": 0.02}}, "mem_available_mb": 3878, "swap_used_mb": 7680}
+{"epoch": 1790355874.6067586, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 3866, "swap_used_mb": 7680}
+{"epoch": 1790355875.6131766, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.04, "hermes": 0.02}}, "mem_available_mb": 3899, "swap_used_mb": 7680}
+{"epoch": 1790355876.6196904, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 3880, "swap_used_mb": 7680}
+{"epoch": 1790355877.624238, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.03}}, "mem_available_mb": 3907, "swap_used_mb": 7680}
+{"epoch": 1790355878.6301248, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.09}}, "mem_available_mb": 3926, "swap_used_mb": 7680}
+{"epoch": 1790355879.6344965, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 3926, "swap_used_mb": 7679}
+{"epoch": 1790355880.639283, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {"cursor": 0.01, "hermes": 0.04}}, "mem_available_mb": 3940, "swap_used_mb": 7679}
+{"epoch": 1790355881.6448092, "phase": "loaded", "cores": {"tracer": 0.06, "x1": 0.06, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 3939, "swap_used_mb": 7679}
+{"epoch": 1790355882.649468, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {"cursor": 0.07, "hermes": 0.02}}, "mem_available_mb": 3923, "swap_used_mb": 7679}
+{"epoch": 1790355883.6545103, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.07}}, "mem_available_mb": 3943, "swap_used_mb": 7679}
+{"epoch": 1790355884.6605954, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 3940, "swap_used_mb": 7679}
+{"epoch": 1790355885.6653593, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {"cursor": 0.03, "hermes": 0.02}}, "mem_available_mb": 3966, "swap_used_mb": 7679}
+{"epoch": 1790355886.670669, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.089, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 3970, "swap_used_mb": 7679}
+{"epoch": 1790355887.6764805, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.179, "shard": {"cursor": 0.239, "hermes": 0.01}}, "mem_available_mb": 3966, "swap_used_mb": 7679}
+{"epoch": 1790355888.6810038, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.189, "shard": {"cursor": 0.756, "hermes": 0.01}}, "mem_available_mb": 4066, "swap_used_mb": 7653}
+{"epoch": 1790355889.6870298, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.08, "shard": {"cursor": 0.746, "hermes": 0.01}}, "mem_available_mb": 4060, "swap_used_mb": 7653}
+{"epoch": 1790355890.6919446, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.736, "hermes": 0.02}}, "mem_available_mb": 4072, "swap_used_mb": 7653}
+{"epoch": 1790355891.6980681, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.318, "hermes": 0.01}}, "mem_available_mb": 4076, "swap_used_mb": 7653}
+{"epoch": 1790355892.7031944, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4077, "swap_used_mb": 7653}
+{"epoch": 1790355893.7081177, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.08, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4077, "swap_used_mb": 7653}
+{"epoch": 1790355894.7155197, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.159, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4085, "swap_used_mb": 7653}
+{"epoch": 1790355895.7245595, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.218, "shard": {"cursor": 0.04, "hermes": 0.02}}, "mem_available_mb": 4083, "swap_used_mb": 7655}
+{"epoch": 1790355896.7324238, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.149, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4078, "swap_used_mb": 7656}
+{"epoch": 1790355897.7388644, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.07, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4091, "swap_used_mb": 7660}
+{"epoch": 1790355898.7463717, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4081, "swap_used_mb": 7660}
+{"epoch": 1790355899.7533429, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.069, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4085, "swap_used_mb": 7661}
+{"epoch": 1790355900.7617075, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.08, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4081, "swap_used_mb": 7661}
+{"epoch": 1790355901.7680733, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.178, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4081, "swap_used_mb": 7662}
+{"epoch": 1790355902.7760305, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.149, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4107, "swap_used_mb": 7670}
+{"epoch": 1790355903.7826402, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.089, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4148, "swap_used_mb": 7749}
+{"epoch": 1790355904.788871, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4190, "swap_used_mb": 7749}
+{"epoch": 1790355905.796174, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.02, "hermes": 0.02}}, "mem_available_mb": 4191, "swap_used_mb": 7748}
+{"epoch": 1790355906.803416, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.069, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4183, "swap_used_mb": 7748}
+{"epoch": 1790355907.8171024, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.069, "shard": {"cursor": 0.02, "hermes": 0.01}}, "mem_available_mb": 4182, "swap_used_mb": 7748}
+{"epoch": 1790355908.8227184, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.138, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4177, "swap_used_mb": 7747}
+{"epoch": 1790355909.8287976, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.199, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4176, "swap_used_mb": 7747}
+{"epoch": 1790355910.8353708, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.079, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4184, "swap_used_mb": 7747}
+{"epoch": 1790355911.8411627, "phase": "loaded", "cores": {"tracer": 0.06, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4181, "swap_used_mb": 7747}
+{"epoch": 1790355912.8476007, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4178, "swap_used_mb": 7747}
+{"epoch": 1790355913.852608, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.08, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4183, "swap_used_mb": 7747}
+{"epoch": 1790355914.858623, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.169, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4179, "swap_used_mb": 7747}
+{"epoch": 1790355915.8631313, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.199, "shard": {"cursor": 0.04, "hermes": 0.0}}, "mem_available_mb": 4181, "swap_used_mb": 7747}
+{"epoch": 1790355916.8684478, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4177, "swap_used_mb": 7744}
+{"epoch": 1790355917.8740072, "phase": "loaded", "cores": {"tracer": 0.129, "x1": 0.07, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4173, "swap_used_mb": 7743}
+{"epoch": 1790355918.8805459, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4145, "swap_used_mb": 7743}
+{"epoch": 1790355919.8854346, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.08, "shard": {"cursor": 0.01, "hermes": 0.0}}, "mem_available_mb": 4151, "swap_used_mb": 7743}
+{"epoch": 1790355920.8930993, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.149, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4150, "swap_used_mb": 7743}
+{"epoch": 1790355921.90067, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.119, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4147, "swap_used_mb": 7743}
+{"epoch": 1790355922.90604, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.079, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4135, "swap_used_mb": 7743}
+{"epoch": 1790355923.9106421, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4209, "swap_used_mb": 7743}
+{"epoch": 1790355924.9173641, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4199, "swap_used_mb": 7742}
+{"epoch": 1790355925.923205, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.129, "shard": {"cursor": 0.04, "hermes": 0.0}}, "mem_available_mb": 4231, "swap_used_mb": 7741}
+{"epoch": 1790355926.929113, "phase": "loaded", "cores": {"tracer": 0.06, "x1": 0.189, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4225, "swap_used_mb": 7741}
+{"epoch": 1790355927.935673, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.109, "shard": {"cursor": 0.01, "hermes": 0.0}}, "mem_available_mb": 4183, "swap_used_mb": 7740}
+{"epoch": 1790355928.9408195, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4221, "swap_used_mb": 7737}
+{"epoch": 1790355929.9470959, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4224, "swap_used_mb": 7736}
+{"epoch": 1790355930.9548645, "phase": "loaded", "cores": {"tracer": 0.06, "x1": 0.07, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4223, "swap_used_mb": 7735}
+{"epoch": 1790355931.9618826, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.079, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4211, "swap_used_mb": 7734}
+{"epoch": 1790355932.9667313, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.189, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4265, "swap_used_mb": 7731}
+{"epoch": 1790355933.973343, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.139, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4265, "swap_used_mb": 7731}
+{"epoch": 1790355934.9792893, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.07, "shard": {"cursor": 0.01, "hermes": 0.0}}, "mem_available_mb": 4262, "swap_used_mb": 7731}
+{"epoch": 1790355935.986188, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.07, "shard": {"cursor": 0.04, "hermes": 0.0}}, "mem_available_mb": 4264, "swap_used_mb": 7731}
+{"epoch": 1790355936.9918032, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.01, "hermes": 0.0}}, "mem_available_mb": 4262, "swap_used_mb": 7731}
+{"epoch": 1790355937.9972138, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4266, "swap_used_mb": 7731}
+{"epoch": 1790355939.0051184, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.079, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4264, "swap_used_mb": 7731}
+{"epoch": 1790355940.009877, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.169, "shard": {"cursor": 0.01, "hermes": 0.0}}, "mem_available_mb": 4262, "swap_used_mb": 7731}
+{"epoch": 1790355941.0146585, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.139, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4264, "swap_used_mb": 7731}
+{"epoch": 1790355942.0203745, "phase": "loaded", "cores": {"tracer": 0.06, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4263, "swap_used_mb": 7731}
+{"epoch": 1790355943.0271568, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4297, "swap_used_mb": 7731}
+{"epoch": 1790355944.0342445, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4284, "swap_used_mb": 7731}
+{"epoch": 1790355945.039408, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.07, "shard": {"cursor": 0.01, "hermes": 0.0}}, "mem_available_mb": 4280, "swap_used_mb": 7731}
+{"epoch": 1790355946.04465, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.129, "shard": {"cursor": 0.02, "hermes": 0.0}}, "mem_available_mb": 4267, "swap_used_mb": 7731}
+{"epoch": 1790355947.050797, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.169, "shard": {"cursor": 0.0, "hermes": 0.149}}, "mem_available_mb": 4263, "swap_used_mb": 7730}
+{"epoch": 1790355948.0582657, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.169, "shard": {"cursor": 0.02, "hermes": 0.0}}, "mem_available_mb": 4254, "swap_used_mb": 7730}
+{"epoch": 1790355949.0660846, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.099, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4252, "swap_used_mb": 7730}
+{"epoch": 1790355950.0714679, "phase": "loaded", "cores": {"tracer": 0.06, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4250, "swap_used_mb": 7730}
+{"epoch": 1790355951.0768178, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4245, "swap_used_mb": 7730}
+{"epoch": 1790355952.0833337, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4225, "swap_used_mb": 7715}
+{"epoch": 1790355953.0902553, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.079, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4223, "swap_used_mb": 7715}
+{"epoch": 1790355954.094976, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.159, "shard": {"cursor": 0.0, "hermes": 0.0}}, "mem_available_mb": 4195, "swap_used_mb": 7715}
+{"epoch": 1790355955.100374, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.03, "hermes": 0.02}}, "mem_available_mb": 4236, "swap_used_mb": 7715}
+{"epoch": 1790355956.1065402, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4217, "swap_used_mb": 7714}
+{"epoch": 1790355957.1107705, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4230, "swap_used_mb": 7710}
+{"epoch": 1790355958.115682, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.03}}, "mem_available_mb": 4245, "swap_used_mb": 7710}
+{"epoch": 1790355959.119707, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4241, "swap_used_mb": 7710}
+{"epoch": 1790355960.1241941, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4224, "swap_used_mb": 7703}
+{"epoch": 1790355961.1297987, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.0, "hermes": 0.04}}, "mem_available_mb": 4310, "swap_used_mb": 7702}
+{"epoch": 1790355962.134905, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4298, "swap_used_mb": 7702}
+{"epoch": 1790355963.1401038, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4318, "swap_used_mb": 7702}
+{"epoch": 1790355964.1463969, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4287, "swap_used_mb": 7702}
+{"epoch": 1790355965.151348, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.03, "hermes": 0.03}}, "mem_available_mb": 4235, "swap_used_mb": 7700}
+{"epoch": 1790355966.156196, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4241, "swap_used_mb": 7700}
+{"epoch": 1790355967.162511, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4209, "swap_used_mb": 7700}
+{"epoch": 1790355968.1668744, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4230, "swap_used_mb": 7683}
+{"epoch": 1790355969.171463, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4227, "swap_used_mb": 7683}
+{"epoch": 1790355970.1755185, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4215, "swap_used_mb": 7683}
+{"epoch": 1790355971.181364, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4240, "swap_used_mb": 7683}
+{"epoch": 1790355972.1864023, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4235, "swap_used_mb": 7682}
+{"epoch": 1790355973.19105, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4217, "swap_used_mb": 7682}
+{"epoch": 1790355974.196849, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4265, "swap_used_mb": 7678}
+{"epoch": 1790355975.202168, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {"cursor": 0.04, "hermes": 0.01}}, "mem_available_mb": 4253, "swap_used_mb": 7678}
+{"epoch": 1790355976.206732, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4257, "swap_used_mb": 7678}
+{"epoch": 1790355977.2126935, "phase": "loaded", "cores": {"tracer": 0.02, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4266, "swap_used_mb": 7678}
+{"epoch": 1790355978.2195187, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.06, "shard": {"cursor": 0.02, "hermes": 0.03}}, "mem_available_mb": 4261, "swap_used_mb": 7678}
+{"epoch": 1790355979.2278435, "phase": "loaded", "cores": {"tracer": 0.149, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4260, "swap_used_mb": 7678}
+{"epoch": 1790355980.2349222, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4272, "swap_used_mb": 7678}
+{"epoch": 1790355981.243208, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4266, "swap_used_mb": 7678}
+{"epoch": 1790355982.2505577, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4253, "swap_used_mb": 7678}
+{"epoch": 1790355983.257375, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4255, "swap_used_mb": 7678}
+{"epoch": 1790355984.262382, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4243, "swap_used_mb": 7678}
+{"epoch": 1790355985.2694194, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.03, "hermes": 0.02}}, "mem_available_mb": 4252, "swap_used_mb": 7678}
+{"epoch": 1790355986.2754962, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4204, "swap_used_mb": 7678}
+{"epoch": 1790355987.2817776, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4197, "swap_used_mb": 7678}
+{"epoch": 1790355988.2876782, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4274, "swap_used_mb": 7677}
+{"epoch": 1790355989.2936406, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4258, "swap_used_mb": 7677}
+{"epoch": 1790355990.2994826, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4253, "swap_used_mb": 7677}
+{"epoch": 1790355991.3053865, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4250, "swap_used_mb": 7677}
+{"epoch": 1790355992.3111844, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4221, "swap_used_mb": 7677}
+{"epoch": 1790355993.317354, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4211, "swap_used_mb": 7677}
+{"epoch": 1790355994.3246758, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4220, "swap_used_mb": 7677}
+{"epoch": 1790355995.3318512, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.04, "hermes": 0.02}}, "mem_available_mb": 4194, "swap_used_mb": 7677}
+{"epoch": 1790355996.3388011, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4211, "swap_used_mb": 7677}
+{"epoch": 1790355997.3456483, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4199, "swap_used_mb": 7677}
+{"epoch": 1790355998.35094, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4219, "swap_used_mb": 7677}
+{"epoch": 1790355999.3572366, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4202, "swap_used_mb": 7677}
+{"epoch": 1790356000.3644345, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4198, "swap_used_mb": 7677}
+{"epoch": 1790356001.3712018, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4204, "swap_used_mb": 7676}
+{"epoch": 1790356002.3768137, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4202, "swap_used_mb": 7677}
+{"epoch": 1790356003.3843927, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4193, "swap_used_mb": 7677}
+{"epoch": 1790356004.3907669, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4197, "swap_used_mb": 7677}
+{"epoch": 1790356005.3971562, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.05, "hermes": 0.02}}, "mem_available_mb": 4197, "swap_used_mb": 7677}
+{"epoch": 1790356006.404204, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4234, "swap_used_mb": 7677}
+{"epoch": 1790356007.4105508, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4212, "swap_used_mb": 7677}
+{"epoch": 1790356008.4184842, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4194, "swap_used_mb": 7677}
+{"epoch": 1790356009.4235983, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4202, "swap_used_mb": 7677}
+{"epoch": 1790356010.4297538, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4228, "swap_used_mb": 7658}
+{"epoch": 1790356011.43586, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4197, "swap_used_mb": 7655}
+{"epoch": 1790356012.4423025, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4223, "swap_used_mb": 7641}
+{"epoch": 1790356013.4487135, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.099, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4224, "swap_used_mb": 7636}
+{"epoch": 1790356014.4565623, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4213, "swap_used_mb": 7636}
+{"epoch": 1790356015.4641526, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.04, "hermes": 0.01}}, "mem_available_mb": 4212, "swap_used_mb": 7636}
+{"epoch": 1790356016.4708586, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4199, "swap_used_mb": 7635}
+{"epoch": 1790356017.4764, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4186, "swap_used_mb": 7636}
+{"epoch": 1790356018.4834907, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4182, "swap_used_mb": 7636}
+{"epoch": 1790356019.489081, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4186, "swap_used_mb": 7636}
+{"epoch": 1790356020.494763, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.01}}, "mem_available_mb": 4169, "swap_used_mb": 7636}
+{"epoch": 1790356021.5006943, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4194, "swap_used_mb": 7636}
+{"epoch": 1790356022.5064545, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4200, "swap_used_mb": 7636}
+{"epoch": 1790356023.5132365, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4187, "swap_used_mb": 7636}
+{"epoch": 1790356024.5190508, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4179, "swap_used_mb": 7636}
+{"epoch": 1790356025.525333, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.03, "hermes": 0.02}}, "mem_available_mb": 4181, "swap_used_mb": 7636}
+{"epoch": 1790356026.5321367, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4217, "swap_used_mb": 7638}
+{"epoch": 1790356027.539292, "phase": "loaded", "cores": {"tracer": 0.05, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4179, "swap_used_mb": 7638}
+{"epoch": 1790356028.5464242, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.03, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4182, "swap_used_mb": 7638}
+{"epoch": 1790356029.5516644, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4157, "swap_used_mb": 7638}
+{"epoch": 1790356030.558151, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4163, "swap_used_mb": 7638}
+{"epoch": 1790356031.5634892, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.06, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4183, "swap_used_mb": 7638}
+{"epoch": 1790356032.5689003, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4174, "swap_used_mb": 7638}
+{"epoch": 1790356033.5742157, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4144, "swap_used_mb": 7638}
+{"epoch": 1790356034.5785007, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4151, "swap_used_mb": 7638}
+{"epoch": 1790356035.5839925, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.03, "shard": {"cursor": 0.03, "hermes": 0.01}}, "mem_available_mb": 4155, "swap_used_mb": 7638}
+{"epoch": 1790356036.5883262, "phase": "loaded", "cores": {"tracer": 0.119, "x1": 0.05, "shard": {"cursor": 0.01, "hermes": 0.02}}, "mem_available_mb": 4134, "swap_used_mb": 7638}
+{"epoch": 1790356037.5959692, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4129, "swap_used_mb": 7638}
+{"epoch": 1790356038.6025531, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4146, "swap_used_mb": 7638}
+{"epoch": 1790356039.6074119, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.01, "hermes": 0.01}}, "mem_available_mb": 4134, "swap_used_mb": 7641}
+{"epoch": 1790356040.6139798, "phase": "loaded", "cores": {"tracer": 0.04, "x1": 0.04, "shard": {"cursor": 0.0, "hermes": 0.03}}, "mem_available_mb": 4140, "swap_used_mb": 7642}
+{"epoch": 1790356041.6185012, "phase": "loaded", "cores": {"tracer": 0.03, "x1": 0.05, "shard": {"cursor": 0.0, "hermes": 0.02}}, "mem_available_mb": 4195, "swap_used_mb": 7642}
