@@ -55,6 +55,7 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
 2. **Gate A／EXA 非同步化 → XFCE 桌面卡頓**（使用者決定繼續；取代先前「我建議凍結 Gate A」）
    - 現況：非同步原型 `11b3b79` op 層過關（client 端延遲 GA 為 G 的 19–24%）；XFCE 尖峰來自小 pixmap 逐一升級（PGA-GAP-5）→
      依尺寸分流 `f592241`（`TERMUX_X11_GPU_MIN_PIXELS` 預設 4097）讓尖峰消失，但 2D 桌面 GPU 仍未贏 CPU（GT p50 ≈ C 的 2–3 倍）。細節：`HANDOFF-NEXT-SESSION-20260924.md`。
+   - **凍結文件已寫（2026-09-25，任何資料之前）：`evidence/session/xfce-v6/XFCE-V6-BASELINE-01-FREEZE.md`（PR #27）**（Part A 日常 :1、Part B 實驗 :3；工具 T1–T6 尚未實作）。
    - 起手建議（未執行）：先在 **v6 日常**下重量 XFCE 卡頓基線。09-23 卡頓主嫌是追蹤器滿載（~1 核），現在 30 s 窗只剩 0.007 核；
      先確認剩下的卡頓有多少真的在 X／EXA，再決定 EXA 要修哪裡。比較前要先凍結新判準。
    - **證據（09-25 查）**：`runtime-f592241` XFCE C0 八格的 RCA `cpu_cores_window`：追蹤器 **0.55–0.69 核**、X3 0.34–0.60 核——
