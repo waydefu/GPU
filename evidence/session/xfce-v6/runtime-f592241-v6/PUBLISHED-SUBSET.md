@@ -5,7 +5,9 @@
 
 ```
 raw-logcat.txt        windowed device log；本輪每格 1.2–1.3 GB（c-01 取樣 97% 的行是 gatea-telemetry），7 格共約 8.4 GB。
-                      本地保留原檔、未壓縮（evidence 壓縮需使用者同意）。preflight-01 的 1.3 MB 也不發佈，規則一致。
+                      2026-09-25 經使用者同意，本地改為 raw-logcat.txt.gz（gzip -6，無損；解壓後 sha256 與
+                      sha256sums.txt 相同，逐格記在 POST-CAPTURE-CHANGES.md），7 格合計約 250 MB，仍不發佈。
+                      preflight-01（原 1.3 MB）同樣處理、同樣不發佈。
 x3-launcher.log       > 100 KB 者（本輪只有 xfce-c0-g0-01，813632 bytes）。
 ```
 
