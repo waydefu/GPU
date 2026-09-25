@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5954 floor_mb=4500 disk_free_gb=49
+STOP logcat pid 31764 still alive after TERM
+XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-03

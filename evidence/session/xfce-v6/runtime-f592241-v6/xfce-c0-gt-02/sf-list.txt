@@ -1,0 +1,8 @@
+RequestedLayerState{Bounds for - com.waydefu.x11gpu/com.termux.x11.MainActivity#16678 parentId=16675}
+RequestedLayerState{com.waydefu.x11gpu/com.termux.x11.MainActivity#16675 parentId=16674}
+RequestedLayerState{c42117d ActivityRecordInputSink com.waydefu.x11gpu/com.termux.x11.MainActivity#16671 parentId=16664 z=-2147483648}
+RequestedLayerState{2b27377 SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity](BLAST)#16680 parentId=16679}
+RequestedLayerState{Background for 2b27377 SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity]#16681 parentId=16679 relativeParentId=16675 z=-2147483648}
+RequestedLayerState{4c7eac0 com.waydefu.x11gpu/com.termux.x11.MainActivity#16674 parentId=16664}
+RequestedLayerState{2b27377 SurfaceView[com.waydefu.x11gpu/com.termux.x11.MainActivity]#16679 parentId=16678 relativeParentId=16675 z=-2}
+RequestedLayerState{ActivityRecord{10178880 u0 com.waydefu.x11gpu/com.termux.x11.MainActivity t383}#16664 parentId=16662}
