@@ -177,3 +177,16 @@
 5. **被追蹤探測**的 `TRACER` 必須等於該次記錄的 client 追蹤器 pid（§4 第 3 項）；不符 → INVALID。
 6. 工具執行檔 sha256（2026-09-25 11:04 建置）：`x_rtt2.glibc` `17700d91…`、`x_grab_stall.glibc` `1004aa87…`、
    `x_rtt2.bionic` `61f51ff3…`、`traced_lat.glibc` `44ea9efb…`；完整值在 `tool-qualification/tool-binaries.sha256.txt`。每次擷取記錄實際使用的雜湊，與此不同 → INVALID。
+
+### 偏差 3：Part A 改由 Claude 執行，使用者只負責重開後打開 Claude（2026-09-25 使用者決定；**Part A 仍無任何資料**）
+- 使用者要求「不貼指令」。記錄程式（T5）改由**日常桌面內的 Claude Code session** 啟動：它仍在日常追蹤器底下，§4 第 1 項照驗。
+- 三次都是「Claude Desktop 開著、正在等這個記錄程式的工具呼叫」，三次狀態一致；§6.1 的「閒置」改讀為這個狀態。
+  （原設計裡使用者自己貼指令時 Claude 真閒置、Claude 跑時不閒置的不對稱因此消失。）
+- 切換：Claude 建立／刪除 `~/.f8-proot-stock`（＝「F8 設定」做的事），再經 TermuxService 執行 `f8stop`（＝「F8 工作站 → 關閉桌面」）；
+  使用者用「F8 工作站」開回桌面、打開 Claude、叫 Claude 繼續。`f8stop` 會結束 XFCE 與 Stable X `:1`——使用者已同意（本對話）。
+- Cursor／Hermes 由記錄程式在擷取結束後關閉（`--close-launched`）：只對啟動時記下的確切 pid 送 SIGTERM，且 cmdline 仍須符合；
+  pid、cmdline、結果記入該次 `closed.json`（屬 construction，不是 cleanup）。cmdline 不符的程序不動。
+
+### 補充 7：Part A 補跑規則（新增；原凍結沒有訂，任何一次無效就整個 A INCONCLUSIVE）
+- 每一格（v6-1、stock-1、v6-2）**原本那次無效**時，可以補跑 **1 次**（同 kind、新目錄 `<格>-r1`，原無效目錄保留）；
+  補跑仍無效 → Part A `INCONCLUSIVE`。原本那次有效時**不得**提交補跑（禁止挑結果）。判定器 `part-a ... slot=<dir>` 實作並有測試。

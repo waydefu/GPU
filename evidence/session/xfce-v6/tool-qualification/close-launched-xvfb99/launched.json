@@ -1,0 +1,14 @@
+[
+  {
+    "cmd": "bash -c 'exec -a /usr/share/cursor/cursor sleep 60'",
+    "pid": 565
+  },
+  {
+    "cmd": "sleep 8",
+    "pid": 566
+  },
+  {
+    "cmd": "bash -c 'exec -a /usr/bin/something-else sleep 40'",
+    "pid": 567
+  }
+]
