@@ -1,0 +1,20 @@
+end_begin sid=30610 tracer=30608 members=18
+term sid=30610 pid=30610 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh claude /tmp/app-idle/run-claude-sanity 
+term sid=30610 pid=30611 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=30610 pid=30612 cmd=/usr/lib/claude-desktop/claude-desktop --no-sandbox --disable-gpu --disable-dev-shm-usage --ozone-platform=x11 --password-store=basic --user-data-dir=/tmp/app-i
+term sid=30610 pid=30632 cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=30610 pid=30633 cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-sandbox 
+term sid=30610 pid=30811 cmd=/usr/libexec/gvfsd 
+term sid=30610 pid=30826 cmd=/usr/lib/claude-desktop/claude-desktop --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-repo
+term sid=30610 pid=30829 cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --di
+term sid=30610 pid=30908 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=30610 pid=30943 cmd=/usr/libexec/xdg-permission-store 
+term sid=30610 pid=30977 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=30610 pid=30997 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=30610 pid=31003 cmd=/usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 11 --address=unix:path=/tmp/app-idle/run-claude-sanit
+term sid=30610 pid=31009 cmd=/usr/libexec/at-spi2-registryd --use-gnome-session 
+term sid=30610 pid=31018 cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=8ef3a950-f063-4f6c-88f3-76f5419c54be,no_channel --user-d
+term sid=30610 pid=31050 cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=8ef3a950-f063-4f6c-88f3-76f5419c54be,no_channel --user-d
+term sid=30610 pid=31130 cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=8ef3a950-f063-4f6c-88f3-76f5419c54be,no_channel --user-d
+term sid=30610 pid=31166 cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disabl
+END survivors=0 tracer_gone=true

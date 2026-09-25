@@ -1,0 +1,67 @@
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+dbus-daemon[30611]: [session uid=0 pid=30611] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+[30612:0925/091400.946625:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[30611]: [session uid=0 pid=30611] Activating service name='org.gtk.vfs.Daemon' requested by ':1.1' (uid=0 pid=30612 comm="/usr/lib/claude-desktop/claude-desktop --no-sandbo" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30611]: [session uid=0 pid=30611] Successfully activated service 'org.gtk.vfs.Daemon'
+[30612:0925/091401.583367:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30612:0925/091401.583868:ERROR:net/base/address_tracker_linux.cc:364] Could not send NETLINK request: Invalid argument (22)
+[30612:0925/091401.584154:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30612:0925/091401.607079:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+[30612:0925/091401.677255:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30612:0925/091401.677549:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[30612:0925/091401.677797:ERROR:dbus/bus.cc:406] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[30611]: [session uid=0 pid=30611] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.0' (uid=0 pid=30612 comm="/usr/lib/claude-desktop/claude-desktop --no-sandbo" label="u:r:runas_app:s0:c109,c257,c512,c768")
+[30857:0925/091401.797415:ERROR:net/base/address_tracker_linux.cc:364] Could not send NETLINK request: Invalid argument (22)
+dbus-daemon[30611]: [session uid=0 pid=30611] Activating service name='org.freedesktop.portal.Documents' requested by ':1.3' (uid=0 pid=30908 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30611]: [session uid=0 pid=30611] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.4' (uid=0 pid=30933 comm="/usr/libexec/xdg-document-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30611]: [session uid=0 pid=30611] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[30611]: [session uid=0 pid=30611] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /tmp/app-idle/run-claude-sanity/runtime/doc
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:01.905: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:01.905: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[30611]: [session uid=0 pid=30611] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.3' (uid=0 pid=30908 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30611]: [session uid=0 pid=30611] Activating service name='org.a11y.Bus' requested by ':1.6' (uid=0 pid=30977 comm="/usr/libexec/xdg-desktop-portal-gtk" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[30611]: [session uid=0 pid=30611] Successfully activated service 'org.a11y.Bus'
+dbus-daemon[31003]: org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[31003]: Activating service name='org.a11y.atspi.Registry' requested by ':1.0' (uid=0 pid=30977 comm="/usr/libexec/xdg-desktop-portal-gtk" label="u:r:runas_app:s0:c109,c257,c512,c768")
+
+(xdg-desktop-portal-gtk:30977): xdg-desktop-portal-gtk-WARNING **: 09:14:02.284: error: Could not connect: No such file or directory
+
+dbus-daemon[31003]: Successfully activated service 'org.a11y.atspi.Registry'
+SpiRegistry daemon is running with well-known name - org.a11y.atspi.Registry
+dbus-daemon[30611]: [session uid=0 pid=30611] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.433: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.433: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.433: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.435: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.436: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.437: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.439: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.440: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][54328.281525] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][54328.281537] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.445: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.445: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.447: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:30908): xdg-desktop-portal-WARNING **: 09:14:02.448: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[30611]: [session uid=0 pid=30611] Successfully activated service 'org.freedesktop.portal.Desktop'
+proot info: vpid 1: terminated with signal 15
+LAUNCH_EXIT rc=0

@@ -1,0 +1,13 @@
+29389 main
+29567 Jit thread pool
+29568 Signal Catcher
+29569 perfetto_hprof_
+29570 HeapTaskDaemon
+29571 ReferenceQueueD
+29572 FinalizerDaemon
+29573 FinalizerWatchd
+29600 binder:29389_1
+29601 binder:29389_2
+29666 main
+29667 Thread-1
+29668 binder:29389_3

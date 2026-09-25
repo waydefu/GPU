@@ -1,0 +1,109 @@
+end_begin sid=30610 tracer=30608 members=18
+term sid=30610 pid=30610 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh claude /tmp/app-idle/run-claude-sanity 
+term sid=30610 pid=30611 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=30610 pid=30612 cmd=/usr/lib/claude-desktop/claude-desktop --no-sandbox --disable-gpu --disable-dev-shm-usage --ozone-platform=x11 --password-store=basic --user-data-dir=/tmp/app-i
+term sid=30610 pid=30632 cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=30610 pid=30633 cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-sandbox 
+term sid=30610 pid=30811 cmd=/usr/libexec/gvfsd 
+term sid=30610 pid=30826 cmd=/usr/lib/claude-desktop/claude-desktop --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-repo
+term sid=30610 pid=30829 cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --di
+term sid=30610 pid=30908 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=30610 pid=30943 cmd=/usr/libexec/xdg-permission-store 
+term sid=30610 pid=30977 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=30610 pid=30997 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=30610 pid=31003 cmd=/usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 11 --address=unix:path=/tmp/app-idle/run-claude-sanit
+term sid=30610 pid=31009 cmd=/usr/libexec/at-spi2-registryd --use-gnome-session 
+term sid=30610 pid=31018 cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=8ef3a950-f063-4f6c-88f3-76f5419c54be,no_channel --user-d
+term sid=30610 pid=31050 cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=8ef3a950-f063-4f6c-88f3-76f5419c54be,no_channel --user-d
+term sid=30610 pid=31130 cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=8ef3a950-f063-4f6c-88f3-76f5419c54be,no_channel --user-d
+term sid=30610 pid=31166 cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disabl
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=30542 file=claude-sanity.touch
+end_begin sid=7314 tracer=7312 members=18
+term sid=7314 pid=7314 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh chatgpt /tmp/app-idle/run-chatgpt-sanity 
+term sid=7314 pid=7315 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=7314 pid=7321 cmd=/usr/lib/chatgpt/ChatGPT --no-sandbox --ozone-platform=x11 --disable-gpu --disable-dev-shm-usage 
+term sid=7314 pid=7337 cmd=/usr/lib/chatgpt/ChatGPT --type=zygote --no-zygote-sandbox --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex -
+term sid=7314 pid=7338 cmd=/usr/lib/chatgpt/ChatGPT --type=zygote --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex --owl-electron-scheme
+term sid=7314 pid=7369 cmd=/usr/libexec/gvfsd 
+term sid=7314 pid=7397 cmd=/usr/lib/chatgpt/ChatGPT --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-reporter=, --user-
+term sid=7314 pid=7401 cmd=/usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-
+term sid=7314 pid=7407 cmd=/usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --no-sandbox --disable-dev-s
+term sid=7314 pid=7450 cmd=/usr/bin/gnome-keyring-daemon --start --foreground --components=secrets 
+term sid=7314 pid=7460 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=7314 pid=7477 cmd=/usr/libexec/xdg-permission-store 
+term sid=7314 pid=7487 cmd=/usr/libexec/gcr-prompter 
+term sid=7314 pid=7498 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=7314 pid=7727 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=7314 pid=7745 cmd=/usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex --owl-electron-scheme-replay --s
+term sid=7314 pid=7751 cmd=/usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex --owl-electron-scheme-replay --s
+term sid=7314 pid=7784 cmd=/usr/lib/chatgpt/resources/codex -c features.code_mode_host=true app-server --analytics-default-enabled -c mcp_servers.codex_app={"command"="/usr/lib/chatgpt/re
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=7210 file=chatgpt-sanity.touch
+end_begin sid=15153 tracer=15150 members=20
+term sid=15153 pid=15153 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh chatgptweb /tmp/app-idle/run-chatgptweb-sanity 
+term sid=15153 pid=15154 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=15153 pid=15156 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --no-sandbox --disable-dev-shm-usage --disable-gpu --remote-debugging-port=9222 --user-data-dir=/ro
+term sid=15153 pid=15182 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=zygote --no-zygote-sandbox --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, -
+term sid=15153 pid=15183 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=zygote --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root
+term sid=15153 pid=15199 cmd=/usr/libexec/gvfsd 
+term sid=15153 pid=15221 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid
+term sid=15153 pid=15225 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=
+term sid=15153 pid=15262 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=
+term sid=15153 pid=15355 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=15153 pid=15365 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+term sid=15153 pid=15366 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+term sid=15153 pid=15394 cmd=/usr/bin/gnome-keyring-daemon --start --foreground --components=secrets 
+term sid=15153 pid=15396 cmd=/usr/lib/aarch64-linux-gnu/xfce4/notifyd/xfce4-notifyd 
+term sid=15153 pid=15398 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=15153 pid=15410 cmd=/usr/lib/aarch64-linux-gnu/xfce4/xfconf/xfconfd 
+term sid=15153 pid=15430 cmd=/usr/libexec/gcr-prompter 
+term sid=15153 pid=15433 cmd=/usr/libexec/xdg-permission-store 
+term sid=15153 pid=15451 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=15153 pid=15625 cmd=/root/.cache/ms-playwright/chromium-1228/chrome-linux/chrome --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/ch
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=15068 file=chatgptweb-sanity.touch
+end_begin sid=19457 tracer=19455 members=16
+term sid=19457 pid=19457 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh hermes /tmp/app-idle/run-hermes-sanity 
+term sid=19457 pid=19458 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=19457 pid=19459 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --no-sandbox --ozone-platform=x11 --disable-gpu --disable-dev-shm-usage 
+term sid=19457 pid=19473 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=19457 pid=19474 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox 
+term sid=19457 pid=19499 cmd=/usr/libexec/gvfsd 
+term sid=19457 pid=19540 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=19457 pid=19558 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --en
+term sid=19457 pid=19601 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=19457 pid=19621 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox 
+term sid=19457 pid=19630 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=19457 pid=19664 cmd=/usr/libexec/xdg-permission-store 
+term sid=19457 pid=19675 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=19457 pid=19767 cmd=/usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile luna serve --host 127.0.0.1 --port 0 
+term sid=19457 pid=19853 cmd=/usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile default serve --host 127.0.0.1 --port 0 
+term sid=19457 pid=19922 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --enable
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=19378 file=hermes-sanity.touch
+end_begin sid=25069 tracer=25067 members=22
+term sid=25069 pid=25069 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh cursor /tmp/app-idle/run-cursor-sanity 
+term sid=25069 pid=25070 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=25069 pid=25075 cmd=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --ozone-platform=x11 --disable-gpu --user-data-dir=/tmp/app-idle/run-cursor-
+term sid=25069 pid=25078 cmd=/usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=25069 pid=25079 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox 
+term sid=25069 pid=25152 cmd=/usr/libexec/gvfsd 
+term sid=25069 pid=25166 cmd=/proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-report
+term sid=25069 pid=25172 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --cr
+term sid=25069 pid=25188 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=25069 pid=25210 cmd=/usr/libexec/xdg-permission-store 
+term sid=25069 pid=25226 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=25069 pid=25259 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=25069 pid=25267 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25069 pid=25269 cmd=/usr/share/cursor/cursor --type=zygote --no-sandbox 
+term sid=25069 pid=25443 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --dns-resu
+term sid=25069 pid=25465 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashp
+term sid=25069 pid=25484 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25069 pid=25485 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+term sid=25069 pid=25720 cmd=/usr/share/cursor/cursor --dns-result-order=ipv4first --experimental-network-inspection /usr/share/cursor/resources/app/extensions/cursor-always-local/dist/gitW
+term sid=25069 pid=26011 cmd=node /usr/bin/firebase mcp --dir /root/projects/clinic --only auth,firestore 
+term sid=25069 pid=26136 cmd=/root/.local/share/uv/tools/serena-agent/bin/python /root/.local/bin/serena start-mcp-server --context ide --project-from-cwd --enable-web-dashboard False --ope
+term sid=25069 pid=26404 cmd=/proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --crashpad
+END survivors=0 tracer_gone=true
+touch_recorder_stopped pid=24980 file=cursor-sanity.touch

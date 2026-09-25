@@ -1,0 +1,14 @@
+node_ifaces lo,wlan0
+venv rc=0 True
+clone rc=0
+fsck rc=0
+0
+1
+clone_obj_nlink=1
+tar: t: Cannot change mode to rwxrwxrwx: No such file or directory
+tar: Exiting with failure status due to previous errors
+t2/a 1 aid_u0_a365
+t2/b 1 aid_u0_a365
+apt_sim_lines=1
+py_rglob True
+DAILY_CHECK_DONE

@@ -1,0 +1,10 @@
+stat_smoke v6 IDENTICAL (59 lines)
+stat_smoke v6off IDENTICAL (59 lines)
+stat_smoke v6b DIFFERS (40 changed lines)
+smoke v6 IDENTICAL (23 lines)
+smoke v6off IDENTICAL (23 lines)
+smoke v6b DIFFERS (4 changed lines)
+daily_check v6 IDENTICAL (14 lines)
+daily_check v6off IDENTICAL (14 lines)
+daily_check v6b DIFFERS (6 changed lines)
+V6CHECK_DONE
