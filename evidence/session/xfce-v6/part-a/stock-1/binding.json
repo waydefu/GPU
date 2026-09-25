@@ -1,0 +1,19 @@
+{
+  "kind": "stock",
+  "client_tracer": {
+    "pid": 21630,
+    "tracer_pid": 19896,
+    "tracer_comm": "proot",
+    "tracer_exe": "/data/data/com.termux/files/usr/bin/proot",
+    "tracer_sha256": "ea47e17da8e6ff4882c169c6508861e5b4be9227e477c6020f4f14facc85c10d",
+    "proot_env": {
+      "PROOT_L2S_DIR": "/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs/.l2s"
+    }
+  },
+  "test_mode": false,
+  "display": ":1",
+  "launch": [
+    "/root/.local/bin/cursor-gpu",
+    "/root/.local/bin/hermes-gpu"
+  ]
+}

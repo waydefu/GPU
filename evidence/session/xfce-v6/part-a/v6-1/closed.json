@@ -1,0 +1,23 @@
+{
+  "closed": [
+    {
+      "cmd": "/root/.local/bin/cursor-gpu",
+      "pid": 13176,
+      "cmdline": "/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --user-data-dir=/root/.cursor-data --disable-gpu",
+      "action": "sigterm",
+      "gone_after_s": 1.0
+    },
+    {
+      "cmd": "/root/.local/bin/hermes-gpu",
+      "pid": 13180,
+      "cmdline": "/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --no-sandbox --disable-gpu-sandbox --ozone-platform=x11 --disable-dev-shm-usage --disable-gpu",
+      "action": "sigterm",
+      "gone_after_s": 0.5
+    }
+  ],
+  "electron_left": {
+    "claude": [
+      15688
+    ]
+  }
+}
