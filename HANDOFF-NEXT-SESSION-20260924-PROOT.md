@@ -120,4 +120,6 @@ fork commits  8b905a2（GL-BENCH）、a4440fa（ELECTRON-BENCH）、22137ff（PR
 - **日常改用 v6**（使用者同意，2026-09-25）：`f8desk`／`f8desk-external` 依序 v6 → v5 → v2 → 原版（備份 `*.bak-20260925-v6`）。
   注意：目前跑著的桌面仍是 **v2**（pid 17477，開了約 10 小時未重開）；下次重開桌面直接變 v6。PR [#24](https://github.com/waydefu/GPU/pull/24)。
 
+- 09:46 桌面重開，**v6 已在日常上線**（v2 退役）；09:52 核對通過。
+
 ## ➜ 更新的交接：`HANDOFF-NEXT-SESSION-20260925.md`（2026-09-25 09:40，本檔之後的狀態以它為準）
