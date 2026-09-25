@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5552 floor_mb=4500 disk_free_gb=54
+STOP logcat pid 29348 still alive after TERM
+CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/v6-sanity-01 APP_IDLE_SANITY_DONE

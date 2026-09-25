@@ -108,3 +108,12 @@ fork commits  8b905a2（GL-BENCH）、a4440fa（ELECTRON-BENCH）、22137ff（PR
 - 外接螢幕：`force_desktop_mode_on_external_displays=1`（所以不是鏡像）；`stay_on_while_plugged_in=15`；逾時 10 分。螢幕工具（觸控/按鍵才算活動、2 分鐘關面板）尚未做，待接外接螢幕＋搖桿實測。
 - **查檔案 v5**：成本拆解 `PROOT-STAT-COST-01.md`（每 stop ~30 µs、主因放行喚醒）；v5「進入時代答」`PROOT-FAST5-STAT-AT-ENTER-01.md`：
   stat −41%、fstat −45%、不存在 −45%、整體工作 −29% wall／−28% CPU；smoke 逐字相同＋必紅對照抓得到。`out5/bin/proot-fast5`（adb3d6d6），**未部署**。
+- **日常改用 v5**（使用者決定，2026-09-25）：`f8desk`／`f8desk-external` 選 v5 → v2 → 原版（備份 `*.bak-20260925-v5`），下次重開桌面生效。
+  V5-SANITY-01：Claude／ChatGPT／chatgpt-web／Hermes／Cursor 在 v5 都正常；日常操作對照與 v2 相同。已知：tar 解開硬連結的 chmod 錯誤（原版也有）、Node 只看得到 IPv4 介面。
+  PR [#23](https://github.com/waydefu/GPU/pull/23)。
+- **v6（statx 代答，進行中）**：`~/build/proot-fast/proot-5.1.107.92-v6`、`out6/bin/proot-fast6`（2d5596dc）；`tracee/statx.c` `v6_statx_at_enter()` 以真 statx＋同一個 STATX_SYSCALL 通知。
+  -v 2 確認有代答（成功 6、ENOENT 2）；stat_smoke：v6 與 v6off 皆與 v2 相同（59 行），故意壞掉的 v6b（不發 STATX_SYSCALL）DIFFERS 40 行。
+  **未完成**：通用 smoke／daily_check（跑到一半 ADB 斷線，輸出不完整）、效能量測、五個程式健康檢查。ADB：手機換網到 192.168.1.100 後無線偵錯失效，需使用者重開。
+  之後跑裝置端測試要用 `setsid nohup` 讓它脫離 adb session（避免斷線時被一起殺掉）。
+- **v6 完成驗證（未部署）**：`PROOT-FAST6-STATX-AT-ENTER-01.md`。三份 smoke 與 v2 相同、v6b 三份都抓到；statx −37%，相對 v5 整體 −16%、相對 v2 −28%；
+  `v6-sanity-01` 五個程式正常。日常仍 v5（`f8desk` 的 PD_PROOT_BIN 區塊把 out5 改成 out6 即可）。ADB 現為 192.168.1.100:35251（會變；mdns 不能用，掃埠）。
