@@ -88,6 +88,11 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
 - **Termux 的 procps-ng（pgrep／ps 4.0.7）把程序名截成 7 字**（`xfce4-session`→`xfce4-s`），`pgrep -x` 對長名稱永遠比不到；
   「F8 工作站」因此一度沒有關閉選項（09:5x 已改成直接比對 `/proc/*/comm`，舊版備份 `~/.shortcuts-backup-20260925/F8 工作站.v1`）。
 - 在 run-as 下 Termux 的 `zstd` 被拒（權限／SELinux），在 PRoot 內執行正常。
+- **PATH 上的 `glxinfo`／`vulkaninfo`／`eglinfo` 是 Termux（bionic）版**，載入 Termux 的 Mesa，不能當 Ubuntu 程式的 GPU 證據。
+  10:15 起 `/usr/local/bin/f8-gpu` 改成 `/opt/mesa-kgsl` 環境（舊版指向 Ubuntu Mesa，對 Ubuntu 程式是 0 裝置；備份 `f8-gpu.bak-20260925`），
+  `f8-doctor` 的 GPU 檢查改成經 Ubuntu `libvulkan.so.1` 列舉（舊環境同一探測回空＝紅色對照）。
+  `hermes-gpu`（Hermes 日常啟動器）仍寫死舊環境＋`--use-gl=desktop`＝實際軟體算圖；要不要改成 `--disable-gpu` 由使用者決定。
+- 技能 `termux-proot-performance` 0.4.0（Hermes 來源 `~/.hermes/skills/`，已同步到 `~/.claude/skills/`）、`verification-integrity` 1.6.0 已更新到本檔狀態。
 - 真實登入設定檔開程式留下的 launch.out 推 PR 前要掃帳號識別資訊（目前只有請求 ID）。
 
 ## fork（`waydefu/termux-x11` worktree `src/f8-ahb-exa-async`，**全部本地、未 push**）
