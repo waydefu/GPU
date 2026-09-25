@@ -1,0 +1,49 @@
+{
+  "captures": [
+    {
+      "name": "notel-c-01",
+      "group": "C",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-c-01"
+    },
+    {
+      "name": "notel-gt-01",
+      "group": "GT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-01"
+    },
+    {
+      "name": "notel-ct-01",
+      "group": "CT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-ct-01"
+    },
+    {
+      "name": "notel-gt-02",
+      "group": "GT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-02"
+    },
+    {
+      "name": "notel-ct-02",
+      "group": "CT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-ct-02"
+    },
+    {
+      "name": "notel-c-02",
+      "group": "C",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-c-02"
+    },
+    {
+      "name": "notel-ct-03",
+      "group": "CT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-ct-03"
+    },
+    {
+      "name": "notel-c-03",
+      "group": "C",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-c-03"
+    },
+    {
+      "name": "notel-gt-03",
+      "group": "GT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-03"
+    }
+  ]
+}

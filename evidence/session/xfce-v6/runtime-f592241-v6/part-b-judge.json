@@ -1,0 +1,315 @@
+{
+  "preflight": {
+    "verdict": "PROBE_SENSITIVE",
+    "why": [],
+    "grabs": [
+      {
+        "hold_s": 1.001,
+        "untraced_max_ms": 854.203,
+        "traced_max_ms": 990.868
+      },
+      {
+        "hold_s": 1.001,
+        "untraced_max_ms": 991.49,
+        "traced_max_ms": 991.535
+      },
+      {
+        "hold_s": 1.0,
+        "untraced_max_ms": 992.881,
+        "traced_max_ms": 992.674
+      }
+    ]
+  },
+  "captures": [
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 2,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 599,
+          "p50": 0.392,
+          "p99": 13.035,
+          "max": 15.255,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 599,
+          "p50": 0.346,
+          "p99": 10.012,
+          "max": 13.781,
+          "over_100ms": 0
+        },
+        "traced_lat_us": {
+          "n": 1498,
+          "p50": 153.0,
+          "p99": 3900.7,
+          "max": 8251.0
+        },
+        "x3_cores": 0.495,
+        "tracer_cores": 0.322,
+        "search": {
+          "n": 49,
+          "p50_s": 0.034,
+          "p90_s": 0.059,
+          "max_s": 0.1641,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-c-01",
+      "group": "C"
+    },
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 53,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 600,
+          "p50": 0.983,
+          "p99": 12.392,
+          "max": 39.093,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 600,
+          "p50": 1.043,
+          "p99": 10.631,
+          "max": 15.179,
+          "over_100ms": 0
+        },
+        "traced_lat_us": {
+          "n": 1498,
+          "p50": 137.8,
+          "p99": 3641.7,
+          "max": 9882.8
+        },
+        "x3_cores": 0.626,
+        "tracer_cores": 0.339,
+        "search": {
+          "n": 49,
+          "p50_s": 0.047,
+          "p90_s": 0.257,
+          "max_s": 0.7198,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-gt-01",
+      "group": "GT"
+    },
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 53,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 599,
+          "p50": 1.184,
+          "p99": 10.712,
+          "max": 14.654,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 599,
+          "p50": 1.337,
+          "p99": 11.146,
+          "max": 14.914,
+          "over_100ms": 0
+        },
+        "traced_lat_us": {
+          "n": 1497,
+          "p50": 153.4,
+          "p99": 3051.9,
+          "max": 9663.1
+        },
+        "x3_cores": 0.625,
+        "tracer_cores": 0.365,
+        "search": {
+          "n": 49,
+          "p50_s": 0.046,
+          "p90_s": 0.145,
+          "max_s": 0.7929,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-gt-02",
+      "group": "GT"
+    },
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 2,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 600,
+          "p50": 1.5,
+          "p99": 10.387,
+          "max": 15.923,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 599,
+          "p50": 1.347,
+          "p99": 8.998,
+          "max": 12.041,
+          "over_100ms": 0
+        },
+        "traced_lat_us": {
+          "n": 1497,
+          "p50": 206.8,
+          "p99": 4218.2,
+          "max": 11630.1
+        },
+        "x3_cores": 0.566,
+        "tracer_cores": 0.395,
+        "search": {
+          "n": 48,
+          "p50_s": 0.059,
+          "p90_s": 0.13,
+          "max_s": 0.2816,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-c-02",
+      "group": "C"
+    },
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 2,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 599,
+          "p50": 1.119,
+          "p99": 13.211,
+          "max": 17.209,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 599,
+          "p50": 1.205,
+          "p99": 9.255,
+          "max": 13.943,
+          "over_100ms": 0
+        },
+        "traced_lat_us": {
+          "n": 1498,
+          "p50": 184.9,
+          "p99": 4610.3,
+          "max": 17346.5
+        },
+        "x3_cores": 0.631,
+        "tracer_cores": 0.421,
+        "search": {
+          "n": 50,
+          "p50_s": 0.052,
+          "p90_s": 0.082,
+          "max_s": 0.1051,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-c-03",
+      "group": "C"
+    },
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 54,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 600,
+          "p50": 1.557,
+          "p99": 10.418,
+          "max": 63.973,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 599,
+          "p50": 1.424,
+          "p99": 20.727,
+          "max": 182.572,
+          "over_100ms": 1
+        },
+        "traced_lat_us": {
+          "n": 1498,
+          "p50": 190.6,
+          "p99": 5313.3,
+          "max": 11660.7
+        },
+        "x3_cores": 0.645,
+        "tracer_cores": 0.424,
+        "search": {
+          "n": 49,
+          "p50_s": 0.052,
+          "p90_s": 0.091,
+          "max_s": 0.1288,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-gt-03",
+      "group": "GT"
+    },
+    {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "shared_buffers": 2002,
+        "x_root": "1200x2464",
+        "untraced": {
+          "n": 599,
+          "p50": 1.902,
+          "p99": 106.84,
+          "max": 448.813,
+          "over_100ms": 6
+        },
+        "traced": {
+          "n": 599,
+          "p50": 2.697,
+          "p99": 107.372,
+          "max": 448.935,
+          "over_100ms": 6
+        },
+        "traced_lat_us": {
+          "n": 1497,
+          "p50": 197.4,
+          "p99": 4128.5,
+          "max": 8397.3
+        },
+        "x3_cores": 0.672,
+        "tracer_cores": 0.443,
+        "search": {
+          "n": 49,
+          "p50_s": 0.06,
+          "p90_s": 0.162,
+          "max_s": 0.6827,
+          "over_3s": 0,
+          "found": 44
+        }
+      },
+      "name": "xfce-c0-g0-01",
+      "group": "G0"
+    }
+  ],
+  "B1": "GT_NO_TAIL_STALLS",
+  "B1_over_100ms": [
+    0,
+    0,
+    0
+  ],
+  "B2_p50": "NO_SEPARATION",
+  "B2_p99": "NO_SEPARATION",
+  "B3": "NO_SEPARATION",
+  "verdict": "JUDGED"
+}

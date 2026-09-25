@@ -247,3 +247,65 @@ used: v6-1=original stock-1=original v6-2=replacement      verdict JUDGED
 - 本次 sampler 以背景工具呼叫執行，Claude 在擷取期間沒有做其他工具呼叫，只等完成通知（偏差 3 所述「等這個記錄程式」的狀態）。
 - `closed.json`：Cursor pid 14327、Hermes pid 14329 以 SIGTERM 結束（cmdline 相符，0.5–1.0 s 內消失），只剩 Claude Desktop。
 - 結束後確認 `~/.f8-proot-stock` 不存在，日常停在 v6。
+
+## 11. 結果 — Part B（2026-09-25；本節在資料之後寫，§1–§9 不改）
+
+### 11.1 執行
+
+- 一條指令：`SERIAL=192.168.1.100:46297 bash evidence/session/xfce-v6/series-v6.sh`，17:13:16 開始、17:43:18 判定完成，
+  資料目錄 `runtime-f592241-v6/`。
+- preflight-01 **`PROBE_SENSITIVE`**（偏差 1 的 1000 ms grab ×3）：不被追蹤探測最大 854.2／991.5／992.9 ms，
+  被追蹤探測 990.9／991.5／992.7 ms，全部 ≥ 500 ms。`EXPECT_ROOT` = 1200x2464（與 09-25 交接記錄相同）。
+- 判準擷取照凍結順序 `C GT GT C C GT`，**6 格全部有效**，沒有使用補跑；最後 G0 一格（有效，只描述）。
+- 7 格共同綁定（§4）：client 追蹤器 pid 27459，sha256 `2d5596dc…`；`:3` `xfce4-session` 的追蹤器同為 27459；
+  X3 `TracerPid 0`；觸控 `{"selftest": true, "events": 0}`；Stable `com.termux.x11` 前後 pid、cmdline、版本完全相同。
+- 開關生效證據（§5.1）：`Sent shared buffer` C = 2／2／2（≤ 5）、GT = 53／53／54（20–200，且有 `GPU min pixels 4097`）、G0 = 2002（≥ 1000）。
+
+### 11.2 判定（`runtime-f592241-v6/part-b-judge.json`）
+
+| 判準 | 結果 | 數字 |
+|---|---|---|
+| **B1 尾端** | **`GT_NO_TAIL_STALLS`** | 3 格 GT 不被追蹤探測 `over_100ms` = 0／0／0 |
+| **B2 p50** | **`NO_SEPARATION`** | C 0.392／1.500／1.119 ms；GT 0.983／1.184／1.557 ms（交錯） |
+| **B2 p99** | **`NO_SEPARATION`** | C 13.035／10.387／13.211 ms；GT 12.392／10.712／10.418 ms（交錯） |
+| **B3 X CPU** | **`NO_SEPARATION`** | X3 核數 C 0.495／0.566／0.631；GT 0.626／0.625／0.645（min GT 0.625 < max C 0.631） |
+
+verdict **`JUDGED`**。§5.4 事先寫下的三種讀法都**不**適用：沒有 `GT_FASTER`（不能說 GPU 2D 有收益），
+也沒有 `GT_MORE_X_CPU` 或 `CPU_FASTER`（不能說 GPU 路徑較差）。字面結論：**v6 環境、凍結的 XFCE 劇本下，
+GT 與 C 在不被追蹤探測的延遲與 X3 CPU 上分不出輸贏，GT 沒有尾端卡頓。** 不改 Production 預設或 Gate A 狀態。
+
+### 11.3 描述（不改判決）
+
+| 格 | 共享 | 不被追蹤 p50／p99／max（ms） | 被追蹤 p99／max（ms）／>100 | X3 核 | 追蹤器核 | `xdotool search` p50（s）／>3 s |
+|---|---|---|---|---|---|---|
+| c-01 | 2 | 0.392／13.035／15.3 | 10.0／13.8／0 | 0.495 | 0.322 | 0.034／0 |
+| gt-01 | 53 | 0.983／12.392／39.1 | 10.6／15.2／0 | 0.626 | 0.339 | 0.047／0 |
+| gt-02 | 53 | 1.184／10.712／14.7 | 11.1／14.9／0 | 0.625 | 0.365 | 0.046／0 |
+| c-02 | 2 | 1.500／10.387／15.9 | 9.0／12.0／0 | 0.566 | 0.395 | 0.059／0 |
+| c-03 | 2 | 1.119／13.211／17.2 | 9.3／13.9／0 | 0.631 | 0.421 | 0.052／0 |
+| gt-03 | 54 | 1.557／10.418／64.0 | 20.7／182.6／**1** | 0.645 | 0.424 | 0.052／0 |
+| g0-01 | 2002 | 1.902／106.84／**448.8** | 107.4／448.9／**6** | 0.672 | 0.443 | 0.060／0 |
+
+- **B3 差一點分開**：3 格 GT 的 X3 核數都在 C 的最高值附近（平均 GT 0.632、C 0.564，多 0.068 核），
+  但 gt-02 的 0.625 低於 c-03 的 0.631，規則是完全分開才算，照判 `NO_SEPARATION`。
+- **G0 的尖峰在 v6 下還在**：不被追蹤探測 `over_100ms` = 6、max 448.8 ms（共享 2002 次）；
+  這是 §5.3 列的描述題「v6 下 G0 的尖峰還在不在」的答案：在。
+- gt-03 的**被追蹤**探測有 1 筆 182.6 ms，同一窗內不被追蹤探測 max 64.0 ms；被追蹤探測不入判準，只記錄。
+- c-01（第一格）的 p50 0.392 ms 明顯低於其他 5 格（0.98–1.56 ms）；順序設計讓線性漂移對兩組影響相同，這裡只描述。
+- 追蹤器核數 0.32–0.44，照擷取順序逐格上升（0.322 → 0.443，7 格單調）；X3 核數也大致隨順序上升（c-01 0.495 → g0-01 0.672）。與舊 `runtime-f592241`（0.55–0.69，推定原版追蹤器）
+  追蹤器與探測都不同，**不可合併**，只記錄方向。
+- 每格 `raw-logcat.txt` 1.2–1.3 GB（c-01 前 40 MB 取樣：97% 的行是 `gatea-telemetry`）；舊 `runtime-f592241` 該輪以 gzip 保存、約 34 MB／格，原始大小未記錄；
+  本地保留原檔、未壓縮、不發佈（`runtime-f592241-v6/PUBLISHED-SUBSET.md`）。
+
+### 11.4 執行紀錄（事實，不改判決）
+
+- ADB：手機換了網路，舊端點 `10.191.48.13:42435` 變 `offline`；以 `adb_find.py`（UDP 取本機 IP＋TCP 掃 30000–50000）
+  找到 `192.168.1.100` 的 3 個開放埠，逐一 `adb connect`，只有 46297 成功；舊項目 `adb disconnect`。lane 5038 server 仍是 pid 26023。
+- 桌面重開清空了 `/tmp`：`/tmp/p_r10_ledger` 依既有指令重建（`cc -O2 ... tests/r10/p_r10_ledger.c tests/r8/r8_xcb_request.c -lxcb -lxcb-render`），
+  sha256 `2aca8ae1…` 與 runner 鎖定值相同。探測執行檔 4 個 sha256 與 `tool-qualification/tool-binaries.sha256.txt` 相符。
+- 螢幕：`screen_off_timeout` 600000 ms，但手機接 AC 充電且 `stay_on_while_plugged_in=15`（`mStayOn=true`），整輪沒有熄屏；
+  每格 `screen-pre/post` 都是 Awake、未鎖。
+- 開跑前 MemAvailable 5874 MB；磁碟 477G 用 89% → 系列後 91%（剩 45G）。
+- 系列以 `setsid nohup` 脫離 Claude session 執行；擷取期間 Claude 沒有做工具呼叫，只有一個 `tail -F | grep` 監看 `series.out`
+  與一個每 30 s `kill -0` 的等待迴圈。另一個閒置的 Claude Code 程序（pid 31150，見 §10.4）整輪都在。
+- 系列結束後：`com.waydefu.x11gpu` 已無程序，前景回到 Stable `com.termux.x11`，無殘留的 runner／探測／mem-guard 程序。

@@ -1,0 +1,3 @@
+{"v":1,"fixture":"p_r10_ledger","mode":"terminate","phase":"CONNECTED","display":":3"}
+{"v":1,"fixture":"p_r10_ledger","mode":"terminate","phase":"TERMINATE_SENT"}
+{"v":1,"fixture":"p_r10_ledger","mode":"terminate","phase":"RESULT","outcome":"X_HANGUP_AFTER_TERMINATE"}

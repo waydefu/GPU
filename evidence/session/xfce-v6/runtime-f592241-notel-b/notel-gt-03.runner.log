@@ -1,0 +1,5 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5405 floor_mb=4500 disk_free_gb=48
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-terminal-runtime/harness-lib.sh: line 33: /proc/16919/cmdline: No such file or directory
+STOP logcat pid 17441 still alive after TERM
+/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-terminal-runtime/harness-lib.sh: line 33: /proc/17441/cmdline: No such file or directory
+XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-03

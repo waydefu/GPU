@@ -1,0 +1,11 @@
+{
+  "verdict": "PREFLIGHT_INVALID",
+  "why": [
+    "runner-exit 2",
+    "tools-v6.json missing",
+    "untraced probe: file missing",
+    "traced probe: file missing",
+    "grabs.txt missing"
+  ],
+  "grabs": []
+}

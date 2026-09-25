@@ -1,0 +1,172 @@
+{
+  "x3": 31804,
+  "samples": 1583,
+  "threads": {
+    "31804": {
+      "comm": "main",
+      "samples": 1583,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.9375
+        ],
+        [
+          "S:0",
+          0.0303
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0297
+        ],
+        [
+          "R:0",
+          0.0025
+        ]
+      ]
+    },
+    "32092": {
+      "comm": "Jit thread pool",
+      "samples": 1583,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "32113": {
+      "comm": "Signal Catcher",
+      "samples": 1583,
+      "top": [
+        [
+          "S:do_sigtimedwait",
+          1.0
+        ]
+      ]
+    },
+    "32114": {
+      "comm": "perfetto_hprof_",
+      "samples": 1583,
+      "top": [
+        [
+          "S:pipe_read",
+          1.0
+        ]
+      ]
+    },
+    "32116": {
+      "comm": "HeapTaskDaemon",
+      "samples": 1583,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "32117": {
+      "comm": "ReferenceQueueD",
+      "samples": 1583,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "32118": {
+      "comm": "FinalizerDaemon",
+      "samples": 1583,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "32120": {
+      "comm": "FinalizerWatchd",
+      "samples": 1583,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "32183": {
+      "comm": "binder:31804_1",
+      "samples": 1583,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "32186": {
+      "comm": "binder:31804_2",
+      "samples": 1583,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "32289": {
+      "comm": "main",
+      "samples": 1583,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.5148
+        ],
+        [
+          "R:0",
+          0.4668
+        ],
+        [
+          "R:do_epoll_wait",
+          0.012
+        ],
+        [
+          "S:0",
+          0.0051
+        ],
+        [
+          "R:mi_update_group_group",
+          0.0006
+        ],
+        [
+          "S:do_sys_poll",
+          0.0006
+        ]
+      ]
+    },
+    "32290": {
+      "comm": "Thread-1",
+      "samples": 1583,
+      "top": [
+        [
+          "S:inet_csk_accept",
+          1.0
+        ]
+      ]
+    },
+    "32489": {
+      "comm": "binder:31804_3",
+      "samples": 1583,
+      "top": [
+        [
+          "S:binder_thread_read",
+          0.9994
+        ],
+        [
+          "S:0",
+          0.0006
+        ]
+      ]
+    }
+  }
+}

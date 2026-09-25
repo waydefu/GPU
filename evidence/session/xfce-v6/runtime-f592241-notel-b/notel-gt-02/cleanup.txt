@@ -1,0 +1,2 @@
+touch_recorder_stopped pid=29727
+cleanup_sigterm_x3 pid=29916 cmd=termux-x11gpu com.waydefu.x11gpu :3 -noreset                                                                                           

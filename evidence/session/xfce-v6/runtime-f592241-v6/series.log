@@ -1,0 +1,19 @@
+17:13:35 START preflight-01
+17:14:51 PREFLIGHT rc=0 XFCE_CAPTURED mode=preflight variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/preflight-01
+17:14:51 PREFLIGHT_VERDICT PROBE_SENSITIVE
+17:14:51 EXPECT_ROOT 1200x2464
+17:15:10 START xfce-c0-c-01 group=C
+17:18:36 CAPTURE xfce-c0-c-01 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-01
+17:18:55 START xfce-c0-gt-01 group=GT
+17:22:21 CAPTURE xfce-c0-gt-01 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-gt-01
+17:22:40 START xfce-c0-gt-02 group=GT
+17:26:08 CAPTURE xfce-c0-gt-02 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-gt-02
+17:26:27 START xfce-c0-c-02 group=C
+17:30:02 CAPTURE xfce-c0-c-02 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-02
+17:30:21 START xfce-c0-c-03 group=C
+17:33:55 CAPTURE xfce-c0-c-03 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-03
+17:34:14 START xfce-c0-gt-03 group=GT
+17:37:48 CAPTURE xfce-c0-gt-03 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-gt-03
+17:38:47 START xfce-c0-g0-01 group=G0
+17:42:30 CAPTURE xfce-c0-g0-01 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-g0-01
+17:43:18 PART_B JUDGED GT_NO_TAIL_STALLS NO_SEPARATION NO_SEPARATION NO_SEPARATION

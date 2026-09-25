@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="showAdditionalKbd" value="false" />
+    <boolean name="additionalKbdVisible" value="true" />
+    <string name="displayResolutionExact">1920x1080</string>
+    <string name="swipeDownAction">no action</string>
+    <string name="screenIdleTimeout">never</string>
+    <string name="displayResolutionMode">native</string>
+    <string name="backButtonAction">no action</string>
+</map>

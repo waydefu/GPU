@@ -1,0 +1,15 @@
+5928814ab856bb89bf1346911674b9872c01f0436f4b758807a9e052a804aae7  /root/projects/GPU加速/evidence/session/xfce-v6/run-xfce-v5b-notel.sh
+cdae546de616de21011103510ddbac7fe77fd41866427ef8d0c290cdb283e559  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/xfce3/FROZEN-SHA256SUMS
+2aca8ae15d536065168b3a819de1414c5520792712ea56ce254efbdde05ae50b  /tmp/p_r10_ledger
+fee07bd5a62b617e9e403e91efa8b451e0b29b8af8a9dc63ff96e11f9af8ad8c  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/adb_find.py
+80eeb1fdffb6671a9dcd5af8d236fc6b2bfc979f574afadd6d921d55db34738c  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/daily_sampler_v2.py
+c67cb6700fc9ad0fa49d8e43aa14c0cf647c5e2197725874966602bba6d46f60  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/mutation_check.py
+c7834a4ddb4292cf986503a09882e9bd5440185db6b2e2fba438928dc4076e24  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/preflight_probe.py
+ee308fa86607ecd76eca395e6e848336afe2aa0a2de89cf92b317c164f963b3a  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/test_proc_match.py
+e7a0a79914e58a2348db78145d23cc29693b1628f0cd40fd57656914bd487630  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/test_xfce_v6_judge.py
+3b01692de1fac117e7bbfe1c02ce941a37583cf68c2fd9a6aee42a5bfe6d6030  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/tracer_ident.py
+a16cd982133fb01877404c5951891d1621aa3b6b5c4400cb1b7f30fbc5f60a8b  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/v6_probes.py
+cf177a3e4ba63486b7ca88a4c15fd1742c309c08e05c711b8a9edb4e9bb885a6  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/xfce_v6_judge.py
+eb7a1b8f2f2075e8e42d694ad2b47ad714c8a02c90b5b9d738466fbe552164f9  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/build.sh
+a3eefec5ac39762a96fb9c15ade8f191a476bb0e8a6a7d4db90ca60472cb1adb  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/untraced_run.sh
+6ab1645a592c4160efca6f1880fe1ea325ae2e77faa5387e8a2e87ae87b71ae1  /root/projects/GPU加速/src/f8-ahb-gatea-r7-p1-arm/tests/common/mem-guard.sh

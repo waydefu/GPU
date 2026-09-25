@@ -1,0 +1,1 @@
+touch_recorder_stopped pid=12000

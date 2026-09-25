@@ -1,0 +1,1 @@
+launcher_log=/data/data/com.termux/files/usr/tmp/x3-launch-20260925173850-11343.log
