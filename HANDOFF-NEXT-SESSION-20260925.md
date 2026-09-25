@@ -57,6 +57,10 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
      依尺寸分流 `f592241`（`TERMUX_X11_GPU_MIN_PIXELS` 預設 4097）讓尖峰消失，但 2D 桌面 GPU 仍未贏 CPU（GT p50 ≈ C 的 2–3 倍）。細節：`HANDOFF-NEXT-SESSION-20260924.md`。
    - 起手建議（未執行）：先在 **v6 日常**下重量 XFCE 卡頓基線。09-23 卡頓主嫌是追蹤器滿載（~1 核），現在 30 s 窗只剩 0.007 核；
      先確認剩下的卡頓有多少真的在 X／EXA，再決定 EXA 要修哪裡。比較前要先凍結新判準。
+   - **證據（09-25 查）**：`runtime-f592241` XFCE C0 八格的 RCA `cpu_cores_window`：追蹤器 **0.55–0.69 核**、X3 0.34–0.60 核——
+     每一格追蹤器都比 X3 吃得多，C／G0／GAT／GT 都一樣。runner 只驗 X3 未被追蹤（`x3-tracer.txt`），**沒記錄 XFCE client 的追蹤器是哪一版**
+     （時間早於 v2 上日常，推定原版）。新 runner 要把「client 追蹤器 exe sha256」列為有效性欄位，並分兩件事量：
+     (a) 日常 Stable `:1`（官方 termux-x11，**沒有 Gate A**）在 v6 下還卡不卡；(b) 實驗 `:3` 的 C／GT 在 v6 下誰贏。舊判決保持凍結、不重判。
 3. **DRI3＋AHB client 端 → GPU 已經畫快、但上屏仍吃 CPU**（留在主線）
    - 目標負載：Blender 3D viewport、Linux OpenGL／Vulkan 程式、WebGL／GPU 重的 Chromium、任何經 Zink／Turnip → X11 上屏的程式。對 Android 遊戲無關。
    - X 端已有：upstream `loriePixmapFromFds`（`src/upstream/lorie/src/main/cpp/lorie/InitOutput.c:1170`）認 modifier 1255／1256（socket 傳 AHB）、1274／LINEAR（可 mmap 的 fd）；Gate A R2 的 fixture 就是用 1255。
@@ -91,7 +95,7 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
 - **PATH 上的 `glxinfo`／`vulkaninfo`／`eglinfo` 是 Termux（bionic）版**，載入 Termux 的 Mesa，不能當 Ubuntu 程式的 GPU 證據。
   10:15 起 `/usr/local/bin/f8-gpu` 改成 `/opt/mesa-kgsl` 環境（舊版指向 Ubuntu Mesa，對 Ubuntu 程式是 0 裝置；備份 `f8-gpu.bak-20260925`），
   `f8-doctor` 的 GPU 檢查改成經 Ubuntu `libvulkan.so.1` 列舉（舊環境同一探測回空＝紅色對照）。
-  `hermes-gpu`（Hermes 日常啟動器）仍寫死舊環境＋`--use-gl=desktop`＝實際軟體算圖；要不要改成 `--disable-gpu` 由使用者決定。
+  `hermes-gpu`（Hermes 日常啟動器）10:23 經使用者同意改成 `--disable-gpu`（舊環境本來就是軟體算圖；備份 `hermes-gpu.bak-20260925`），下次開 Hermes 生效。
 - 技能 `termux-proot-performance` 0.4.0（Hermes 來源 `~/.hermes/skills/`，已同步到 `~/.claude/skills/`）、`verification-integrity` 1.6.0 已更新到本檔狀態。
 - 真實登入設定檔開程式留下的 launch.out 推 PR 前要掃帳號識別資訊（目前只有請求 ID）。
 
