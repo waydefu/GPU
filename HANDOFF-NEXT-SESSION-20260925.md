@@ -21,7 +21,7 @@
 | 小工具 | 8 → 3：`F8 工作站`（開／切到／關）、`F8 外接`（外接 App／外接 Linux／滿版／滑鼠）、`F8 設定`（proot 加速／原版）；舊的在 `~/.shortcuts-backup-20260925/` |
 | 螢幕設定（使用者自己跑的） | `screen_optimize_mode=2`、`hide_gesture_line=1` → **實驗版 X root 變 1200×2464**（runner 的 `EXPECT_ROOT` 要用這個） |
 | 儲存空間 | 477G 用 89%、可用 54 GB（今天清出 ~10 GB：logs/ zstd 無損、`.cursor-test`、Cursor snapshots、快取、舊 APK）；RAM MemAvailable 5.1G、swap 5.5/15G |
-| PR | #21（proot v1/v2）、#22（GL/Electron）、#23（v5＋日常切換）、#24（v6，09:36 使用者合併）、#25（本交接檔，10:15 合併）、#26（f8-gpu／hermes-gpu／技能）、#27（XFCE v6 凍結）都已合併；T1–T6 工具與凍結 §9 另開 PR |
+| PR | #21（proot v1/v2）、#22（GL/Electron）、#23（v5＋日常切換）、#24（v6，09:36 使用者合併）、#25（本交接檔，10:15 合併）、#26（f8-gpu／hermes-gpu／技能）、#27（XFCE v6 凍結）、#28（T1–T6＋§9）都已合併；Part A 放養流程（§9 偏差 3）另開 PR |
 
 ## proot-fast 各版本（全在 `~/build/proot-fast/`；loader 路徑編死在各自 `outN/libexec`，**不要刪 out2/out5/out6**）
 | 版本 | 內容 | 產物 sha256 前綴 | 狀態 |
@@ -60,8 +60,13 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
      判定器 53 個測試＋行程比對 5 個；`mutation_check.py` 17 個突變全被抓到（含未突變對照必須綠）。工具驗證證據 `evidence/session/xfce-v6/tool-qualification/`（Xvfb `:99`）。
      過程抓到並修掉：§5.2 原參數（200 ms／≥150 ms）必假紅 → **偏差 1 改 1000 ms／≥500 ms**；`v6_probes` 用 NUL 分隔比對命令列，
      但 termux-x11／Claude 把整串命令列塞在 argv[0]（空格分隔）→ 裝置上會永遠找不到 X3、Part B 全部 INVALID（已修＋測試）。
-   - **下一步＝裝置執行**：Part B 一條指令 `SERIAL=<現探> bash evidence/session/xfce-v6/series-v6.sh`（preflight → C GT GT C C GT → 補跑 ≤2 → G0，
-     約 45 分鐘；要 ADB、螢幕全程亮不鎖、手機放著不碰、MemAvailable ≥ 4600）。Part A 要使用者在旁（兩次重開桌面，約 20 分鐘），開跑當下再問。
+   - **下一步＝裝置執行**（凍結 §9 偏差 3＋補充 7 已加，工具 fork `2278505`，快照 `evidence/session/xfce-v6/tools-2278505/`）：
+     - **Part A（先做）＝使用者要「放養」**：Claude 在日常桌面裡自己跑記錄程式，三格 `v6-1 → stock-1 → v6-2`；
+       每格前 Claude 切模式（建立／刪除 `~/.f8-proot-stock`）並經 TermuxService 跑 `f8stop` 關桌面，使用者用「F8 工作站」開回來、打開 Claude、叫 Claude 繼續。
+       指令（每格一條，Claude 執行）：`python3 src/f8-ahb-exa-async/tests/xfce_v6/daily_sampler_v2.py --kind <v6|stock> --out evidence/session/xfce-v6/part-a/<格> --serial <現探> --close-launched`。
+       無效的格可補跑 1 次（`<格>-r1`）。判定：`xfce_v6_judge.py part-a <v6-1> <stock-1> <v6-2> [slot=dir]`。進度記在記憶 `xfce-v6-part-a-runbook`。
+     - **Part B**：一條指令 `SERIAL=<現探> bash evidence/session/xfce-v6/series-v6.sh`（preflight → C GT GT C C GT → 補跑 ≤2 → G0，
+       約 45 分鐘；要 ADB、螢幕全程亮不鎖、手機放著不碰、MemAvailable ≥ 4600）。
    - 起手建議（未執行）：先在 **v6 日常**下重量 XFCE 卡頓基線。09-23 卡頓主嫌是追蹤器滿載（~1 核），現在 30 s 窗只剩 0.007 核；
      先確認剩下的卡頓有多少真的在 X／EXA，再決定 EXA 要修哪裡。比較前要先凍結新判準。
    - **證據（09-25 查）**：`runtime-f592241` XFCE C0 八格的 RCA `cpu_cores_window`：追蹤器 **0.55–0.69 核**、X3 0.34–0.60 核——

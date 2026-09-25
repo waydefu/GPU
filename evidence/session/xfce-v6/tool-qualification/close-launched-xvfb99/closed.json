@@ -1,0 +1,29 @@
+{
+  "closed": [
+    {
+      "cmd": "bash -c 'exec -a /usr/share/cursor/cursor sleep 60'",
+      "pid": 565,
+      "cmdline": "/usr/share/cursor/cursor 60",
+      "action": "sigterm",
+      "gone_after_s": 0.5
+    },
+    {
+      "cmd": "sleep 8",
+      "pid": 566,
+      "cmdline": null,
+      "action": "already_gone",
+      "rc": 0
+    },
+    {
+      "cmd": "bash -c 'exec -a /usr/bin/something-else sleep 40'",
+      "pid": 567,
+      "cmdline": "/usr/bin/something-else 40",
+      "action": "skipped_cmdline_mismatch"
+    }
+  ],
+  "electron_left": {
+    "claude": [
+      15688
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+untraced_started=True traced_pid=562 traced_lat_pid=563
+launched ["bash -c 'exec -a /usr/share/cursor/cursor sleep 60'", 'sleep 8', "bash -c 'exec -a /usr/bin/something-else sleep 40'"] at 1790318656.400
+traced_sigterm pid=562 (own child)
+traced_lat_sigterm pid=563 (own child)
+launch attempt=1 rc=0 usr/tmp/xfce-v6-daily-536-1790318653-untraced-1.log 2>&1 < /dev/null
+Starting service: Intent { act=com.termux.service_execute dat=com.termux.file:/... cmp=com.termux/.app.TermuxService (has extras) }
+close_launched sigterm pid=565 cmdline=/usr/share/cursor/cursor 60
+reason=completed
