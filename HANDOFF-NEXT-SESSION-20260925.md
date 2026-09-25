@@ -21,7 +21,7 @@
 | 小工具 | 8 → 3：`F8 工作站`（開／切到／關）、`F8 外接`（外接 App／外接 Linux／滿版／滑鼠）、`F8 設定`（proot 加速／原版）；舊的在 `~/.shortcuts-backup-20260925/` |
 | 螢幕設定（使用者自己跑的） | `screen_optimize_mode=2`、`hide_gesture_line=1` → **實驗版 X root 變 1200×2464**（runner 的 `EXPECT_ROOT` 要用這個） |
 | 儲存空間 | 477G 用 89%、可用 54 GB（今天清出 ~10 GB：logs/ zstd 無損、`.cursor-test`、Cursor snapshots、快取、舊 APK）；RAM MemAvailable 5.1G、swap 5.5/15G |
-| PR | #21（proot v1/v2）、#22（GL/Electron）、#23（v5＋日常切換）、#24（v6，09:36 使用者合併）、#25（本交接檔，10:15 合併）都已合併；f8-gpu／技能更新另開 PR |
+| PR | #21（proot v1/v2）、#22（GL/Electron）、#23（v5＋日常切換）、#24（v6，09:36 使用者合併）、#25（本交接檔，10:15 合併）、#26（f8-gpu／hermes-gpu／技能）、#27（XFCE v6 凍結）都已合併；T1–T6 工具與凍結 §9 另開 PR |
 
 ## proot-fast 各版本（全在 `~/build/proot-fast/`；loader 路徑編死在各自 `outN/libexec`，**不要刪 out2/out5/out6**）
 | 版本 | 內容 | 產物 sha256 前綴 | 狀態 |
@@ -55,7 +55,13 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
 2. **Gate A／EXA 非同步化 → XFCE 桌面卡頓**（使用者決定繼續；取代先前「我建議凍結 Gate A」）
    - 現況：非同步原型 `11b3b79` op 層過關（client 端延遲 GA 為 G 的 19–24%）；XFCE 尖峰來自小 pixmap 逐一升級（PGA-GAP-5）→
      依尺寸分流 `f592241`（`TERMUX_X11_GPU_MIN_PIXELS` 預設 4097）讓尖峰消失，但 2D 桌面 GPU 仍未贏 CPU（GT p50 ≈ C 的 2–3 倍）。細節：`HANDOFF-NEXT-SESSION-20260924.md`。
-   - **凍結文件已寫（2026-09-25，任何資料之前）：`evidence/session/xfce-v6/XFCE-V6-BASELINE-01-FREEZE.md`（PR #27）**（Part A 日常 :1、Part B 實驗 :3；工具 T1–T6 尚未實作）。
+   - **凍結文件已寫（2026-09-25，任何資料之前）：`evidence/session/xfce-v6/XFCE-V6-BASELINE-01-FREEZE.md`（PR #27 已合併；§9 偏差與補充另開 PR）**（Part A 日常 :1、Part B 實驗 :3）。
+   - **工具 T1–T6 已完成、主機端驗證通過（fork commit 14:17，未碰裝置）**：fork `96c0b26`（`tests/xfce_v6/`，本地未 push；快照在 `evidence/session/xfce-v6/tools-96c0b26/`）。
+     判定器 53 個測試＋行程比對 5 個；`mutation_check.py` 17 個突變全被抓到（含未突變對照必須綠）。工具驗證證據 `evidence/session/xfce-v6/tool-qualification/`（Xvfb `:99`）。
+     過程抓到並修掉：§5.2 原參數（200 ms／≥150 ms）必假紅 → **偏差 1 改 1000 ms／≥500 ms**；`v6_probes` 用 NUL 分隔比對命令列，
+     但 termux-x11／Claude 把整串命令列塞在 argv[0]（空格分隔）→ 裝置上會永遠找不到 X3、Part B 全部 INVALID（已修＋測試）。
+   - **下一步＝裝置執行**：Part B 一條指令 `SERIAL=<現探> bash evidence/session/xfce-v6/series-v6.sh`（preflight → C GT GT C C GT → 補跑 ≤2 → G0，
+     約 45 分鐘；要 ADB、螢幕全程亮不鎖、手機放著不碰、MemAvailable ≥ 4600）。Part A 要使用者在旁（兩次重開桌面，約 20 分鐘），開跑當下再問。
    - 起手建議（未執行）：先在 **v6 日常**下重量 XFCE 卡頓基線。09-23 卡頓主嫌是追蹤器滿載（~1 核），現在 30 s 窗只剩 0.007 核；
      先確認剩下的卡頓有多少真的在 X／EXA，再決定 EXA 要修哪裡。比較前要先凍結新判準。
    - **證據（09-25 查）**：`runtime-f592241` XFCE C0 八格的 RCA `cpu_cores_window`：追蹤器 **0.55–0.69 核**、X3 0.34–0.60 核——
