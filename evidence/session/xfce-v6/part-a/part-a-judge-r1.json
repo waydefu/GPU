@@ -1,0 +1,140 @@
+{
+  "captures": {
+    "v6-1": {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.141,
+          "p99": 1.128,
+          "max": 185.548,
+          "over_100ms": 1
+        },
+        "traced": {
+          "n": 958,
+          "p50": 0.131,
+          "p99": 1.488,
+          "max": 325.279,
+          "over_100ms": 1
+        },
+        "traced_lat": {
+          "n": 2352,
+          "over_100ms": 47,
+          "fstat_p99_us": 163160.9,
+          "getppid_p99_us": 6.1
+        },
+        "S1": 47,
+        "S2": 1,
+        "S3": 1,
+        "E": 48
+      }
+    },
+    "stock-1": {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.123,
+          "p99": 1.864,
+          "max": 359.573,
+          "over_100ms": 1
+        },
+        "traced": {
+          "n": 930,
+          "p50": 0.45,
+          "p99": 498.666,
+          "max": 1745.132,
+          "over_100ms": 57
+        },
+        "traced_lat": {
+          "n": 2223,
+          "over_100ms": 91,
+          "fstat_p99_us": 343742.3,
+          "getppid_p99_us": 18.1
+        },
+        "S1": 91,
+        "S2": 57,
+        "S3": 1,
+        "E": 148
+      }
+    },
+    "v6-2": {
+      "valid": false,
+      "why": [
+        "touch events 533"
+      ],
+      "metrics": {
+        "untraced": {
+          "n": 958,
+          "p50": 0.163,
+          "p99": 2.781,
+          "max": 321.995,
+          "over_100ms": 1
+        },
+        "traced": {
+          "n": 959,
+          "p50": 0.14,
+          "p99": 1.858,
+          "max": 226.553,
+          "over_100ms": 1
+        },
+        "traced_lat": {
+          "n": 2303,
+          "over_100ms": 45,
+          "fstat_p99_us": 142476.2,
+          "getppid_p99_us": 8.2
+        },
+        "S1": 45,
+        "S2": 1,
+        "S3": 1,
+        "E": 46
+      }
+    },
+    "v6-2-r1": {
+      "valid": true,
+      "why": [],
+      "metrics": {
+        "untraced": {
+          "n": 959,
+          "p50": 0.175,
+          "p99": 1.884,
+          "max": 4.583,
+          "over_100ms": 0
+        },
+        "traced": {
+          "n": 959,
+          "p50": 0.16,
+          "p99": 1.359,
+          "max": 112.698,
+          "over_100ms": 1
+        },
+        "traced_lat": {
+          "n": 2377,
+          "over_100ms": 13,
+          "fstat_p99_us": 63857.2,
+          "getppid_p99_us": 5.9
+        },
+        "S1": 13,
+        "S2": 1,
+        "S3": 0,
+        "E": 14
+      }
+    }
+  },
+  "used": {
+    "v6-1": "original",
+    "stock-1": "original",
+    "v6-2": "replacement"
+  },
+  "A0": "CONTROL_REPRODUCES",
+  "A1": "DAILY_STUTTER_REMAINS",
+  "A2": "X_SERVER_STALLS_PRESENT",
+  "E": {
+    "stock-1": 148,
+    "v6-1": 48,
+    "v6-2": 14
+  },
+  "verdict": "JUDGED"
+}

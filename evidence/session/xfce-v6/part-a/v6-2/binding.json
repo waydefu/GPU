@@ -1,0 +1,19 @@
+{
+  "kind": "v6",
+  "client_tracer": {
+    "pid": 31689,
+    "tracer_pid": 27459,
+    "tracer_comm": "proot-fast6",
+    "tracer_exe": "/data/data/com.termux/files/home/build/proot-fast/out6/bin/proot-fast6",
+    "tracer_sha256": "2d5596dce6ae3a978658a66902cf121a34b8062480958b5750caba61feda2eab",
+    "proot_env": {
+      "PROOT_L2S_DIR": "/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs/.l2s"
+    }
+  },
+  "test_mode": false,
+  "display": ":1",
+  "launch": [
+    "/root/.local/bin/cursor-gpu",
+    "/root/.local/bin/hermes-gpu"
+  ]
+}

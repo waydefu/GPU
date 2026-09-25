@@ -190,3 +190,60 @@
 ### 補充 7：Part A 補跑規則（新增；原凍結沒有訂，任何一次無效就整個 A INCONCLUSIVE）
 - 每一格（v6-1、stock-1、v6-2）**原本那次無效**時，可以補跑 **1 次**（同 kind、新目錄 `<格>-r1`，原無效目錄保留）；
   補跑仍無效 → Part A `INCONCLUSIVE`。原本那次有效時**不得**提交補跑（禁止挑結果）。判定器 `part-a ... slot=<dir>` 實作並有測試。
+
+## 10. 結果 — Part A（2026-09-25；本節在資料之後寫，上面 §1–§9 不改）
+
+### 10.1 擷取（全部由日常桌面內的 Claude Code 以 `daily_sampler_v2.py --close-launched` 執行，偏差 3）
+
+| 格 | 目錄 | 追蹤器（pid／sha256） | baseline → launch → loaded 結束 | 有效 | S1 | S2 | S3 | E |
+|---|---|---|---|---|---|---|---|---|
+| v6-1 | `part-a/v6-1` | 15010／`2d5596dc` | 16:15:40 → 16:16:41 → 16:20:41 | 有效 | 47 | 1 | 1 | 48 |
+| stock-1 | `part-a/stock-1` | 19896／`ea47e17d` | 16:24:33 → 16:25:33 → 16:29:34 | 有效 | 91 | 57 | 1 | 148 |
+| v6-2 | `part-a/v6-2` | 27459／`2d5596dc` | 16:35:41 → 16:36:41 → 16:40:42 | **INVALID**（`touch events 533`） | — | — | — | — |
+| v6-2-r1 | `part-a/v6-2-r1` | 27459／`2d5596dc` | 16:47:53 → 16:48:53 → 16:52:54 | 有效（補充 7 的唯一一次補跑） | 13 | 1 | 0 | 14 |
+
+- 時間為 Asia/Taipei。v6-2 無效＝無資訊，不列入任何判準或描述；目錄原樣保留。
+- 第一次判定 `part-a/part-a-judge.json` = `INCONCLUSIVE`（v6-2 INVALID）原樣保留；本節的判定是補跑後的新檔 `part-a/part-a-judge-r1.json`。
+
+### 10.2 判定
+
+```
+xfce_v6_judge.py part-a part-a/v6-1 part-a/stock-1 part-a/v6-2 v6-2=part-a/v6-2-r1
+used: v6-1=original stock-1=original v6-2=replacement      verdict JUDGED
+```
+
+- **A0 `CONTROL_REPRODUCES`**：E_stock = 148 ≥ 3。
+- **A1 `DAILY_STUTTER_REMAINS`**：兩次 v6 的 E = 48、14，都不為 0；max(E_v6) = 48 > 0.25 × 148 = 37，所以不是 `REDUCED`。
+  （v6-2-r1 單獨看是 14 ≤ 37，但判準是兩次取最大值，事前凍結，不改。）
+- **A2 `X_SERVER_STALLS_PRESENT`**：v6-1 的 S3 = 1（不被追蹤探測 max 185.5 ms）。Stable `:1` 沒有 Gate A，這不是 Gate A 能直接修的。
+
+### 10.3 描述（不改判決）
+
+| | stock-1 | v6-1 | v6-2-r1 |
+|---|---|---|---|
+| 被追蹤探測 rtt p99／max（ms） | 498.7／1745.1 | 1.49／325.3 | 1.36／112.7 |
+| `traced_lat` fstat p99（µs） | 343742 | 163161 | 63857 |
+| `traced_lat` getppid p99（µs） | 18.1 | 6.1 | 5.9 |
+| 追蹤器核數 baseline／loaded 平均 | 0.348／0.752 | 0.022／0.334 | 0.017／0.197 |
+| Stable X `:1` 核數 baseline／loaded 平均 | 0.089／0.020 | 0.129／0.028 | 0.102／0.030 |
+| loaded 窗 MemAvailable 最低（MB） | 3586 | 3394 | 3498 |
+| loaded 窗 swap 使用最高（MB） | 6988 | 7199 | 7832 |
+
+- **S2 從 57 → 1、1**：PRoot 裡的程式感受到的 X 往返卡頓在 v6 下幾乎消失（被追蹤探測 p99 從 499 ms 降到 1.5 ms）。
+- **剩下的 E 幾乎全是 S1**（fstatat > 100 ms：91 → 47、13）。同一窗內 getppid p99 只有 6 µs，
+  所以這些停頓不是「整機 CPU 滿到連最便宜的 syscall 都排不到」，而是 fstatat 這條路徑本身等超過 100 ms；
+  原因本次未量（追蹤器核數 0.2–0.33，不是滿載），不在本判準範圍。
+- 兩次 v6 的 E 差 3.4 倍（48 vs 14），單次變異大；開始時 swap 使用 stock-1 4381、v6-1 5114、v6-2-r1 5881 MB（`precheck.json`），v6-2-r1 起點最高，只描述。
+- 三次都是 3 個 Electron（Claude＋Cursor＋Hermes），超過本機「最多 2 個」的容量規則（§6.1 已知干擾）。
+
+### 10.4 v6-2-r1 執行紀錄（事實，不改判決）
+
+- 開跑前檢查：`/proc/self` TracerPid 27459 → `proot-fast6` sha256 `2d5596dc…`；`~/.f8-proot-stock` 不存在；
+  MemAvailable 5358 MB（sampler `precheck.json`）；Cursor／Hermes 未執行；ADB lane 5038（server pid 26023）裝置 `10.191.48.13:42435`；
+  螢幕 `mWakefulness=Awake`、`isKeyguardShowing=false`；`screen_off_timeout` 600000 ms（大於本次約 320 s）。
+- 使用者開跑前在對話中確認 6 分鐘不碰手機；`touch.json` = `{"selftest": true, "events": 0}`。
+- 開跑時另有一個 Claude Code 程序（pid 31150，前一個 session，同一 Claude Desktop 29031 底下）存在但閒置：
+  5 秒量測 4 ticks（0.008 核）。它不是獨立的 Electron app，sampler 的 `electron_others` = `[]`；只記錄。
+- 本次 sampler 以背景工具呼叫執行，Claude 在擷取期間沒有做其他工具呼叫，只等完成通知（偏差 3 所述「等這個記錄程式」的狀態）。
+- `closed.json`：Cursor pid 14327、Hermes pid 14329 以 SIGTERM 結束（cmdline 相符，0.5–1.0 s 內消失），只剩 Claude Desktop。
+- 結束後確認 `~/.f8-proot-stock` 不存在，日常停在 v6。

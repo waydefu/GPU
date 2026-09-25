@@ -1,0 +1,10 @@
+[
+  {
+    "cmd": "/root/.local/bin/cursor-gpu",
+    "pid": 13176
+  },
+  {
+    "cmd": "/root/.local/bin/hermes-gpu",
+    "pid": 13180
+  }
+]

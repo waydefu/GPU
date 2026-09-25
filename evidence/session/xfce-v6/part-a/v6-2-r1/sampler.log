@@ -1,0 +1,10 @@
+untraced_started=True traced_pid=14122 traced_lat_pid=14123
+launched ['/root/.local/bin/cursor-gpu', '/root/.local/bin/hermes-gpu'] at 1790326133.333
+traced_sigterm pid=14122 (own child)
+traced_lat_sigterm pid=14123 (own child)
+touch_recorder_stopped pid=14090
+launch attempt=1 rc=0 r/tmp/xfce-v6-daily-14079-1790326072-untraced-1.log 2>&1 < /dev/null
+Starting service: Intent { act=com.termux.service_execute dat=com.termux.file:/... cmp=com.termux/.app.TermuxService (has extras) }
+close_launched sigterm pid=14327 cmdline=/usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --user-data-dir=/root/.cursor-data --disable-gpu
+close_launched sigterm pid=14329 cmdline=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --no-sandbox --disable-gpu-sandbox --ozone-platform=x11 --disable-dev-shm-usage --d
+reason=completed

@@ -1,0 +1,13 @@
+{
+  "claude_running": true,
+  "cursor_running": false,
+  "hermes_running": false,
+  "electron_others": [],
+  "main_processes": {
+    "claude": [
+      20578
+    ]
+  },
+  "mem_available_mb": 5999,
+  "swap_used_mb": 4381
+}
