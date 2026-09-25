@@ -83,6 +83,7 @@
 在 `:3`（C 設定、不開 XFCE）上跑 T3：3 次 `GrabServer`，每次 200 ms，間隔 10 s。兩份 `x_rtt` 同時量：
 **每一次 grab 都必須在 ±1 s 內各有一筆 ≥ 150 ms 的樣本**（兩份探測都要）。任一份沒看到 → `PROBE_INSENSITIVE` → Part B 不開跑，先查工具。
 這一項確保「0 次尖峰」代表 X 真的沒卡，而不是探測看不到。
+**（本節參數已由 §9 偏差 1 取代：200 ms／≥150 ms 會把正常探測判成不靈敏。原文保留。）**
 
 ### 5.3 判準（主要指標：**不被追蹤探測**的 rtt）
 - **B1 尾端**：3 次 GT 的 `over_100ms` 全為 0 → `GT_NO_TAIL_STALLS`；否則 `GT_TAIL_STALLS`（列出次數）。
@@ -145,3 +146,34 @@
 2. Part B：preflight（§5.2）→ 7 次擷取（每次約 5 分鐘，共約 40 分鐘）。需要 ADB、螢幕亮、手機放著不碰。
 3. Part A：約 20 分鐘，需要使用者在旁操作（兩次重開桌面）。
 4. 結果寫在本檔之後的「結果」段落；判決用本檔的名稱，資料目錄 `evidence/session/xfce-v6/`。
+
+## 9. 偏差與補充（2026-09-25 實作 T1／T3 時；**仍在任何受判資料之前**）
+
+工具驗證資料在 `evidence/session/xfce-v6/tool-qualification/`（Xvfb `:99`，只在主機上，未碰 `:1`／`:3`／裝置）。
+
+### 偏差 1：§5.2 探測靈敏度檢查的參數錯了，改為 1000 ms／≥ 500 ms
+- **錯在哪**：探測每 250 ms 才送一次請求。X 卡 200 ms 時，請求常常落在卡頓後段或完全錯開，量到的延遲介於 0–200 ms 之間，
+  很少 ≥ 150 ms。原判準要求 3 次都 ≥ 150 ms，即使探測完全正常也幾乎一定判成 `PROBE_INSENSITIVE`（假紅燈）。
+- **實測**（`t3-*.log`，兩份探測同時量）：200 ms × 10 次 → 每次最大延遲 0、162、112、62、11、0、160、109、59、9 ms，
+  ≥ 150 ms 只有 **2／10**（兩份探測相同）；1000 ms × 5 次 → 765、999、1000、997、1000 ms，**5／5 ≥ 500 ms**；
+  不卡的時段（對照）最大約 1 ms、0 次 > 100 ms。
+- **改為**：3 次 `GrabServer`，**每次 1000 ms**，間隔 10 s；每次 grab 在 `[開始 − 0.5 s, 結束 + 1.0 s]` 內，
+  **兩份探測都要各有一筆 ≥ 500 ms 的樣本**。理論下限 = 1000 − 250 = 750 ms，500 留有餘量。其他不變。
+
+### 偏差 2：不被追蹤探測改用 TermuxService 啟動（不經 adb）
+- 與 X3 的不被追蹤啟動同一機制（`start-x3-untraced.sh`：Termux 自己的 `am startservice` → TermuxService 執行）；
+  工具 `tests/xfce_v6/untraced_run.sh`。要求不變：探測必須印 `TRACER 0`。
+- 實測（`t1c-untraced-via-termuxservice.log`）：經 TermuxService → `TRACER 0`；**同一個 bionic 執行檔直接在 PRoot 內啟動 → `TRACER 15010`**
+  （＝應該要紅的案例確實紅；§3 T1 的負面測試）。Part A 因此也不需要 ADB 來啟動探測。
+
+### 補充（實作需要的精確定義，事前寫下）
+1. **觸控**：沿用 `gl_bench.sh` 的偵測器（`getevent /dev/input/event7`，無時間戳），所以計數範圍是**整次擷取**，比「判準窗內」更嚴；
+   記錄器中途死掉 → `null` → 該次 INVALID（不是 0）。
+2. **樣本數**：Part B 不被追蹤探測 n ≥ 500（150 s 窗，理論 600）；Part A 兩份探測在 240 s 窗各 n ≥ 768（理論 960 的 80%）；
+   `traced_lat` 在 Part A 240 s 窗 n ≥ 1920（理論 2400 的 80%），Part B 只描述。
+3. **時間窗**：Part B 用 `rca_report.py` 同一定義（`steps.jsonl` 第一行 `t0_epoch_s` 起 150 s），百分位用它的 `pct()`（最近秩）；
+   Part A 的 loaded 窗 = sampler 送出第一個啟動指令的時刻起 240 s，baseline 窗 = 其前 60 s。
+4. **B3 的 X3 核數**：`rca_report.py` 的 `cpu_cores_window["X3"]`。
+5. **被追蹤探測**的 `TRACER` 必須等於該次記錄的 client 追蹤器 pid（§4 第 3 項）；不符 → INVALID。
+6. 工具執行檔 sha256（2026-09-25 11:04 建置）：`x_rtt2.glibc` `17700d91…`、`x_grab_stall.glibc` `1004aa87…`、
+   `x_rtt2.bionic` `61f51ff3…`、`traced_lat.glibc` `44ea9efb…`；完整值在 `tool-qualification/tool-binaries.sha256.txt`。每次擷取記錄實際使用的雜湊，與此不同 → INVALID。
