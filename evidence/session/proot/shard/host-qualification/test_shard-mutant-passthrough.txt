@@ -1,0 +1,10 @@
+case1 verdict=NOT_SHARDED tracer=27459 daily=27459 shard_out=F8_SHARD tracer=none app=5760 job=none
+FAIL case1 not sharded
+ok same tracer sha 2d5596dc
+ok DISPLAY carried
+ok cwd carried
+ok rootfs visible
+ok SIGTERM forwarded (f8-shard rc=0)
+FAIL shard tracer 27459 still alive after the program ended
+case2 verdict=NOT_SHARDED (control, must be NOT_SHARDED)
+TEST_SHARD_FAIL

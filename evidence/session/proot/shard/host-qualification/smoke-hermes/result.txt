@@ -1,0 +1,3 @@
+launcher=/root/.local/bin/hermes-gpu daily_tracer=27459 shard_tracer=13944 app=13952 app_tracer=13944 processes_under_shard=7 renderers_under_shard=1 windows_on_99=1 after_s=3
+after SIGTERM to f8-shard pid 13920: f8-shard_gone=yes shard_tracer_gone=yes after_s=2
+SMOKE_ELECTRON_PASS

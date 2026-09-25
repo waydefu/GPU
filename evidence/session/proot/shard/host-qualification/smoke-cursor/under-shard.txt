@@ -1,0 +1,8 @@
+12748 main /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox 
+12750 --type=zygote /usr/share/cursor/cursor --type=zygote --no-zygote-sandbox -
+12751 --type=zygote /usr/share/cursor/cursor --type=zygote --no-sandbox 
+13374 main /usr/share/cursor/chrome_crashpad_handler --monitor-self-ann
+13399 --type=gpu-process /proc/self/exe --type=gpu-process --disable-gpu-sandbox --no
+13413 --type=utility /proc/self/exe --type=utility --utility-sub-type=network.moj
+13441 --type=utility /proc/self/exe --type=utility --utility-sub-type=node.mojom.
+13443 --type=zygote /usr/share/cursor/cursor --type=zygote --no-sandbox 

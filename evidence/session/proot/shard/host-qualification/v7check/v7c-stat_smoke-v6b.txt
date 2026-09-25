@@ -1,0 +1,59 @@
+file|aid_u0_a365:aid_u0_a365|640|1|5|regular file
+hard|aid_u0_a365:aid_u0_a365|640|1|5|regular file
+dir|aid_u0_a365:aid_u0_a365|700|3|3452|directory
+sym|aid_u0_a365:aid_u0_a365|777|1|4|symbolic link
+rc=0
+sym|aid_u0_a365:aid_u0_a365|640|1|5|regular file
+rc=0
+dangling|aid_u0_a365:aid_u0_a365|777|1|7|symbolic link
+rc=0
+stat: cannot statx 'dangling': No such file or directory
+rc=0
+stat: cannot statx 'missing': No such file or directory
+rc=0
+sub|aid_u0_a365:aid_u0_a365|700|2|3452|directory
+sub/x|aid_u0_a365:aid_u0_a365|600|1|0|regular empty file
+../file|aid_u0_a365:aid_u0_a365|640|1|5|regular file
+rc=0
+/dev/null|root:root|S|1|0|character special file
+/tmp|aid_u0_a365:aid_u0_a365|S|19|N|directory
+/proc/self/status|root:root|S|1|0|regular empty file
+rc=0
+py file True 0 0 0o100640 2 5
+py hard True 0 0 0o100640 2 5
+py sym False 0 0 0o120777 1 4
+py sym True 0 0 0o100640 2 5
+py dangling False 0 0 0o120777 1 7
+py dir/sub/x True 0 0 0o100600 1 0
+py dangling 2 No such file or directory
+py missing 2 No such file or directory
+fstat hardlink 0 0 0o100640 2 5
+fstat file 0 0 0o100600 1 0
+fstat dirfd 0 0 0o40700 3 3452
+fstat pipe 0 0 0o10600 1 -
+fstat socket 0 0 0o140777 1 0
+fstat devnull 0 0 0o20666 1 0
+fstat deleted 0 0 0o100600 0 1
+fstat bad 9
+node file 10365 10365 1 5
+node hard 10365 10365 1 5
+node dir 10365 10365 3 3452
+node lstat sym true
+drwx------. 3 aid_u0_a365 aid_u0_a365 .  
+drwxr-xr-x. 21 aid_u0_a365 aid_u0_a365 ..  
+lrwxrwxrwx. 1 aid_u0_a365 aid_u0_a365 dangling -> missing
+drwx------. 3 aid_u0_a365 aid_u0_a365 dir  
+-rw-r-----. 1 aid_u0_a365 aid_u0_a365 file  
+-rw-r-----. 1 aid_u0_a365 aid_u0_a365 hard  
+lrwxrwxrwx. 1 aid_u0_a365 aid_u0_a365 sym -> file
+.
+./dangling
+./dir
+./dir/sub
+./dir/sub/x
+./file
+./hard
+./sym
+git rc=0
+true
+STAT_SMOKE_DONE

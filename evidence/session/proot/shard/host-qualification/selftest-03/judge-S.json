@@ -1,0 +1,38 @@
+{
+  "valid": false,
+  "why": [
+    "test_mode True (host self-test captures never count)",
+    "screen-pre.json: not awake/unlocked (None)",
+    "screen-post.json: not awake/unlocked (None)",
+    "touch recorder self-test failed ({'selftest': False, 'events': None})",
+    "untraced n 195 < 768",
+    "traced n 161 < 768",
+    "traced_lat n 403 < 1920"
+  ],
+  "metrics": {
+    "untraced": {
+      "n": 195,
+      "p50": 0.101,
+      "p99": 1.199,
+      "max": 2.151,
+      "over_100ms": 0
+    },
+    "traced": {
+      "n": 161,
+      "p50": 0.087,
+      "p99": 0.825,
+      "max": 1.101,
+      "over_100ms": 0
+    },
+    "traced_lat": {
+      "n": 403,
+      "over_100ms": 0,
+      "fstat_p99_us": 1887.5,
+      "getppid_p99_us": 4.3
+    },
+    "S1": 0,
+    "S2": 0,
+    "S3": 0,
+    "E": 0
+  }
+}

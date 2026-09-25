@@ -1,0 +1,2 @@
+Failed to register on connection to "unix:path=/tmp/f8-dbus-cross-13930" message bus: Did not receive a reply. Possible causes include: the remote application did not send a reply, the message bus security policy blocked the reply, the reply timeout expired, or the network connection was broken.
+rc=1

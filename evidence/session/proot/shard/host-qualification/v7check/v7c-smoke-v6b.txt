@@ -1,0 +1,23 @@
+id: uid=0(root) gid=0(root) groups=0(root),3003(aid_inet),9997(aid_everybody),20365(aid_u0_a365_cache),50365(aid_all_a365)
+uname: Linux 6.17.0-PRoot-Distro aarch64
+whoami: root
+nlink: 1 aid_u0_a365:aid_u0_a365 600 1 aid_u0_a365:aid_u0_a365 600 
+perm: 640 aid_u0_a365
+readlink: f
+mv: g
+left: 0
+threads_locks 160000
+sqlite 499500
+ssl True
+socketpair 4000
+subprocess 42
+pipe b'x'
+sleep_ok True
+node_worker 42
+node_child child
+git: 40f09dd
+dpkg: 1
+apt_policy: 1
+dns: ::1
+sysvipc: ipcs_ok
+SMOKE_DONE
