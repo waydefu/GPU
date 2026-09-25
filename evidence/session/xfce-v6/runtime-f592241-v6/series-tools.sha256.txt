@@ -1,0 +1,15 @@
+1898dc3f53d27bc6c5622967e586ab4cc82a7f974d7df750e6d68efb3c41fb16  evidence/session/xfce-v6/series-v6.sh
+61639cc45e6b613ffaaefbcdbbe399d7e6ed1683220ae56aff8b447e37582576  /root/projects/GPU加速/evidence/session/xfce-v6/run-xfce-v4-v6.sh
+fee07bd5a62b617e9e403e91efa8b451e0b29b8af8a9dc63ff96e11f9af8ad8c  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/adb_find.py
+80eeb1fdffb6671a9dcd5af8d236fc6b2bfc979f574afadd6d921d55db34738c  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/daily_sampler_v2.py
+c67cb6700fc9ad0fa49d8e43aa14c0cf647c5e2197725874966602bba6d46f60  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/mutation_check.py
+c7834a4ddb4292cf986503a09882e9bd5440185db6b2e2fba438928dc4076e24  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/preflight_probe.py
+ee308fa86607ecd76eca395e6e848336afe2aa0a2de89cf92b317c164f963b3a  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/test_proc_match.py
+e7a0a79914e58a2348db78145d23cc29693b1628f0cd40fd57656914bd487630  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/test_xfce_v6_judge.py
+3b01692de1fac117e7bbfe1c02ce941a37583cf68c2fd9a6aee42a5bfe6d6030  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/tracer_ident.py
+a16cd982133fb01877404c5951891d1621aa3b6b5c4400cb1b7f30fbc5f60a8b  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/v6_probes.py
+cf177a3e4ba63486b7ca88a4c15fd1742c309c08e05c711b8a9edb4e9bb885a6  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/xfce_v6_judge.py
+eb7a1b8f2f2075e8e42d694ad2b47ad714c8a02c90b5b9d738466fbe552164f9  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/build.sh
+a3eefec5ac39762a96fb9c15ade8f191a476bb0e8a6a7d4db90ca60472cb1adb  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/xfce_v6/untraced_run.sh
+70b2a9f717319676bc9d274a472502ea00ec398662fca69fee98da8fdf641890  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/pga/rca_sampler.py
+5d93df70e532efa42814f67bc3412ab9b751e7374d7334c76b13e643a98630a8  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/pga/rca_report.py

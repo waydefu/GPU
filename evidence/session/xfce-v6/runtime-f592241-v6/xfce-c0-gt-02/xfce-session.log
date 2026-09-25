@@ -1,0 +1,71 @@
+dbus-daemon[22937]: [session uid=0 pid=22937] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.xfce.Xfconf' requested by ':1.0' (uid=0 pid=22942 comm="xfce4-session" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.xfce.Xfconf'
+/usr/bin/iceauth:  creating new authority file /tmp/xfce-x3-run-20260925172241-21761/runtime/ICEauthority
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.Daemon' requested by ':1.2' (uid=0 pid=22971 comm="xfwm4" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.Daemon'
+
+(xfsettingsd:23023): libupower-glib-WARNING **: 17:22:59.655: Couldn't connect to proxy: Could not connect: No such file or directory
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.freedesktop.thumbnails.Thumbnailer1' requested by ':1.7' (uid=0 pid=23054 comm="xfdesktop" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+
+(tumblerd:23146): tumblerd-WARNING **: 17:23:00.268: Couldn't change nice value of process.
+libclock-Message: 17:23:00.617: could not get proxy for org.freedesktop.login1
+
+(xfce4-panel:23037): libclock-WARNING **: 17:23:00.617: could not instantiate a sleep monitor
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.UDisks2VolumeMonitor' requested by ':1.8' (uid=0 pid=23146 comm="/usr/lib/aarch64-linux-gnu/tumbler-1/tumblerd" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+
+(process:23523): GVFS-UDisks2-WARNING **: 17:23:01.160: Failed to connect to UDisks: Could not connect: No such file or directory
+
+(process:23523): GVFS-RemoteVolumeMonitorDaemon-WARNING **: 17:23:01.160: monitor says it's not supported
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.UDisks2VolumeMonitor'
+
+(process:23523): GVFS-RemoteVolumeMonitorDaemon-WARNING **: 17:23:01.163: monitor says it's not supported
+
+(tumblerd:23146): GVFS-RemoteVolumeMonitor-WARNING **: 17:23:01.164: remote volume monitor with dbus name org.gtk.vfs.UDisks2VolumeMonitor is not supported
+
+(tumblerd:23146): GLib-GIO-WARNING **: 17:23:01.166: Error creating IO channel for /proc/self/mountinfo: Operation not permitted (g-io-error-quark, 14)
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.AfcVolumeMonitor' requested by ':1.8' (uid=0 pid=23146 comm="/usr/lib/aarch64-linux-gnu/tumbler-1/tumblerd" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.AfcVolumeMonitor'
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.MTPVolumeMonitor' requested by ':1.8' (uid=0 pid=23146 comm="/usr/lib/aarch64-linux-gnu/tumbler-1/tumblerd" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.MTPVolumeMonitor'
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.GPhoto2VolumeMonitor' requested by ':1.8' (uid=0 pid=23146 comm="/usr/lib/aarch64-linux-gnu/tumbler-1/tumblerd" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.GPhoto2VolumeMonitor'
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.GoaVolumeMonitor' requested by ':1.8' (uid=0 pid=23146 comm="/usr/lib/aarch64-linux-gnu/tumbler-1/tumblerd" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.GoaVolumeMonitor'
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.freedesktop.thumbnails.Thumbnailer1'
+
+(xfdesktop:23054): GLib-GObject-CRITICAL **: 17:23:01.281: g_object_unref: assertion 'G_IS_OBJECT (object)' failed
+
+(process:23523): GVFS-RemoteVolumeMonitorDaemon-WARNING **: 17:23:01.303: monitor says it's not supported
+
+(xfdesktop:23054): GVFS-RemoteVolumeMonitor-WARNING **: 17:23:01.303: remote volume monitor with dbus name org.gtk.vfs.UDisks2VolumeMonitor is not supported
+
+(xfdesktop:23054): GLib-GIO-WARNING **: 17:23:01.305: Error creating IO channel for /proc/self/mountinfo: Operation not permitted (g-io-error-quark, 14)
+
+(process:23597): GLib-GIO-WARNING **: 17:23:01.346: Error creating IO channel for /proc/self/mountinfo: Operation not permitted (g-io-error-quark, 14)
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.gtk.vfs.Metadata' requested by ':1.7' (uid=0 pid=23054 comm="xfdesktop" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.gtk.vfs.Metadata'
+
+** (xfdesktop:23054): WARNING **: 17:23:01.566: Failed to get system bus: Could not connect: No such file or directory
+
+(xfce4-session:22942): xfce4-session-WARNING **: 17:23:01.687: failed to run script: Failed to execute child process “/usr/bin/pm-is-supported” (No such file or directory)
+
+(xfce4-session:22942): xfce4-session-WARNING **: 17:23:01.705: failed to run script: Failed to execute child process “/usr/bin/pm-is-supported” (No such file or directory)
+dbus-daemon[22937]: [session uid=0 pid=22937] Activating service name='org.xfce.Notifyd' requested by ':1.9' (uid=0 pid=23391 comm="/usr/lib/aarch64-linux-gnu/xfce4/panel/wrapper-2.0" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+
+(xfce4-session:22942): xfce4-session-WARNING **: 17:23:01.748: failed to run script: Failed to execute child process “/usr/bin/pm-is-supported” (No such file or directory)
+dbus-daemon[22937]: [session uid=0 pid=22937] Successfully activated service 'org.xfce.Notifyd'
+A connection to the bus can't be made
+
+(tumblerd:23146): tumblerd-CRITICAL **: 17:25:55.629: Name org.freedesktop.thumbnails.Cache1 lost on the message dbus, exiting.
+
+(tumblerd:23146): tumblerd-CRITICAL **: 17:25:55.630: Name org.freedesktop.thumbnails.Manager1 lost on the message dbus, exiting.
+
+(tumblerd:23146): tumblerd-CRITICAL **: 17:25:55.630: Name org.freedesktop.thumbnails.Thumbnailer1 lost on the message dbus, exiting.
+
+(xfsettingsd:23023): xfconf-WARNING **: 17:25:55.630: Failed to set property "keyboards::/Default/Numlock": The connection is closed
+
+(xfconfd:22958): xfconfd-WARNING **: 17:25:55.634: Name org.xfce.Xfconf lost on the message dbus, exiting.
+A connection to the bus can't be made
+Another notification daemon is running, exiting
+Another notification daemon is running, exiting
