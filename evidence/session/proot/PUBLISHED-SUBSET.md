@@ -23,3 +23,15 @@ Fork tooling: waydefu/termux-x11 local commits 22137ff, 9f7bad4, e4bf7d6 (not pu
 files as judged in PROOT-BENCH-02 (`SHA256SUMS`). PROOT-BENCH-01 used the same files except `proot_bench.sh`
 (09fb812b...) and `proot_bench_judge.py` (86f0159b...), which differ only by the 3-line `PF_BIN` parametrization of e4bf7d6.
 Each cell's `cmd.out` TOOLS line records the drive / launch / args / meter / end sha256 prefixes.
+
+
+## 2026-09-25 batch (PR after #21/#22)
+Same exclusions (`raw-logcat.txt`, screenshots). Contents:
+- APP-IDLE-01 (daily apps idle CPU, stock vs proot-fast2): `DAILY_ENABLE false` (16/16 pairs lower under v2, noise term fails 3/4); the user then enabled v2 daily by hand (daily tracer 0.36 -> 0.013 cores).
+- PROOT-FAST-NETLINK-01: proot-fast broke getifaddrs (half-done netlink emulation); v3 probe shows Android denies rtnetlink outright; fixed in the guest by `f8ifaddrs.c` via /etc/ld.so.preload (IPv4 only; Python ifaddr still bypasses it).
+- DND-PROBE-01: non-ASCII drag-and-drop crash not reproduced (GTK and Electron targets, C and C.UTF-8 locales).
+- PROOT-FAST4-SPIN-01: "tracer wake-up latency" hypothesis falsified (spinning before waitpid: no gain, +45% CPU).
+- PROOT-STAT-COST-01: per-stop cost decomposition (proftrace LD_PRELOAD into the tracer): ~8 us per resume, two stops per stat.
+- PROOT-FAST5-STAT-AT-ENTER-01: v5 answers newfstatat (PR_fstatat64 on arm64) / fstat at the seccomp enter stop: stat -41%, fstat -45%, agent-type work -29% wall / -28% CPU; smokes identical to v2, deliberately broken v5b caught (must-be-red).
+- V5-SANITY-01: Claude Desktop, ChatGPT, chatgpt-web, Hermes, Cursor all start and idle normally under v5; daily switched to v5.
+The judged / used tool files are in `tools-be7fbc0/` (fork commits local only).

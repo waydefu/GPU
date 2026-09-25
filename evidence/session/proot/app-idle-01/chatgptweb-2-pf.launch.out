@@ -1,0 +1,92 @@
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+dbus-daemon[29117]: [session uid=0 pid=29117] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+[29123:29154:0924/225152.682057:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.gtk.vfs.Daemon' requested by ':1.0' (uid=0 pid=29123 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.gtk.vfs.Daemon'
+[29123:29144:0924/225152.877124:ERROR:net/base/address_tracker_linux.cc:364] Could not send NETLINK request: Invalid argument (22)
+[29123:29154:0924/225152.881447:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[29123:29154:0924/225152.881970:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[29123:29145:0924/225152.891519:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+
+DevTools listening on ws://127.0.0.1:9222/devtools/browser/74d0ab25-8f5d-4433-8427-c6b4f871f17e
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.a11y.Bus' requested by ':1.0' (uid=0 pid=29123 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.a11y.Bus'
+
+(chrome:29123): dbind-WARNING **: 22:51:53.048: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+[29123:29154:0924/225153.208615:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[29123:29154:0924/225153.208872:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.freedesktop.secrets' requested by ':1.2' (uid=0 pid=29123 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.freedesktop.Notifications' requested by ':1.2' (uid=0 pid=29123 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+[29123:29123:0924/225153.223458:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: unknown error type: 
+** Message: 22:51:53.225: couldn't access control socket: /tmp/app-idle/run-chatgptweb-2-pf/runtime/keyring/control: No such file or directory
+discover_other_daemon: 0dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.2' (uid=0 pid=29123 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.freedesktop.secrets'
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.xfce.Xfconf' requested by ':1.7' (uid=0 pid=29294 comm="/usr/lib/aarch64-linux-gnu/xfce4/notifyd/xfce4-not" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.freedesktop.portal.Documents' requested by ':1.8' (uid=0 pid=29298 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.xfce.Xfconf'
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.10' (uid=0 pid=29313 comm="/usr/libexec/xdg-document-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.gnome.keyring.SystemPrompter' requested by ':1.6' (uid=0 pid=29292 comm="/usr/bin/gnome-keyring-daemon --start --foreground" label="u:r:runas_app:s0:c109,c257,c512,c768")
+
+(xfce4-notifyd:29294): dbind-WARNING **: 22:51:53.308: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /tmp/app-idle/run-chatgptweb-2-pf/runtime/doc
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.336: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.336: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[29117]: [session uid=0 pid=29117] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.8' (uid=0 pid=29298 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+
+(gcr-prompter:29328): dbind-WARNING **: 22:51:53.345: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.freedesktop.Notifications'
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.gnome.keyring.SystemPrompter'
+
+(xdg-desktop-portal-gtk:29342): dbind-WARNING **: 22:51:53.377: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+
+(xdg-desktop-portal-gtk:29342): xdg-desktop-portal-gtk-WARNING **: 22:51:53.392: error: Could not connect: No such file or directory
+
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.521: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.521: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.521: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.524: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.526: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.527: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.528: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.530: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][16999.370614] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][16999.370638] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.534: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.535: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.536: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:29298): xdg-desktop-portal-WARNING **: 22:51:53.538: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[29117]: [session uid=0 pid=29117] Successfully activated service 'org.freedesktop.portal.Desktop'
+[29123:29170:0924/225158.173215:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+[29123:29123:0924/225158.265683:ERROR:chrome/browser/component_updater/pki_metadata_component_installer.cc:432] ignored invalid MtcAnchorData
+[29123:29123:0924/225158.265759:ERROR:chrome/browser/component_updater/pki_metadata_component_installer.cc:432] ignored invalid MtcAnchorData
+[29123:29123:0924/225158.265761:ERROR:chrome/browser/component_updater/pki_metadata_component_installer.cc:432] ignored invalid MtcAnchorData
+[29123:29123:0924/225158.268323:ERROR:services/cert_verifier/cert_verifier_service_factory.cc:424] error interpreting proto for MtcMetadata
+Warning: maxDynamicUniformBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+Warning: maxDynamicStorageBuffersPerPipelineLayout artificially reduced from 500000 to 16 to fit dynamic offset allocation limit.
+Warning: Couldn't get proc eglChooseConfig
+ - While trying to discover a BackendType::OpenGLES adapter.
+    at LoadClientProcs (../../third_party/dawn/src/dawn/native/opengl/EGLFunctions.cpp:119)
+
+proot info: vpid 1: terminated with signal 15
+LAUNCH_EXIT rc=0

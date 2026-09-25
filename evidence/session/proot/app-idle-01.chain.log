@@ -1,0 +1,3 @@
+CELL app-idle-01-dryrun rc=3 STOP logcat pid 12058 still alive after TERM
+CHAIN_STOP dryrun
+AI_CHAIN_DONE

@@ -1,0 +1,14 @@
+dbus-daemon[13180]: [session uid=0 pid=13180] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[13180]: [session uid=0 pid=13180] Activating service name='org.a11y.Bus' requested by ':1.0' (uid=0 pid=13187 comm="xfce4-terminal --disable-server --title=dnd-target" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[13180]: [session uid=0 pid=13180] Successfully activated service 'org.a11y.Bus'
+dbus-daemon[13195]: org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[13180]: [session uid=0 pid=13180] Activating service name='org.xfce.Xfconf' requested by ':1.2' (uid=0 pid=13187 comm="xfce4-terminal --disable-server --title=dnd-target" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[13180]: [session uid=0 pid=13180] Successfully activated service 'org.xfce.Xfconf'
+dbus-daemon[13180]: [session uid=0 pid=13180] Activating service name='org.gtk.vfs.Daemon' requested by ':1.2' (uid=0 pid=13187 comm="xfce4-terminal --disable-server --title=dnd-target" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[13180]: [session uid=0 pid=13180] Successfully activated service 'org.gtk.vfs.Daemon'
+dbus-daemon[13195]: Activating service name='org.a11y.atspi.Registry' requested by ':1.0' (uid=0 pid=13187 comm="xfce4-terminal --disable-server --title=dnd-target" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[13195]: Successfully activated service 'org.a11y.atspi.Registry'
+SpiRegistry daemon is running with well-known name - org.a11y.atspi.Registry
+
+(xfconfd:13209): xfconfd-WARNING **: 02:50:54.067: Name org.xfce.Xfconf lost on the message dbus, exiting.
+A connection to the bus can't be made

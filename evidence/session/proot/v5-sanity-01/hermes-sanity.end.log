@@ -1,0 +1,18 @@
+end_begin sid=20358 tracer=20356 members=16
+term sid=20358 pid=20358 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh hermes /tmp/app-idle/run-hermes-sanity 
+term sid=20358 pid=20361 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=20358 pid=20362 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --no-sandbox --ozone-platform=x11 --disable-gpu --disable-dev-shm-usage 
+term sid=20358 pid=20390 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=20358 pid=20391 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox 
+term sid=20358 pid=20463 cmd=/usr/libexec/gvfsd 
+term sid=20358 pid=20493 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-zygote-sandbox --no-sandbox 
+term sid=20358 pid=20537 cmd=/proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --en
+term sid=20358 pid=20672 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=20358 pid=20743 cmd=/usr/local/lib/hermes-agent/apps/desktop/release/linux-arm64-unpacked/Hermes --type=zygote --no-sandbox 
+term sid=20358 pid=20755 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=20358 pid=20785 cmd=/usr/libexec/xdg-permission-store 
+term sid=20358 pid=20811 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=20358 pid=20906 cmd=/usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile luna serve --host 127.0.0.1 --port 0 
+term sid=20358 pid=21004 cmd=/usr/local/lib/hermes-agent/venv/bin/python /usr/local/lib/hermes-agent/hermes --profile default serve --host 127.0.0.1 --port 0 
+term sid=20358 pid=21048 cmd=/proc/self/exe --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --enable
+END survivors=0 tracer_gone=true

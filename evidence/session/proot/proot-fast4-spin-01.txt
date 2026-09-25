@@ -1,0 +1,120 @@
+== v2#1
+git_status     1110 ms
+find_tree       192 ms
+stat_storm     1942 ms
+futex_wake         0.20 us/call
+fstat             63.35 us/call
+open+close        83.82 us/pair
+0m0.000000s 0m0.000000s
+0m0.550000s 0m4.430000s
+wall_total_ms 5034
+== v4-spin0#1
+git_status     1209 ms
+find_tree       173 ms
+stat_storm     2018 ms
+futex_wake         0.21 us/call
+fstat             66.20 us/call
+open+close        89.35 us/pair
+0m0.000000s 0m0.000000s
+0m0.620000s 0m4.560000s
+wall_total_ms 5258
+== v4-spin20#1
+git_status     1253 ms
+find_tree       184 ms
+stat_storm     2476 ms
+futex_wake         0.43 us/call
+fstat             65.37 us/call
+open+close       121.58 us/pair
+0m0.000000s 0m0.000000s
+0m0.880000s 0m6.170000s
+wall_total_ms 5954
+== v4-spin50#1
+git_status     1261 ms
+find_tree       237 ms
+stat_storm     2215 ms
+futex_wake         0.20 us/call
+fstat             68.11 us/call
+open+close       102.65 us/pair
+0m0.000000s 0m0.000000s
+0m1.070000s 0m6.240000s
+wall_total_ms 5712
+== v4-spin100#1
+git_status     1213 ms
+find_tree       219 ms
+stat_storm     2110 ms
+futex_wake         0.25 us/call
+fstat             65.65 us/call
+open+close        97.10 us/pair
+0m0.000000s 0m0.000000s
+0m1.030000s 0m6.100000s
+wall_total_ms 5468
+== v4-spin200#1
+git_status     1201 ms
+find_tree       221 ms
+stat_storm     2080 ms
+futex_wake         0.42 us/call
+fstat             71.23 us/call
+open+close        88.76 us/pair
+0m0.000000s 0m0.010000s
+0m0.920000s 0m6.110000s
+wall_total_ms 5525
+== v2#2
+git_status     1108 ms
+find_tree       170 ms
+stat_storm     1934 ms
+futex_wake         0.27 us/call
+fstat             67.95 us/call
+open+close        77.32 us/pair
+0m0.000000s 0m0.010000s
+0m0.500000s 0m4.350000s
+wall_total_ms 5057
+== v4-spin0#2
+git_status     1156 ms
+find_tree       187 ms
+stat_storm     1902 ms
+futex_wake         0.33 us/call
+fstat             60.68 us/call
+open+close        78.06 us/pair
+0m0.000000s 0m0.010000s
+0m0.450000s 0m4.420000s
+wall_total_ms 4947
+== v4-spin20#2
+git_status     1335 ms
+find_tree       200 ms
+stat_storm     2417 ms
+futex_wake         0.23 us/call
+fstat             60.04 us/call
+open+close       119.24 us/pair
+0m0.000000s 0m0.000000s
+0m0.890000s 0m6.010000s
+wall_total_ms 5862
+== v4-spin50#2
+git_status     1234 ms
+find_tree       229 ms
+stat_storm     2190 ms
+futex_wake         0.44 us/call
+fstat             61.16 us/call
+open+close        99.29 us/pair
+0m0.000000s 0m0.010000s
+0m1.060000s 0m5.990000s
+wall_total_ms 5508
+== v4-spin100#2
+git_status     1234 ms
+find_tree       226 ms
+stat_storm     2103 ms
+futex_wake         0.48 us/call
+fstat             62.56 us/call
+open+close        93.55 us/pair
+0m0.000000s 0m0.010000s
+0m1.070000s 0m5.990000s
+wall_total_ms 5437
+== v4-spin200#2
+git_status     1214 ms
+find_tree       228 ms
+stat_storm     2126 ms
+futex_wake         0.28 us/call
+fstat             69.01 us/call
+open+close        96.75 us/pair
+0m0.000000s 0m0.000000s
+0m0.990000s 0m6.360000s
+wall_total_ms 5557

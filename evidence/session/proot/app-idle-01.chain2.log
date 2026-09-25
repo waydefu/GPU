@@ -1,0 +1,6 @@
+CELL app-idle-01-dryrun2 rc=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/app-idle-01-dryrun2 APP_IDLE_DRYRUN_DONE
+GATE dry-chatgpt-p0 valid
+GATE dry-chatgpt-pf valid
+DRYRUN_GATE_OK
+CELL app-idle-01 rc=0 CMD_CAPTURED mode=G evidence=/root/projects/GPU加速/evidence/session/proot/app-idle-01 APP_IDLE_DONE
+AI_CHAIN_DONE

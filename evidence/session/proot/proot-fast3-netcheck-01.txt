@@ -1,0 +1,38 @@
+== stock
+ifaddr ['dummy0', 'lo', 'r_rmnet_data0', 'rmnet_data0', 'wlan0']
+node_ifaces dummy0,lo,r_rmnet_data0,rmnet_data0,wlan0
+ip wlan0 fe80::d47c:69ff:fe69:6e3/64
+ip r_rmnet_data0 fe80::187b:d3ff:fe8b:c7c7/64
+ip rmnet_data0 fe80::dc73:3dff:fe8a:7f17/64
+ip dummy0 fe80::acf1:3fff:fe11:f60c/64
+vdso            absent
+futex_wake        28.23 us/call
+epoll_pwait(0)    27.83 us/call
+sock send+recv    59.97 us/pair
+== v2
+OSError: [Errno 22] Invalid argument
+node_THROW A system error occurred: uv_interface_addresses returned Unknown system error 22 (Unknown system error 22)
+ip Cannot dump
+vdso            present
+futex_wake         0.31 us/call
+epoll_pwait(0)     0.27 us/call
+sock send+recv     1.15 us/pair
+== v3
+PermissionError: [Errno 13] Permission denied
+node_THROW A system error occurred: uv_interface_addresses returned Unknown system error 13 (Unknown system error 13)
+ip Cannot netlink
+vdso            present
+futex_wake         0.25 us/call
+epoll_pwait(0)     0.19 us/call
+sock send+recv     1.17 us/pair
+== v3+bwrapcompat
+ifaddr ['dummy0', 'lo', 'r_rmnet_data0', 'rmnet_data0', 'wlan0']
+node_ifaces dummy0,lo,r_rmnet_data0,rmnet_data0,wlan0
+ip wlan0 fe80::d47c:69ff:fe69:6e3/64
+ip r_rmnet_data0 fe80::187b:d3ff:fe8b:c7c7/64
+ip rmnet_data0 fe80::dc73:3dff:fe8a:7f17/64
+ip dummy0 fe80::acf1:3fff:fe11:f60c/64
+vdso            present
+futex_wake         0.22 us/call
+epoll_pwait(0)     0.18 us/call
+sock send+recv    57.70 us/pair

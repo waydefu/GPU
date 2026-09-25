@@ -1,0 +1,85 @@
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+dbus-daemon[12860]: [session uid=0 pid=12860] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+[12867:12891:0924/225744.369301:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.gtk.vfs.Daemon' requested by ':1.0' (uid=0 pid=12867 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.gtk.vfs.Daemon'
+[12867:12891:0924/225744.622882:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[12867:12891:0924/225744.623256:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[12867:12924:0924/225744.632374:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+
+DevTools listening on ws://127.0.0.1:9222/devtools/browser/7bcf8406-5a63-465b-b713-0f1208c0ccae
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.a11y.Bus' requested by ':1.0' (uid=0 pid=12867 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.a11y.Bus'
+
+(chrome:12867): dbind-WARNING **: 22:57:44.880: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+[12867:12891:0924/225745.132328:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[12867:12891:0924/225745.132863:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.freedesktop.secrets' requested by ':1.2' (uid=0 pid=12867 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+** Message: 22:57:45.158: couldn't access control socket: /tmp/app-idle/run-chatgptweb-4-p0/runtime/keyring/control: No such file or directory
+discover_other_daemon: 0dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.freedesktop.Notifications' requested by ':1.2' (uid=0 pid=12867 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.freedesktop.secrets'
+[12867:12867:0924/225745.220389:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: unknown error type: 
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.2' (uid=0 pid=12867 comm="/root/.cache/ms-playwright/chromium-1228/chrome-li" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.xfce.Xfconf' requested by ':1.7' (uid=0 pid=13102 comm="/usr/lib/aarch64-linux-gnu/xfce4/notifyd/xfce4-not" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.xfce.Xfconf'
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.freedesktop.portal.Documents' requested by ':1.9' (uid=0 pid=13114 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+
+(xfce4-notifyd:13102): dbind-WARNING **: 22:57:45.278: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.10' (uid=0 pid=13132 comm="/usr/libexec/xdg-document-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /tmp/app-idle/run-chatgptweb-4-p0/runtime/doc
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.418: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.418: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.9' (uid=0 pid=13114 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Activating service name='org.gnome.keyring.SystemPrompter' requested by ':1.6' (uid=0 pid=13095 comm="/usr/bin/gnome-keyring-daemon --start --foreground" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.freedesktop.Notifications'
+
+(xdg-desktop-portal-gtk:13150): dbind-WARNING **: 22:57:45.539: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+
+(xdg-desktop-portal-gtk:13150): xdg-desktop-portal-gtk-WARNING **: 22:57:45.554: error: Could not connect: No such file or directory
+
+
+(gcr-prompter:13171): dbind-WARNING **: 22:57:45.554: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.gnome.keyring.SystemPrompter'
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.717: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.718: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.718: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.721: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.724: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.726: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.732: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.734: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][17351.580290] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][17351.580308] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.744: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.744: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.747: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13114): xdg-desktop-portal-WARNING **: 22:57:45.749: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[12860]: [session uid=0 pid=12860] Successfully activated service 'org.freedesktop.portal.Desktop'
+[12867:12867:0924/225750.040892:ERROR:chrome/browser/component_updater/pki_metadata_component_installer.cc:432] ignored invalid MtcAnchorData
+[12867:12867:0924/225750.040940:ERROR:chrome/browser/component_updater/pki_metadata_component_installer.cc:432] ignored invalid MtcAnchorData
+[12867:12867:0924/225750.040943:ERROR:chrome/browser/component_updater/pki_metadata_component_installer.cc:432] ignored invalid MtcAnchorData
+[12867:12867:0924/225750.113740:ERROR:services/cert_verifier/cert_verifier_service_factory.cc:424] error interpreting proto for MtcMetadata
+[12867:12885:0924/225750.128059:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+proot info: vpid 1: terminated with signal 15
+LAUNCH_EXIT rc=0

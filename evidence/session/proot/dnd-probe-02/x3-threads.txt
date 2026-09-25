@@ -1,0 +1,13 @@
+2086 main
+2467 Jit thread pool
+2468 Signal Catcher
+2470 perfetto_hprof_
+2472 HeapTaskDaemon
+2473 ReferenceQueueD
+2475 FinalizerDaemon
+2476 FinalizerWatchd
+2483 binder:2086_1
+2484 binder:2086_2
+2615 main
+2616 Thread-1
+2634 binder:2086_3

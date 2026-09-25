@@ -1,0 +1,56 @@
+term source-terminal-nolang-ascii sid=4959 pid=4959 
+term target-terminal-nolang-ascii sid=4347 pid=4347 
+term target-terminal-nolang-ascii sid=4347 pid=4353 
+term target-terminal-nolang-ascii sid=4347 pid=4355 
+term source-terminal-nolang-cjk sid=9421 pid=9421 
+term target-terminal-nolang-cjk sid=8941 pid=8941 
+term target-terminal-nolang-cjk sid=8941 pid=8944 
+term source-terminal-utf8-ascii sid=13532 pid=13532 
+term target-terminal-utf8-ascii sid=13177 pid=13177 
+term target-terminal-utf8-ascii sid=13177 pid=13180 dbus-daemon --nofork --print-address 4 --session 
+term target-terminal-utf8-ascii sid=13177 pid=13189 /usr/libexec/at-spi-bus-launcher 
+term target-terminal-utf8-ascii sid=13177 pid=13195 
+term source-terminal-utf8-cjk sid=16438 pid=16438 
+term target-terminal-utf8-cjk sid=16203 pid=16203 
+term target-terminal-utf8-cjk sid=16203 pid=16209 dbus-daemon --nofork --print-address 4 --session 
+term target-terminal-utf8-cjk sid=16203 pid=16210 
+term source-cursor-nolang-ascii sid=19457 pid=19457 
+term target-cursor-nolang-ascii sid=19057 pid=19057 
+term target-cursor-nolang-ascii sid=19057 pid=19065 dbus-daemon --nofork --print-address 4 --session 
+term target-cursor-nolang-ascii sid=19057 pid=19069 
+term target-cursor-nolang-ascii sid=19057 pid=19084 
+term target-cursor-nolang-ascii sid=19057 pid=19085 
+term target-cursor-nolang-ascii sid=19057 pid=19209 
+term target-cursor-nolang-ascii sid=19057 pid=19215 
+term source-cursor-nolang-cjk sid=22659 pid=22659 
+term target-cursor-nolang-cjk sid=21970 pid=21970 
+term target-cursor-nolang-cjk sid=21970 pid=21973 dbus-daemon --nofork --print-address 4 --session 
+term target-cursor-nolang-cjk sid=21970 pid=21974 
+term target-cursor-nolang-cjk sid=21970 pid=21978 
+term target-cursor-nolang-cjk sid=21970 pid=21979 
+term target-cursor-nolang-cjk sid=21970 pid=22092 
+term target-cursor-nolang-cjk sid=21970 pid=22196 
+term target-cursor-nolang-cjk sid=21970 pid=22637 
+term target-cursor-nolang-cjk sid=21970 pid=23453 
+term target-cursor-nolang-cjk sid=21970 pid=23460 
+term source-cursor-utf8-ascii sid=26058 pid=26058 
+term target-cursor-utf8-ascii sid=25457 pid=25457 
+term target-cursor-utf8-ascii sid=25457 pid=25466 dbus-daemon --nofork --print-address 4 --session 
+term target-cursor-utf8-ascii sid=25457 pid=25467 
+term target-cursor-utf8-ascii sid=25457 pid=25469 
+term target-cursor-utf8-ascii sid=25457 pid=25470 
+term target-cursor-utf8-ascii sid=25457 pid=25584 
+term target-cursor-utf8-ascii sid=25457 pid=25700 
+term target-cursor-utf8-ascii sid=25457 pid=26631 
+term target-cursor-utf8-ascii sid=25457 pid=26632 
+term target-cursor-utf8-ascii sid=25457 pid=27994 
+term source-cursor-utf8-cjk sid=29675 pid=29675 
+term target-cursor-utf8-cjk sid=29015 pid=29015 
+term target-cursor-utf8-cjk sid=29015 pid=29029 
+term target-cursor-utf8-cjk sid=29015 pid=29030 
+term target-cursor-utf8-cjk sid=29015 pid=29034 
+term target-cursor-utf8-cjk sid=29015 pid=29044 
+term target-cursor-utf8-cjk sid=29015 pid=29159 
+term target-cursor-utf8-cjk sid=29015 pid=29295 
+term target-cursor-utf8-cjk sid=29015 pid=29441 
+term target-cursor-utf8-cjk sid=29015 pid=29641 

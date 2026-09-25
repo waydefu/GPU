@@ -1,0 +1,116 @@
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+proot warning: can't sanitize binding "/storage/self/primary": Permission denied
+dbus-daemon[11841]: [session uid=0 pid=11841] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+[11842:11890:0924/224305.984528:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.gtk.vfs.Daemon' requested by ':1.1' (uid=0 pid=11842 comm="/usr/lib/chatgpt/ChatGPT --no-sandbox --ozone-plat" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.gtk.vfs.Daemon'
+[11842:11917:0924/224306.126765:ERROR:net/base/address_tracker_linux.cc:364] Could not send NETLINK request: Invalid argument (22)
+[11842:11890:0924/224306.127792:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[11842:11890:0924/224306.130085:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[11842:11892:0924/224306.142700:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+[sparkle] in_app_updates_policy_wait_started timeoutMs=300000
+Launching app agentRunId=null allowDebugMenu=false allowDevtools=false allowInspectElement=false buildFlavor=prod enableSparkle=false enableUpdater=true nodeEnv=undefined packaged=true platform=linux
+[11842:11890:0924/224306.500015:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[11842:11890:0924/224306.500748:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.freedesktop.secrets' requested by ':1.0' (uid=0 pid=11842 comm="/usr/lib/chatgpt/ChatGPT --no-sandbox --ozone-plat" label="u:r:runas_app:s0:c109,c257,c512,c768")
+** Message: 22:43:06.524: couldn't access control socket: /tmp/app-idle/run-chatgpt-3-pf/runtime/keyring/control: No such file or directory
+discover_other_daemon: 0dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.freedesktop.secrets'
+[11842:11842:0924/224306.551982:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: unknown error type: 
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.0' (uid=0 pid=11842 comm="/usr/lib/chatgpt/ChatGPT --no-sandbox --ozone-plat" label="u:r:runas_app:s0:c109,c257,c512,c768")
+(node:11842) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `ChatGPT --trace-deprecation ...` to show where the warning was created)
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.freedesktop.portal.Documents' requested by ':1.4' (uid=0 pid=12153 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.5' (uid=0 pid=12169 comm="/usr/libexec/xdg-document-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /tmp/app-idle/run-chatgpt-3-pf/runtime/doc
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.gnome.keyring.SystemPrompter' requested by ':1.3' (uid=0 pid=12092 comm="/usr/bin/gnome-keyring-daemon --start --foreground" label="u:r:runas_app:s0:c109,c257,c512,c768")
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.642: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.642: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.4' (uid=0 pid=12153 comm="/usr/libexec/xdg-desktop-portal" label="u:r:runas_app:s0:c109,c257,c512,c768")
+
+(xdg-desktop-portal-gtk:12236): dbind-WARNING **: 22:43:06.674: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+
+(gcr-prompter:12225): dbind-WARNING **: 22:43:06.677: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.gnome.keyring.SystemPrompter'
+
+(xdg-desktop-portal-gtk:12236): xdg-desktop-portal-gtk-WARNING **: 22:43:06.697: error: Could not connect: No such file or directory
+
+Appshot hotkey inactive configured=true enabled=true platform=linux
+[dynamic-app-tools-native-pipe] dynamic_app_tools_listening pipePath=/tmp/codex-browser-use/988f1496-3c09-4574-8979-b2dbf7e50a30.sock
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.866: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.866: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.866: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.868: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.870: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.872: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.873: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.874: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][16472.714491] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][16472.714504] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.878: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.878: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.880: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:12153): xdg-desktop-portal-WARNING **: 22:43:06.881: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.freedesktop.portal.Desktop'
+[11842:11890:0924/224306.955564:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[11842:11890:0924/224306.955960:ERROR:dbus/bus.cc:405] Failed to connect to the bus: Failed to connect to socket /run/dbus/system_bus_socket: No such file or directory
+[remote-connections/window-context] refresh_started previousConnectionCount=0
+[AppServerConnection] Initializing app-server transport
+[AppServerConnection] Starting app-server connection hostId=local transport=stdio
+[AppServerConnection] app_server_connection.state_changed cause=start_process connectionError=null currentConnectionId=null currentState=disconnected hasConnection=false hostId=local initialized=false initializeInFlight=false next=connecting pendingClientRequests=0 pendingInternalRequests=0 previous=disconnected reconnectAttempt=0 reconnectTimerScheduled=false restartInFlight=false targetConnectionId=null targetReadyState=null transport=stdio
+Failed to register codex:// protocol handler isPackaged=true
+dbus-daemon[11841]: [session uid=0 pid=11841] Activating service name='org.a11y.Bus' requested by ':1.1' (uid=0 pid=11842 comm="/usr/lib/chatgpt/ChatGPT --no-sandbox --ozone-plat" label="u:r:runas_app:s0:c109,c257,c512,c768")
+dbus-daemon[11841]: [session uid=0 pid=11841] Successfully activated service 'org.a11y.Bus'
+
+(ChatGPT:11842): dbind-WARNING **: 22:43:07.358: Couldn't connect to accessibility bus: Failed to connect to socket /tmp/app-idle/run-chatgpt-1-p0/runtime/at-spi/bus_3: Connection refused
+(electron) The default sandbox option for windows without nodeIntegration is changing. Presently, by default, when a window has a preload script, it defaults to being unsandboxed. In Electron 20, this default will be changing, and all windows that have nodeIntegration: false (which is the default) will be sandboxed by default. If your preload script doesn't use Node, no action is needed. If your preload script does use Node, either refactor it to move Node usage to the main process, or specify sandbox: false in your WebPreferences.
+[remote-connections/window-context] load_completed savedRemoteConnectionCount=0 totalConnectionCount=0
+[remote-connections/window-context] reconcile_completed creationFailureCount=0 nextConnectionCount=0 previousConnectionCount=0
+[remote-connections/window-context] refresh_completed autoConnectConnectionCount=0 codexManagedConnectionCount=0 discoveredConnectionCount=0 nextConnectionCount=0 previousConnectionCount=0
+(node:11842) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 destroyed listeners added to [WebContents]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+[11842:11842:0924/224307.662477:ERROR:dbus/object_proxy.cc:572] Failed to call method: org.freedesktop.DBus.Properties.GetAll: object_path= /org/freedesktop/UPower/devices/DisplayDevice: unknown error type: 
+(node:11842) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+[IpcRouter] I am the router
+[IpcClient] Received broadcast but no handler is configured method=client-status-changed
+[StdioConnection] stdio_transport_spawned argsCount=6 coreRuntimeInUse=false executablePath=/usr/lib/chatgpt/resources/codex pid=12617 spawnCommand=/usr/lib/chatgpt/resources/codex
+[AppServerConnection] Transport start success connectionId=1 hostId=local transport=stdio
+[window-manager] window main frame finished load appearance=primary hostId=local startupElapsedMs=715 webContentsId=1 windowId=1
+[bundled-plugins] bundled_plugins_reconcile_skipped_features_unavailable reason=focus
+[AppServerConnection] Current reported app-server version: currentVersion=0.153.1 hostId=local
+[AppServerConnection] initialize_handshake_result durationMs=551 initializeRequestId=__codex_initialize__ outcome=success transportKind=stdio
+[AppServerConnection] Codex CLI initialized
+[AppServerConnection] app_server_connection.state_changed cause=post_initialize_connection_state connectionError=null currentConnectionId=1 currentState=connecting hasConnection=true hostId=local initialized=true initializeInFlight=false next=connected pendingClientRequests=0 pendingInternalRequests=0 previous=connecting reconnectAttempt=0 reconnectTimerScheduled=false restartInFlight=false targetConnectionId=1 targetReadyState=1 transport=stdio
+[host-app-server-projects] Local app-server project migration completed projectCount=3
+[startup] [1.880] Host startup critical-path phases completed startupElapsedMs=2395 startupPhaseDurationsMs={"bootstrap handoff complete":515,"main app.whenReady resolved":0,"registered app protocol":1,"shell environment hydrated":131,"local data migrations completed":0,"registered deep link protocol":333,"startup window revealed":728,"local app-server sqlite initialized":309,"window context initialized":309,"application menu refreshed":3,"bundled plugins reconcile checked":0}
+[window-manager] window ready-to-show appearance=primary hostId=local startupElapsedMs=1207 webContentsId=1 windowId=1
+[electron-message-handler] [statsig-refresh-diagnostics] React root render requested rendererWebContentsId=1 rendererWindowAppearance=primary rendererWindowFocused=true rendererWindowId=1 rendererWindowVisible=true windowType=electron
+[AppServerConnection] response_routed broadcastFallback=false conversationId=null durationMs=1 errorCode=null hadInternalHandler=false hadPending=true method=remoteControl/status/read originWebcontentsId=1 queueWaitMs=1 requestId=e06e6b4c-2934-402d-bf4b-0a376ccb0b99 targetDestroyed=false
+[electron-fetch-handler] codex-home request hostId=local
+[AppServerConnection] response_routed broadcastFallback=false conversationId=null durationMs=3 errorCode=null hadInternalHandler=false hadPending=true method=fs/readFile originWebcontentsId=1 queueWaitMs=0 requestId=f5b704c4-424f-4283-bc12-28ba7153faca targetDestroyed=false
+[electron-fetch-handler] codex-home request hostId=local
+[AppServerConnection] response_routed broadcastFallback=false conversationId=null durationMs=13 errorCode=null hadInternalHandler=false hadPending=true method=account/read originWebcontentsId=1 queueWaitMs=0 requestId=f33e1cdc-074f-483a-9669-47348367a254 targetDestroyed=false
+[AppServerConnection] response_routed broadcastFallback=false conversationId=null durationMs=18 errorCode=null hadInternalHandler=false hadPending=true method=config/read originWebcontentsId=1 queueWaitMs=0 requestId=9d480d28-e064-4aeb-88b7-c24d006dfe2b targetDestroyed=false
+[AppServerConnection] response_routed broadcastFallback=false conversationId=null durationMs=22 errorCode=null hadInternalHandler=false hadPending=true method=getAuthStatus originWebcontentsId=1 queueWaitMs=0 requestId=285ebef3-2272-4241-a3dc-79bb86091850 targetDestroyed=false
+[11842:12012:0924/224311.573968:ERROR:device/udev_linux/udev_watcher.cc:51] Failed to initialize a udev monitor.
+[electron-message-handler] Statsig: error while bootstrapping post-login client attemptNumber=1 errorMessage="Timed out while fetching post-login Statsig bootstrap" errorName=Error errorStack="Error: Timed out while fetching post-login Statsig bootstrap" rendererWebContentsId=1 rendererWindowAppearance=primary rendererWindowFocused=true rendererWindowId=1 rendererWindowVisible=true
+proot info: vpid 1: terminated with signal 15
+LAUNCH_EXIT rc=0

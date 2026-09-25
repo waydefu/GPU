@@ -1,0 +1,13 @@
+31959 main
+32146 Jit thread pool
+32147 Signal Catcher
+32155 perfetto_hprof_
+32156 HeapTaskDaemon
+32158 ReferenceQueueD
+32159 FinalizerDaemon
+32160 FinalizerWatchd
+32199 binder:31959_1
+32202 binder:31959_2
+32229 main
+32230 Thread-1
+32502 binder:31959_3

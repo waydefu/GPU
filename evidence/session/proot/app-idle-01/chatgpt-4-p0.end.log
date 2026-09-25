@@ -1,0 +1,20 @@
+end_begin sid=18787 tracer=18785 members=18
+term sid=18787 pid=18787 cmd=/usr/bin/dbus-run-session -- /bin/bash /tmp/app-idle/app_idle_cmd.sh chatgpt /tmp/app-idle/run-chatgpt-4-p0 
+term sid=18787 pid=18788 cmd=dbus-daemon --nofork --print-address 4 --session 
+term sid=18787 pid=18794 cmd=/usr/lib/chatgpt/ChatGPT --no-sandbox --ozone-platform=x11 --disable-gpu --disable-dev-shm-usage 
+term sid=18787 pid=18820 cmd=/usr/lib/chatgpt/ChatGPT --type=zygote --no-zygote-sandbox --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex -
+term sid=18787 pid=18821 cmd=/usr/lib/chatgpt/ChatGPT --type=zygote --no-sandbox --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex --owl-electron-scheme
+term sid=18787 pid=18887 cmd=/usr/libexec/gvfsd 
+term sid=18787 pid=18906 cmd=/usr/lib/chatgpt/ChatGPT --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platform=x11 --crashpad-handler-pid=0 --enable-crash-reporter=, --user-
+term sid=18787 pid=18918 cmd=/usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-
+term sid=18787 pid=18930 cmd=/usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --no-sandbox --disable-dev-s
+term sid=18787 pid=18973 cmd=/usr/bin/gnome-keyring-daemon --start --foreground --components=secrets 
+term sid=18787 pid=18993 cmd=/usr/libexec/xdg-desktop-portal 
+term sid=18787 pid=19017 cmd=/usr/libexec/xdg-permission-store 
+term sid=18787 pid=19031 cmd=/usr/libexec/xdg-desktop-portal-gtk 
+term sid=18787 pid=19044 cmd=/usr/libexec/gcr-prompter 
+term sid=18787 pid=19310 cmd=/usr/libexec/at-spi-bus-launcher 
+term sid=18787 pid=19358 cmd=/usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex --owl-electron-scheme-replay --s
+term sid=18787 pid=19360 cmd=/usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=, --user-data-dir=/root/.config/Codex --owl-electron-scheme-replay --s
+term sid=18787 pid=19384 cmd=/usr/lib/chatgpt/resources/codex -c features.code_mode_host=true app-server --analytics-default-enabled -c mcp_servers.codex_app={"command"="/usr/lib/chatgpt/re
+END survivors=0 tracer_gone=true

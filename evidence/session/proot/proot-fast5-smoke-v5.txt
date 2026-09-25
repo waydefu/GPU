@@ -1,0 +1,23 @@
+id: uid=0(root) gid=0(root) groups=0(root),1004,1007,1011,1015,1028,1078,1079,3001,3002,3003(aid_inet),3006,3009,3011,3012,50365(aid_all_a365)
+uname: Linux 6.17.0-PRoot-Distro aarch64
+whoami: root
+nlink: 2 root:root 666 2 root:root 666 
+perm: 640 root
+readlink: f
+mv: g
+left: 0
+threads_locks 160000
+sqlite 499500
+ssl True
+socketpair 4000
+subprocess 42
+pipe b'x'
+sleep_ok True
+node_worker 42
+node_child child
+git: 98396ad
+dpkg: 1
+apt_policy: 1
+dns: ::1
+sysvipc: ipcs_ok
+SMOKE_DONE

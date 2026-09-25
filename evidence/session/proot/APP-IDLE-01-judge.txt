@@ -1,0 +1,25 @@
+  chatgpt-1-p0: idle 0.104 cores
+  chatgpt-2-pf: idle 0.042 cores
+  chatgpt-3-pf: idle 0.046 cores
+  chatgpt-4-p0: idle 0.071 cores
+  chatgpt: P0 0.088 PF 0.044 cores (0.501x, -50%) noise 0.376 need -75%
+VERDICT chatgpt APP_NO_BENEFIT
+  chatgptweb-1-p0: idle 0.989 cores
+  chatgptweb-2-pf: idle 0.855 cores
+  chatgptweb-3-pf: idle 0.884 cores
+  chatgptweb-4-p0: idle 0.945 cores
+  chatgptweb: P0 0.967 PF 0.869 cores (0.899x, -10%) noise 0.046 need -10%
+VERDICT chatgptweb APP_BENEFIT
+  hermes-1-p0: idle 0.170 cores
+  hermes-2-pf: idle 0.101 cores
+  hermes-3-pf: idle 0.121 cores
+  hermes-4-p0: idle 0.170 cores
+  hermes: P0 0.170 PF 0.111 cores (0.652x, -35%) noise 0.176 need -35%
+VERDICT hermes APP_NO_BENEFIT
+  cursor-1-p0: idle 0.547 cores
+  cursor-2-pf: idle 0.065 cores
+  cursor-3-pf: idle 0.391 cores
+  cursor-4-p0: idle 0.528 cores
+  cursor: P0 0.537 PF 0.228 cores (0.425x, -58%) noise 1.429 need -286%
+VERDICT cursor APP_NO_BENEFIT
+DAILY_ENABLE false (median reduction 42%)
