@@ -1,0 +1,13 @@
+2684 105 105 main
+3363 1 1 Jit thread pool
+3364 0 0 Signal Catcher
+3370 0 0 perfetto_hprof_
+3371 0 0 HeapTaskDaemon
+3372 0 0 ReferenceQueueD
+3373 0 0 FinalizerDaemon
+3374 0 0 FinalizerWatchd
+3376 0 0 binder:2684_1
+3377 0 0 binder:2684_2
+3379 16 26 main
+3380 0 0 Thread-1
+3391 0 0 binder:2684_3

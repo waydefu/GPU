@@ -1,0 +1,13 @@
+25821 62 41 main
+25960 2 0 Jit thread pool
+25961 0 0 Signal Catcher
+25963 0 0 perfetto_hprof_
+25964 0 0 HeapTaskDaemon
+25965 0 0 ReferenceQueueD
+25966 0 0 FinalizerDaemon
+25967 0 0 FinalizerWatchd
+25995 0 0 binder:25821_1
+25996 0 0 binder:25821_2
+26010 0 0 binder:25821_3
+26011 675 89 main
+26012 0 0 Thread-1

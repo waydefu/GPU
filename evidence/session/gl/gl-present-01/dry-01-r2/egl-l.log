@@ -1,0 +1,6 @@
+libEGL warning: DRI3 error: Could not get DRI3 device
+libEGL warning: Ensure your X server supports DRI3 to get accelerated rendering
+ATTENTION: default value of option vblank_mode overridden by environment.
+ATTENTION: default value of option vblank_mode overridden by environment.
+GL_RENDERER "zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))" GL_VERSION "OpenGL ES 3.2 Mesa 26.0.6"
+GL_PRESENT api=egl frames=3569 secs=5.002 fps=713.6 size=1200x1200 offscreen=0 gl_error=0x0

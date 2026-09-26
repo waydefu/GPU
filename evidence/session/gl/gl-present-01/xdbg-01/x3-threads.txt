@@ -1,0 +1,13 @@
+25821 main
+25960 Jit thread pool
+25961 Signal Catcher
+25963 perfetto_hprof_
+25964 HeapTaskDaemon
+25965 ReferenceQueueD
+25966 FinalizerDaemon
+25967 FinalizerWatchd
+25995 binder:25821_1
+25996 binder:25821_2
+26010 binder:25821_3
+26011 main
+26012 Thread-1

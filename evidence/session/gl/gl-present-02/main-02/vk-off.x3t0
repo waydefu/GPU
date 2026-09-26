@@ -1,0 +1,13 @@
+24587 102 50 main
+24844 1 0 Jit thread pool
+24845 0 0 Signal Catcher
+24846 0 0 perfetto_hprof_
+24847 0 0 HeapTaskDaemon
+24848 0 0 ReferenceQueueD
+24849 0 0 FinalizerDaemon
+24850 0 0 FinalizerWatchd
+24851 0 0 binder:24587_1
+24852 0 0 binder:24587_2
+24855 8 17 main
+24856 0 0 Thread-1
+24884 0 0 binder:24587_3

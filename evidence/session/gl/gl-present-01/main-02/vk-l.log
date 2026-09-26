@@ -1,0 +1,3 @@
+VK_DEVICE name="Adreno (TM) 840" driver="turnip Mesa driver" info="Mesa 26.0.6"
+VK_MODES immediate mailbox fifo fifo_relaxed
+VK_PRESENT frames=32455 secs=20.001 fps=1622.7 size=1200x1200 offscreen=0 mode=immediate images=4 format=44 suboptimal=0

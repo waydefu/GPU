@@ -1,0 +1,4 @@
+PX t=0 0xffff8000
+PX t=151 0xff0080ff
+PX t=301 0xff0080ff
+PX t=452 0xffff8000

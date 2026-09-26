@@ -1,0 +1,14 @@
+21117 43 21 main
+21288 2 0 Jit thread pool
+21291 0 0 Signal Catcher
+21292 0 0 perfetto_hprof_
+21293 0 0 HeapTaskDaemon
+21294 0 0 ReferenceQueueD
+21295 0 0 FinalizerDaemon
+21297 0 0 FinalizerWatchd
+21346 0 0 binder:21117_1
+21347 0 0 binder:21117_2
+21355 5 6 main
+21358 0 0 Thread-1
+21494 0 0 binder:21117_3
+21497 0 0 binder:21117_4

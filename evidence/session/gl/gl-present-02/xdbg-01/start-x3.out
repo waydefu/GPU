@@ -1,0 +1,2 @@
+launch_cmd=unset BASH_ENV ENV; exec env TERMUX_X11_DEBUG=2 TERMUX_X11_DISABLE_EXA_GPU=1 DISPLAY=:3 /data/data/com.termux/files/usr/bin/f8-x11gpu :3 -noreset >> /data/data/com.termux/files/usr/tmp/x3-launch-async-cmd-C-5338.log 2>&1 < /dev/null
+Starting service: Intent { act=com.termux.service_execute dat=com.termux.file:/... cmp=com.termux/.app.TermuxService (has extras) }

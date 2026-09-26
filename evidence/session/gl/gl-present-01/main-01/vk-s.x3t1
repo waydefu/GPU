@@ -1,0 +1,13 @@
+30834 110 147 main
+30989 2 0 Jit thread pool
+30991 0 0 Signal Catcher
+30992 0 0 perfetto_hprof_
+30993 0 0 HeapTaskDaemon
+30994 0 0 ReferenceQueueD
+30995 0 0 FinalizerDaemon
+30996 0 0 FinalizerWatchd
+31016 0 0 binder:30834_1
+31017 0 0 binder:30834_2
+31028 1926 316 main
+31029 0 0 Thread-1
+31354 0 0 binder:30834_3

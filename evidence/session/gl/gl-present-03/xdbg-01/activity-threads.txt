@@ -1,0 +1,33 @@
+18992 Signal Catcher
+18993 perfetto_hprof_
+18994 ADB-JDWP Connec
+18996 Jit thread pool
+18997 HeapTaskDaemon
+18998 ReferenceQueueD
+19003 FinalizerDaemon
+19004 FinalizerWatchd
+19005 binder:20704_1
+19006 binder:20704_2
+19008 dex_preload_t
+19014 binder:20704_3
+19015 ActivityHelper
+19022 20704-ScoutStat
+19033 Profile Saver
+19037 MiuiMonitorThre
+19041 Timer-0
+19044 Timer-1
+19059 AppCustomScenar
+19073 RenderThread
+19095 AICollector
+19097 SharedPreferenc
+19110 RenderThread
+19123 Thread-7
+19129 TracingMuxer
+19131 hwuiTask0
+19132 hwuiTask1
+19133 VsyncReceiver
+19134 binder:20704_4
+19135 ImageReader-1x1
+19147 SurfaceSyncGrou
+19149 blastAsyncWork
+20704 .waydefu.x11gpu

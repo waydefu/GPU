@@ -1,0 +1,14 @@
+19955 96 82 main
+20237 0 1 Jit thread pool
+20238 0 0 Signal Catcher
+20239 0 0 perfetto_hprof_
+20240 0 0 HeapTaskDaemon
+20241 0 0 ReferenceQueueD
+20242 0 0 FinalizerDaemon
+20243 0 0 FinalizerWatchd
+20294 0 0 binder:19955_1
+20295 0 0 binder:19955_2
+20356 10 25 main
+20357 0 0 Thread-1
+20579 0 0 binder:19955_3
+20580 0 0 binder:19955_4

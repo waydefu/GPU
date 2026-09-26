@@ -1,0 +1,33 @@
+24903 Metrics Backgro
+24904 Signal Catcher
+24905 perfetto_hprof_
+24907 ADB-JDWP Connec
+24908 Jit thread pool
+24909 HeapTaskDaemon
+24910 ReferenceQueueD
+24911 FinalizerDaemon
+24912 FinalizerWatchd
+24913 binder:26188_1
+24922 dex_preload_t
+24937 binder:26188_2
+24939 ActivityHelper
+24941 binder:26188_3
+24942 26188-ScoutStat
+24949 Profile Saver
+24953 MiuiMonitorThre
+24958 Timer-0
+24959 Timer-1
+24969 AppCustomScenar
+24974 RenderThread
+24978 AICollector
+24981 SharedPreferenc
+24982 RenderThread
+24983 Thread-7
+24984 TracingMuxer
+24985 hwuiTask0
+24986 hwuiTask1
+24992 VsyncReceiver
+24993 ImageReader-1x1
+24995 SurfaceSyncGrou
+24999 blastAsyncWork
+26188 .waydefu.x11gpu

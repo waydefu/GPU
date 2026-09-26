@@ -1,0 +1,13 @@
+11890 main
+12029 Jit thread pool
+12031 Signal Catcher
+12032 perfetto_hprof_
+12033 HeapTaskDaemon
+12034 ReferenceQueueD
+12035 FinalizerDaemon
+12036 FinalizerWatchd
+12068 binder:11890_1
+12069 binder:11890_2
+12083 main
+12084 Thread-1
+12088 binder:11890_3

@@ -1,0 +1,19 @@
+# GL-PRESENT-01 amendment-1 host qualification (private Xvfb :97, Ubuntu llvmpipe), tools @ fork bb45c12
+== glx-l.present.jsonl
+{"shim":"present_count/1","pid":28994,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/gl_present_glx","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":0,"shm_pixels":0,"put_image":0,"put_bytes":0,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":7529,"x_shm_pixels":770969600,"shm_create_pixmap":0,"shm_attach":0,"imports_total":0,"imports":[]}
+== glx-l.req.jsonl
+{"diag":"req_count/1","pid":28994,"xlib_writev_calls":15076,"xlib_writev_bytes":391880,"requests":[{"ext":"GLX","op":7,"n":1,"bytes":12,"fds":0},{"ext":"MIT-SHM","op":2,"n":1,"bytes":8,"fds":0},{"ext":"GLX","op":19,"n":1,"bytes":12,"fds":0},{"ext":"GLX","op":35,"n":1,"bytes":288,"fds":0},{"ext":"GLX","op":6,"n":1,"bytes":8,"fds":0}],"sock_fds_passed":0,"majors":[{"major":1,"n":1,"bytes":40,"fds":0},{"major":8,"n":1,"bytes":8,"fds":0},{"major":14,"n":7530,"bytes":60240,"fds":0},{"major":20,"n":1,"bytes":24,"fds":0},{"major":43,"n":7533,"bytes":30132,"fds":0},{"major":55,"n":2,"bytes":36,"fds":0},{"major":60,"n":2,"bytes":16,"fds":0},{"major":78,"n":1,"bytes":16,"fds":0},{"major":98,"n":9,"bytes":156,"fds":0},{"major":128,"n":1,"bytes":8,"fds":0},{"major":130,"n":7532,"bytes":301192,"fds":0},{"major":133,"n":1,"bytes":4,"fds":0},{"major":135,"n":1,"bytes":8,"fds":0},{"major":150,"n":12,"bytes":408,"fds":0}]}
+== glx-off.present.jsonl
+{"shim":"present_count/1","pid":29215,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/gl_present_glx","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":0,"shm_pixels":0,"put_image":0,"put_bytes":0,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":0,"x_shm_pixels":0,"shm_create_pixmap":0,"shm_attach":0,"imports_total":0,"imports":[]}
+== glx-off.req.jsonl
+{"diag":"req_count/1","pid":29215,"xlib_writev_calls":13,"xlib_writev_bytes":284,"requests":[{"ext":"GLX","op":7,"n":1,"bytes":12,"fds":0},{"ext":"MIT-SHM","op":2,"n":1,"bytes":8,"fds":0},{"ext":"GLX","op":19,"n":1,"bytes":12,"fds":0},{"ext":"GLX","op":35,"n":1,"bytes":288,"fds":0},{"ext":"GLX","op":6,"n":1,"bytes":8,"fds":0}],"sock_fds_passed":0,"majors":[{"major":1,"n":1,"bytes":40,"fds":0},{"major":8,"n":1,"bytes":8,"fds":0},{"major":14,"n":2,"bytes":16,"fds":0},{"major":20,"n":1,"bytes":24,"fds":0},{"major":43,"n":2,"bytes":8,"fds":0},{"major":55,"n":2,"bytes":36,"fds":0},{"major":60,"n":2,"bytes":16,"fds":0},{"major":78,"n":1,"bytes":16,"fds":0},{"major":98,"n":7,"bytes":108,"fds":0},{"major":130,"n":1,"bytes":8,"fds":0},{"major":133,"n":1,"bytes":4,"fds":0},{"major":135,"n":1,"bytes":8,"fds":0},{"major":150,"n":11,"bytes":400,"fds":0}]}
+== glx-l.px.txt
+PX t=0 0x00ff8000
+PX t=100 0x000080ff
+PX t=200 0x000080ff
+PX t=300 0x000080ff
+== glx-off.px.txt
+PX t=0 0x00000000
+PX t=100 0x00000000
+PX t=200 0x00000000
+PX t=300 0x00000000

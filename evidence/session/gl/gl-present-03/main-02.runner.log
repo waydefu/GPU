@@ -1,0 +1,3 @@
+SAFE_RUN_CHECK_OK mem_available_mb=5014 floor_mb=4500 disk_free_gb=51
+STOP logcat pid 2579 still alive after TERM
+CMD_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gl/gl-present-03/main-02 GL_PRESENT_DONE set=main rep=02

@@ -1,0 +1,13 @@
+6297 77 42 main
+6554 1 0 Jit thread pool
+6555 0 0 Signal Catcher
+6556 0 0 perfetto_hprof_
+6557 0 0 HeapTaskDaemon
+6558 0 0 ReferenceQueueD
+6559 0 0 FinalizerDaemon
+6560 0 0 FinalizerWatchd
+6643 0 0 binder:6297_1
+6645 0 0 binder:6297_2
+6757 930 56 main
+6758 0 0 Thread-1
+6786 0 0 binder:6297_3

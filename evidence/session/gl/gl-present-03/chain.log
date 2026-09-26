@@ -1,0 +1,12 @@
+CELL_START main-01 12:27:46 avail=5435 set=main
+CMD_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gl/gl-present-03/main-01 GL_PRESENT_DONE set=main rep=01
+CELLCHECK_OK
+CELL_DONE main-01 12:33:39
+CELL_START main-02 12:34:00 avail=5016 set=main
+CMD_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gl/gl-present-03/main-02 GL_PRESENT_DONE set=main rep=02
+CELLCHECK_OK
+CELL_DONE main-02 12:39:51
+CELL_START xdbg-01 12:40:12 avail=5103 set=xdbg
+CMD_CAPTURED mode=C evidence=/root/projects/GPU加速/evidence/session/gl/gl-present-03/xdbg-01 GL_PRESENT_DONE set=xdbg rep=01
+CELL_DONE xdbg-01 12:41:41
+CHAIN_DONE

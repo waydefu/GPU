@@ -1,0 +1,2 @@
+VK_DEVICE name="Adreno (TM) 840" driver="turnip Mesa driver" info="Mesa 26.0.6"
+VK_PRESENT frames=15278 secs=20.001 fps=763.9 size=1200x1200 offscreen=1 mode=none images=2 format=44 suboptimal=0
