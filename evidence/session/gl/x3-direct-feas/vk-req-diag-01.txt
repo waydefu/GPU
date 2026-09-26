@@ -1,0 +1,30 @@
+VK_EXT VK_ANDROID_external_memory_android_hardware_buffer=1
+VK_EXT VK_KHR_external_memory_fd=1
+VK_EXT VK_EXT_external_memory_dma_buf=1
+VK_EXT VK_EXT_queue_family_foreign=1
+VK_INIT=OK device=Adreno (TM) 840 qf=0 ts_valid_bits=48 ts_period=52.083 foreign_qf=0xfffffffd
+BUFREQ ext=0 size=4096 -> req=4096 (+0) align=64 bits=0x41
+BUFREQ ext=0 size=65536 -> req=65536 (+0) align=64 bits=0x41
+BUFREQ ext=0 size=622528 -> req=622528 (+0) align=64 bits=0x41
+BUFREQ ext=0 size=622592 -> req=622592 (+0) align=64 bits=0x41
+BUFREQ ext=0 size=1048576 -> req=1048576 (+0) align=64 bits=0x41
+BUFREQ ext=0 size=11984896 -> req=11984896 (+0) align=64 bits=0x41
+BUFREQ ext=1 size=4096 -> req=9396 (+5300) align=64 bits=0x13
+BUFREQ ext=1 size=65536 -> req=70836 (+5300) align=64 bits=0x13
+BUFREQ ext=1 size=622528 -> req=627828 (+5300) align=64 bits=0x13
+BUFREQ ext=1 size=622592 -> req=627892 (+5300) align=64 bits=0x13
+BUFREQ ext=1 size=1048576 -> req=1053876 (+5300) align=64 bits=0x13
+BUFREQ ext=1 size=11984896 -> req=11990196 (+5300) align=64 bits=0x13
+IMGREQ fmt=BGRA 1200x128 create=0 rowPitch=4800 size=614400 offset=0 req=619700 (pitch*h=614400, +5300) align=64
+IMGREQ fmt=BGRA 1216x128 create=0 rowPitch=4864 size=622592 offset=0 req=627892 (pitch*h=622592, +5300) align=64
+IMGREQ fmt=BGRA 1216x2464 create=0 rowPitch=4864 size=11984896 offset=0 req=11990196 (pitch*h=11984896, +5300) align=64
+IMGREQ fmt=BGRA 1200x2464 create=0 rowPitch=4800 size=11827200 offset=0 req=11832500 (pitch*h=11827200, +5300) align=64
+IMGREQ fmt=BGRA 640x480 create=0 rowPitch=2560 size=1228800 offset=0 req=1234100 (pitch*h=1228800, +5300) align=64
+IMGREQ fmt=BGRA 656x480 create=0 rowPitch=2624 size=1259520 offset=0 req=1264820 (pitch*h=1259520, +5300) align=64
+IMGREQ fmt=RGBA 1200x128 create=0 rowPitch=4800 size=614400 offset=0 req=619700 (pitch*h=614400, +5300) align=64
+IMGREQ fmt=RGBA 1216x128 create=0 rowPitch=4864 size=622592 offset=0 req=627892 (pitch*h=622592, +5300) align=64
+IMGREQ fmt=RGBA 1216x2464 create=0 rowPitch=4864 size=11984896 offset=0 req=11990196 (pitch*h=11984896, +5300) align=64
+IMGREQ fmt=RGBA 1200x2464 create=0 rowPitch=4800 size=11827200 offset=0 req=11832500 (pitch*h=11827200, +5300) align=64
+IMGREQ fmt=RGBA 640x480 create=0 rowPitch=2560 size=1228800 offset=0 req=1234100 (pitch*h=1228800, +5300) align=64
+IMGREQ fmt=RGBA 656x480 create=0 rowPitch=2624 size=1259520 offset=0 req=1264820 (pitch*h=1259520, +5300) align=64
+DONE

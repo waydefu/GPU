@@ -1,0 +1,9 @@
+1790410517.709 pid=12738 shard electron /usr/share/cursor/cursor
+1790410517.839 pid=12803 skip same_app /usr/share/cursor/cursor
+1790410517.924 pid=12808 skip chromium_child /usr/share/cursor/cursor
+1790410517.926 pid=12812 skip chromium_child /usr/share/cursor/cursor
+1790410520.937 pid=13229 skip same_app /usr/share/cursor/chrome_crashpad_handler
+1790410521.235 pid=13270 skip chromium_child /usr/share/cursor/cursor
+1790410521.264 pid=13280 skip chromium_child /usr/share/cursor/cursor
+1790410521.860 pid=13512 skip stdio_pipe /usr/share/cursor/cursor
+1790410521.911 pid=13516 skip stdio_pipe /usr/share/cursor/cursor

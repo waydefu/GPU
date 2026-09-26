@@ -1,0 +1,30 @@
+LOAD=OK
+EGL_INIT=OK 1.5 vendor=Android
+EGL_EXTENSIONS=EGL_ANDROID_front_buffer_auto_refresh EGL_ANDROID_get_native_client_buffer EGL_ANDROID_presentation_time EGL_EXT_surface_CTA861_3_metadata EGL_EXT_surface_SMPTE2086_metadata EGL_KHR_get_all_proc_addresses EGL_KHR_swap_buffers_with_damage EGL_ANDROID_get_frame_timestamps EGL_EXT_gl_colorspace_scrgb EGL_EXT_gl_colorspace_scrgb_linear EGL_EXT_gl_colorspace_display_p3_linear EGL_EXT_gl_colorspace_display_p3 EGL_EXT_gl_colorspace_display_p3_passthrough EGL_EXT_gl_colorspace_bt2020_hlg EGL_EXT_gl_colorspace_bt2020_linear EGL_EXT_gl_colorspace_bt2020_pq EGL_ANDROID_image_native_buffer EGL_ANDROID_native_fence_sync EGL_ANDROID_recordable EGL_EXT_create_context_robustness EGL_EXT_image_gl_colorspace EGL_EXT_pixel_format_float EGL_EXT_protected_content EGL_EXT_yuv_surface EGL_IMG_context_priority EGL_KHR_create_context EGL_KHR_create_context_no_error EGL_KHR_fence_sync EGL_KHR_gl_colorspace EGL_KHR_gl_renderbuffer_image EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_3D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_image EGL_KHR_image_base EGL_KHR_lock_surface EGL_KHR_mutable_render_buffer EGL_KHR_no_config_context EGL_KHR_partial_update EGL_KHR_reusable_sync EGL_KHR_surfaceless_context EGL_KHR_wait_sync EGL_NV_context_priority_realtime 
+EXT EGL_EXT_image_dma_buf_import=0
+EXT EGL_EXT_image_dma_buf_import_modifiers=0
+EXT EGL_ANDROID_image_native_buffer=1
+EXT EGL_ANDROID_get_native_client_buffer=1
+EXT EGL_KHR_image_base=1
+EXT EGL_ANDROID_native_fence_sync=1
+GL_RENDERER=Adreno (TM) 840 | OpenGL ES 3.2 V@0842.27.1 (GIT@0a73ec43e7, I489da0dd30, 1770115872) (Date:02/03/26)
+GLEXT GL_OES_EGL_image=1 GL_OES_EGL_image_external=1 GL_OES_EGL_image_external_essl3=1
+PROCS eglCreateImageKHR=1 glEGLImageTargetTexture2DOES=1
+GL_SETUP prog_ext=ok prog_2d=ok fbo=0x8cd5
+HEAP=OK fd_target=/dmabuf: size=622592
+IMP[XR24/EXT]=FAIL egl_err=0x3009
+IMP[XR24/2D]=FAIL egl_err=0x3009
+IMP[AR24/EXT]=FAIL egl_err=0x3009
+IMP[AR24/2D]=FAIL egl_err=0x3009
+IMP[XB24/EXT]=FAIL egl_err=0x3009
+IMP[XB24/2D]=FAIL egl_err=0x3009
+IMP[AB24/EXT]=FAIL egl_err=0x3009
+IMP[AB24/2D]=FAIL egl_err=0x3009
+C1_MEMFD_IMPORT=FAIL egl_err=0x3009 (expected FAIL)
+VK_DEVICE=Adreno (TM) 840 api=1.4.295 driver=0x8034a01b ext_count=183
+VK_EXT VK_EXT_external_memory_dma_buf=1
+VK_EXT VK_EXT_image_drm_format_modifier=0
+VK_EXT VK_KHR_external_memory_fd=1
+VK_EXT VK_ANDROID_external_memory_android_hardware_buffer=1
+AHB AHardwareBuffer_createFromHandle=1
+DONE

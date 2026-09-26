@@ -1,0 +1,5 @@
+app=cursor bin=/usr/share/cursor/cursor test_tracer=30716 daily=29525 memavail_mb=4569
+after_s=4 main=30749 shard_tracer=30743 processes=8 not_under_shard_tracer=0 renderers=1 windows_on_99=1 memavail_mb=4173
+after SIGTERM to f8-shard 30729: main_and_type_processes_left=0 other_app_helpers_left=0 after_s=1 f8-shard_gone=yes
+info: shard tracer gone on its own
+SMOKE_REAL_PASS
