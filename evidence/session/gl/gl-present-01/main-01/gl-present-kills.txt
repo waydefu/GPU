@@ -1,0 +1,9 @@
+touch_recorder_stopped pid=32042 file=idle.touch
+touch_recorder_stopped pid=804 file=vk-off.touch
+touch_recorder_stopped pid=2722 file=glx-off.touch
+touch_recorder_stopped pid=4857 file=vk-l.touch
+touch_recorder_stopped pid=6744 file=vk-s.touch
+touch_recorder_stopped pid=7805 file=glx-l.touch
+touch_recorder_stopped pid=9083 file=glx-s.touch
+touch_recorder_stopped pid=10296 file=egl-l.touch
+touch_recorder_stopped pid=11710 file=vk-l-sw.touch

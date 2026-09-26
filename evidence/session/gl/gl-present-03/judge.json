@@ -1,0 +1,1219 @@
+{
+ "reps": [
+  "/root/projects/GPU\u52a0\u901f/evidence/session/gl/gl-present-03/main-01",
+  "/root/projects/GPU\u52a0\u901f/evidence/session/gl/gl-present-03/main-02"
+ ],
+ "segments": [
+  {
+   "idle": {
+    "seg": "idle",
+    "valid": true,
+    "why": [],
+    "window_s": 20.166000000026543,
+    "x3_ticks": 33.0,
+    "x3_cores": 0.0163641773281546,
+    "client_cpu_s": 0.0,
+    "x3_top_thread": {
+     "tid": "19955",
+     "comm": "main",
+     "share": 0.818
+    }
+   },
+   "vk-off": {
+    "seg": "vk-off",
+    "valid": true,
+    "why": [],
+    "window_s": 20.236000000004424,
+    "x3_ticks": 24.0,
+    "x3_cores": 0.011860051393553445,
+    "client_cpu_s": 5.04,
+    "x3_top_thread": {
+     "tid": "19955",
+     "comm": "main",
+     "share": 0.792
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 15278,
+    "x3_ms_per_frame": 0.01570886241654667,
+    "client_ms_per_frame": 0.32988611074748003,
+    "counts": {
+     "dri3_open": 0,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 0,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [],
+    "path": "NONE",
+    "req": {
+     "diag": "req_count/1",
+     "pid": 22505,
+     "xlib_writev_calls": 0,
+     "xlib_writev_bytes": 0,
+     "requests": [],
+     "sock_fds_passed": 0,
+     "majors": []
+    },
+    "px_client_colour": null
+   },
+   "glx-off": {
+    "seg": "glx-off",
+    "valid": true,
+    "why": [],
+    "window_s": 20.29099999999744,
+    "x3_ticks": 25.0,
+    "x3_cores": 0.01232073333004936,
+    "client_cpu_s": 7.7299999999999995,
+    "x3_top_thread": {
+     "tid": "19955",
+     "comm": "main",
+     "share": 0.8
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 15258,
+    "x3_ms_per_frame": 0.016384847293223228,
+    "client_ms_per_frame": 0.5066194783064621,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 3,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "NONE",
+    "req": {
+     "diag": "req_count/1",
+     "pid": 23979,
+     "xlib_writev_calls": 15,
+     "xlib_writev_bytes": 280,
+     "requests": [
+      {
+       "ext": "GLX",
+       "op": 7,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 0,
+       "n": 2,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "Present",
+       "op": 0,
+       "n": 2,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "GLX",
+       "op": 19,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "GLX",
+       "op": 35,
+       "n": 1,
+       "bytes": 288,
+       "fds": 0
+      },
+      {
+       "ext": "GLX",
+       "op": 6,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "ext": "Present",
+       "op": 3,
+       "n": 3,
+       "bytes": 48,
+       "fds": 0
+      },
+      {
+       "ext": "XFIXES",
+       "op": 0,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "RANDR",
+       "op": 0,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "RANDR",
+       "op": 25,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "ext": "RANDR",
+       "op": 9,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "Present",
+       "op": 4,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 1,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 6,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "XFIXES",
+       "op": 5,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 7,
+       "n": 3,
+       "bytes": 192,
+       "fds": 3
+      },
+      {
+       "ext": "DRI3",
+       "op": 4,
+       "n": 3,
+       "bytes": 48,
+       "fds": 3
+      },
+      {
+       "ext": "SYNC",
+       "op": 17,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "XFIXES",
+       "op": 10,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      }
+     ],
+     "sock_fds_passed": 6,
+     "majors": [
+      {
+       "major": 1,
+       "n": 1,
+       "bytes": 40,
+       "fds": 0
+      },
+      {
+       "major": 3,
+       "n": 2,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 8,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "major": 14,
+       "n": 4,
+       "bytes": 32,
+       "fds": 0
+      },
+      {
+       "major": 15,
+       "n": 2,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 16,
+       "n": 1,
+       "bytes": 28,
+       "fds": 0
+      },
+      {
+       "major": 19,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "major": 20,
+       "n": 1,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "major": 43,
+       "n": 4,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 54,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "major": 55,
+       "n": 3,
+       "bytes": 56,
+       "fds": 0
+      },
+      {
+       "major": 60,
+       "n": 2,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 78,
+       "n": 1,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 98,
+       "n": 18,
+       "bytes": 276,
+       "fds": 0
+      },
+      {
+       "major": 133,
+       "n": 1,
+       "bytes": 4,
+       "fds": 0
+      },
+      {
+       "major": 134,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "major": 135,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "major": 137,
+       "n": 7,
+       "bytes": 60,
+       "fds": 0
+      },
+      {
+       "major": 139,
+       "n": 3,
+       "bytes": 32,
+       "fds": 0
+      },
+      {
+       "major": 146,
+       "n": 6,
+       "bytes": 80,
+       "fds": 1
+      },
+      {
+       "major": 147,
+       "n": 10,
+       "bytes": 288,
+       "fds": 5
+      },
+      {
+       "major": 150,
+       "n": 11,
+       "bytes": 396,
+       "fds": 0
+      }
+     ]
+    },
+    "px_client_colour": null
+   },
+   "vk-l": {
+    "seg": "vk-l",
+    "valid": true,
+    "why": [],
+    "window_s": 20.18599999998696,
+    "x3_ticks": 1969.0,
+    "x3_cores": 0.9754285148128762,
+    "client_cpu_s": 6.41,
+    "x3_top_thread": {
+     "tid": "20356",
+     "comm": "main",
+     "share": 0.988
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 23043,
+    "x3_ms_per_frame": 0.8544894327995487,
+    "client_ms_per_frame": 0.2781755847762878,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 4,
+     "present_pixmap": 23043,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "vk-s": {
+    "seg": "vk-s",
+    "valid": true,
+    "why": [],
+    "window_s": 20.160999999992782,
+    "x3_ticks": 761.0,
+    "x3_cores": 0.37746143544480554,
+    "client_cpu_s": 10.39,
+    "x3_top_thread": {
+     "tid": "20356",
+     "comm": "main",
+     "share": 0.986
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 37945,
+    "x3_ms_per_frame": 0.20055343259981553,
+    "client_ms_per_frame": 0.2738173672420609,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 4,
+     "present_pixmap": 37945,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "glx-l": {
+    "seg": "glx-l",
+    "valid": true,
+    "why": [],
+    "window_s": 20.226000000024214,
+    "x3_ticks": 978.0,
+    "x3_cores": 0.48353604271671563,
+    "client_cpu_s": 6.55,
+    "x3_top_thread": {
+     "tid": "20356",
+     "comm": "main",
+     "share": 0.986
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 10399,
+    "x3_ms_per_frame": 0.940475045677469,
+    "client_ms_per_frame": 0.6298682565631311,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 3,
+     "present_pixmap": 10399,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "glx-s": {
+    "seg": "glx-s",
+    "valid": true,
+    "why": [],
+    "window_s": 20.285999999992782,
+    "x3_ticks": 442.0,
+    "x3_cores": 0.2178842551514134,
+    "client_cpu_s": 7.8500000000000005,
+    "x3_top_thread": {
+     "tid": "20356",
+     "comm": "main",
+     "share": 0.971
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 15201,
+    "x3_ms_per_frame": 0.2907703440563121,
+    "client_ms_per_frame": 0.5164133938556674,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 3,
+     "present_pixmap": 15201,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "egl-l": {
+    "seg": "egl-l",
+    "valid": true,
+    "why": [],
+    "window_s": 20.288999999989755,
+    "x3_ticks": 106.0,
+    "x3_cores": 0.05224505889893712,
+    "client_cpu_s": 7.09,
+    "x3_top_thread": {
+     "tid": "20356",
+     "comm": "main",
+     "share": 0.821
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 14120,
+    "x3_ms_per_frame": 0.07507082152974505,
+    "client_ms_per_frame": 0.5021246458923513,
+    "counts": {
+     "dri3_open": 2,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 0,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 1
+    },
+    "modifiers": [],
+    "path": "NOT_PRESENTED",
+    "px_client_colour": false
+   },
+   "vk-l-sw": {
+    "seg": "vk-l-sw",
+    "valid": true,
+    "why": [],
+    "window_s": 20.169000000023516,
+    "x3_ticks": 1252.0,
+    "x3_cores": 0.6207546234312759,
+    "client_cpu_s": 16.169999999999998,
+    "x3_top_thread": {
+     "tid": "20356",
+     "comm": "main",
+     "share": 0.988
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 7717,
+    "x3_ms_per_frame": 1.622392121290657,
+    "client_ms_per_frame": 2.0953738499416867,
+    "counts": {
+     "dri3_open": 0,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 0,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 7715,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [],
+    "path": "CORE_PUT",
+    "px_client_colour": true
+   }
+  },
+  {
+   "idle": {
+    "seg": "idle",
+    "valid": true,
+    "why": [],
+    "window_s": 20.152999999991152,
+    "x3_ticks": 32.0,
+    "x3_cores": 0.015878529251235077,
+    "client_cpu_s": 0.0,
+    "x3_top_thread": {
+     "tid": "2684",
+     "comm": "main",
+     "share": 0.844
+    }
+   },
+   "vk-off": {
+    "seg": "vk-off",
+    "valid": true,
+    "why": [],
+    "window_s": 20.235000000015134,
+    "x3_ticks": 23.0,
+    "x3_cores": 0.011366444279704867,
+    "client_cpu_s": 4.9399999999999995,
+    "x3_top_thread": {
+     "tid": "2684",
+     "comm": "main",
+     "share": 0.739
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 17106,
+    "x3_ms_per_frame": 0.01344557465216883,
+    "client_ms_per_frame": 0.2887875599204957,
+    "counts": {
+     "dri3_open": 0,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 0,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [],
+    "path": "NONE",
+    "req": {
+     "diag": "req_count/1",
+     "pid": 6729,
+     "xlib_writev_calls": 0,
+     "xlib_writev_bytes": 0,
+     "requests": [],
+     "sock_fds_passed": 0,
+     "majors": []
+    },
+    "px_client_colour": null
+   },
+   "glx-off": {
+    "seg": "glx-off",
+    "valid": true,
+    "why": [],
+    "window_s": 20.25800000000163,
+    "x3_ticks": 23.0,
+    "x3_cores": 0.011353539342481069,
+    "client_cpu_s": 7.74,
+    "x3_top_thread": {
+     "tid": "2684",
+     "comm": "main",
+     "share": 0.783
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 15773,
+    "x3_ms_per_frame": 0.014581880428580486,
+    "client_ms_per_frame": 0.49071197616179546,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 3,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "NONE",
+    "req": {
+     "diag": "req_count/1",
+     "pid": 8184,
+     "xlib_writev_calls": 15,
+     "xlib_writev_bytes": 280,
+     "requests": [
+      {
+       "ext": "GLX",
+       "op": 7,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 0,
+       "n": 2,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "Present",
+       "op": 0,
+       "n": 2,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "GLX",
+       "op": 19,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "GLX",
+       "op": 35,
+       "n": 1,
+       "bytes": 288,
+       "fds": 0
+      },
+      {
+       "ext": "GLX",
+       "op": 6,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "ext": "Present",
+       "op": 3,
+       "n": 3,
+       "bytes": 48,
+       "fds": 0
+      },
+      {
+       "ext": "XFIXES",
+       "op": 0,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "RANDR",
+       "op": 0,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "RANDR",
+       "op": 25,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "ext": "RANDR",
+       "op": 9,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "Present",
+       "op": 4,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 1,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 6,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "ext": "XFIXES",
+       "op": 5,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "DRI3",
+       "op": 7,
+       "n": 3,
+       "bytes": 192,
+       "fds": 3
+      },
+      {
+       "ext": "DRI3",
+       "op": 4,
+       "n": 3,
+       "bytes": 48,
+       "fds": 3
+      },
+      {
+       "ext": "SYNC",
+       "op": 17,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "ext": "XFIXES",
+       "op": 10,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      }
+     ],
+     "sock_fds_passed": 6,
+     "majors": [
+      {
+       "major": 1,
+       "n": 1,
+       "bytes": 40,
+       "fds": 0
+      },
+      {
+       "major": 3,
+       "n": 2,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 8,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "major": 14,
+       "n": 4,
+       "bytes": 32,
+       "fds": 0
+      },
+      {
+       "major": 15,
+       "n": 2,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 16,
+       "n": 1,
+       "bytes": 28,
+       "fds": 0
+      },
+      {
+       "major": 19,
+       "n": 1,
+       "bytes": 12,
+       "fds": 0
+      },
+      {
+       "major": 20,
+       "n": 1,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "major": 43,
+       "n": 4,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 54,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "major": 55,
+       "n": 3,
+       "bytes": 56,
+       "fds": 0
+      },
+      {
+       "major": 60,
+       "n": 2,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 78,
+       "n": 1,
+       "bytes": 16,
+       "fds": 0
+      },
+      {
+       "major": 98,
+       "n": 18,
+       "bytes": 276,
+       "fds": 0
+      },
+      {
+       "major": 133,
+       "n": 1,
+       "bytes": 4,
+       "fds": 0
+      },
+      {
+       "major": 134,
+       "n": 3,
+       "bytes": 24,
+       "fds": 0
+      },
+      {
+       "major": 135,
+       "n": 1,
+       "bytes": 8,
+       "fds": 0
+      },
+      {
+       "major": 137,
+       "n": 7,
+       "bytes": 60,
+       "fds": 0
+      },
+      {
+       "major": 139,
+       "n": 3,
+       "bytes": 32,
+       "fds": 0
+      },
+      {
+       "major": 146,
+       "n": 6,
+       "bytes": 80,
+       "fds": 1
+      },
+      {
+       "major": 147,
+       "n": 10,
+       "bytes": 288,
+       "fds": 5
+      },
+      {
+       "major": 150,
+       "n": 11,
+       "bytes": 396,
+       "fds": 0
+      }
+     ]
+    },
+    "px_client_colour": null
+   },
+   "vk-l": {
+    "seg": "vk-l",
+    "valid": true,
+    "why": [],
+    "window_s": 20.17399999999907,
+    "x3_ticks": 1825.0,
+    "x3_cores": 0.9046297214236563,
+    "client_cpu_s": 6.25,
+    "x3_top_thread": {
+     "tid": "3379",
+     "comm": "main",
+     "share": 0.987
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 21235,
+    "x3_ms_per_frame": 0.8594301860136567,
+    "client_ms_per_frame": 0.2943254061690605,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 4,
+     "present_pixmap": 21235,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "vk-s": {
+    "seg": "vk-s",
+    "valid": true,
+    "why": [],
+    "window_s": 20.160000000003492,
+    "x3_ticks": 759.0,
+    "x3_cores": 0.37648809523803,
+    "client_cpu_s": 10.49,
+    "x3_top_thread": {
+     "tid": "3379",
+     "comm": "main",
+     "share": 0.986
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 38517,
+    "x3_ms_per_frame": 0.19705584547083105,
+    "client_ms_per_frame": 0.2723472752291196,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 4,
+     "present_pixmap": 38517,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "glx-l": {
+    "seg": "glx-l",
+    "valid": true,
+    "why": [],
+    "window_s": 20.206000000005588,
+    "x3_ticks": 961.0,
+    "x3_cores": 0.47560130654247956,
+    "client_cpu_s": 6.5,
+    "x3_top_thread": {
+     "tid": "3379",
+     "comm": "main",
+     "share": 0.984
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 10553,
+    "x3_ms_per_frame": 0.9106415237373259,
+    "client_ms_per_frame": 0.6159385956600019,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 3,
+     "present_pixmap": 10553,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "glx-s": {
+    "seg": "glx-s",
+    "valid": true,
+    "why": [],
+    "window_s": 20.228000000002794,
+    "x3_ticks": 419.0,
+    "x3_cores": 0.20713861973499217,
+    "client_cpu_s": 7.8999999999999995,
+    "x3_top_thread": {
+     "tid": "3379",
+     "comm": "main",
+     "share": 0.974
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 16047,
+    "x3_ms_per_frame": 0.26110799526391226,
+    "client_ms_per_frame": 0.49230385741883215,
+    "counts": {
+     "dri3_open": 1,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 3,
+     "present_pixmap": 16047,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [
+     "0"
+    ],
+    "path": "DRI3",
+    "px_client_colour": true
+   },
+   "egl-l": {
+    "seg": "egl-l",
+    "valid": true,
+    "why": [],
+    "window_s": 20.297999999980675,
+    "x3_ticks": 98.0,
+    "x3_cores": 0.04828061878022135,
+    "client_cpu_s": 6.91,
+    "x3_top_thread": {
+     "tid": "3379",
+     "comm": "main",
+     "share": 0.827
+    },
+    "identity": "GL_RENDERER \"zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))\"",
+    "frames": 15528,
+    "x3_ms_per_frame": 0.06311179804224626,
+    "client_ms_per_frame": 0.4450025759917568,
+    "counts": {
+     "dri3_open": 2,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 0,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 0,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 1
+    },
+    "modifiers": [],
+    "path": "NOT_PRESENTED",
+    "px_client_colour": false
+   },
+   "vk-l-sw": {
+    "seg": "vk-l-sw",
+    "valid": true,
+    "why": [],
+    "window_s": 20.203000000008615,
+    "x3_ticks": 1264.0,
+    "x3_cores": 0.6256496559914176,
+    "client_cpu_s": 16.3,
+    "x3_top_thread": {
+     "tid": "3379",
+     "comm": "main",
+     "share": 0.987
+    },
+    "identity": "VK_DEVICE name=\"Adreno (TM) 840\" driver=\"turnip Mesa driver\"",
+    "frames": 7898,
+    "x3_ms_per_frame": 1.600405165864776,
+    "client_ms_per_frame": 2.063813623702203,
+    "counts": {
+     "dri3_open": 0,
+     "pixmap_from_buffer": 0,
+     "pixmap_from_buffers": 0,
+     "present_pixmap": 0,
+     "shm_put_image": 0,
+     "put_image": 7897,
+     "x_put_image": 0,
+     "x_shm_put_image": 0,
+     "shm_create_pixmap": 0,
+     "shm_attach": 0
+    },
+    "modifiers": [],
+    "path": "CORE_PUT",
+    "px_client_colour": true
+   }
+  }
+ ],
+ "verdicts": {
+  "J0": "GL_PRESENT_TOOL_VALID",
+  "J1_vk": "PATH_DRI3",
+  "J1_egl": "PATH_NOT_PRESENTED",
+  "J1_glx": "PATH_DRI3",
+  "J1x_vk": "X_WITNESS_CONFIRMS",
+  "J1x_egl": "X_WITNESS_CONSISTENT",
+  "J1x_glx": "X_WITNESS_CONFIRMS",
+  "J2_vk": "X3_PRESENT_COST",
+  "J3_vk": "X3_COST_PER_PIXEL",
+  "J2_glx": "X3_PRESENT_COST",
+  "J3_glx": "X3_COST_PER_PIXEL",
+  "STEP1": "PRESENT_COST_IS_X3_PER_PIXEL_COPY"
+ },
+ "J0_why": [],
+ "xdbg_witness": {
+  "vk": {
+   "lines": 4,
+   "modifiers": [
+    "0"
+   ]
+  },
+  "glx": {
+   "lines": 3,
+   "modifiers": [
+    "0"
+   ]
+  },
+  "egl": {
+   "lines": 0,
+   "modifiers": []
+  }
+ },
+ "J2_vk_rows": [
+  [
+   0.9754285148128762,
+   0.0163641773281546
+  ],
+  [
+   0.9046297214236563,
+   0.015878529251235077
+  ]
+ ],
+ "J3_vk_ratios": [
+  4.260657230956488,
+  4.361353422225036
+ ],
+ "J2_glx_rows": [
+  [
+   0.48353604271671563,
+   0.0163641773281546
+  ],
+  [
+   0.47560130654247956,
+   0.015878529251235077
+  ]
+ ],
+ "J3_glx_ratios": [
+  3.2344256039238024,
+  3.4876049000985367
+ ]
+}

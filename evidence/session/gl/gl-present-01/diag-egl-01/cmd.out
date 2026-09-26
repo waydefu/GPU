@@ -1,0 +1,4 @@
+DIAG egl-l rc=0 GL_PRESENT api=egl frames=4280 secs=5.000 fps=856.0 size=1200x1200 offscreen=0 gl_error=0x0 px=0x00000000,0x00000000,0x00000000,0x00000000,
+DIAG glx-l rc=0 GL_PRESENT api=glx frames=2660 secs=5.001 fps=531.9 size=1200x1200 offscreen=0 gl_error=0x0 px=0xffff8000,0xffff8000,0xff0080ff,0xff0080ff,
+DIAG vk-l rc=0 VK_PRESENT frames=8404 secs=5.001 fps=1680.5 size=1200x1200 offscreen=0 mode=immediate images=4 format=44 suboptimal=0 px=0xffff8000,0xffff8000,0xff0080ff,0xff0080ff,
+DIAG_DONE

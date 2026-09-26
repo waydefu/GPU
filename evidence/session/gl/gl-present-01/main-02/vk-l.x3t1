@@ -1,0 +1,13 @@
+13314 93 137 main
+13484 2 0 Jit thread pool
+13486 0 0 Signal Catcher
+13487 0 0 perfetto_hprof_
+13488 0 0 HeapTaskDaemon
+13489 0 0 ReferenceQueueD
+13490 0 0 FinalizerDaemon
+13491 0 0 FinalizerWatchd
+13517 0 0 binder:13314_1
+13518 0 0 binder:13314_2
+13519 1357 176 main
+13520 0 0 Thread-1
+13522 0 0 binder:13314_3

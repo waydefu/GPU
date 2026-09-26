@@ -1,0 +1,13 @@
+27059 main
+27208 Jit thread pool
+27209 Signal Catcher
+27210 perfetto_hprof_
+27211 HeapTaskDaemon
+27212 ReferenceQueueD
+27213 FinalizerDaemon
+27215 FinalizerWatchd
+27246 binder:27059_1
+27247 binder:27059_2
+27248 main
+27249 Thread-1
+27251 binder:27059_3

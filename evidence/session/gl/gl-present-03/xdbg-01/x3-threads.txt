@@ -1,0 +1,14 @@
+18649 main
+18918 Jit thread pool
+18921 Signal Catcher
+18922 perfetto_hprof_
+18923 HeapTaskDaemon
+18924 ReferenceQueueD
+18926 FinalizerDaemon
+18927 FinalizerWatchd
+18928 binder:18649_1
+18929 binder:18649_2
+18934 binder:18649_3
+18935 main
+18938 Thread-1
+18968 binder:18649_4

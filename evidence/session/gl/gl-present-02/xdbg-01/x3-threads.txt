@@ -1,0 +1,13 @@
+6297 main
+6554 Jit thread pool
+6555 Signal Catcher
+6556 perfetto_hprof_
+6557 HeapTaskDaemon
+6558 ReferenceQueueD
+6559 FinalizerDaemon
+6560 FinalizerWatchd
+6643 binder:6297_1
+6645 binder:6297_2
+6757 main
+6758 Thread-1
+6786 binder:6297_3

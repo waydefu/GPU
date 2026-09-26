@@ -1,0 +1,4 @@
+ATTENTION: default value of option vblank_mode overridden by environment.
+GLX_SWAP_INTERVAL_FN EXT
+GL_RENDERER "zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP))" GL_VERSION "4.6 (Compatibility Profile) Mesa 26.0.6"
+GL_PRESENT api=glx frames=10532 secs=20.002 fps=526.5 size=1200x1200 offscreen=0 gl_error=0x0

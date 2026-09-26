@@ -1,0 +1,3 @@
+touch_recorder_stopped pid=7514 file=vk-l.touch
+touch_recorder_stopped pid=8420 file=glx-l.touch
+touch_recorder_stopped pid=10138 file=egl-l.touch

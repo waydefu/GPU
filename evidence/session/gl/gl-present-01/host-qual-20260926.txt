@@ -1,0 +1,15 @@
+# GL-PRESENT-01 host qualification (private Xvfb :97, Ubuntu lavapipe/llvmpipe), 2026-09-26, tools @ fork 6649316
+3e0299f6cfe69231065ff034c0e7a8198b54bf706d33c26307ab7714abae1301  present_count.so
+aeb348e8de527f3c79e7595131672eecf17d48c19d2271cef1c9a525d27e408b  vk_present
+00d343ad662a7e11a588058b78359129295caa075b219f1be82274eb290f939a  gl_present_egl
+0a3cb22be5c99f39d58ec757ff41bb169749f6f6ae5f0079259082fb840c0b1f  gl_present_glx
+== egl-off.jsonl
+{"shim":"present_count/1","pid":7645,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/gl_present_egl","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":0,"shm_pixels":0,"put_image":0,"put_bytes":0,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":0,"x_shm_pixels":0,"shm_create_pixmap":0,"shm_attach":0,"imports_total":0,"imports":[]}
+== egl-shm.jsonl
+{"shim":"present_count/1","pid":7596,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/gl_present_egl","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":2360,"shm_pixels":241664000,"put_image":0,"put_bytes":0,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":0,"x_shm_pixels":0,"shm_create_pixmap":0,"shm_attach":2360,"imports_total":0,"imports":[]}
+== glx-xshm.jsonl
+{"shim":"present_count/1","pid":7692,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/gl_present_glx","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":0,"shm_pixels":0,"put_image":0,"put_bytes":0,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":8106,"x_shm_pixels":830054400,"shm_create_pixmap":0,"shm_attach":0,"imports_total":0,"imports":[]}
+== vk-off.jsonl
+{"shim":"present_count/1","pid":7506,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/vk_present","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":0,"shm_pixels":0,"put_image":0,"put_bytes":0,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":0,"x_shm_pixels":0,"shm_create_pixmap":0,"shm_attach":0,"imports_total":0,"imports":[]}
+== vk-put.jsonl
+{"shim":"present_count/1","pid":7398,"exe":"/root/projects/GPU加速/src/f8-ahb-exa-async/tests/gl_present/build/vk_present","dri3_open":0,"pixmap_from_buffer":0,"pixmap_from_buffers":0,"present_pixmap":0,"present_pixmap_synced":0,"shm_put_image":0,"shm_pixels":0,"put_image":16773,"put_bytes":6038280000,"x_put_image":0,"x_put_pixels":0,"x_shm_put_image":0,"x_shm_pixels":0,"shm_create_pixmap":0,"shm_attach":0,"imports_total":0,"imports":[]}

@@ -1,0 +1,34 @@
+rep1 idle     {"valid": true, "why": [], "x3_cores": 0.0164, "x3_top_thread": {"tid": "19955", "comm": "main", "share": 0.818}}
+rep1 vk-off   {"valid": true, "why": [], "x3_cores": 0.0119, "x3_top_thread": {"tid": "19955", "comm": "main", "share": 0.792}, "frames": 15278, "x3_ms_per_frame": 0.0157, "client_ms_per_frame": 0.3299, "modifiers": [], "path": "NONE", "px_client_colour": null}
+rep1 glx-off  {"valid": true, "why": [], "x3_cores": 0.0123, "x3_top_thread": {"tid": "19955", "comm": "main", "share": 0.8}, "frames": 15258, "x3_ms_per_frame": 0.0164, "client_ms_per_frame": 0.5066, "modifiers": ["0"], "path": "NONE", "px_client_colour": null}
+rep1 vk-l     {"valid": true, "why": [], "x3_cores": 0.9754, "x3_top_thread": {"tid": "20356", "comm": "main", "share": 0.988}, "frames": 23043, "x3_ms_per_frame": 0.8545, "client_ms_per_frame": 0.2782, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep1 vk-s     {"valid": true, "why": [], "x3_cores": 0.3775, "x3_top_thread": {"tid": "20356", "comm": "main", "share": 0.986}, "frames": 37945, "x3_ms_per_frame": 0.2006, "client_ms_per_frame": 0.2738, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep1 glx-l    {"valid": true, "why": [], "x3_cores": 0.4835, "x3_top_thread": {"tid": "20356", "comm": "main", "share": 0.986}, "frames": 10399, "x3_ms_per_frame": 0.9405, "client_ms_per_frame": 0.6299, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep1 glx-s    {"valid": true, "why": [], "x3_cores": 0.2179, "x3_top_thread": {"tid": "20356", "comm": "main", "share": 0.971}, "frames": 15201, "x3_ms_per_frame": 0.2908, "client_ms_per_frame": 0.5164, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep1 egl-l    {"valid": true, "why": [], "x3_cores": 0.0522, "x3_top_thread": {"tid": "20356", "comm": "main", "share": 0.821}, "frames": 14120, "x3_ms_per_frame": 0.0751, "client_ms_per_frame": 0.5021, "modifiers": [], "path": "NOT_PRESENTED", "px_client_colour": false}
+rep1 vk-l-sw  {"valid": true, "why": [], "x3_cores": 0.6208, "x3_top_thread": {"tid": "20356", "comm": "main", "share": 0.988}, "frames": 7717, "x3_ms_per_frame": 1.6224, "client_ms_per_frame": 2.0954, "modifiers": [], "path": "CORE_PUT", "px_client_colour": true}
+rep2 idle     {"valid": true, "why": [], "x3_cores": 0.0159, "x3_top_thread": {"tid": "2684", "comm": "main", "share": 0.844}}
+rep2 vk-off   {"valid": true, "why": [], "x3_cores": 0.0114, "x3_top_thread": {"tid": "2684", "comm": "main", "share": 0.739}, "frames": 17106, "x3_ms_per_frame": 0.0134, "client_ms_per_frame": 0.2888, "modifiers": [], "path": "NONE", "px_client_colour": null}
+rep2 glx-off  {"valid": true, "why": [], "x3_cores": 0.0114, "x3_top_thread": {"tid": "2684", "comm": "main", "share": 0.783}, "frames": 15773, "x3_ms_per_frame": 0.0146, "client_ms_per_frame": 0.4907, "modifiers": ["0"], "path": "NONE", "px_client_colour": null}
+rep2 vk-l     {"valid": true, "why": [], "x3_cores": 0.9046, "x3_top_thread": {"tid": "3379", "comm": "main", "share": 0.987}, "frames": 21235, "x3_ms_per_frame": 0.8594, "client_ms_per_frame": 0.2943, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep2 vk-s     {"valid": true, "why": [], "x3_cores": 0.3765, "x3_top_thread": {"tid": "3379", "comm": "main", "share": 0.986}, "frames": 38517, "x3_ms_per_frame": 0.1971, "client_ms_per_frame": 0.2723, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep2 glx-l    {"valid": true, "why": [], "x3_cores": 0.4756, "x3_top_thread": {"tid": "3379", "comm": "main", "share": 0.984}, "frames": 10553, "x3_ms_per_frame": 0.9106, "client_ms_per_frame": 0.6159, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep2 glx-s    {"valid": true, "why": [], "x3_cores": 0.2071, "x3_top_thread": {"tid": "3379", "comm": "main", "share": 0.974}, "frames": 16047, "x3_ms_per_frame": 0.2611, "client_ms_per_frame": 0.4923, "modifiers": ["0"], "path": "DRI3", "px_client_colour": true}
+rep2 egl-l    {"valid": true, "why": [], "x3_cores": 0.0483, "x3_top_thread": {"tid": "3379", "comm": "main", "share": 0.827}, "frames": 15528, "x3_ms_per_frame": 0.0631, "client_ms_per_frame": 0.445, "modifiers": [], "path": "NOT_PRESENTED", "px_client_colour": false}
+rep2 vk-l-sw  {"valid": true, "why": [], "x3_cores": 0.6256, "x3_top_thread": {"tid": "3379", "comm": "main", "share": 0.987}, "frames": 7898, "x3_ms_per_frame": 1.6004, "client_ms_per_frame": 2.0638, "modifiers": [], "path": "CORE_PUT", "px_client_colour": true}
+J0_why []
+xdbg_witness {"vk": {"lines": 4, "modifiers": ["0"]}, "glx": {"lines": 3, "modifiers": ["0"]}, "egl": {"lines": 0, "modifiers": []}}
+J2_vk_rows [(0.9754285148128762, 0.0163641773281546), (0.9046297214236563, 0.015878529251235077)] J3_vk_ratios [4.261, 4.361]
+J2_glx_rows [(0.48353604271671563, 0.0163641773281546), (0.47560130654247956, 0.015878529251235077)] J3_glx_ratios [3.234, 3.488]
+VERDICT J0 GL_PRESENT_TOOL_VALID
+VERDICT J1_vk PATH_DRI3
+VERDICT J1_egl PATH_NOT_PRESENTED
+VERDICT J1_glx PATH_DRI3
+VERDICT J1x_vk X_WITNESS_CONFIRMS
+VERDICT J1x_egl X_WITNESS_CONSISTENT
+VERDICT J1x_glx X_WITNESS_CONFIRMS
+VERDICT J2_vk X3_PRESENT_COST
+VERDICT J3_vk X3_COST_PER_PIXEL
+VERDICT J2_glx X3_PRESENT_COST
+VERDICT J3_glx X3_COST_PER_PIXEL
+VERDICT STEP1 PRESENT_COST_IS_X3_PER_PIXEL_COPY
