@@ -85,3 +85,66 @@
 `/tmp/p_r10_ledger` 重建（桌面重開清空 /tmp），sha256 `2aca8ae1…` 與 runner 鎖定值相同。
 突變涵蓋：C／GT telemetry 行數忽略、CT 下限忽略、adbd 指令行被算成 telemetry、client 追蹤器停在 v6、CT 用 GT 規則、
 CT 的 env 未檢、R8／PROTO env 未檢、Q1 標籤對調、順序未檢、挑結果補跑、PARTIAL 誤報 JUDGED。
+
+## 10. 偏差 1：R8 一律不 arm（2026-09-26，preflight-01 失敗後、**任何受判資料之前**）
+
+- **發生什麼**：`runtime-f592241-notel/preflight-01`（02:01:48，runner V5，C 設定、telemetry 關、R8 arm）X3 起來 0.6 s 後
+  `GATEA_FATAL_HALT what=x-r8-env reason=5`（logcat 02:01:58.168，X3 pid 26974）；runner 等不到 X3 → `XFCE_INVALID x3_missing`
+  → preflight rc 2 → `PREFLIGHT_INVALID` → 系列停止（`SERIES_STOP`）。沒有任何 X 的量測資料；目錄原樣保留。
+- **原因（原始碼）**：f592241 `lorie_r8_obs.c:130` `lorieR8ValidateStartupEnv(proto, telemetry)`：R8 arm 時 `!proto || !telemetry` → -1 →
+  `lorie_r8_test.c:407` `lorieGateAFatalHalt("x-r8-env", …)`。**R8 arm 必須同時開 telemetry**；§1、§3 的「R8 保留 arm、只改 telemetry」在產品上不可行（設計時未查到）。
+- **改為**：三組（C、GT、CT）都**不 arm R8**（`TERMUX_X11_R8_ARM`／`TERMUX_X11_R8_CASE` 不設），`TERMUX_X11_GATEA_PROTO=1` 照舊；
+  telemetry 仍是 C／GT 關、CT 開。Q1 仍只差 telemetry 一個變數；CT 因此**不等於** Part B 的 C（Part B 另有 R8 arm，R8_OBS 約 128 行/s）。
+- **後果**：`LORIE-R8-TEST` extension 不註冊 → runner 的乾淨關閉（`p_r10_ledger --mode terminate`）失敗（`|| true`），runner 等 30 s 後由
+  EXIT trap 的 `xfce_cleanup` 以驗過 pid 與 cmdline 的 SIGTERM 關 X3、再 force-stop 實驗 app（`cleanup.txt` 記錄，屬 construction）。
+  判準窗（150 s 劇本）在此之前；每格多約 30 s。其他啟動檢查已查：`InitOutput.c:2854` 的 test-fault 檢查只在設了 test fault 時生效（本輪都沒設）。
+- 判定器：§3 共同 env 改為 PROTO=1、R8_ARM／R8_CASE **必須未設**（設了 → INVALID）。其餘判準、門檻、順序、補跑規則不變。
+- 新輸出目錄 `runtime-f592241-notel-b/`（`series-notel-b.sh`）；preflight 重做。
+
+| 檔案 | sha256 |
+|---|---|
+| `evidence/session/xfce-v6/run-xfce-v5b-notel.sh`（V5 ＋ R8 unset；`diff` 9 行含註解） | `5928814ab856bb89bf1346911674b9872c01f0436f4b758807a9e052a804aae7` |
+| `evidence/session/xfce-v6/series-notel-b.sh`（RUNNER＝V5b、OUT＝`runtime-f592241-notel-b`） | `c436701e8a48d42b147872108db0d21ac9b84470fb2d3a88bd21dbff30560fff` |
+| fork `tests/xfce_notel/notel_judge.py`（`a72669c`） | `4e894b3a91bb91c9f1abc6e646936da63518014d3eb48867c5bd9f11fb27dd0f` |
+| fork `tests/xfce_notel/test_notel_judge.py` | `3fe8824b9675ece4c6997596ef9ae6cebf30c5eb502f80966c8f59787ece7c88` |
+| fork `tests/xfce_notel/mutation_check.py`（未變） | `91e1fedb782a2375d67a7b60ab893e48a6ef537bb7d4bba11c262246138fd430` |
+
+主機驗證：18 測試 OK（新增：R8 arm → INVALID、缺 PROTO → INVALID）；突變 11／11 caught、未突變對照綠；V5b `VALIDATE_ONLY` OK。
+
+## 11. 結果（2026-09-26；本節在資料之後寫，§1–§10 不改）
+
+### 11.1 執行
+
+- `SERIAL=10.191.48.13:44925 bash evidence/session/xfce-v6/series-notel-b.sh`（偏差 1：runner V5b），02:08:07 開始、02:49:58 判定完成，
+  資料目錄 `runtime-f592241-notel-b/`。開跑前：AC 充電、`mStayOn=true`、螢幕亮、未鎖、MemAvailable 4880 MB、只有 Claude 在跑（`precheck-apps.json`）。
+- preflight-01 **`PROBE_SENSITIVE`**（1000 ms grab ×3：不被追蹤 849／993／992 ms，被追蹤 998／993／992 ms）；`EXPECT_ROOT` 1200x2464。
+- 9 格照 `C GT CT | GT CT C | CT C GT`（劇本 t0：c-01 02:11:15、gt-01 02:15:36、ct-01 02:19:56、gt-02 02:24:19、ct-02 02:28:39、c-02 02:32:58、
+  ct-03 02:37:18、c-03 02:41:36、gt-03 02:45:56）；**9 格全部有效，未補跑**。
+- 開關證據：`gatea-telemetry` 記錄 C／GT 全為 0；CT 10,259,076／10,251,853／10,281,771（約 5.4 萬行/s，與 Part B 同量級）。共享 buffer C／CT 2、GT 53／53／54。
+- 每格（含 preflight）乾淨關閉都 `FAIL LORIE-R8-TEST missing`（偏差 1 預期），由 runner EXIT trap 以驗過 pid 的 SIGTERM 關 X3（`cleanup.txt` 10 筆）；
+  系列後裝置上無 X3，前景回到 Stable；Stable pid 各格前後相同（判定器檢查）。
+
+### 11.2 判定（`runtime-f592241-notel-b/notel-judge.json`，verdict **`JUDGED`**）
+
+| 判準 | 結果 | 數字 |
+|---|---|---|
+| **Q1** telemetry 成本 | **`TELEMETRY_COSTS_X_CPU`** | X3 核數 C 0.293／0.300／0.300；CT 0.453／0.456／0.520（min CT > max C） |
+| **N1** 尾端 | **`GT_NO_TAIL_STALLS`** | GT 不被追蹤 `over_100ms` 0／0／0 |
+| **N2** p50 | **`NO_SEPARATION`** | C 0.234／0.265／0.269 ms；GT 0.223／0.219／0.274 ms |
+| **N2** p99 | **`NO_SEPARATION`** | C 11.73／11.13／11.04 ms；GT 7.41／9.47／11.49 ms |
+| **N3** X CPU | **`NO_SEPARATION`** | C 0.293／0.300／0.300；GT 0.294／0.290／0.301 |
+
+依 §7：
+- Q1 → Part B 與之前所有帶 telemetry 的 XFCE 量測，X3 CPU 都被灌水；往後 CPU 量測預設關 telemetry。
+- Q2 全 `NO_SEPARATION`（且無尾端卡頓）→ 沒有 telemetry 時，XFCE 2D 桌面上 GPU 路徑**沒有可量到的收益也沒有損失**；
+  §7 事先寫下的建議：主線 #2 的 XFCE EXA 暫停、資源移到主線 #3（DRI3＋AHB）。**由使用者決定**，不改 Production 或 Gate A 狀態。
+
+### 11.3 描述（不改判決）
+
+- telemetry 成本：CT 平均 0.476 核、C 平均 0.298 核，差 **約 0.18 核（約 +60%）**；即 telemetry 開時 X3 約 3／8 的 CPU 在寫 log。
+- 沒有 telemetry 時 X3 在這個劇本只用 **約 0.29–0.30 核**（C 與 GT 幾乎相同）；Part B（telemetry＋R8、同產品）同劇本 X3 0.495–0.645 核，
+  設定不同、不合併，只記方向。
+- GT 的 p99 三次中兩次低於所有 C（7.41、9.47 < 11.04），第三次 11.49 高於 C 的最小值 → 未完全分開，照判 `NO_SEPARATION`。
+  gt-03 的不被追蹤 max 53.5 ms（其他格 13.5–20.3 ms），`over_100ms` 仍 0。
+- 追蹤器（日常 proot-fast7）核數 0.306–0.328，三組相同量級；`xdotool search` p50 24–30 ms。
+- 原始 logcat：CT 三格各約 1.31 GB（telemetry），其餘各 3.8–4.7 MB；目錄共 3.8 GB，本地保留、未壓縮、不發佈（PUBLISHED-SUBSET.md）。

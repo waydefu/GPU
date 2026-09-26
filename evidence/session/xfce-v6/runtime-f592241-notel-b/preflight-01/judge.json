@@ -1,0 +1,21 @@
+{
+  "verdict": "PROBE_SENSITIVE",
+  "why": [],
+  "grabs": [
+    {
+      "hold_s": 1.001,
+      "untraced_max_ms": 848.85,
+      "traced_max_ms": 997.877
+    },
+    {
+      "hold_s": 1.001,
+      "untraced_max_ms": 992.712,
+      "traced_max_ms": 992.545
+    },
+    {
+      "hold_s": 1.001,
+      "untraced_max_ms": 991.716,
+      "traced_max_ms": 991.694
+    }
+  ]
+}

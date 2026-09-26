@@ -1,0 +1,166 @@
+{
+  "x3": 7888,
+  "samples": 1970,
+  "threads": {
+    "7888": {
+      "comm": "main",
+      "samples": 1970,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.9518
+        ],
+        [
+          "S:0",
+          0.0294
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0188
+        ]
+      ]
+    },
+    "8114": {
+      "comm": "Jit thread pool",
+      "samples": 1970,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "8115": {
+      "comm": "Signal Catcher",
+      "samples": 1970,
+      "top": [
+        [
+          "S:do_sigtimedwait",
+          1.0
+        ]
+      ]
+    },
+    "8116": {
+      "comm": "perfetto_hprof_",
+      "samples": 1970,
+      "top": [
+        [
+          "S:pipe_read",
+          1.0
+        ]
+      ]
+    },
+    "8117": {
+      "comm": "HeapTaskDaemon",
+      "samples": 1970,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "8118": {
+      "comm": "ReferenceQueueD",
+      "samples": 1970,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "8119": {
+      "comm": "FinalizerDaemon",
+      "samples": 1970,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "8120": {
+      "comm": "FinalizerWatchd",
+      "samples": 1970,
+      "top": [
+        [
+          "S:futex_wait_queue",
+          1.0
+        ]
+      ]
+    },
+    "8248": {
+      "comm": "binder:7888_1",
+      "samples": 1970,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "8254": {
+      "comm": "binder:7888_2",
+      "samples": 1970,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "8347": {
+      "comm": "main",
+      "samples": 1970,
+      "top": [
+        [
+          "S:do_epoll_wait",
+          0.6218
+        ],
+        [
+          "R:0",
+          0.367
+        ],
+        [
+          "S:0",
+          0.0066
+        ],
+        [
+          "R:do_epoll_wait",
+          0.0046
+        ]
+      ]
+    },
+    "8348": {
+      "comm": "Thread-1",
+      "samples": 1970,
+      "top": [
+        [
+          "S:inet_csk_accept",
+          1.0
+        ]
+      ]
+    },
+    "8627": {
+      "comm": "binder:7888_3",
+      "samples": 1970,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    },
+    "8628": {
+      "comm": "binder:7888_4",
+      "samples": 1970,
+      "top": [
+        [
+          "S:binder_thread_read",
+          1.0
+        ]
+      ]
+    }
+  }
+}

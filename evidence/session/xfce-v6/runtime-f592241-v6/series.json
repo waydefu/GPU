@@ -1,0 +1,39 @@
+{
+  "captures": [
+    {
+      "name": "xfce-c0-c-01",
+      "group": "C",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-01"
+    },
+    {
+      "name": "xfce-c0-gt-01",
+      "group": "GT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-gt-01"
+    },
+    {
+      "name": "xfce-c0-gt-02",
+      "group": "GT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-gt-02"
+    },
+    {
+      "name": "xfce-c0-c-02",
+      "group": "C",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-02"
+    },
+    {
+      "name": "xfce-c0-c-03",
+      "group": "C",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-c-03"
+    },
+    {
+      "name": "xfce-c0-gt-03",
+      "group": "GT",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-gt-03"
+    },
+    {
+      "name": "xfce-c0-g0-01",
+      "group": "G0",
+      "dir": "/root/projects/GPU\u52a0\u901f/evidence/session/xfce-v6/runtime-f592241-v6/xfce-c0-g0-01"
+    }
+  ]
+}

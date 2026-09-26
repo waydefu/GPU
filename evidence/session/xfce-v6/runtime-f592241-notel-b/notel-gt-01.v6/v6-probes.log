@@ -1,0 +1,5 @@
+x3=15980 untraced_started=True
+traced_lat pid=16364
+traced_lat_sigterm pid=16364 (own child, X3 gone)
+launch attempt=1 rc=0 les/usr/tmp/xfce-v6-14836-1790360102-untraced-1.log 2>&1 < /dev/null
+Starting service: Intent { act=com.termux.service_execute dat=com.termux.file:/... cmp=com.termux/.app.TermuxService (has extras) }

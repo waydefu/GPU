@@ -1,0 +1,23 @@
+02:08:27 START preflight-01
+02:10:12 PREFLIGHT rc=0 XFCE_CAPTURED mode=preflight variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/preflight-01
+02:10:12 PREFLIGHT_VERDICT PROBE_SENSITIVE
+02:10:12 EXPECT_ROOT 1200x2464
+02:10:31 START notel-c-01 group=C
+02:14:33 CAPTURE notel-c-01 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-c-01
+02:14:52 START notel-gt-01 group=GT
+02:18:54 CAPTURE notel-gt-01 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-01
+02:19:13 START notel-ct-01 group=CT
+02:23:16 CAPTURE notel-ct-01 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-ct-01
+02:23:36 START notel-gt-02 group=GT
+02:27:37 CAPTURE notel-gt-02 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-02
+02:27:56 START notel-ct-02 group=CT
+02:31:56 CAPTURE notel-ct-02 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-ct-02
+02:32:15 START notel-c-02 group=C
+02:36:16 CAPTURE notel-c-02 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-c-02
+02:36:35 START notel-ct-03 group=CT
+02:40:34 CAPTURE notel-ct-03 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-ct-03
+02:40:53 START notel-c-03 group=C
+02:44:54 CAPTURE notel-c-03 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-c-03
+02:45:13 START notel-gt-03 group=GT
+02:49:14 CAPTURE notel-gt-03 rc=0 XFCE_CAPTURED mode=capture variant=C0 evidence=/root/projects/GPU加速/evidence/session/xfce-v6/runtime-f592241-notel-b/notel-gt-03
+02:49:58 NOTEL JUDGED Q1 TELEMETRY_COSTS_X_CPU {'C': [0.293, 0.3, 0.3], 'CT': [0.453, 0.456, 0.52]} N1 GT_NO_TAIL_STALLS N2 NO_SEPARATION NO_SEPARATION N3 NO_SEPARATION

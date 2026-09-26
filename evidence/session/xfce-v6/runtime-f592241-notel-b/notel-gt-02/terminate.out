@@ -1,0 +1,3 @@
+terminate CONNECTED "display":":3"
+terminate TERMINATE_SENT 
+terminate FAIL "what":"terminate","err":"FAIL LORIE-R8-TEST missing"

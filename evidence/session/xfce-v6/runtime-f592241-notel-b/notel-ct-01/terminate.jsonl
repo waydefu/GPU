@@ -1,0 +1,3 @@
+{"v":1,"fixture":"p_r10_ledger","mode":"terminate","phase":"CONNECTED","display":":3"}
+{"v":1,"fixture":"p_r10_ledger","mode":"terminate","phase":"TERMINATE_SENT"}
+{"v":1,"fixture":"p_r10_ledger","mode":"terminate","phase":"FAIL","what":"terminate","err":"FAIL LORIE-R8-TEST missing"}

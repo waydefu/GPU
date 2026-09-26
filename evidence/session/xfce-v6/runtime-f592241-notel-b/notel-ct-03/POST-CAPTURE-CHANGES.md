@@ -1,0 +1,1 @@
+- 2026-09-26T03:13:10+08:00 raw-logcat.txt → raw-logcat.txt.gz（gzip -6；解壓後 sha256 746755a3619db7019221b0bdb17f643e0977bff9d0d8d85f2447aa52c9188597，與 sha256sums.txt 相同；原 1317264282 bytes → 35232023 bytes；.gz sha256 befa73cbdf767d9f0ea0ce70748e0e991141fd5bd0e68aba16dd0c884629c79c）。原因：手機儲存空間；使用者 2026-09-26 同意。
