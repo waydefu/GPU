@@ -1,0 +1,13 @@
+LOAD=OK
+VK_EXT VK_ANDROID_external_memory_android_hardware_buffer=1
+VK_EXT VK_KHR_external_memory_fd=1
+VK_EXT VK_EXT_external_memory_dma_buf=1
+VK_EXT VK_EXT_queue_family_foreign=1
+VK_INIT=OK device=Adreno (TM) 840 qf=0 ts_valid_bits=48 ts_period=52.083 foreign_qf=0xfffffffd
+AHB_ALLOC=OK 1200x2464 stride=1216 format=2
+AHB_PROPS[big]=0 vkformat=37 external=507 alloc=11984896 bits=0x12
+AHB_IMPORT[big]=OK type=1 bind=0
+SPLIT_WAITFENCES rows_gpu=2462 rec_cpu_ms=0.032 submit_cpu_ms=0.217 wait_wall_ms=1.297 wait_cpu_ms=0.029 (median of 40)
+SPLIT_POLL100US rows_gpu=2462 rec_cpu_ms=0.037 submit_cpu_ms=0.250 wait_wall_ms=1.096 wait_cpu_ms=0.055 (median of 40)
+TAIL_2ROWS_LOCKED cpu_ms=0.0018 | AHB_LOCK_UNLOCK_12MB cpu_ms=0.106 wall_ms=0.228 (median of 40)
+DONE

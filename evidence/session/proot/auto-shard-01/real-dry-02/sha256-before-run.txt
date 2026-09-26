@@ -1,0 +1,4 @@
+10121cc433473db826c75d84a703d989114cb3d2eff4baf7cfd0ebdc912bdbe5  /data/data/com.termux/files/home/build/proot-fast/out8/bin/proot-fast8
+7158e011aa07db1c4b5031dd64b3e2529e6aace3c99445768bda830d96fa2e3d  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard
+c54a8fc64b1e3c876297f7fa6661fdab6358dd47e0d6a598d60fe556eb0f66db  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/autoshard_real_inner.sh
+663d544faa63ff79d0f6a22ddc44b1a3984ebdbfc600ed25042d7cda9590c2a3  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/test_autoshard_real.sh

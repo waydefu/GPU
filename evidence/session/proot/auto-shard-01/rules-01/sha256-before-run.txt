@@ -1,0 +1,11 @@
+ts=20260926-160734 work=/tmp/autoshard-work-20260926-160734
+10121cc433473db826c75d84a703d989114cb3d2eff4baf7cfd0ebdc912bdbe5  /data/data/com.termux/files/home/build/proot-fast/out8/bin/proot-fast8
+4f9d10ad2f78e1eef3907eea1ef761b4b8265c9d7cbd5779df48b4f8cb756058  /data/data/com.termux/files/home/build/proot-fast/out7/bin/proot-fast7
+7158e011aa07db1c4b5031dd64b3e2529e6aace3c99445768bda830d96fa2e3d  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard
+03a249873b4e29a04546d78ab96fbb1a4b4f04330f104c168dcbc9d490a35955  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/shard-run.sh
+ea8f984856d4db150375f9625679c0d787139ace63688e8c1bb8f6f7aeabd364  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/shard-daemon.sh
+0c0064516a6384256f44f14abb696119ba0843a8585ed898ac0ef6e10c972c24  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/autoshard_inner.sh
+c729dfc7cbfad20c6b80a24318fc1f299376637bfce3626fa3694ce7ff62e965  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/test_autoshard.sh
+ddc4a6efbf8b22f4e6ee5569a45c52dc52cbab52866982dd92d894f951df4f0a  /root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/autoshard_judge.py
+03a249873b4e29a04546d78ab96fbb1a4b4f04330f104c168dcbc9d490a35955  /data/data/com.termux/files/home/build/proot-fast/shard2/shard-run.sh
+ea8f984856d4db150375f9625679c0d787139ace63688e8c1bb8f6f7aeabd364  /data/data/com.termux/files/home/build/proot-fast/shard2/shard-daemon.sh

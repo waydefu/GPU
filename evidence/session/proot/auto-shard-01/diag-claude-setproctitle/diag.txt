@@ -1,0 +1,25 @@
+test_tracer=2634 f8-shard=2673
+2781 tracer=2725 home_match=0 environ_lines=7110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --password-store=basic --no-sandbox --disable-gpu --disable-dev-shm-usa
+2805 tracer=2725 home_match=0 environ_lines=7110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-zygote-sandbox --no-sandbox|
+2829 tracer=2725 home_match=0 environ_lines=7110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-sandbox|
+30149 tracer=29525 home_match=0 environ_lines=5135 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --password-store=gnome-libsecret --no-sandbox --disable-gpu --disable-d
+30153 tracer=29525 home_match=0 environ_lines=5174 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-zygote-sandbox --no-sandbox|
+30154 tracer=29525 home_match=0 environ_lines=5174 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-sandbox|
+30178 tracer=29525 home_match=0 environ_lines=31 comm=chrome_crashpad cmd=/usr/lib/claude-desktop/chrome_crashpad_handler|--monitor-self-annotation=ptype=crashpad-handler|--no-rate-lim
+30197 tracer=29525 home_match=0 environ_lines=4197 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platfor
+30200 tracer=29525 home_match=0 environ_lines=5191 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=network.mojom.NetworkService --lang=e
+3036 tracer=2725 home_match=1 environ_lines=75 comm=chrome_crashpad cmd=/usr/lib/claude-desktop/chrome_crashpad_handler|--monitor-self-annotation=ptype=crashpad-handler|--no-rate-lim
+30487 tracer=29525 home_match=0 environ_lines=990 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=6d6a82
+30512 tracer=29525 home_match=0 environ_lines=2 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=6d6a82
+30564 tracer=29525 home_match=0 environ_lines=5176 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
+30568 tracer=29525 home_match=0 environ_lines=32 comm=cowork-linux-he cmd=/usr/lib/claude-desktop/resources/cowork-linux-helper|-socket|/tmp/runtime-root/claude-cowork-vm.sock|
+30593 tracer=29525 home_match=0 environ_lines=5176 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
+30594 tracer=29525 home_match=0 environ_lines=5176 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
+31208 tracer=29525 home_match=0 environ_lines=5237 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US
+31277 tracer=29525 home_match=0 environ_lines=5237 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
+3135 tracer=2725 home_match=0 environ_lines=6110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platfor
+3142 tracer=2725 home_match=0 environ_lines=7102 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=network.mojom.NetworkService --lang=e
+3590 tracer=2725 home_match=0 environ_lines=4926 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=f75524
+3634 tracer=2725 home_match=0 environ_lines=2 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=f75524
+3732 tracer=2725 home_match=0 environ_lines=2 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=f75524
+3830 tracer=2725 home_match=0 environ_lines=7087 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US

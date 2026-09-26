@@ -1,0 +1,8 @@
+12803 main /usr/share/cursor/cursor --no-sandbox --disable-gpu-sandbox --disable-dev-shm-usage --user-data-dir=
+12808 --type=zygote /usr/share/cursor/cursor --type=zygote --no-zygote-sandbox --no-sandbox
+12812 --type=zygote /usr/share/cursor/cursor --type=zygote --no-sandbox
+13229 main /usr/share/cursor/chrome_crashpad_handler --monitor-self-annotation=ptype=crashpad-handler --no-rate
+13270 --type=gpu-process /proc/self/exe --type=gpu-process --disable-gpu-sandbox --no-sandbox --disable-dev-shm-usage --ozone
+13280 --type=utility /proc/self/exe --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service
+13512 --type=utility /proc/self/exe --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandb
+13514 --type=zygote /usr/share/cursor/cursor --type=zygote --no-sandbox

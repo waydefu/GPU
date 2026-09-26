@@ -1,0 +1,6 @@
+orphan_pid=28917 orphan_comm=sleep
+orphan_alive_after_1s=yes
+orphan_tracer=28906
+t1_tracer=28906 t1_tracer_alive=yes
+killed_orphan=28917
+t1_tracer_gone_after_kill=yes after_ds=1

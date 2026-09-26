@@ -1,0 +1,9 @@
+1790410230.820 pid=31951 shard electron /usr/lib/claude-desktop/claude-desktop
+1790410230.966 pid=31975 skip same_app /usr/lib/claude-desktop/claude-desktop
+1790410231.073 pid=31978 skip chromium_child /usr/lib/claude-desktop/claude-desktop
+1790410231.074 pid=31979 skip chromium_child /usr/lib/claude-desktop/claude-desktop
+1790410231.507 pid=32008 skip same_app /usr/lib/claude-desktop/chrome_crashpad_handler
+1790410231.871 pid=32035 skip chromium_child /usr/lib/claude-desktop/claude-desktop
+1790410231.942 pid=32066 skip chromium_child /usr/lib/claude-desktop/claude-desktop
+1790410235.244 pid=32310 skip chromium_child /usr/lib/claude-desktop/claude-desktop
+1790410235.250 pid=32311 skip chromium_child /usr/lib/claude-desktop/claude-desktop

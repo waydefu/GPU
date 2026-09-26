@@ -1,0 +1,33 @@
+LOAD=OK
+GL_SETUP prog_ext=ok prog_2d=ok fbo=0x8cd5
+VK_EXT VK_ANDROID_external_memory_android_hardware_buffer=1
+VK_EXT VK_KHR_external_memory_fd=1
+VK_EXT VK_EXT_external_memory_dma_buf=1
+VK_EXT VK_EXT_queue_family_foreign=1
+VK_INIT=OK device=Adreno (TM) 840 qf=0 ts_valid_bits=48 ts_period=52.083 foreign_qf=0xfffffffd
+AHB_ALLOC=OK 1200x128 stride=1216 format=2
+AHB_PROPS[small]=0 vkformat=37 external=507 alloc=622592 bits=0x12
+AHB_IMPORT[small]=OK type=1 bind=0
+GL_AHB_EGLIMAGE=OK gl_err=0x0
+CASE[S] dmabuf=630784 import=0 overhead=5300 rows_gpu=128 tail_rows=0 buffer=622528 req=627828 req_fits=1 bind=0
+CASE[S] v=0 submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[S] v=1 submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[S] v=2(nosync) submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+C1_NO_COPY submit=0 cpu_mismatch=153600 of=153600 (expected > 0)
+CASE[T] dmabuf=622592 import=0 overhead=5300 rows_gpu=126 tail_rows=2 buffer=612800 req=618100 req_fits=1 bind=0
+CASE[T] v=0 submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[T] v=1 submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[T] v=2(nosync) submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[O] dmabuf=622592 import=0 overhead=5300 rows_gpu=128 tail_rows=0 buffer=622528 req=627828 req_fits=0 bind=0
+CASE[O] v=0 submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[O] v=1 submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+CASE[O] v=2(nosync) submit=0 PIX_CPU mismatch=0 (x_byte_only=0) PIX_GL mismatch=0 mismatch_flipped=153600 of=153600 C2_wrong_pattern_cpu_mismatch=153600
+C3_MEMFD_IMPORT result=-3 (expected nonzero)
+AHB_ALLOC=OK 1200x2464 stride=1216 format=2
+TIMING_CPU_MEMCPY[nosync] 1200x2464 wall_median_ms=0.823 cpu_median_ms=0.823 (n=20, first dropped)
+TIMING_CPU_MEMCPY[sync] 1200x2464 wall_median_ms=0.790 cpu_median_ms=0.699 (n=20, first dropped)
+AHB_PROPS[big]=0 vkformat=37 external=507 alloc=11984896 bits=0x12
+AHB_IMPORT[big]=OK type=1 bind=0
+TIMING_VK_SPLIT 1200x2464 rows_gpu=2462 tail_rows=2 wall_median_ms=2.549 cpu_median_ms=0.629 gpu_median_ms=1.190 (n=20, first dropped; includes command re-record + tail lock/copy)
+TIMING_VK_SPLIT_CHECK mismatch=0 of=2956800
+DONE

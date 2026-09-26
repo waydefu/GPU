@@ -1,0 +1,5 @@
+app=cursor bin=/usr/share/cursor/cursor test_tracer=12720 daily=29525 memavail_mb=4743
+after_s=4 job=/data/data/com.termux/files/usr/tmp/f8-shard/20260926-161517-12738 main=12803 main_tracer=12789 shard_tracer=12789 processes_under_shard=8 renderers=1 windows_on_99=1 rule_log_shard_lines=1 memavail_mb=4310
+after SIGTERM to f8-shard 12738: app_main_and_type_left=0 other_left_under_shard=0 after_s=1 f8-shard_gone=yes
+info: shard tracer gone on its own
+SMOKE_REAL_PASS

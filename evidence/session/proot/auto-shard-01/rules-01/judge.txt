@@ -1,0 +1,34 @@
+ok   main.clean_env: F8_* in the inner harness: ''
+ok   f1.clean_env: F8_* in the inner harness: ''
+ok   f2.clean_env: F8_* in the inner harness: ''
+ok   r1.clean_env: F8_* in the inner harness: ''
+ok   E1: SHARDED tracer=28725
+ok   E1.shard_exe: F8_SHARD_EXE='/tmp/autoshard-work-20260926-160734/fakeapp/fakeelectron'
+ok   E1.sharded: F8_SHARDED='1'
+ok   E1.no_kill_on_exit: tracer argv has 131 words, kill-on-exit=False
+ok   E2: NOT_SHARDED tracer=28701
+ok   E3: NOT_SHARDED tracer=28701
+ok   E4: NOT_SHARDED tracer=28701
+ok   E5: NOT_SHARDED tracer=28701
+ok   E6: NOT_SHARDED tracer=28701
+ok   E7: NOT_SHARDED tracer=28701
+ok   E10: NOT_SHARDED tracer=28701
+ok   E12: NOT_SHARDED tracer=28701
+ok   E8: tracer=28725 (E1 shard tracer 28725)
+ok   E9: tracer=28725 (E1 shard tracer 28725)
+ok   E11: SHARDED tracer=28757 (E1 shard tracer 28725)
+ok   T1: SHARDED tracer=28906
+ok   T1.orphan: alive=yes comm=sleep orphan_tracer=28906 t1_tracer_alive=yes
+ok   T1.tracer_ends: gone=yes after_ds=1
+ok   F1: NOT_SHARDED tracer=28957 rc=7
+ok   F2: NOT_SHARDED tracer=28988 rc=7
+ok   F1.refuse_logged: stderr has F8_SHARD_REFUSE
+ok   main.log: exact
+ok   f1.log: exact
+ok   f2.log: exact
+ok   r1.log: exact
+ok   R1 (proot-fast7, must be NOT_SHARDED): NOT_SHARDED tracer=29020
+ok   R2 (comparator flags E1 vs NOT_SHARDED): mismatch=True
+info ms {"l1": "397", "x1": "390", "e1": "679", "t1": "394"} x1_rc=0 (known limitation: sharded exit code is 0)
+fail=[] invalid=[]
+AUTOSHARD_RULES_PASS

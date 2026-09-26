@@ -1,0 +1,8 @@
+10874 main /usr/lib/claude-desktop/claude-desktop --password-store=basic --no-sandbox --disable-gpu --disable-d
+10886 --type=zygote /usr/lib/claude-desktop/claude-desktop --type=zygote --no-zygote-sandbox --no-sandbox
+10887 --type=zygote /usr/lib/claude-desktop/claude-desktop --type=zygote --no-sandbox
+10945 main /usr/lib/claude-desktop/chrome_crashpad_handler --monitor-self-annotation=ptype=crashpad-handler --n
+11010 --type=gpu-process /usr/lib/claude-desktop/claude-desktop --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozo
+11013 --type=utility /usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=network.mojom.NetworkServic
+11780 --type=renderer /usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-repor
+11830 --type=renderer /usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-repor

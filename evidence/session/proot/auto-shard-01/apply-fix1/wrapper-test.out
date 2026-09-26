@@ -1,0 +1,6 @@
+tracer=3127 comm=proot-fast8
+/data/data/com.termux/files/home/build/proot-fast/out8/bin/proot-fast8
+PROOT_F8_AUTOSHARD_LOG=/data/data/com.termux/files/usr/tmp/f8-shard/autoshard.log
+PROOT_L2S_DIR=/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs/.l2s
+PROOT_F8_AUTOSHARD=1
+login_rc=0

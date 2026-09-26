@@ -1,0 +1,12 @@
+LOAD=OK
+GL_SETUP prog_ext=ok prog_2d=ok fbo=0x8cd5
+VK_EXT VK_ANDROID_external_memory_android_hardware_buffer=1
+VK_EXT VK_KHR_external_memory_fd=1
+VK_EXT VK_EXT_external_memory_dma_buf=1
+VK_EXT VK_EXT_queue_family_foreign=1
+VK_INIT=OK device=Adreno (TM) 840 qf=0 ts_valid_bits=48 ts_period=52.083 foreign_qf=0xfffffffd
+HEAP=OK fd_target=/dmabuf: size=622592
+AHB_ALLOC=OK 1200x128 stride=1216 format=2
+DMABUF_FDPROPS[small]=0 bits=0x12
+DMABUF_IMPORT[small]=NO_TYPE bits=0x12 req=627892 dmabuf=622592
+VERDICT_INPUT CPY=FAIL

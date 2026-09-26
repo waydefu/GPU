@@ -1,0 +1,53 @@
+dbus-daemon[12685]: [session uid=0 pid=12685] org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[12685]: [session uid=0 pid=12685] Activating service name='org.gtk.vfs.Daemon' requested by ':1.0' (uid=0 pid=12803 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[12685]: [session uid=0 pid=12685] Successfully activated service 'org.gtk.vfs.Daemon'
+dbus-daemon[12685]: [session uid=0 pid=12685] Activating service name='org.freedesktop.portal.Desktop' requested by ':1.3' (uid=0 pid=12803 comm="/usr/share/cursor/cursor --no-sandbox --disable-gp" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[12685]: [session uid=0 pid=12685] Activating service name='org.freedesktop.portal.Documents' requested by ':1.4' (uid=0 pid=13282 comm="/usr/libexec/xdg-desktop-portal" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[12685]: [session uid=0 pid=12685] Activating service name='org.freedesktop.impl.portal.PermissionStore' requested by ':1.5' (uid=0 pid=13289 comm="/usr/libexec/xdg-document-portal" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[12685]: [session uid=0 pid=12685] Successfully activated service 'org.freedesktop.impl.portal.PermissionStore'
+dbus-daemon[12685]: [session uid=0 pid=12685] Successfully activated service 'org.freedesktop.portal.Documents'
+fusermount3: failed to open /dev/fuse: Permission denied
+error: fuse init failed: Can't mount path /tmp/runtime-root/doc
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.411: Choosing gtk.portal for org.freedesktop.impl.portal.Lockdown as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.412: The preferred method to match portal implementations to desktop environments is to use the portals.conf(5) configuration file
+dbus-daemon[12685]: [session uid=0 pid=12685] Activating service name='org.freedesktop.impl.portal.desktop.gtk' requested by ':1.4' (uid=0 pid=13282 comm="/usr/libexec/xdg-desktop-portal" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[12685]: [session uid=0 pid=12685] Activating service name='org.a11y.Bus' requested by ':1.7' (uid=0 pid=13375 comm="/usr/libexec/xdg-desktop-portal-gtk" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+dbus-daemon[12685]: [session uid=0 pid=12685] Successfully activated service 'org.a11y.Bus'
+dbus-daemon[13417]: org.freedesktop.DBus.Error.AccessDenied: Failed to set fd limit to 65536: Operation not permitted
+dbus-daemon[13417]: Activating service name='org.a11y.atspi.Registry' requested by ':1.0' (uid=0 pid=13375 comm="/usr/libexec/xdg-desktop-portal-gtk" label="u:r:untrusted_app_27:s0:c109,c257,c512,c768")
+
+(xdg-desktop-portal-gtk:13375): xdg-desktop-portal-gtk-WARNING **: 16:15:21.526: error: Could not connect: No such file or directory
+
+dbus-daemon[13417]: Successfully activated service 'org.a11y.atspi.Registry'
+SpiRegistry daemon is running with well-known name - org.a11y.atspi.Registry
+dbus-daemon[12685]: [session uid=0 pid=12685] Successfully activated service 'org.freedesktop.impl.portal.desktop.gtk'
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.722: Failed to create RealtimeKit proxy: Could not connect: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.723: No skeleton to export
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.723: Choosing gtk.portal for org.freedesktop.impl.portal.FileChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.725: Choosing gtk.portal for org.freedesktop.impl.portal.AppChooser as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.727: Choosing gtk.portal for org.freedesktop.impl.portal.Print as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.728: Choosing gtk.portal for org.freedesktop.impl.portal.Notification as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.730: Choosing gtk.portal for org.freedesktop.impl.portal.Inhibit as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.732: Choosing gtk.portal for org.freedesktop.impl.portal.Access as a last-resort fallback
+[W][66007.574919] pw.conf      | [          conf.c: 1031 try_load_conf()] can't load config client.conf: No such file or directory
+[E][66007.574931] pw.conf      | [          conf.c: 1060 pw_conf_load_conf_for_context()] can't load config client.conf: No such file or directory
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.739: Failed connect to PipeWire: Couldn't create PipeWire context
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.739: Choosing gtk.portal for org.freedesktop.impl.portal.Account as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.740: Choosing gtk.portal for org.freedesktop.impl.portal.Email as a last-resort fallback
+
+(/usr/libexec/xdg-desktop-portal:13282): xdg-desktop-portal-WARNING **: 16:15:21.742: Choosing gtk.portal for org.freedesktop.impl.portal.DynamicLauncher as a last-resort fallback
+dbus-daemon[12685]: [session uid=0 pid=12685] Successfully activated service 'org.freedesktop.portal.Desktop'
+A connection to the bus can't be made

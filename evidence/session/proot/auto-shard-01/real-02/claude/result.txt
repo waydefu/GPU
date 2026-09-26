@@ -1,0 +1,5 @@
+app=claude bin=/usr/lib/claude-desktop/claude-desktop test_tracer=13987 daily=29525 memavail_mb=4736
+after_s=1 job=/data/data/com.termux/files/usr/tmp/f8-shard/20260926-161524-14000 main=14020 main_tracer=14013 shard_tracer=14013 processes_under_shard=8 renderers=1 windows_on_99=1 rule_log_shard_lines=1 memavail_mb=4615
+after SIGTERM to f8-shard 14000: app_main_and_type_left=0 other_left_under_shard=0 after_s=1 f8-shard_gone=yes
+info: shard tracer gone on its own
+SMOKE_REAL_PASS
