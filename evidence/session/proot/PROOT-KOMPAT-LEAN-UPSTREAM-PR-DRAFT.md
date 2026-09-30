@@ -34,6 +34,17 @@ CPU 16.3 s -> 7.5 s (-54%); with `PROOT_KOMPAT_FULL=1` back to 18.4 s (red contr
 Functional smoke (root id, chmod/chown, hardlink/symlink, Python threads, sqlite, ssl, Node
 worker/child_process, git, dpkg, DNS, SysV IPC): stock vs patched output byte-identical.
 
+## Decisions (2026-09-30, user-confirmed plan)
+- Target: `termux/proot` first (all patch/build/smoke/bench data is on its 5.1.107.92 + proot-distro). Both
+  `proot-me/proot` and `termux/proot` `kompat.c` share the fixed `filtered_sysnums[]` + `needs_kompat()` design, so
+  the core can be re-cut as a generic patch for proot-me later if maintainers prefer.
+- Commit A = filter reduction only. vDSO (`AT_SYSINFO_EHDR`) change is OUT of PR #1 (separate commit/PR, own justification).
+- Required before submit: (1) export v2 diff on workstation and strip vDSO hunk; (2) pure-ptrace fallback correctness test
+  (seccomp unavailable: no crash / no regression); (3) **re-run benchmarks on the vDSO-free build** — the tables below were
+  measured WITH vDSO kept, so `clock_gettime`, and possibly open+close and AGENT-MIX, will change; (4) report both runs or median/range.
+- Then rewrite the English PR text from the real diff. Suggested one-line thesis:
+  "Do not install compatibility syscall filters for kernel features that the actual host kernel already provides."
+
 ## Review risks to resolve BEFORE submitting
 1. **vDSO**: the v2 patch also stops stripping `AT_SYSINFO_EHDR` (gives `clock_gettime` 0.22 -> 0.06 µs).
    Stock strips it so programs can't read the real kernel version from the vDSO. This is a
