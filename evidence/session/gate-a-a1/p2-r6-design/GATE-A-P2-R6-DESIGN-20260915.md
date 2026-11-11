@@ -506,16 +506,19 @@ Authority: `GATE-A-P2-R6-D2-HOLD-20260915.md`.
 
 ## 15. Present retirement writer lane (2026-09-15 22:00) — uncommitted
 
-Errata on §14: wait-or-fatal C and the concentrated retirement helper **are
-coded** on worktree `src/f8-ahb-gatea-r6-retire` (base `95e6f96`), not on the
-installed APK. Host gates PASS. Not committed. Not R6 PASS.
+Historical: helper existed uncommitted on 2026-09-15. Superseded by §16.
 
-See:
+## 16. Present retirement independent review (2026-09-16) — COMMITTED, not R6 PASS
 
-- `GATE-A-P2-R6-PRESENT-RETIREMENT-IMPLEMENTATION-20260915.md`
-- `GATE-A-P2-R6-D2-INFLIGHT-ORACLE-ADJUDICATION-20260915.md`
-- `/root/projects/GPU加速/PLANNER-BRIEF-20260915.md`
+```text
+HEAD: 0f1e54699d0b11a781f2c044fbc77505f8a53bd8
+WORKTREE: src/f8-ahb-gatea-r6-retire
+xserver.patch: Present hunks folded; no duplicate present_execute.c
+HOST: PASS (judge 37/37, retirement, verifier, bind, -Werror fixtures)
+DEVICE / CI: not this section
+R6: NOT YET VERIFIED
+```
 
-Do not treat this section as HANDOFF/TEST-MATRIX/AGENTS authority. Parent
-updates those after independent review. D2-OOM, timeout/loss, and teardown
-runtime remain unproven. R7 stays source-blocked.
+Packet: `GATE-A-P2-R6-PRESENT-RETIREMENT-INDEPENDENT-REVIEW-20260916.md`.
+D2-OOM, timeout/loss, and teardown runtime remain unproven. R7 stays
+source-blocked.

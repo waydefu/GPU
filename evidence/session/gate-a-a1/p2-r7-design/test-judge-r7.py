@@ -6,7 +6,7 @@ import importlib.util
 import unittest
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
+HERE = Path("/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r7-design")
 _spec = importlib.util.spec_from_file_location("judge_r7", HERE / "judge-r7.py")
 J = importlib.util.module_from_spec(_spec)
 assert _spec.loader is not None

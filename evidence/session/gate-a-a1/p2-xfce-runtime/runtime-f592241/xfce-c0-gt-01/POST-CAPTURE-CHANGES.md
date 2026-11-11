@@ -1,0 +1,1 @@
+- 2026-09-24T09:20:35+08:00 raw-logcat.txt → raw-logcat.txt.gz（gzip -6；解壓後 sha256 ebf8b9ad2d88c5cf31d2129572cfea6d8e393e9ccb4ce80d3ef0b37dae5de03f，與 sha256sums.txt 相同）。原因：手機儲存空間。

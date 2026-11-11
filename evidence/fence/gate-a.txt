@@ -1,0 +1,61 @@
+Fence qualification — baseline A (no PR #1114)
+date: 2026-09-07 ~14:37 CST
+
+BUILD A
+  branch: f8-ahb (qualified Present)
+  commit: 8862681a2396b8494a687af1d2d690d491138e09
+  APK: com.waydefu.x11gpu SHA256 5adf9676643b4d5c6e37e7e858bb0c10ccd45eb686d339ac72e68754b8f1df98
+  experimental PID 17049  DISPLAY=:3  1920x1080  GPU Present ON
+  activity PID 18133 on phone Display0 (HDMI Display2 left to Stable)
+
+UPSTREAM FRESH
+  master HEAD: 9df8b767645aa0d0a2f2576767449df55b41962f
+  PR #1114: OPEN head c48e84e63b156be4412004935b6417cbbfebdfe8 (matches historical SHA)
+  f8-ahb xserver.patch did NOT include wait-fence disarm (A)
+
+SURFACE CAVEAT
+  First fence x100 ran with activity surface detached → 0/155 GPU offload (CPU Present).
+  All numbers below are AFTER moving com.waydefu.x11gpu MainActivity to Display0.
+  Stable com.termux.x11 remained resumed on Display2. PID 10718 untouched.
+
+TESTER
+  patches/p_fence.c → /tmp/p-fence
+  wait-hold: unsignaled wait_fence, 80ms, GetImage must not show OLD, then trigger → NEW
+  wait-dup: 3 pixmap pipeline + double TriggerFence; CompleteNotify count == 1
+  rotate: 3 pixmaps, IdleNotify before reuse, seq in pixels
+  idle-race: poison pixmap after IdleNotify; window must keep presented seq
+
+x100
+  wait-hold 20/20  wait-dup 100/100  rotate 100/100  idle-race 50/50
+  GPU offload buckets: 20/20 + 199/199 + 6/6  fallback=0
+
+x1000  14:37:13–14:37:39 (~26s)
+  wait-hold 20/20
+  wait-dup 1000/1000 dup_serials=0 miss_serials=0
+  rotate 1000/1000
+  idle-race 50/50
+  GPU offload (5s buckets, all 100%):
+    1/1 185/185 283/283 300/300 280/280 299/299 60/60
+  crash=0  pixel seq fail=0  duplicate CompleteNotify=0
+
+REGRESSION
+  P0 p0_gate2.py :3 1  PASS fails=0 residue=0
+  P1 p1-after 10 1200x64  10/10 stride=4864 pad=16 pixel MATCH BadPixmap=0 fd_delta=0
+  Present 20/20 GPU offload pix_fail=0
+
+A6
+  Branch f8-present-fence 410124d = A + exact PR #1114 disarm hunk
+  CI Build dispatched waydefu/termux-x11 run queued
+  A already: no dup, no crash, wait_fence honored, idle-after-GPU (poison test PASS)
+  B APK A/B pending CI artifact (do not replace Stable)
+
+SYNC MODEL
+  evidence/fence/sync-model.txt
+
+STABLE
+  :1 PID 10718  XFCE 18844  xfwm 18871  alive
+
+VERDICT (A, tested workload)
+  FENCE QUALIFIED — current implementation sufficient for tested workload
+  PR #1114 remains a valid defensive patch for Mesa wait-fence restart-scan UAF;
+  this client did not reproduce duplicate callbacks or crashes without it.

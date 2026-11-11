@@ -1,0 +1,2 @@
+iter 0: FAIL error=4 reply=(nil)
+RESULT: 0/100 iters ok

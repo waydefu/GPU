@@ -11,11 +11,13 @@
 | 資格 fork | https://github.com/waydefu/termux-x11 |
 | 上游 origin（只讀） | https://github.com/termux/termux-x11 |
 | 目前裝置 APK CI | https://github.com/waydefu/termux-x11/actions/runs/35103216566 |
+| 未安裝修復候選 CI | https://github.com/waydefu/termux-x11/actions/runs/35171333149 |
 
 ## 工作站工作樹（2026-09-17）
 
 | 路徑 | HEAD | 分支 | 角色 | 紀律 |
 |---|---|---|---|---|
+| `src/f8-ahb-gatea-r7-hup-preserve` | `a07d66c48b7fe276b0b1fbfa1fa8eaf08ed68b82` | `fix/gatea-r7-hup-fatal-preserve-20260917` | R7-05 HUP preserve **ARTIFACT QUALIFIED / 未安裝** | 不要當成已安裝裝置；不要改 `fdfb1ce` 工作樹 |
 | `src/f8-ahb-gatea-case-loop` | `fdfb1ce44b429897eda17c43bf33fbd37afe67f3` | `fix/gatea-r7-fatal-propagation-20260916` | **已安裝** R7-04 修復 | 不要為 R7-05 改 source |
 | `src/f8-ahb-gatea-r6-retire` | `0f1e54699d0b11a781f2c044fbc77505f8a53bd8` | `fix/gatea-r6-present-retirement-20260915` | 凍結 R6 PASS | **不准改** |
 | `src/f8-ahb-gatea-r7` | `a7528bd` | `qualification/gatea-r7-20260916` | R7 support artifact | 歷史；未安裝 |

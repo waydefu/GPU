@@ -94,3 +94,36 @@ predicate  「production 設定下，一個 session 的 renderer 記憶體不隨
 
 inventory 內每個缺口八步完成、每個 requal PASS、carry-forward 皆有裁決、沒有「暫時接受」。
 PGA-GAP-1 卡在第 8 步（XFCE 系列需要 G 設定下可執行，被 PGA-GAP-2 擋住）；PGA-GAP-2 在第 2 步前等 B.3；PGA-GAP-3 第 8 步兩次 FAIL（只剩 mapping 殘差；記憶體已修）。B.3 mode S 在 PGA-GAP-3 修補前暫停（會觸發 mem-guard，且資料被記憶體壓力污染）。
+
+### PGA-GAP-4 — GPU 寫入 depth 32（B8G8R8A8）pixmap 的結果永遠回不到 AHB　**狀態：修補 d1c86dd 裝置驗證通過（11b3b79 同樣包含）**
+
+```
+evidence   p2-pga-rca/runtime-0245ff3/oracle-{g,ga,c}-s11-01（G 496/614、GA 497/614 張 GetImage RGB 錯；C 0）
+           p2-pga-rca/runtime-0245ff3/probe-{g,c}-01（p_depth_probe：G 16 處錯、全在 depth 32、讀回 00000000；C 全過）
+predicate  「G 設定下，對 depth 32 pixmap 的 GPU solid / copy 結果，CPU（GetImage / fb）看得到」為假
+1 RCA      InitOutput.c lorieEnsureGpuSampleable：depth 32 升級為 B8G8R8A8 AHB 後 LorieBuffer_lock 並長期保持（priv->locked）；
+           只有 copy 的來源會 lorieUnlockBgraAhb。CPU→GPU 正常（Gate A oracle 通過的原因），GPU→CPU 從未生效。
+           Stable :1 不受影響（-legacy-drawing 關閉這些 GPU 路徑）。既有 oracle V3 只涵蓋 composite Over 直通路徑，沒有覆蓋這裡。
+2 design   目的地為 BGRA 時，在 GPU 寫入前解鎖（solid、blit），放在 Gate A 租約拒絕之後；下一次 loriePrepareAccess 重新上鎖。
+3 impl     b3e5d54（解鎖 BGRA 目的地）**被推翻**：runtime-b3e5d54/probe-{g,ga}-01 仍 16 處錯、讀回 00000000（凍結）。
+           修正後的 RCA：LorieBuffer_attachToGL 對 B8G8R8A8 AHB 不建 EGLImage（「BGRA AHB EGLImages sample as black on this GPU」），
+           renderer 的貼圖是 CPU 內容的私有上傳；GPU 寫入只落在私有貼圖，永遠回不到 AHB。當來源可用是因為每次綁定都重新上傳。
+           d1c86dd：depth 32 目的地一律走 CPU（PrepareSolid / PrepareCopy 入口拒絕；排程函式拒絕非 RGBX 目的地，含 Present copy）。
+4–8        d1c86dd：p_depth_probe G/GA 0 錯；p_async_oracle G seed 11/12 0 錯（runtime-d1c86dd）。11b3b79 重驗同樣 0 錯。
+```
+
+### PGA-GAP-5 — XFCE 下大量小 pixmap 逐一升級成 AHB 並向 renderer 登記，成批發生時卡住 X 50–450 ms　**狀態：修正 f592241（依尺寸分流，使用者決定）ROUTING_REMOVES_SPIKES；正確性全過**
+
+```
+evidence   p2-xfce-runtime/runtime-11b3b79/xfce-c0-{g,ga,c}-{01,02}（PGA-GAP-2-ASYNC-XFCE-FREEZE.md）
+predicate  「G 設定下，日常 XFCE（C0）的 X 往返延遲 p99 與 CPU 同級」為假：G/GA p99 47–96 ms、max 105–446 ms；C p99 8.7–9.2 ms、max 17–19 ms
+1 RCA      每次 G/GA XFCE 共 2005–2006 次「Sent shared buffer」（89% ≤ 64×64；RGBX 1445、BGRA 561），C 只有 3 次。
+           RTT ≥ 30 ms 的取樣期間平均 33–53 次，其他取樣 0.06–0.19 次（300–600 倍）；同一時段 SnapAlloc（gralloc）
+           與 GATEA_PEEK/HANDLE/DRAIN/VALIDATE（Gate A 登記握手）同樣密集。機制推論：lorieEnsureGpuSampleable 對每個第一次
+           被 GPU 使用的 pixmap 分配 AHB、複製內容、跨程序傳給 renderer 並登記；XFCE 畫面更新時一次冒出數十到數百個。
+           非同步原型不影響這條路（升級發生在排程之前）。
+2 next     因果檢驗：讓小 pixmap 不升級（留在 CPU），預測尖峰消失；判準在資料之前凍結。
+2 result   709dfac TERMUX_X11_GPU_MIN_PIXELS=4097（≤64×64 不升級）：共享 2006 → 55 次；GAT p99 9.3 / 10.2 ms、>100 ms 0 次；
+           C p99 10.2 / 8.1 ms。凍結判準（p99 ≤ 1.25×C 兩組皆成立）第二組差 0.145 ms → NOT_SUPPORTED（PGA-GAP-2-ASYNC-XFCE-FREEZE.md）。
+           修正方向（未決）：小 pixmap 走 CPU（路由），或讓升級變便宜（AHB 池／staging atlas），或兩者。
+```

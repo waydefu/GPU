@@ -1,0 +1,118 @@
+Present GPU-copy synchronization model
+date: 2026-09-07
+tree: src/f8-ahb @ 8862681 (PR #1095) + GPU Present (in-tree)
+upstream master HEAD (fresh): 9df8b767645aa0d0a2f2576767449df55b41962f
+PR #1114 (fresh): OPEN head c48e84e63b156be4412004935b6417cbbfebdfe8
+  title: xserver: prevent repeated Present wait-fence callbacks
+  NOT present in f8-ahb xserver.patch (present_wait_fence_triggered still
+  calls re_execute without disarming the callback).
+
+================================================================
+Function-level sequence (copy path, OPTION_COPY)
+================================================================
+
+1. Client
+   xcb_present_pixmap(window, pixmap, serial, wait_fence, idle_fence, OPTION_COPY)
+   → present_request.c VERIFY_FENCE_OR_NONE(wait_fence/idle_fence)
+   → present_scmd_pixmap
+   → present_vblank_create  (owns pixmap ref, wraps wait/idle as present_fence)
+   → present_execute
+
+2. Wait fence (X SyncFence, not Android native fence fd)
+   present_execute
+     → present_execute_wait
+        if wait_fence not triggered:
+          present_fence_set_callback(wait_fence, present_wait_fence_triggered, vblank)
+          return  (vblank stays queued)
+   Client XSyncTriggerFence / xcb_sync_trigger_fence
+     → SyncFence SetTriggered
+     → present_fence_sync_check_trigger  (TRUE iff callback != NULL)
+     → present_fence_sync_trigger_fired
+     → present_wait_fence_triggered
+     → present_re_execute → present_execute again
+   PR #1114 inserts, at the top of present_wait_fence_triggered:
+     present_fence_set_callback(vblank->wait_fence, NULL, NULL);
+   Without it, CheckTrigger stays TRUE for the whole vblank lifetime, so a
+   miSyncTriggerFence restart-scan can invoke the same Present twice
+   (UAF if the first invocation already present_vblank_destroy'd).
+
+3. Copy scheduling (GPU)
+   present_execute (wait satisfied)
+     → present_execute_copy
+        dst = screen->GetWindowPixmap(window)     // root, or redirected backing
+        lorieTryScheduleGpuCopy(srcPixmap, dst, update, x_off, y_off, &serial, &dstBuf)
+          ownership:
+            src AHB/LorieBuffer: acquire + gpuCopyPendingInc
+            dst if not root:     acquire + gpuCopyPendingInc
+            dst if root:         pvfb->rootGpuCopyPending++
+            ring: gpuCopyQueue.entries[writeIndex] = {serial, srcId, dstId, rects}
+            writeIndex++ (release barrier), pthread_cond_signal(rendererCond)
+          return TRUE → vblank->gpu_copy_pending=TRUE, queue_vblank(msc+1), return
+          return FALSE → present_copy_region CPU fallback
+   If GPU scheduled: present_pixmap_idle is NOT called yet.
+
+4. Renderer thread (activity process)
+   EVENT_GPU_COPY_DONE path OR redraw:
+     applyPendingGpuCopiesLocked
+       findBufferWithRetry(srcId/dstId)
+       FBO blit src tex → dst tex (AHB EGLImage)
+     THEN:
+       eglCreateSyncKHR(EGL_SYNC_FENCE_KHR)
+       glFlush
+       eglClientWaitSyncKHR(..., EGL_FOREVER)
+       eglDestroySyncKHR
+       gpuCopyQueue.completedSerial = lastSerial   // only AFTER GPU finished
+       notifyGpuCopyDone() → EVENT_GPU_COPY_DONE on conn_fd
+   redrawLocked shares the same fence wait with the on-screen draw of root.
+
+5. Completion on X thread
+   cmdentrypoint EVENT_GPU_COPY_DONE
+     → QueueWorkProc(lorieRecheckGpuCopies) + lorieWakeServer
+   lorieRecheckGpuCopies
+     for vblank in present_exec_queue:
+       if gpu_copy_pending && (lorieGpuCopyIsDone(serial) || stalled)
+         present_re_execute(vblank)
+   present_execute_copy (second entry):
+     lorieGpuCopyIsDone → lorieGpuCopyAck
+       gpuCopyPendingDec src (+ dst or rootGpuCopyPending--)
+       LorieBuffer_release extra refs
+     DamageDamageRegion (already done at schedule time)
+     screen_priv->flush(window)
+     present_pixmap_idle(pixmap, window, serial, idle_fence)
+       idle_fence SetTriggered
+       PresentIdleNotify
+   present_execute_post
+     PresentCompleteNotify (mode Copy)
+     present_vblank_destroy
+       if still gpu_copy_pending: lorieGpuCopyAck (scrap/destroy safety)
+       destroy wait_fence wrapper, idle_fence wrapper, pixmap ref
+
+6. Surface
+   After GPU copies, redrawLocked draws root tex to EGL surface, eglSwapBuffers.
+   Copy path does NOT flip the client pixmap to the screen pixmap; it blits
+   into GetWindowPixmap(window) then the renderer samples that (usually root).
+
+================================================================
+Ownership
+================================================================
+source pixmap     X client + vblank ref; GPU read protected by gpuCopyPending
+                  until Ack. IdleNotify/idle_fence = client may rewrite.
+destination       screen/root pixmap or Composite redirected backing.
+AHB               LorieBuffer wrapping AHardwareBuffer; registered to renderer.
+GPU copy command  LorieGpuCopyEntry in shared-memory SPSC ring.
+fence fd          EGL_SYNC_FENCE_KHR is renderer-internal (not exported to X
+                  Present wait/idle). X wait/idle are SyncFence XIDs / xshmfence
+                  for DRI3 clients, not Android sync fds on this copy path.
+Present event     CompleteNotify after idle; serial is client PresentPixmap serial
+                  (distinct from gpu_copy_serial).
+
+================================================================
+Sync properties claimed by this code
+================================================================
+- completedSerial is published only after eglClientWaitSyncKHR
+  → present_pixmap_idle cannot race an in-flight GPU read of the source.
+- wait_fence delays present_execute_copy entirely (CPU and GPU).
+- idle_fence is signaled only after Ack, i.e. after GPU complete.
+- PR #1114 is a wait-fence callback lifetime fix, not a GPU-copy fence.
+
+No Android native fence fd is imported/exported on the Present copy path.

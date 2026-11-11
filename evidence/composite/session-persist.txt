@@ -1,0 +1,5 @@
+persistent :3 PASS
+PID 29799
+lifetime_check 30s=PASS 60s=PASS
+ppid 1
+2026-09-07T17:36:19

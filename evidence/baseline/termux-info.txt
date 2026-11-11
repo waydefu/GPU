@@ -1,0 +1,32 @@
+Termux Variables:
+unsupported
+Packages CPU architecture:
+arm64
+Subscribed repositories:
+# sources.list
+deb https://termux.danyael.xyz/termux/termux-main stable main
+# sources.list.d/x11.list
+deb https://termux.danyael.xyz/termux/termux-x11 x11 main
+Updatable packages:
+Running as root. Cannot check package updates.
+termux-tools version:
+1.45.0
+Android version:
+16
+Kernel build information:
+Linux localhost 6.17.0-PRoot-Distro #1 SMP PREEMPT_DYNAMIC Fri, 10 Oct 2025 00:00:00 +0000 aarch64 aarch64 aarch64 GNU/Linux
+Device manufacturer:
+Xiaomi
+Device model:
+25102PCBEG
+Supported ABIs:
+SUPPORTED_ABIS: arm64-v8a
+SUPPORTED_32_BIT_ABIS: 
+SUPPORTED_64_BIT_ABIS: arm64-v8a
+LD Variables:
+LD_LIBRARY_PATH=
+LD_PRELOAD=
+Installed termux plugins:
+com.termux.widget versionCode:1001
+com.termux.api versionCode:1002
+com.termux.x11 versionCode:15

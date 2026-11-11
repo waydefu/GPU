@@ -1,0 +1,25 @@
+GPU Present qualification close
+date: 2026-09-07 ~13:34 CST
+
+RESTORE
+  experimental PID 17049
+  DISPLAY=:3
+  flags: (none; GPU Present enabled)
+  sanity: 20/20 present copies offloaded to GPU
+  Stable 10718 untouched
+
+GATE7
+  1200x2191: prior ×1000 1000/1000 + restore sanity 20/20 GPU; pixel PASS
+  1280x1024: 100 solid + 10 corners + 10 partial = 120/120 GPU offload; pix_fail=0
+  1920x1080: 120/120 GPU offload; pix_fail=0
+  Surface viewport phone Display0 1200x2608 app 0,144-1200,2560 (scale/letterbox of X root; not a translation bug)
+  3440x1440: NOT TESTED
+
+P0 guard p0_gate2.py :3 1: PASS fails=0 residue=0
+P1 guard p1-after 10 1200x64: 10/10 stride=4864 pad=16 pixel MATCH BadPixmap=0 fd_delta=0
+
+PERFORMANCE CAVEAT (unchanged)
+  256x256 GPU 3710ms vs CPU 3636ms — no wall-time speedup
+
+GPU PRESENT QUALIFIED
+Next: Present fence / FrameTimeline qualification

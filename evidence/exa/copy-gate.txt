@@ -1,0 +1,28 @@
+EXA Copy GPU acceleration
+date: 2026-09-07 ~15:24 CST
+
+BEFORE (410124d, PrepareCopy=FalseNoop)
+  p-exa-copy 50: ok=102 fail=0 (software)
+
+AFTER (8f357b8)
+  branch f8-exa-copy
+  APK SHA256 a517121373191ae9de5142d1c9de2868d85b40b1265b6f94d9ed2cc4a1a51115
+  versionName 1.03.01-8f357b8-07.09.26
+  DISPLAY=:3 PID 30722  1200x2191 native
+  p-exa-copy 100: ok=202 fail=0
+  GPU: 203/203 EXA copies offloaded (0 CPU rects)
+  same-pixmap overlap: pixel PASS (software fallback, as designed)
+  unsupported ROP/planemask: not in this tester; PrepareCopy returns FALSE
+
+Subset accelerated
+  GXcopy, full planemask, distinct AHB pixmaps
+  waits completedSerial in DoneCopy
+  queue-full: wait+retry then CPU rect
+
+Regression
+  P0 PASS  P1 10/10  Present 20/20 GPU  Fence x20 PASS
+  Stable 10718 / 18844 / 18871  Display2 termux.x11
+
+1200x2191 pacing (bonus)
+  300 frames fps=60.10 p50=16.67 p95=17.92 p99=20.85 max=22.57 ms
+  Present GPU 297/297

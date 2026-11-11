@@ -65,7 +65,9 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
        每格前 Claude 切模式（建立／刪除 `~/.f8-proot-stock`）並經 TermuxService 跑 `f8stop` 關桌面，使用者用「F8 工作站」開回來、打開 Claude、叫 Claude 繼續。
        指令（每格一條，Claude 執行）：`python3 src/f8-ahb-exa-async/tests/xfce_v6/daily_sampler_v2.py --kind <v6|stock> --out evidence/session/xfce-v6/part-a/<格> --serial <現探> --close-launched`。
        無效的格可補跑 1 次（`<格>-r1`）。判定：`xfce_v6_judge.py part-a <v6-1> <stock-1> <v6-2> [slot=dir]`。進度記在記憶 `xfce-v6-part-a-runbook`。
-     - **Part B**：一條指令 `SERIAL=<現探> bash evidence/session/xfce-v6/series-v6.sh`（preflight → C GT GT C C GT → 補跑 ≤2 → G0，
+     - **Part A 進度（2026-09-25）**：v6-1 **有效**（E=48）、stock-1 **有效**（E=148，對照成立）、v6-2 **INVALID：觸控 533 筆**（原目錄保留）。
+     `part-a/part-a-judge.json` 目前 INCONCLUSIVE。**下一步＝補跑 `part-a/v6-2-r1`**（補充 7，最後 1 次）：桌面已在 v6、不用重開；開跑前請使用者確認 6 分鐘不碰手機（含實體鍵），再照執行手冊記憶 `xfce-v6-part-a-runbook` 跑、判 `part-a ... v6-2=part-a/v6-2-r1`，結果寫進凍結文件結果段並推 PR（part-a 目錄尚未推）。
+   - **Part B**：一條指令 `SERIAL=<現探> bash evidence/session/xfce-v6/series-v6.sh`（preflight → C GT GT C C GT → 補跑 ≤2 → G0，
        約 45 分鐘；要 ADB、螢幕全程亮不鎖、手機放著不碰、MemAvailable ≥ 4600）。
    - 起手建議（未執行）：先在 **v6 日常**下重量 XFCE 卡頓基線。09-23 卡頓主嫌是追蹤器滿載（~1 核），現在 30 s 窗只剩 0.007 核；
      先確認剩下的卡頓有多少真的在 X／EXA，再決定 EXA 要修哪裡。比較前要先凍結新判準。

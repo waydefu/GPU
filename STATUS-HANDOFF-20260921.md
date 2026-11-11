@@ -1,6 +1,17 @@
 # Gate A P2 — P2 RUNTIME CLOSED（17/17）· **PGA-GAP-2/3 已證明；GAP-3 修補 83d45a9 已安裝** — 2026-09-21, updated 2026-09-23 夜
 
 ```
+STATUS 2026-09-24 午（先讀 HANDOFF-NEXT-SESSION-20260924-GL.md，再讀 HANDOFF-NEXT-SESSION-20260924.md）:
+        **INSTALLED ARTIFACT f592241**（fork feat/exa-async-proto-20260923）CI 35937188670 · APK f9e35b69…075c · Build ID 1b80cabb…fedf
+          預設 TERMUX_X11_GPU_MIN_PIXELS=4097（依尺寸分流，使用者 2026-09-24 決定）；TERMUX_X11_EXA_ASYNC=1 選用
+        PGA-GAP-2 非同步原型：正確性全過、op 層 ASYNC_LATENCY_IMPROVED；XFCE 無改善
+        PGA-GAP-4（depth 32 GPU 目的地結果回不到 AHB）已修；PGA-GAP-5（小 pixmap 逐一升級造成 XFCE 尖峰）ROUTING_REMOVES_SPIKES
+        2D 桌面尚無 GPU 收益；下一階段 = 3D／GL（Zink+Turnip 在 Adreno 840 可行，需 VK_LOADER_LAYERS_DISABLE=*）
+        下一步：新對話安裝 glmark2 / vkmark（下載前再確認一次）→ 凍結判準 → GPU vs CPU 渲染實測
+        Stable :1 全程未動（pid 20457）
+```
+
+```
 STATUS 2026-09-23 夜（先讀這一段，再讀 §6.11）:
         **INSTALLED ARTIFACT 83d45a9**（PGA-GAP-3 修補）CI 35845935317 · APK f4c98b8a…230f · Build ID 67e8ad53…
           parent bfb5769；產品差異只有 InitOutput.c +7；requal-01 / -02 = GAP3_REQUAL_FAIL（GB 級記憶體洩漏已修、兩次證明；Activity mapping 殘差 ~0.01/筆未解）

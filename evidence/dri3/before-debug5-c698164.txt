@@ -1,0 +1,9 @@
+DRI3 BuffersFromPixmap BEFORE PR #1095
+date: 2026-09-07 ~07:10 CST
+server: experimental :3 debug5 c698164 PID 11957
+tool: patches/dri3-pixmap-test.c → /tmp/dri3-pixmap-test
+iters: 100
+iter 0: FAIL error=4 reply=(nil)
+RESULT: 0/100 iters ok
+classification: DRI3 dispatch / pixmap → AHB conversion missing (expected pre-#1095)
+note: not run against Stable :1

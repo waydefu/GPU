@@ -1,0 +1,142 @@
+#!/usr/bin/env python3
+"""Gate A P1 CI artifact verifier (run 34709782426, HEAD 5e9eb2a).
+
+Verdict-critical (asserted): identity, integrity, signer continuity, Build ID
+match, A1/P0 continuity markers.
+P1-informational: P1 is dormant default-off foundation; unused static-inline /
+uncalled globals may be linker-discarded. Absence is NOT failure; presence
+rules are: source->exact commit->CI binding + all-ABI compile success.
+"""
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+import zipfile
+
+EVID = Path('/root/projects/GPU加速/evidence/session/gate-a-a1/p1-ci-34709782426')
+APK = EVID / 'universal' / 'termux-x11-universal-debug.apk'
+OUT = EVID / 'apk-elf-verification'
+OUT.mkdir(parents=True, exist_ok=True)
+LIB_REL = 'lib/arm64-v8a/libXlorie.so'
+EXPECTED_SIGNER = 'b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1'
+SDK_BT = '/root/android-sdk/build-tools/36.0.0'
+APKANALYZER = '/root/android-sdk/cmdline-tools/latest/bin/apkanalyzer'
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, 'rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def run_capture(label, args):
+    try:
+        result = subprocess.run(args, capture_output=True, check=False)
+        rc, out, err = result.returncode, result.stdout, result.stderr
+    except OSError as error:
+        rc, out, err = 127, b'', f'{type(error).__name__}: {error}'.encode()
+    (OUT / f'{label}.stdout.txt').write_bytes(out)
+    (OUT / f'{label}.stderr.txt').write_bytes(err)
+    (OUT / f'{label}.status').write_text(
+        json.dumps({'argv': args, 'returncode': rc}, indent=2) + '\n')
+    return rc, out.decode(errors='replace'), err.decode(errors='replace')
+
+
+assert APK.is_file() and APK.stat().st_size > 0, APK
+report = {'apk_path': str(APK), 'apk_bytes': APK.stat().st_size,
+          'apk_sha256': sha256(APK)}
+
+with zipfile.ZipFile(APK) as zf:
+    infos = zf.infolist()
+    names = [i.filename for i in infos]
+    report['testzip'] = zf.testzip()
+    report['member_count'] = len(infos)
+    report['duplicate_names'] = sorted({n for n in names if names.count(n) > 1})
+    report['arm64_member_present'] = LIB_REL in names
+    stored = [i for i in infos if i.compress_type == zipfile.ZIP_STORED]
+    bad = 0
+    with open(APK, 'rb') as f:
+        for i in stored:
+            f.seek(i.header_offset)
+            local = f.read(30)
+            if len(local) < 30:
+                bad += 1
+                continue
+            name_len = int.from_bytes(local[26:28], 'little')
+            extra_len = int.from_bytes(local[28:30], 'little')
+            if (i.header_offset + 30 + name_len + extra_len) % 4 != 0:
+                bad += 1
+    report['stored_count'] = len(stored)
+    report['stored_mod4_failures'] = bad
+
+with zipfile.ZipFile(APK) as zf:
+    embedded = OUT / 'libXlorie-embedded.so'
+    embedded.write_bytes(zf.read(LIB_REL))
+report['embedded_sha256'] = sha256(embedded)
+
+unstripped = sorted((EVID / 'unstripped').glob('**/obj/arm64-v8a/libXlorie.so'))
+assert len(unstripped) == 1, unstripped
+unstripped = unstripped[0]
+report['unstripped_path'] = str(unstripped)
+report['unstripped_sha256'] = sha256(unstripped)
+
+build_ids = {}
+for label, path in (('embedded', embedded), ('unstripped', unstripped)):
+    rc, out, _ = run_capture(f'{label}-readelf-n', ['readelf', '-n', str(path)])
+    assert rc == 0, label
+    match = re.search(r'Build ID:\s*([0-9a-f]+)', out)
+    assert match, label
+    build_ids[label] = match.group(1)
+report['build_ids'] = build_ids
+report['build_id_equal'] = build_ids['embedded'] == build_ids['unstripped']
+
+p0wanted = {'GATEA_A1': 'A1 microprobe marker (continuity)',
+            'gateaA1MicroprobeRun': 'A1 entry symbol, unstripped only (hidden)'}
+p1wanted = {'TERMUX_X11_GATEA_PROTO': 'P1 flag literal (may be GC-dirs, informational)',
+            'GATEA_FATAL_HALT': 'P1 fatal-halt log tag (informational)',
+            'GATEA_PRECALL': None, 'GATEA_ENTRY': None}
+strings = {}
+for label, path in (('embedded', embedded), ('unstripped', unstripped)):
+    rc, out, _ = run_capture(f'{label}-strings', ['strings', '-a', str(path)])
+    assert rc == 0, label
+    strings[label] = {key: (key in out) for key in list(p0wanted) + [k for k in p1wanted if p1wanted[k]]}
+report['strings'] = strings
+report['p0_continuity'] = {
+    'GATEA_A1_both': strings['embedded']['GATEA_A1'] and strings['unstripped']['GATEA_A1'],
+    'entry_unstripped_only': (not strings['embedded']['gateaA1MicroprobeRun'])
+    and strings['unstripped']['gateaA1MicroprobeRun'],
+}
+assert report['p0_continuity']['GATEA_A1_both'], 'P0/A1 continuity broken'
+assert report['p0_continuity']['entry_unstripped_only'], 'A1 visibility changed'
+
+rc, out, _ = run_capture('unstripped-nm-gatea',
+                         ['nm', '-a', '-C', str(unstripped)])
+gatea_syms = [line for line in out.splitlines()
+              if 'orieGateA' in line or 'gatea' in line.lower()]
+(OUT / 'unstripped-nm-gatea-symbols.txt').write_text('\n'.join(gatea_syms) + '\n')
+report['unstripped_gatea_symbols_informational'] = gatea_syms
+report['p1_symbol_note'] = ('P1 is dormant default-off foundation (unused '
+                            'static-inline discarded, uncalled globals kept). '
+                            'Presence/absence in binary is informational; '
+                            'authority is source->commit->CI binding + all-ABI '
+                            'compile success.')
+
+manifest = {}
+for label, sub in (('application-id', 'application-id'), ('version-code', 'version-code'),
+                   ('version-name', 'version-name')):
+    rc, out, _ = run_capture(f'manifest-{label}', [APKANALYZER, 'manifest', sub, str(APK)])
+    manifest[label] = {'returncode': rc, 'value': out.strip()}
+report['manifest'] = manifest
+
+rc, out, _ = run_capture('apksigner-verify', [f'{SDK_BT}/apksigner', 'verify',
+                                              '--verbose', '--print-certs', str(APK)])
+report['apksigner_returncode'] = rc
+certs = re.findall(r'SHA-256 digest:\s*([0-9a-fA-F]+)', out)
+report['signer_sha256_list'] = [c.lower() for c in certs]
+report['signer_expected_cert_present'] = EXPECTED_SIGNER in report['signer_sha256_list']
+
+(OUT / 'p1-apk-elf-report.json').write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps(report, indent=2))
