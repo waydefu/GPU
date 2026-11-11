@@ -1,0 +1,61 @@
+--- /root/projects/GPU加速/evidence/session/daily/f8-gamemode-20261027/f8-gamemode.before	2026-10-03 13:09:23.491259967 +0800
++++ /root/projects/GPU加速/evidence/session/daily/f8-gamemode-20261027/f8-gamemode	2026-10-27 03:26:34.852855445 +0800
+@@ -9,8 +9,12 @@
+ #   4. one detached shell on the phone force-stops Termux:X11 and Termux (the force-stop ends every process of the
+ #      app's cgroup: proot tracers, shard-daemon, the adb server, this script), then turns wireless and USB debugging
+ #      off. Debugging goes off LAST: stopping adbd kills its whole cgroup, setsid included, so nothing after it would run.
+-# Without wireless debugging it can do only steps 1 and 3 plus `adb kill-server`, and opens Developer options so the
+-# two debugging switches can be turned off by hand.
++# Step 4 needs adb to be allowed to write settings. MIUI refuses every `settings put` from shell while "USB 偵錯（安全設定）"
++# is off, even with WRITE_SECURE_SETTINGS granted (2026-10-27: both puts of every earlier run returned rc=255, so
++# debugging was never turned off). That is checked before the hand-off, because after it nothing is left to report.
++# Manual mode — no wireless debugging, adb not authorized (an expired pairing still answers on its port), or settings
++# writes refused — does only steps 1 and 3 (2 too when adb works) plus `adb kill-server`, says why, and opens
++# Developer options so the two debugging switches can be turned off by hand.
+ # F8_BIN replaces the tool directory and F8_GAMEMODE_LOG the log file (tests only).
+ P=${F8_BIN:-/data/data/com.termux/files/usr/bin}
+ LOG=${F8_GAMEMODE_LOG:-/data/data/com.termux/files/home/.cache/f8-gamemode.log}
+@@ -30,9 +34,14 @@
+ 
+ PORT=$(timeout 4 "$P/f8-adb-port" 2>/dev/null)
+ ADB=(fakeroot env ANDROID_NO_USE_FWMARK_CLIENT=1 "$P/adb")
++MANUAL="無線偵錯沒開"
++UNPLUG="、拔掉外接滑鼠／鍵盤"
+ if [ -n "$PORT" ]; then
+     "${ADB[@]}" connect "127.0.0.1:$PORT" >/dev/null 2>&1
+     ADB+=(-s "127.0.0.1:$PORT")
++    MANUAL="adb 連不上（配對可能過期）"
++fi
++if [ -n "$PORT" ] && [ "$("${ADB[@]}" get-state 2>/dev/null)" = device ]; then
+     # Event Hub block of dumpsys input (the one f8-mouse-external reads): an external device whose Classes has CURSOR
+     # (mouse, touchpad) or ALPHAKEY (a real keyboard; a headset's media buttons are KEYBOARD without ALPHAKEY).
+     while :; do
+@@ -51,6 +60,14 @@
+         # sheet items are comma-separated, so the device names go in the title
+         [ "$(sheet "還接著外接滑鼠／鍵盤：$ext（官方禁用），先拔掉或關藍牙" "已拔掉，重新檢查")" = 0 ] || exit 0
+     done
++    UNPLUG=
++    # Write adb_wifi_enabled with the value it already has (1: this connection is wireless). SettingsProvider skips an
++    # unchanged value, so nothing is notified; the exit code alone says whether the real writes would be refused.
++    if "${ADB[@]}" shell '[ "$(settings get global adb_wifi_enabled)" = 1 ] && settings put global adb_wifi_enabled 1' >/dev/null 2>&1; then
++        MANUAL=
++    else
++        MANUAL="系統不准 adb 改設定（MIUI「USB 偵錯（安全設定）」沒開）"
++    fi
+ fi
+ 
+ for c in /proc/[0-9]*/comm; do
+@@ -62,10 +79,10 @@
+     fi
+ done
+ 
+-if [ -z "$PORT" ]; then
++if [ -n "$MANUAL" ]; then
+     "$P/adb" kill-server >/dev/null 2>&1
+-    log "no wireless debugging: adb server killed, opening Developer options"
+-    say "F8 遊戲模式：請手動關閉「USB 偵錯」和「無線偵錯」，再從 Termux 通知按 Exit"
++    log "manual: $MANUAL; adb server killed, opening Developer options"
++    say "F8 遊戲模式：$MANUAL，偵錯沒有關。請手動關閉「USB 偵錯」和「無線偵錯」$UNPLUG，再從 Termux 通知按 Exit"
+     am start -a android.settings.APPLICATION_DEVELOPMENT_SETTINGS >/dev/null 2>&1
+     exit 0
+ fi

@@ -1,4 +1,9 @@
 test_tracer=2634 f8-shard=2673
+14284 tracer=29525 home_match=0 environ_lines=64 comm=claude cmd=/root/.config/Claude/claude-code/2.1.280/claude|--output-format|stream-json|--verbose|--input-format|stream-js
+14328 tracer=29525 home_match=0 environ_lines=63 comm=serena cmd=/root/.local/share/uv/tools/serena-agent/bin/python|/root/.local/bin/serena|start-mcp-server|--context|claude-
+2504 tracer=29525 home_match=0 environ_lines=69 comm=bash cmd=/bin/bash|-c|source /root/.claude/shell-snapshots/snapshot-bash-1790399358831-6ddwws.sh 2>/dev/null || true &&
+F8_SHARD_PROOT=/data/data/com.termux/files/home/build/proot-fast/out8/bin/proot-fast8 F8_SHARD_TRACER_ENV="PRO
+2579 tracer=29525 home_match=0 environ_lines=72 comm=f8-shard cmd=/bin/bash|/root/projects/GPU加速/src/f8-ahb-exa-async/tests/tracer_shard/f8-shard|/bin/bash|/tmp/claude-0/-r
 2781 tracer=2725 home_match=0 environ_lines=7110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --password-store=basic --no-sandbox --disable-gpu --disable-dev-shm-usa
 2805 tracer=2725 home_match=0 environ_lines=7110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-zygote-sandbox --no-sandbox|
 2829 tracer=2725 home_match=0 environ_lines=7110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=zygote --no-sandbox|
@@ -16,6 +21,8 @@ test_tracer=2634 f8-shard=2673
 30593 tracer=29525 home_match=0 environ_lines=5176 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
 30594 tracer=29525 home_match=0 environ_lines=5176 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
 31208 tracer=29525 home_match=0 environ_lines=5237 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US
+31251 tracer=29525 home_match=0 environ_lines=64 comm=claude cmd=/root/.config/Claude/claude-code/2.1.280/claude|--output-format|stream-json|--verbose|--input-format|stream-js
+31272 tracer=29525 home_match=0 environ_lines=62 comm=serena cmd=/root/.local/share/uv/tools/serena-agent/bin/python|/root/.local/bin/serena|start-mcp-server|--context|claude-
 31277 tracer=29525 home_match=0 environ_lines=5237 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US -
 3135 tracer=2725 home_match=0 environ_lines=6110 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=gpu-process --no-sandbox --disable-dev-shm-usage --ozone-platfor
 3142 tracer=2725 home_match=0 environ_lines=7102 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=network.mojom.NetworkService --lang=e
@@ -23,3 +30,5 @@ test_tracer=2634 f8-shard=2673
 3634 tracer=2725 home_match=0 environ_lines=2 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=f75524
 3732 tracer=2725 home_match=0 environ_lines=2 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=0 --enable-crash-reporter=f75524
 3830 tracer=2725 home_match=0 environ_lines=7087 comm=claude-desktop cmd=/usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US
+4403 tracer=29525 home_match=0 environ_lines=64 comm=claude cmd=/root/.config/Claude/claude-code/2.1.280/claude|--output-format|stream-json|--verbose|--input-format|stream-js
+4675 tracer=29525 home_match=0 environ_lines=63 comm=serena cmd=/root/.local/share/uv/tools/serena-agent/bin/python|/root/.local/bin/serena|start-mcp-server|--context|claude-

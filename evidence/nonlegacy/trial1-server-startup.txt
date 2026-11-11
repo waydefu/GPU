@@ -1,0 +1,30 @@
+09-07 01:36:27.578 20514 20514 W libc    : Access denied finding property "persist.vendor.track.malloc.enable"
+09-07 01:36:27.578 20514 20514 W libc    : Access denied finding property "persist.vendor.fd.monitor.enable"
+09-07 01:36:28.026 20514 20514 W libc    : Access denied finding property "ro.debuggable"
+09-07 01:36:28.026 20514 20514 W libc    : Access denied finding property "ro.debuggable"
+09-07 01:36:28.027 20514 20514 W libc    : Access denied finding property "ro.debuggable"
+09-07 01:36:28.029 20514 20514 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+09-07 01:36:28.031 20514 20514 W libc    : Access denied finding property "ro.debuggable"
+09-07 01:36:28.047 20514 20514 I AndroidRuntime: Using default boot image
+09-07 01:36:28.047 20514 20514 I AndroidRuntime: Leaving lock profiling enabled
+09-07 01:36:28.047 20514 20514 W libc    : Access denied finding property "odsign.verification.success"
+09-07 01:36:28.048 20514 20514 W libc    : Access denied finding property "ro.debuggable"
+09-07 01:36:28.056 20514 20514 W termux-x11 com.termux.x11 :2: ART APEX data files are untrusted.
+09-07 01:36:28.056 20514 20514 I termux-x11 com.termux.x11 :2: Using generational CollectorTypeCMC GC.
+09-07 01:36:28.057 20514 20514 E termux-x11 com.termux.x11 :2: Error reading named image component header for /system/framework/boot.art, error: Image header from "/system/framework/arm64/boot.art" is invalid
+09-07 01:36:28.057 20514 20514 E termux-x11 com.termux.x11 :2: Could not create image space with image file '/system/framework/boot.art!/apex/com.android.art/etc/boot-image.prof!/system/etc/boot-image.prof:/system/framework/boot-framework-adservices.art'. Attempting to fall back to imageless running. Error was: Image header from "/system/framework/arm64/boot.art" is invalid
+09-07 01:36:28.498 20514 20514 D termux-x11 com.termux.x11 :2: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/9/icu") succeeded. 
+09-07 01:36:28.498 20514 20514 D termux-x11 com.termux.x11 :2: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt76l.dat
+09-07 01:36:28.530 20514 20514 I termux-x11 com.termux.x11 :2: Priority-to-niceness mapping: 19, 16, 13, 10, 0, -2, -4, -5, -6, -8
+09-07 01:36:28.630 20514 20514 W libc    : Access denied finding property "ro.product.name_for_attestation"
+09-07 01:36:28.630 20514 20514 W libc    : Access denied finding property "ro.product.device_for_attestation"
+09-07 01:36:28.631 20514 20514 W libc    : Access denied finding property "ro.product.manufacturer_for_attestation"
+09-07 01:36:28.631 20514 20514 W libc    : Access denied finding property "ro.product.brand_for_attestation"
+09-07 01:36:28.631 20514 20514 W libc    : Access denied finding property "ro.product.model_for_attestation"
+09-07 01:36:28.638 20514 20514 W libc    : Access denied finding property "ro.vendor.mtk.hbt_binfmt_misc_support"
+09-07 01:36:28.639 20514 20514 W libc    : Access denied finding property "ro.vendor.mtk.app32_boost_support"
+09-07 01:36:28.639 20514 20514 W libc    : Access denied finding property "ro.vendor.mtk.hbt_dyn_type"
+09-07 01:36:28.639 20514 20514 W libc    : Access denied finding property "persist.vendor.mtk.hbt_dyn_type"
+09-07 01:36:28.639 20514 20514 W libc    : Access denied finding property "ro.vendor.mi_fake_32bit_support"
+09-07 01:36:28.641 20514 20514 W libc    : Access denied finding property "ro.debuggable"
+09-07 01:36:28.736 20514 20514 D AndroidRuntime: Calling main entry com.termux.x11.Loader
