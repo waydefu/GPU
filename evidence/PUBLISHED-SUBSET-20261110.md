@@ -38,3 +38,9 @@ Screenshots were not part of this batch. A later batch that needs one for a verd
   (agent approval policy; no credentials), and two CI workflow `.yml` files under `evidence/session/gate-a-a1/`.
 - Not published on purpose: `GPU加速-全部Markdown-合併純文字.txt`, a generated merged copy of the markdown from
   2026-09-08. It is stale and derived from the published files, so it was not refreshed.
+
+## Follow-up 2: screenshots referenced by published documents
+
+Added the 24 PNG screenshots that a published document cites by name (proot bench dry runs and reps, and the
+nonlegacy trial and present captures). Each is 7–23 KB. Screenshots that no document cites are not judgment
+basis and stay local. Larger phone captures (MB range) also stay local.
