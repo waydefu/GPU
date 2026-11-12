@@ -88,7 +88,7 @@ dump 只在 fatal / clean close / terminate 時寫。健康的 cell 沒有 GATEA
 X:3 的 dump sink 是本機路徑，不是 device——別用 adb shell cat。
 R7-era 證據格式不同：judge.txt / installed-package.txt / logcat-follow.txt。
               只認 R8+ 的檔名會讓整包 R7 從掃描裡消失（我踩過，61 → 114 attempts）。
-ADB endpoint 每次都變，一律 mdns 重探；lane 只用 5038。
+ADB endpoint 每次都變，一律用 `f8-adb-port` 重探（09-26 更正：mDNS 查不到）；lane 只用 5038。
 ```
 
 ## 5. 證據紀律（違反就等於作廢）

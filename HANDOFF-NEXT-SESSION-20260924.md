@@ -57,4 +57,4 @@ XFCE C0          ROUTING_REMOVES_SPIKES：G0 p99 63–72 ms → GT 9–10 ms（C
 - runner 的 exit trap 要 `cleanup || true; b_cleanup || true; mg_stop`（舊 runner 失敗時會留下 X3）。
 - adb 不能放在 safe-run（RLIMIT_AS）底下：會一路卡到 timeout。
 - 產物流程：artifact-<sha>/install-<sha>.sh 由上一版衍生；sed 全域替換會弄壞 EXPECT_HEAD，要逐欄核對。
-- ADB endpoint 會換網段（192.168.1.100 ↔ 10.191.48.13），一律 mdns 重探。
+- ADB endpoint 會換網段（192.168.1.100 ↔ 10.191.48.13），一律用 `f8-adb-port` 重探（09-26 更正：mDNS 查不到）。

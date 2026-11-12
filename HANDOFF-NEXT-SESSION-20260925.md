@@ -56,7 +56,7 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
    - 現況：非同步原型 `11b3b79` op 層過關（client 端延遲 GA 為 G 的 19–24%）；XFCE 尖峰來自小 pixmap 逐一升級（PGA-GAP-5）→
      依尺寸分流 `f592241`（`TERMUX_X11_GPU_MIN_PIXELS` 預設 4097）讓尖峰消失，但 2D 桌面 GPU 仍未贏 CPU（GT p50 ≈ C 的 2–3 倍）。細節：`HANDOFF-NEXT-SESSION-20260924.md`。
    - **凍結文件已寫（2026-09-25，任何資料之前）：`evidence/session/xfce-v6/XFCE-V6-BASELINE-01-FREEZE.md`（PR #27 已合併；§9 偏差與補充另開 PR）**（Part A 日常 :1、Part B 實驗 :3）。
-   - **工具 T1–T6 已完成、主機端驗證通過（fork commit 14:17，未碰裝置）**：fork `96c0b26`（`tests/xfce_v6/`，本地未 push；快照在 `evidence/session/xfce-v6/tools-96c0b26/`）。
+   - **工具 T1–T6 已完成、主機端驗證通過（fork commit 14:17，未碰裝置）**：fork `96c0b26`（`tests/xfce_v6/`，已於 11-11 推到 backup/feat-exa-async-proto-20260923；快照在 `evidence/session/xfce-v6/tools-96c0b26/`）。
      判定器 53 個測試＋行程比對 5 個；`mutation_check.py` 17 個突變全被抓到（含未突變對照必須綠）。工具驗證證據 `evidence/session/xfce-v6/tool-qualification/`（Xvfb `:99`）。
      過程抓到並修掉：§5.2 原參數（200 ms／≥150 ms）必假紅 → **偏差 1 改 1000 ms／≥500 ms**；`v6_probes` 用 NUL 分隔比對命令列，
      但 termux-x11／Claude 把整串命令列塞在 argv[0]（空格分隔）→ 裝置上會永遠找不到 X3、Part B 全部 INVALID（已修＋測試）。
@@ -113,6 +113,6 @@ v5/v6 程式裡留有 `VERBOSE(tracee, 2, "v5:/v6: ...")` 追蹤，只有 `-v 2`
 - 技能 `termux-proot-performance` 0.4.0（Hermes 來源 `~/.hermes/skills/`，已同步到 `~/.claude/skills/`）、`verification-integrity` 1.6.0 已更新到本檔狀態。
 - 真實登入設定檔開程式留下的 launch.out 推 PR 前要掃帳號識別資訊（目前只有請求 ID）。
 
-## fork（`waydefu/termux-x11` worktree `src/f8-ahb-exa-async`，**全部本地、未 push**）
+## fork（`waydefu/termux-x11` worktree `src/f8-ahb-exa-async`，**已於 11-11 全部推到 backup/feat-exa-async-proto-20260923（原為本地未 push）**）
 `22137ff`、`9f7bad4`（PROOT-BENCH 工具）→ `e4bf7d6`（PF_BIN）→ `9c190e7`（APP-IDLE）→ `0341c54`（DND）→ `a45558c`（f8ifaddrs）→ `98396ad`（proftrace）→ `be7fbc0`（sanity 模式）。
 受判工具的原檔快照已放進 PR：`evidence/session/proot/tools-e4bf7d6/`、`tools-be7fbc0/`。proot 本身的修補在 `~/build/proot-fast/proot-5.1.107.92-v*/`，patch 檔在 `evidence/session/proot/`。

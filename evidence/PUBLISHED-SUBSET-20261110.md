@@ -44,3 +44,11 @@ Screenshots were not part of this batch. A later batch that needs one for a verd
 Added the 24 PNG screenshots that a published document cites by name (proot bench dry runs and reps, and the
 nonlegacy trial and present captures). Each is 7–23 KB. Screenshots that no document cites are not judgment
 basis and stay local. Larger phone captures (MB range) also stay local.
+
+## Follow-up 3: corrections and the Claude Desktop update pitfall record
+
+- Corrected in place (dated 09-26 更正 or 11-11 note): the ADB endpoint instruction now says to use `f8-adb-port`,
+  because mDNS does not find this phone, and the fork-status lines now say the commits were pushed to
+  `backup/feat-exa-async-proto-20260923`. Original wording is kept in the surrounding history.
+- Added: `evidence/session/proot/CLAUDE-DESKTOP-MEMFD-20261112-{PITFALLS,REPORT,DEPLOYMENT}.md`.
+  The `EVIDENCE*.zip` bundles stay local (binary archives of raw run output).

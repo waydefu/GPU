@@ -23,7 +23,7 @@ GPU 的脈絡在 `HANDOFF-NEXT-SESSION-20260924-GL.md`（兩次更新都在檔�
 ## 進行中：PROOT-BENCH-01（Cursor 在 proot-fast 對系統 proot）
 - 判準 **FROZEN**：`S`＝捲動＋打字 CPU（Cursor session＋它的追蹤器＋X3），`PF ≤ P0 × (1 − max(0.10, 2×noise))`，閒置 ≤ +0.05 核，幀不變差，功能正常；兩次重複；
   順序 rep01 P0→PF→P0'、rep02 PF→P0→PF'。
-- 工具（fork `waydefu/termux-x11` worktree `src/f8-ahb-exa-async`，commit **`22137ff` WIP**，本地未 push）：
+- 工具（fork `waydefu/termux-x11` worktree `src/f8-ahb-exa-async`，commit **`22137ff` WIP**，已於 11-11 推到 backup/feat-exa-async-proto-20260923）：
   `tests/proot/proot_bench_launch.sh`（PRoot 外、run-as 啟動新 proot＋Cursor）、`proot_bench.sh`（cell）、`proot_bench_judge.py`（`--selftest` 8/8）、
   `proot_meter.py`（**新寫、未整合**）、`proot-args.txt`（日常 proot 的 42 個參數）。driver `tests/gl/electron_bench_drive.mjs` 多了選用的 `EXTRA_PIDS`。
 - **乾跑 `evidence/session/proot/proot-bench-dryrun-01` 發現**（詳見凍結文件文末）：
@@ -44,12 +44,12 @@ GPU 的脈絡在 `HANDOFF-NEXT-SESSION-20260924-GL.md`（兩次更新都在檔�
 實驗版         1.03.01-f592241-24.09.26（APK f9e35b69…075c），MODE=G；X root 1200×2416（按鍵列隱藏）
 包包模式       evidence/session/gl/exp-pocket-prefs.sh 仍套用中（按鍵列隱藏／下滑、返回無動作／Never keep screen on）；restore 還原
 桌面圖示       「F8 鍵盤列（實驗版）」＝ /usr/local/bin/f8-ekbar-toggle com.waydefu.x11gpu（原腳本備份 .bak-20260924）
-ADB            lane 5038，10.191.48.13:38869（會變；mdns 重探，舊 endpoint 會被一起廣播）
+ADB            lane 5038，10.191.48.13:38869（會變；用 `f8-adb-port` 重探，mDNS 在這支手機上查不到，09-26 更正）
 proot-fast     ~/build/proot-fast/out/bin/proot-fast（SHA256 2a513992…5aba），loader 在 ~/build/proot-fast/out/libexec；未取代系統 proot
 日常 proot     pid 20095（系統 5.1.107.92），沒有動
 /opt/mesa-kgsl 自編 Mesa（opt-in 環境變數，見 MESA-KGSL 文件）；日常啟動器都沒改（仍 --disable-gpu）
 殘留          無 Cursor／X3／proot-fast／meter 程序
-fork commits  8b905a2（GL-BENCH）、a4440fa（ELECTRON-BENCH）、22137ff（PROOT-BENCH WIP）——全部本地、未 push
+fork commits  8b905a2（GL-BENCH）、a4440fa（ELECTRON-BENCH）、22137ff（PROOT-BENCH WIP）——已於 11-11 全部推到 backup/feat-exa-async-proto-20260923（原為本地未 push）
 ```
 
 ## 會咬人的事（今天真的踩過）
@@ -67,7 +67,7 @@ fork commits  8b905a2（GL-BENCH）、a4440fa（ELECTRON-BENCH）、22137ff（PR
 ## 更新 2026-09-24 晚（session 51abd7ec）：PROOT-BENCH-01 結案 → `PROOT_FAST_NO_BENEFIT`
 - 結果：`evidence/session/proot/PROOT-BENCH-01-RESULT.md`。PF 讓追蹤器少約 30%（0.40 → 0.28 核），但總量只少 5–9%，未達 10% 門檻；六輪全 VALID、Stable 不變、殘留 0。
   **不建議換掉日常 proot**。若續攻 PRoot：先拆解追蹤器剩下 0.28 核花在哪些 syscall（新方向，要問使用者）。
-- 工具：fork `9f7bad4`（WIP 標籤、本地未 push）＝乾跑 02 驗證過的版本；計量與結束都改在 run-as 側（乾跑 01 的 `survivors=0` 是假的，已記入凍結文件）。
+- 工具：fork `9f7bad4`（WIP 標籤、已於 11-11 推到 backup/feat-exa-async-proto-20260923）＝乾跑 02 驗證過的版本；計量與結束都改在 run-as 側（乾跑 01 的 `survivors=0` 是假的，已記入凍結文件）。
 - ADB：PRoot 內重起 adb server 要帶 `ADB_VENDOR_KEYS=/data/data/com.termux/files/home/.android/adbkey`，否則 `CERTIFICATE_UNKNOWN`（記憶 device-run-hazards）。
 - 儲存空間：清掉舊 APK、ChatGPT 舊 deb、結案測試的 Cursor profile、npm/uv/pnpm/pip/chromium 快取，可用 42.4 → 45.8 GB。
   Claude Code `2.1.275` 等本 session 結束後可刪（`/root/.config/Claude/claude-code/2.1.275`）。

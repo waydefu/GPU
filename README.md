@@ -10,7 +10,7 @@
 
 1. **[`STATUS-HANDOFF-20260921.md`](STATUS-HANDOFF-20260921.md)** ← 入口（含 §6.5 R9 / §6.6 D-06 / §6.7 R10）
 2. [`V1-CORE-EXECUTOR-MASTER-PLAN-V2.3.md`](V1-CORE-EXECUTOR-MASTER-PLAN-V2.3.md) — 計畫書；**§8/§9 有部分已被 R9/R10 取代，以 handoff 的 SUPERSEDED 標記為準**
-3. [`ADB-CONNECT.md`](ADB-CONNECT.md) — 連線（endpoint 每次都變，一律用 mdns 重探，不要沿用舊值）
+3. [`ADB-CONNECT.md`](ADB-CONNECT.md) — 連線（endpoint 每次都變，一律用 `f8-adb-port` 重探（mDNS 查不到），不要沿用舊值）
 4. [`WORKTREE-MAP.md`](WORKTREE-MAP.md) — source SHA / 遠端
 5. [`HANDOFF.md`](HANDOFF.md) — 完整歷史 ledger
 
