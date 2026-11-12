@@ -1,0 +1,21 @@
+Mon Sep  7 01:01:34 CST 2026
+===uname===
+Linux localhost 6.17.0-PRoot-Distro #1 SMP PREEMPT_DYNAMIC Fri, 10 Oct 2025 00:00:00 +0000 aarch64 aarch64 aarch64 GNU/Linux
+===fingerprint===
+POCO/myron_global/myron:16/BP2A.250605.031.A3/OS3.0.302.0.WPMTWXM:user/release-keys
+16
+36
+===kgsl===
+crw-rw-rw-. 1 ubuntu ubuntu 452, 0 Jan  1  1970 /dev/kgsl-3d0
+===termux-pkgs===
+pkg-query-failed
+ii  glu:aarch64                        9.0.3-1                         aarch64      Mesa OpenGL Utility library
+ii  mesa:aarch64                       26.0.6-3                        aarch64      An open-source implementation of the OpenGL specification
+ii  mesa-demos:aarch64                 9.0.0-7                         aarch64      OpenGL demonstration and test programs
+ii  mesa-vulkan-icd-freedreno:aarch64  26.0.6-3                        aarch64      Mesa's Freedreno Vulkan ICD
+ii  mesa-vulkan-icd-swrast:aarch64     26.0.6-3                        aarch64      Mesa's Swrast Vulkan ICD
+ii  termux-x11-nightly                 1.03.01-6                       all          Termux X11 add-on.
+ii  vulkan-icd                         0.1-1                           all          A metapackage that provides Vulkan ICDs
+ii  vulkan-loader                      0.0.3                           all          A metapackage that provides vulkan loader library
+ii  vulkan-loader-generic:aarch64      1.4.361                         aarch64      Vulkan Loader
+ii  vulkan-tools:aarch64               1.4.361                         aarch64      Vulkan Tools and Utilities

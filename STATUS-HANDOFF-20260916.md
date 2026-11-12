@@ -29,9 +29,9 @@ ADB:      192.168.1.101:46061（live-fetch adb-51c6f1fe-ZtRPH4）
 `evidence/session/gate-a-a1/p2-r7-design/HANDOFF-NEXT-AGENT-20260916.md`、
 `evidence/session/gate-a-a1/p2-r3-xpump-runtime/runtime-7549e36/GATE-A-P2-B2-REQUALIFICATION-02-20260916.md`。
 
-`main` 已合併 [PR #1](https://github.com/waydefu/GPU/pull/1) 與 [PR #3](https://github.com/waydefu/GPU/pull/3)。
+`main` 已合併 [PR #1](https://github.com/waydefu/GPU/pull/1)、[PR #3](https://github.com/waydefu/GPU/pull/3) 與 [PR #5](https://github.com/waydefu/GPU/pull/5)（B-2 PASS `7549e36`）。
 [PR #2](https://github.com/waydefu/GPU/pull/2) **不 merge 關閉**。
-[PR #4](https://github.com/waydefu/GPU/pull/4) **OPEN**（docs snapshot；非 qualification；未 merge）。
+[PR #4](https://github.com/waydefu/GPU/pull/4) **不 merge 關閉**（過期 CASE_LOOP 快照）。
 
 ---
 
@@ -41,7 +41,7 @@ ADB:      192.168.1.101:46061（live-fetch adb-51c6f1fe-ZtRPH4）
 
 不准從本輪自動開 R7。不准 overlay `b2-requalification-01`／`02`。不准 retry `repair-validation-01`。不准安裝 `327b028`。不准改 timeout。
 
-下一步：另開授權做 R7 qualification。建議之後更新 docs／PR #4，但**不要 merge**，除非另有授權。
+下一步：另開授權做 R7 qualification。docs 紀錄已在 waydefu/GPU [PR #5](https://github.com/waydefu/GPU/pull/5) merge（`6c83338`）。[PR #4](https://github.com/waydefu/GPU/pull/4) 已不 merge 關閉。
 
 ---
 
@@ -61,7 +61,7 @@ ADB:      192.168.1.101:46061（live-fetch adb-51c6f1fe-ZtRPH4）
 
 **後面沒開、現在也不該開**
 
-- R7 裝置 qualification、R8–R10、Gate H、Production enable、termux-x11 origin PR／merge、PR #4 merge。
+- R7 裝置 qualification、R8–R10、Gate H、Production enable、termux-x11 origin PR／merge。
 
 ---
 

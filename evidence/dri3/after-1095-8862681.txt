@@ -1,0 +1,43 @@
+DRI3 BuffersFromPixmap AFTER PR #1095 — full P1 After
+date: 2026-09-07 ~12:54 CST
+adb: 192.168.1.101:35749 (myron / 25102PCBEG)
+
+BUILD
+  branch: dri3-ahardwarebuffer-export (worktree src/f8-ahb, local f8-ahb)
+  commit / PR head: 8862681a2396b8494a687af1d2d690d491138e09
+  upstream master: 9df8b767645aa0d0a2f2576767449df55b41962f
+  CI run: 31390788274 headSha=8862681
+  CI APK (NOT installed): evidence/x11gpu/f8-ahb/termux-x11-universal-debug.apk
+    sha256 a10e5eedd1e3fe87e2cee88861a9e4d772a9b31748dd3936acea33ba7cf5d4d3
+    package com.termux.x11 versionName 1.03.01-f7e0247-10.08.26
+  installed APK: evidence/x11gpu/f8-ahb/termux-x11-universal-debug-waydefu.apk
+    sha256 de4a3c856c783fb71fcd083bae8e197eb3400a2f83bafc2417c0eab1da70d041
+    package com.waydefu.x11gpu
+    lastUpdateTime 2026-09-07 12:37:26
+    on-device sha256 match: yes
+
+BEFORE (debug5 c698164 :3, evidence/dri3/before-debug5-c698164.txt)
+  attempts=100 success=0 BadPixmap=100 error=4
+
+AFTER functional 1200x64 (historical pad size)
+  nfd=1 w=1200 h=64 stride=4864 offset=0 modifier=0x0 depth=24 bpp=32
+  fd_target=/dmabuf:AHardwareBuffer pid [23628]
+  fstat st_size=311296 (=1216*64*4) ioctl DMA_BUF_SYNC=0
+  AHB_infer width=1200 height=64 stride_px=1216 pad_px=16
+  pixel p00=0x00ff0000 p10=0x0000ff00 p01=0x000000ff p11=0x00ffffff MATCH
+  LINEAR justified: row-1 blue at y=1 uses stride 4864, not width*4=4800
+
+AFTER 1280x64: stride=5120 pad_px=0 pixel MATCH
+AFTER 256x256: stride=1024 pad_px=0 pixel MATCH
+
+STRESS 1200x64 draw+export+pixel+close
+  x100:  100/100 BadPixmap=0 pix_mismatch=0 crashish=0 fd_delta=0
+  x1000: 1000/1000 BadPixmap=0 pix_mismatch=0 crashish=0 fd_delta=0
+
+P0 regression p0_gate2.py :3 1: PASS fails=0 residue=0
+Stable :1 PID 10718 alive 1920x1059
+Stable XFCE 18844 / xfwm 18871 alive
+experimental :3 PID 23628 alive
+
+P1 CLOSED
+Next: GPU Present qualification

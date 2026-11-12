@@ -39,7 +39,7 @@
   - 要比對 Termux 修補 0017：它讓 `dri3_x11_connect` 在拿不到 DRI3 裝置時也回傳 true。
   - 候選環境變數（例如 `LIBGL_KOPPER_DRI2`）只能在 `:3` 上試，**不碰 Stable**。
 
-## 工具（fork `src/f8-ahb-exa-async`，分支 `feat/exa-async-proto-20260923`，**本地、未 push**）
+## 工具（fork `src/f8-ahb-exa-async`，分支 `feat/exa-async-proto-20260923`，**已於 11-11 推到 backup/feat-exa-async-proto-20260923**）
 - 相關 commit：`6649316` → `bb45c12` → `5130cf2` → `40a1750` → `8423f0a`。
 - 原始碼快照已推到 `evidence/session/gl/gl-present-tools-8423f0a/`。
 - 內容：

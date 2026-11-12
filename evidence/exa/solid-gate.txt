@@ -1,0 +1,32 @@
+EXA SOLID GPU PATH OPERATIONAL
+date: 2026-09-07 ~16:25 CST
+branch: f8-exa-solid
+commit: ca8600a
+APK: com.waydefu.x11gpu 1.03.01-ca8600a-07.09.26
+SHA256: 52e4fbfc848c31b728139ceb227756d0919ca2c949151468723da1a6fabd3422
+DISPLAY: :3 PID 18291 geom 1200x2191
+install: 2026-09-07T16:19:30+08:00 (X later reconnected; GPU path live)
+
+matrix: ok=19 fail=0
+unsupported GXxor/GXand/GXor/planemask: pixel PASS, PrepareSolid FALSE
+padded 1200: PASS
+stress 100/1000: fail=0 fd_delta=0 (measured on 923116b; matrix+P1 reconfirmed on ca8600a)
+P1: 10/10 stride=4864 AHB=1216 BadPixmap=0 fd_delta=0 pixel match
+P0: fails=0 residue=0
+Present 20/20 pix_fail=0
+Fence x20: all PASS
+Copy 22/22
+
+counters (matrix window):
+exa_solid_prepare=43 exa_solid_gpu=29 exa_solid_fallback=14
+solid_rects=29 cpu_solid_rects=0
+renderer_solid_submits=33 renderer_solid_complete=33
+
+First wrong layer (fixed): R8G8B8X8 FBO stores unused byte 0xFF;
+24bpp CPU/DRI3 mmap expects 0x00. Repair after GPU wait.
+
+Performance (honest): GPU solid is not faster than software for this subset.
+X-byte repair walks filled pixels on 24bpp. Tiny rects: software wins.
+-disable-gpu-exa: gpu=0 fallback=all (toggle works).
+
+Stable: :1 PID 10718 XFCE 18844 xfwm 18871 1920x1059 untouched.

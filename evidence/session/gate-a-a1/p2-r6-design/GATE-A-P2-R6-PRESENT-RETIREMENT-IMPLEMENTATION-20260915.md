@@ -3,11 +3,12 @@
 Date: 2026-09-15 22:00 UTC+8
 
 ```text
-STATUS: SOURCE+HOST VERIFIED / UNCOMMITTED / NOT R6 PASS
+STATUS: SOURCE REVIEWED / PATCH NORMALIZED / LOCAL COMMIT 0f1e546 / NOT R6 PASS
 WORKTREE: src/f8-ahb-gatea-r6-retire
 BRANCH: fix/gatea-r6-present-retirement-20260915
 BASE: 95e6f9602b0146ee190870f84a34aad822ef666f
-PARENT DIRTY: lorie/src/main/cpp/patches/xserver.patch
+COMMIT: 0f1e54699d0b11a781f2c044fbc77505f8a53bd8
+PARENT: clean after commit (xserver submodule remains patch-applied)
 CI / INSTALL / ADB / R7: NOT DONE
 ```
 
@@ -49,13 +50,14 @@ p_r6_d2_present.c -Werror        exit 0
 ARM64 incremental and full-clean native builds previously succeeded on this
 worktree. They were not re-run after the 20:56 markdown-only Hermes turn.
 
-## Remaining before commit
+## Remaining before CI / device
 
-1. Normalize `xserver.patch`: merge retirement hunks into the existing Present
-   sections; do not leave a second `+++ ./present/present_execute.c` at EOF.
-2. Independent architecture review (not the session that wrote the helper).
-3. Parent updates `HANDOFF.md` / `TEST-MATRIX.md` / `AGENTS.md` only after that
-   review. This packet does not do it.
+Independent review 2026-09-16 folded Present hunks into the primary patch
+and committed `0f1e546`. Packet:
+`GATE-A-P2-R6-PRESENT-RETIREMENT-INDEPENDENT-REVIEW-20260916.md`.
+
+Still not R6 PASS. Next is fork CI of exact `0f1e546`, then experimental
+install and new `runtime-0f1e546/` cells. Do not start R7.
 
 ## Not proven
 

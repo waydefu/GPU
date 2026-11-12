@@ -1,0 +1,31 @@
+xfwm OFF FAIL
+classification: xfwm/session interaction (NOT compositor-specific)
+stopped: yes — no restart, no compositor ON, no GPU Composite
+
+Gate1 persistent :3 PASS
+  X PID 29799
+  ppid 1
+  30s PASS 60s PASS
+  xdpyinfo PASS after starter shell exit
+  probe: XRender histogram probe installed
+
+Gate2 xfwm --compositor=off
+  start 2026-09-07T17:37:38
+  xfwm PID 31278
+  X still 29799 at WM start
+  xwininfo -root -tree: 0 children
+  after 2.2s: X_DIED and xfwm dead
+  xdpyinfo FAIL
+
+Evidence gaps / facts
+  X stdout/stderr /tmp/x11gpu-hist-x.log empty (X logs via logcat)
+  xfwm stderr /tmp/x11gpu-xfwm-off.log empty (killed before flush or no output)
+  no new tombstone (newest 2026-09-06) → not an obvious native SIGSEGV dump
+  adb logcat -d wrapped; PID 29799 lines no longer in ring buffer
+  last known good logcat for 29799: 17:36:57 histogram probe installed (before xfwm)
+  Stable 10718/18844/18871 untouched
+
+First wrong layer
+  2. xfwm startup / session interaction
+  compositor ON not tested (OFF already fatal)
+  histogram NOT COLLECTED

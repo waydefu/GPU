@@ -33,7 +33,7 @@ POCO F8 Ultra 真正的 Linux 全域 GPU 加速（不只 Gate A）。先以**內
                   fork waydefu/termux-x11  branch feat/exa-async-proto-20260923（HEAD a8ce018，已 push）
                   worktree src/f8-ahb-exa-async
 預設行為          TERMUX_X11_GPU_MIN_PIXELS=4097（≤64×64 不升級 AHB；0 = 舊行為）；TERMUX_X11_EXA_ASYNC=1 選用
-ADB               lane 5038，上次 10.191.48.13:41757（會換，一律 mdns 重探：evidence/session/gate-a-a1/runtime/mdns-address-15s.py）
+ADB               lane 5038，上次 10.191.48.13:41757（會換，一律用 `f8-adb-port` 重探（09-26 更正：mDNS 查不到）：evidence/session/gate-a-a1/runtime/mdns-address-15s.py）
 手機黑盒子        /data/local/tmp/f8-blackbox（pid 5963），凍結／重開機後讀 bb.log、events.log
 手機方向          必須直向（橫向時 X root 變 2464×783，runner 會正確 BLOCKED）；使用者已關閉自動旋轉
 儲存空間          約 30 GB 可用；XFCE 原始 logcat 每次約 1.2 GB（遙測造成），跑完用 gzip 壓縮（見下）
@@ -72,7 +72,7 @@ ADB               lane 5038，上次 10.191.48.13:41757（會換，一律 mdns �
 GL-BENCH-01 GL_INVALID／VK_INVALID（放包包，判準段有觸控；凍結）
 GL-BENCH-02 GL_GPU_BENEFIT（分數 5.38×／4.86×，每幀 CPU 0.10×／0.11×）、VK_GPU_BENEFIT（3.93×／4.99×，0.18×）；A/A 通過
 限制        lavapipe 自身重複差 1.61×（1.5× 門檻不是「遠超雜訊」）；只到 benchmark 800×600，不代表遊戲
-工具        fork 8b905a2（本地未 push）tests/gl/gl_bench.sh、gl_bench_judge.py；evidence/session/gl/run-gl-bench.sh（EXPECT_ROOT=1200x2416）
+工具        fork 8b905a2（已於 11-11 推到 backup/feat-exa-async-proto-20260923）tests/gl/gl_bench.sh、gl_bench_judge.py；evidence/session/gl/run-gl-bench.sh（EXPECT_ROOT=1200x2416）
 包包模式    evidence/session/gl/exp-pocket-prefs.sh（實驗版按鍵列隱藏／手勢無動作／保持亮屏）目前仍套用中；restore 還原
 桌面        「F8 鍵盤列（實驗版）」＝ /usr/local/bin/f8-ekbar-toggle com.waydefu.x11gpu
 ```
@@ -87,7 +87,7 @@ Electron    GPU 程序啟動即死的根因＝ANGLE 載入 libpci 找不到 /pro
             Cursor CPU 幾乎全在 JS；閒置 0.33 核（未查）
 事件        滑掉實驗版 → Gate A x-hup/6 設計停機（整個 :3 session 結束）；EXA「devPrivate.ptr」是非致命警告（INCIDENT-20260924…，開頭有更正）
             兩個唯讀 RCA session 由使用者啟動中（task_7bdaf674 前提錯誤、task_be769d75 前提正確）
-工具        fork a4440fa（本地未 push）tests/gl/electron_bench*.{sh,mjs,py}
+工具        fork a4440fa（已於 11-11 推到 backup/feat-exa-async-proto-20260923）tests/gl/electron_bench*.{sh,mjs,py}
 ```
 
 > **2026-09-24 15:00 之後的最新交接：`HANDOFF-NEXT-SESSION-20260924-PROOT.md`**（PRoot 追蹤器開銷、PROOT-BENCH-01 進行中）。

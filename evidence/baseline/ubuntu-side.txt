@@ -1,0 +1,69 @@
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+aarch64
+===icd===
+total 40
+-rw-r--r--. 1 root root 137 Apr 21 22:43 asahi_icd.json
+-rw-r--r--. 1 root root 140 Apr 21 22:43 broadcom_icd.json
+-rw-r--r--. 1 root root 141 Apr 21 22:43 freedreno_icd.json
+-rw-r--r--. 1 root root 141 Apr 21 22:43 gfxstream_vk_icd.json
+-rw-r--r--. 1 root root 137 Apr 21 22:43 intel_icd.json
+-rw-r--r--. 1 root root 135 Apr 21 22:43 lvp_icd.json
+-rw-r--r--. 1 root root 139 Apr 21 22:43 nouveau_icd.json
+-rw-r--r--. 1 root root 140 Apr 21 22:43 panfrost_icd.json
+-rw-r--r--. 1 root root 138 Apr 21 22:43 radeon_icd.json
+-rw-r--r--. 1 root root 138 Apr 21 22:43 virtio_icd.json
+===glxinfo-bare===
+name of display: :1
+display: :1  screen: 0
+direct rendering: Yes
+Extended renderer info (GLX_MESA_query_renderer):
+    Vendor: Mesa (0xffffffff)
+    Device: llvmpipe (LLVM 21.1.8, 128 bits) (0xffffffff)
+    Version: 26.0.6
+    Accelerated: no
+    Video memory: 15013MB
+    Unified memory: yes
+    Preferred profile: core (0x1)
+    Max core profile version: 4.5
+===glxinfo-gpu===
+name of display: :1
+display: :1  screen: 0
+direct rendering: Yes
+Extended renderer info (GLX_MESA_query_renderer):
+    Vendor: Mesa (0x5143)
+    Device: zink Vulkan 1.4(Adreno (TM) 840 (MESA_TURNIP)) (0x44050a31)
+    Version: 26.0.6
+    Accelerated: yes
+    Video memory: 11260MB
+    Unified memory: yes
+    Preferred profile: core (0x1)
+    Max core profile version: 4.6
+===vulkaninfo===
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_broadcom.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_broadcom.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_gfxstream.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_gfxstream.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_intel.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_intel.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_nouveau.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_nouveau.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_panfrost.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_panfrost.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_radeon.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_radeon.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_virtio.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_virtio.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libvulkan_asahi.so" not found
+ERROR: [Loader Message] Code 0 : loader_icd_scan: Failed loading library associated with ICD JSON libvulkan_asahi.so. Ignoring this JSON
+ERROR: [Loader Message] Code 0 : dlopen failed: library "libVkLayer_MESA_device_select.so" not found
+==========
+VULKANINFO
+==========
+
+Vulkan Instance Version: 1.4.361
+
+
+Instance Extensions: count = 25

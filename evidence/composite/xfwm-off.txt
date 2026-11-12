@@ -1,0 +1,5 @@
+xfwm OFF FAIL X_DIED
+X 29799 alive=False
+xfwm 31278 alive=False
+elapsed 2.2s
+2026-09-07T17:37:40

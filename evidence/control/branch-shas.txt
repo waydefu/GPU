@@ -1,0 +1,11 @@
+date: Mon Sep  7 01:12:55 CST 2026
+f8-control: 9df8b767645aa0d0a2f2576767449df55b41962f
+master: 9df8b767645aa0d0a2f2576767449df55b41962f
+identical: yes
+pr1095-head: 8862681a2396b8494a687af1d2d690d491138e09
+pr1114-head: refs/pull/1114/head
+not-fetched
+fork	https://github.com/waydefu/termux-x11.git (fetch)
+fork	https://github.com/waydefu/termux-x11.git (push)
+origin	https://github.com/termux/termux-x11.git (fetch)
+origin	https://github.com/termux/termux-x11.git (push)

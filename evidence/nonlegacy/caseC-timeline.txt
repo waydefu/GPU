@@ -1,0 +1,65 @@
+06:30:25.603 T_prefs set exact 1280x1024 (experimental package only)
+06:30:26.382 T_kill experimental X 19146 and wrapper 19119; Stable 10718 must live
+06:30:27.685 X3 socket leftover after process death; removing X3 only
+06:30:28.676 Stable 10718 and X1 OK; X3 gone
+06:30:28.712 T_force-stop experimental activity for first Surface attach
+06:30:29.746 T_app launch experimental MainActivity Display2 fullscreen
+06:30:31.622 T_app done; X3 still must be absent
+06:31:48.224 f8dbg_offset_before=107
+06:31:48.374 Stable PID=10718 X1=X1
+06:31:48.384 T0 process spawn f8-x11gpu :3 -> logs/x11gpu-trial10.log
+T0_actual 06:31:54.067
+06:32:32.866 T1_T2_T3 from logs: Surface+setViewport 06:31:56; RRSetSize 1280x1024; CreatePixmap 1280x1024
+06:32:33.022 X root=1280x1024
+06:32:33.128 Stable still 10718
+06:32:33.140 T4 xterm -geometry 80x24+0+0
+06:32:34.397 xterm pid=31814
+06:32:54.947 T5 first marker write on VT 0x200012 (xterm inner)
+06:32:59.143 T6 first visible frame screenshot HDMI (no UI poke)
+06:32:59.799 screenshot /root/projects/GPU加速/evidence/nonlegacy/present-768-caseC-hdmi-fresh.png bytes=24344
+06:32:59.976 Stable still 10718 X sockets=X1
+X3
+06:34:50.161 RUN2 kill experimental :3 only
+06:35:43.183 RUN2 kill termux-x11gpu by comm only (never 10718)
+06:35:43.501 X3 leftover; rm X3 only
+06:35:43.901 Stable 10718 OK; X3 gone; sockets=X1
+06:35:44.405 RUN2 force-stop experimental then launch Display2 fullscreen
+06:35:46.851 RUN2 f8dbg_offset_before=207 T0 spawn /root/projects/GPU加速/logs/x11gpu-trial11.log
+06:35:46.864 RUN2 wrapper=6699
+06:36:04.317 RUN2 X3 up geom=1280x1024 xpid= Stable=10718
+06:36:04.326 RUN2 T4 xterm
+06:36:05.678 RUN2 T5 markers VT=0x200012
+06:36:09.984 RUN2 T6 screenshot /root/projects/GPU加速/evidence/nonlegacy/present-768-caseC-hdmi-fresh-r2.png
+GetImage (21, 21) = #00ff00
+GetImage (789, 21) = #000000
+GetImage (301, 11) = #ff0000
+GetImage (1069, 11) = #000000
+GREEN_BBOX 381 20 417 56 n= 1369
+CLASS letterbox_ok left=381 (not +768)
+06:36:11.381 RUN2 sockets=X1
+X3
+06:36:11.394 RUN3 kill termux-x11gpu by comm only (never 10718)
+06:36:11.692 X3 leftover; rm X3 only
+06:36:11.977 Stable 10718 OK; X3 gone; sockets=X1
+06:36:12.361 RUN3 force-stop experimental then launch Display2 fullscreen
+06:36:14.681 RUN3 f8dbg_offset_before=298 T0 spawn /root/projects/GPU加速/logs/x11gpu-trial12.log
+06:36:14.704 RUN3 wrapper=8428
+06:37:27.221 RUN3 kill leftover by /proc cmdline (never 10718)
+06:37:27.473 Stable 10718 OK; sockets=X1
+06:37:27.979 RUN3 force-stop experimental then launch Display2 fullscreen
+06:37:30.691 RUN3 f8dbg_offset_before=298 T0 spawn trial12
+06:37:30.706 RUN3 wrapper=11957
+06:37:34.284 RUN3 X3 up geom=1280x1024 xpid=11957
+12251 Stable=10718
+06:37:34.294 RUN3 T4 xterm
+06:37:35.643 RUN3 T5 markers VT=0x200012
+06:37:39.804 RUN3 T6 screenshot /root/projects/GPU加速/evidence/nonlegacy/present-768-caseC-hdmi-fresh-r3.png
+GetImage (21, 21) = #00ff00
+GetImage (789, 21) = #000000
+GetImage (301, 11) = #ff0000
+GetImage (1069, 11) = #000000
+GREEN_BBOX 381 20 417 56 n= 1369
+CLASS letterbox_ok left=381 (not +768)
+06:37:41.220 RUN3 sockets=X1
+X3 xpid=11957
+06:39:13.796 restore experimental Display0 native; Stable HDMI; X1=1920x1059 PID 10718; X3=1200x2191 PID 11957

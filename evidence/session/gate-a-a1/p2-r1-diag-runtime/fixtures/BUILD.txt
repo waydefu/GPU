@@ -31,3 +31,5 @@ de75acfe19bafae80a9c1005517a2bc3fbcb7c115ac974df9866b00c9bb22b90  /root/projects
 cc -O2 -Wall -Wextra -Werror -o fixtures/p_b2_stress patches/p_b2_stress.c -lxcb -lxcb-render
 Do not overwrite runtime-a7528bd/r1-unset-oracle/. Device reproduction needs separate authorization
 (cell runtime-a7528bd/r1-unset-diagnostic-01/).
+
+

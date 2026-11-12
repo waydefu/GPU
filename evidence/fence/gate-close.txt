@@ -1,0 +1,69 @@
+Fence + FrameTimeline qualification
+date: 2026-09-07 ~15:10 CST
+
+## 1. Verdict
+FENCE QUALIFIED — current implementation sufficient for tested workload
+PR #1114 A/B: no measured duplicate-callback/crash benefit; no regression; kept as defensive disarm.
+
+FRAMETIMELINE: quantitative baseline recorded (not zero-jank). 1920x1080@60 Present copy is stable. GPU Present does not improve pacing vs CPU fallback on this solid-fill workload.
+
+## 2. Exact build (experimental B, currently running)
+branch: f8-present-fence
+commit: 410124d029d682f03704d17481df13fc917fe9e5
+APK SHA256: f664f6b61dbb3efd5b68079bd293166736075141348b4ddb41cbd146057959a0
+versionName: 1.03.01-410124d-07.09.26
+package: com.waydefu.x11gpu
+upstream base: 8862681 (#1095) + PR #1114 wait-fence disarm
+experimental PID: 6751 (after GPU restore)  DISPLAY=:3  1920x1080
+activity: Display0  PID 19982
+CI: https://github.com/waydefu/termux-x11/actions/runs/34091920062
+
+A (pre-1114) was 8862681 APK SHA 5adf9676643b4d5c6e37e7e858bb0c10ccd45eb686d339ac72e68754b8f1df98 PID 17049
+
+## 3. What changed
+xserver.patch present_wait_fence_triggered: disarm callback before re_execute (exact PR #1114 hunk).
+Testers: patches/p_fence.c patches/p_pace.c
+No Stable APK/prefs/PID changes.
+
+## 4. Direct evidence
+Wait-fence hold: 20/20 unsignaled fence delayed copy; pixels after trigger = NEW
+Wait-dup: 1000/1000 A and 100/100 B; CompleteNotify n=1; double TriggerFence; dup_serials=0
+Rotate 3 pixmaps + IdleNotify: 1000/1000 A, 100/100 B
+Idle-race poison after idle: 50/50 window kept presented seq
+GPU offload A x1000: 185+283+300+280+299+60 all 100%
+GPU offload B x100: 20/20 + 165/165 + 40/40
+CPU fallback confirmed: 0/174 0/295 0/131 with -disable-gpu-present
+Perfetto 64MB: /tmp/ft-gpu.perfetto-trace (FrameTimeline source captured; gfxinfo View stats=0 because SurfaceView BLAST)
+
+## 5. Quantitative pacing (client CompleteNotify intervals)
+GPU 1920x1080 1200 frames: fps=57.24 copy=1200 skip=0  p50=16.68 p95=20.49 p99=35.96 max=230.30 ms
+GPU 1920x1080 600 frames:  fps=59.41 copy=600  skip=0  p50=16.71 p95=21.12 p99=27.21 max=69.65 ms
+CPU 1920x1080 600 frames:  fps=59.53 copy=600  skip=0  p50=16.64 p95=18.36 p99=22.86 max=73.46 ms  offload 0/N
+GPU 1200x1080 400 frames (1200x2191 not in exact list; clamped): fps=60.03 p50=16.68 p95=19.37 p99=20.93 max=26.86  297/297 GPU
+
+Do NOT claim GPU faster. CPU p95/p99 were slightly tighter on this solid fill.
+
+## 6. First wrong layer
+None for fence correctness.
+Pacing: client Present complete ≈ 60Hz; SurfaceFlinger View gfxinfo not applicable (SurfaceView).
+1200x2191 exact mode rejected by preference enum (not in list).
+3440x1440: HDMI currently 1920x1080@60 only — display not connected.
+
+## 7. Regression
+P0 :3 PASS fails=0 residue=0
+P1 10/10 stride=4864 pad=16 MATCH BadPixmap=0 fd_delta=0
+Present 20/20 GPU after B install and after GPU restore
+Fence A×1000 and B×100 PASS
+
+## 8. Stable safety
+:1 PID 10718  XFCE 18844  xfwm 18871  X1=1920x1059
+Display2 restored to com.termux.x11 MainActivity (was briefly covered by experimental during 1200 attempt; restored)
+Stable versionName still 1.03.01-6d3c688-27.08.26
+
+## 9. Gate
+FENCE QUALIFIED
+FRAMETIMELINE BASELINE RECORDED (1920x1080@60; no pathological pacing; GPU≠faster)
+V1 UWQHD60: blocked — physical 3440x1440 display absent (HDMI 1920x1080@60)
+
+## 10. Next
+EXA Copy using proven GPU copy queue (PrepareCopy currently FalseNoop).

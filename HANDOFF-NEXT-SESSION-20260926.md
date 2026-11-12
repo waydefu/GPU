@@ -70,5 +70,5 @@ X 端 `loriePixmapFromFds`（`src/upstream/lorie/src/main/cpp/lorie/InitOutput.c
 - 推證據：疊層 PR 進 base 不進 main；使用者常在建立後立刻合併（之後的 push 不會進 main）；**公開 repo 別推 raw logcat**（`tar --exclude`＋commit 前檢查）。
 - 改日常檔案（啟動器、`f8desk`）會被 auto mode 擋：寫成套用腳本、先在假根目錄測、給使用者自己執行。
 
-## Fork 狀態（`src/f8-ahb-exa-async`，`feat/exa-async-proto-20260923`，本地未 push）
+## Fork 狀態（`src/f8-ahb-exa-async`，`feat/exa-async-proto-20260923`，已於 11-11 推到 backup/feat-exa-async-proto-20260923）
 `27f72e5`（tests/tracer_shard）、`7e9c752`／`a72669c`（tests/xfce_notel）；快照在 `evidence/session/proot/tools-27f72e5/`、`evidence/session/xfce-v6/tools-7e9c752/`、`tools-a72669c/`。

@@ -1,0 +1,12 @@
+=== Phase0 freeze: 2026-09-07 01:16 CST ===
+---stable x11 procs (expect ONLY :1 -legacy-drawing)---
+10718 termux-x11 com.termux.x11 :1 -legacy-drawing
+---any :2 (expect none)---
+none (good)
+---kgsl---
+crw-rw-rw-. 1 ubuntu ubuntu 452, 0 Jan  1  1970 /dev/kgsl-3d0
+---f8desk sha (frozen, must contain -legacy-drawing)---
+e995a5142c31b7bed5b0f540e7be3f1e2a0706ebade7e9d67da01e26c0459c56  /data/data/com.termux/files/usr/bin/f8desk
+c67919ea7700e3ec8c4893acf21f1633bdf116612fe8274fb73e9d9f4821b525  /data/data/com.termux/files/usr/bin/f8desk-external
+/data/data/com.termux/files/usr/bin/f8desk:1
+/data/data/com.termux/files/usr/bin/f8desk-external:1

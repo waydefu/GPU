@@ -14,7 +14,9 @@
 ```bash
 test -f /root/projects/GPU加速/HANDOFF.md
 git -C /root/projects/GPU加速/src/f8-ahb-gatea-case-loop rev-parse HEAD
-# 期待：fdfb1ce44b429897eda17c43bf33fbd37afe67f3
+# 期待：fdfb1ce44b429897eda17c43bf33fbd37afe67f3  （裝置仍為此 SHA）
+git -C /root/projects/GPU加速/src/f8-ahb-gatea-r7-hup-preserve rev-parse HEAD
+# 期待：a07d66c48b7fe276b0b1fbfa1fa8eaf08ed68b82  （未安裝修復候選）
 
 python3 /root/projects/GPU加速/evidence/session/gate-a-a1/p2-r7-design/judge-r7.py \
   fbo-incomplete \

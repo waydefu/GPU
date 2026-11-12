@@ -1,0 +1,247 @@
+#!/usr/bin/env python3
+"""Gate A P2 R3 bound-tuple CI artifact verifier (run 34786907985, HEAD 98b0011)."""
+from pathlib import Path
+import hashlib
+import json
+import re
+import subprocess
+import zipfile
+
+EVID = Path('/root/projects/GPU加速/evidence/session/gate-a-a1/p2-r3-bound-ci-34786907985')
+APK = EVID / 'universal' / 'termux-x11-universal-debug.apk'
+OUT = EVID / 'apk-elf-verification'
+OUT.mkdir(parents=True, exist_ok=True)
+LIB_REL = 'lib/arm64-v8a/libXlorie.so'
+EXPECTED_SIGNER = 'b6da01480eefd5fbf2cd3771b8d1021ec791304bdd6c4bf41d3faabad48ee5e1'
+SDK_BT = '/root/android-sdk/build-tools/36.0.0'
+APKANALYZER = '/root/android-sdk/cmdline-tools/latest/bin/apkanalyzer'
+EXPECTED_PKG = 'com.waydefu.x11gpu'
+EXPECTED_HEAD = '98b001129682a50eb43180e29bc57ac03556dae3'
+CI_RUN = 34786907985
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with open(path, 'rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def run_capture(label, args):
+    try:
+        result = subprocess.run(args, capture_output=True, check=False)
+        rc, out, err = result.returncode, result.stdout, result.stderr
+    except OSError as error:
+        rc, out, err = 127, b'', f'{type(error).__name__}: {error}'.encode()
+    (OUT / f'{label}.stdout.txt').write_bytes(out)
+    (OUT / f'{label}.stderr.txt').write_bytes(err)
+    (OUT / f'{label}.status').write_text(
+        json.dumps({'argv': args, 'returncode': rc}, indent=2) + '\n')
+    return rc, out.decode(errors='replace'), err.decode(errors='replace')
+
+
+assert APK.is_file() and APK.stat().st_size > 0, APK
+report = {'apk_path': str(APK), 'apk_bytes': APK.stat().st_size,
+          'apk_sha256': sha256(APK), 'head': EXPECTED_HEAD,
+          'ci_run': CI_RUN}
+
+with zipfile.ZipFile(APK) as zf:
+    infos = zf.infolist()
+    names = [i.filename for i in infos]
+    report['testzip'] = zf.testzip()
+    report['member_count'] = len(infos)
+    report['duplicate_names'] = sorted({n for n in names if names.count(n) > 1})
+    report['libxlories'] = sorted(n for n in names if n.endswith('libXlorie.so'))
+    report['arm64_member_present'] = LIB_REL in names
+    stored = [i for i in infos if i.compress_type == zipfile.ZIP_STORED]
+    bad = 0
+    with open(APK, 'rb') as f:
+        for i in stored:
+            f.seek(i.header_offset)
+            local = f.read(30)
+            if len(local) < 30:
+                bad += 1
+                continue
+            name_len = int.from_bytes(local[26:28], 'little')
+            extra_len = int.from_bytes(local[28:30], 'little')
+            if (i.header_offset + 30 + name_len + extra_len) % 4 != 0:
+                bad += 1
+    report['stored_count'] = len(stored)
+    report['stored_mod4_failures'] = bad
+
+with zipfile.ZipFile(APK) as zf:
+    embedded = OUT / 'libXlorie-embedded.so'
+    embedded.write_bytes(zf.read(LIB_REL))
+report['embedded_sha256'] = sha256(embedded)
+
+unstripped = sorted((EVID / 'unstripped').glob('**/obj/arm64-v8a/libXlorie.so'))
+assert len(unstripped) == 1, unstripped
+unstripped = unstripped[0]
+report['unstripped_path'] = str(unstripped)
+report['unstripped_sha256'] = sha256(unstripped)
+
+build_ids = {}
+for label, path in (('embedded', embedded), ('unstripped', unstripped)):
+    rc, out, _ = run_capture(f'{label}-readelf-n', ['readelf', '-n', str(path)])
+    assert rc == 0, label
+    match = re.search(r'Build ID:\s*([0-9a-f]+)', out)
+    assert match, label
+    build_ids[label] = match.group(1)
+report['build_ids'] = build_ids
+report['build_id_equal'] = build_ids['embedded'] == build_ids['unstripped']
+
+p0wanted = {'GATEA_A1': 'A1 microprobe marker',
+            'gateaA1MicroprobeRun': 'A1 entry, unstripped only (hidden)'}
+p1wanted = {'TERMUX_X11_GATEA_PROTO': 'P1/P2 flag literal',
+            'GATEA_FATAL_HALT': 'fatal-halt log tag'}
+telewanted = {'TERMUX_X11_GATEA_TELEMETRY': 'telemetry exact-opt-in flag'}
+b1b4lits = {
+    'r-gatea-DIRECT_LOOKUP_FAIL': 'B2 lookup-miss fatal',
+    'r-gatea-stale-direct-meta': 'B2 stale-meta fatal',
+    'r-gatea-direct-identity': 'B2 identity mismatch fatal',
+    'x-direct-slot-not-consumed': 'B2 slot-reuse fatal',
+    'x-direct-not-success': 'post-publish fail-stop tag',
+    'x-post-unlock-revalidate': 'pair-lease revalidation tag',
+    'r-gatea-fence-wait': 'finite-fence failure tag',
+    'x-publish-no-lease': 'lease refusal tag',
+    'x-unregister-send': 'B4 unregister send fatal',
+    'x-generation-close-send': 'B4 generation close send fatal',
+    'r-unregister-missing': 'B4 renderer unregister miss',
+    'r-close-not-empty': 'B4 generation close empty check',
+}
+# Clang stores "Uraw " / "Upid pid=" as "Uraw"/"Upid pid" plus immediate
+# space/'=' stores; exact trailing-space / '=' literals are not in .rodata.
+diaglits = {
+    'Uraw': 'raw ucontext qword dump marker',
+    'Upid pid': 'pid/tid crash marker',
+}
+p2syms = [
+    'consumeGateAComposite', 'gateAEnsureReady', 'gateADirectTryPrepare',
+    'gateADirectPublishRect', 'gateADoneDirect', 'gateAPairRelockCpu',
+    'gateAWaitTerminal', 'gateALookupDirect', 'gateAPairUndoReserve',
+    'gateAReadyStill', 'gateAPairOverlapsBuffer',
+    'gateAQueueSemanticallyQuiescent', 'gateARetireBuffer',
+    'gateACloseGeneration', 'gateADestroyReadyImport',
+    'lorieGateAPublishDirectMeta', 'lorieGateAConsumeDirectMeta',
+    'lorieGateABoundTuple', 'gateABindFromState',
+    'p2a3CrashHandler', 'p2a3DumpUraw', 'p2a3PutHex64',
+]
+repairlits = {
+    'r-rebind-busy': 'Activity bind-from-shared-state fail-stop',
+}
+keys = (list(p0wanted) + list(p1wanted) + list(telewanted)
+        + list(b1b4lits) + list(diaglits) + list(repairlits))
+strings = {}
+for label, path in (('embedded', embedded), ('unstripped', unstripped)):
+    rc, out, _ = run_capture(f'{label}-strings', ['strings', '-a', str(path)])
+    assert rc == 0, label
+    strings[label] = {key: (key in out) for key in keys}
+report['strings'] = strings
+report['p0_continuity'] = {
+    'GATEA_A1_both': strings['embedded']['GATEA_A1'] and strings['unstripped']['GATEA_A1'],
+    'entry_unstripped_only': (not strings['embedded']['gateaA1MicroprobeRun'])
+    and strings['unstripped']['gateaA1MicroprobeRun'],
+}
+assert report['p0_continuity']['GATEA_A1_both'], 'P0/A1 continuity broken'
+assert report['p0_continuity']['entry_unstripped_only'], 'A1 visibility changed'
+report['p1_continuity'] = {
+    'flag_both': strings['embedded']['TERMUX_X11_GATEA_PROTO']
+    and strings['unstripped']['TERMUX_X11_GATEA_PROTO'],
+    'halt_both': strings['embedded']['GATEA_FATAL_HALT']
+    and strings['unstripped']['GATEA_FATAL_HALT'],
+}
+assert report['p1_continuity']['flag_both'], 'P1 flag literal missing'
+assert report['p1_continuity']['halt_both'], 'P1 halt tag missing'
+report['telemetry_literals'] = {
+    'embedded': strings['embedded']['TERMUX_X11_GATEA_TELEMETRY'],
+    'unstripped': strings['unstripped']['TERMUX_X11_GATEA_TELEMETRY'],
+}
+assert report['telemetry_literals']['embedded'] and report['telemetry_literals']['unstripped']
+report['b1b4_literals'] = {
+    'embedded': {k: strings['embedded'][k] for k in b1b4lits},
+    'unstripped': {k: strings['unstripped'][k] for k in b1b4lits},
+}
+assert all(report['b1b4_literals']['embedded'].values()), report['b1b4_literals']['embedded']
+assert all(report['b1b4_literals']['unstripped'].values()), report['b1b4_literals']['unstripped']
+report['diag_literals'] = {
+    'embedded': {k: strings['embedded'][k] for k in diaglits},
+    'unstripped': {k: strings['unstripped'][k] for k in diaglits},
+}
+assert all(report['diag_literals']['embedded'].values()), report['diag_literals']['embedded']
+assert all(report['diag_literals']['unstripped'].values()), report['diag_literals']['unstripped']
+report['repair_literals'] = {
+    'embedded': {k: strings['embedded'][k] for k in repairlits},
+    'unstripped': {k: strings['unstripped'][k] for k in repairlits},
+}
+assert all(report['repair_literals']['embedded'].values()), report['repair_literals']['embedded']
+assert all(report['repair_literals']['unstripped'].values()), report['repair_literals']['unstripped']
+
+rc, out, _ = run_capture('unstripped-nm-gatea',
+                         ['nm', '-a', '-C', str(unstripped)])
+gatea_syms = [line for line in out.splitlines()
+              if 'orieGateA' in line or 'gatea' in line.lower()
+              or 'gateA' in line or 'GateADirect' in line or 'GateAPair' in line
+              or 'p2a3' in line]
+(OUT / 'unstripped-nm-gatea-symbols.txt').write_text('\n'.join(gatea_syms) + '\n')
+found = set()
+for line in gatea_syms:
+    for s in p2syms:
+        if s in line:
+            found.add(s)
+report['p2_symbols_expected'] = sorted(p2syms)
+report['p2_symbols_found'] = sorted(found)
+report['p2_symbols_missing_informational'] = sorted(set(p2syms) - found)
+assert 'p2a3CrashHandler' in found, 'crash handler missing from unstripped nm'
+# p2a3DumpUraw / p2a3PutHex64 are inlined into the handler at -O2.
+
+manifest = {}
+for label, sub in (('application-id', 'application-id'), ('version-code', 'version-code'),
+                   ('version-name', 'version-name')):
+    rc, out, _ = run_capture(f'manifest-{label}', [APKANALYZER, 'manifest', sub, str(APK)])
+    manifest[label] = {'returncode': rc, 'value': out.strip()}
+report['manifest'] = manifest
+assert manifest['application-id']['value'] == EXPECTED_PKG, manifest['application-id']
+assert 'com.termux.x11' != manifest['application-id']['value']
+assert '98b0011' in manifest['version-name']['value'], manifest['version-name']
+
+rc, out, _ = run_capture('apksigner-verify', [f'{SDK_BT}/apksigner', 'verify',
+                                              '--verbose', '--print-certs', str(APK)])
+report['apksigner_returncode'] = rc
+certs = re.findall(r'SHA-256 digest:\s*([0-9a-fA-F]+)', out)
+report['signer_sha256_list'] = [c.lower() for c in certs]
+report['signer_expected_cert_present'] = EXPECTED_SIGNER in report['signer_sha256_list']
+assert rc == 0 and report['signer_expected_cert_present']
+
+za = Path(f'{SDK_BT}/zipalign')
+report['formal_zipalign'] = {
+    'path': str(za),
+    'blocked_reason': 'x86-64 tool on aarch64 host',
+    'claimed_pass': False,
+}
+
+assert 'lorieGateABoundTuple' in found, 'bound-tuple symbol missing from unstripped nm'
+(OUT / 'p2-r3-bound-apk-elf-report.json').write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps({
+    'apk_sha256': report['apk_sha256'],
+    'apk_bytes': report['apk_bytes'],
+    'package': manifest['application-id']['value'],
+    'versionCode': manifest['version-code']['value'],
+    'versionName': manifest['version-name']['value'],
+    'abis': report['libxlories'],
+    'testzip': report['testzip'],
+    'members': report['member_count'],
+    'duplicates': report['duplicate_names'],
+    'stored': f"{report['stored_count']}/{report['stored_count'] - report['stored_mod4_failures']} aligned failures={report['stored_mod4_failures']}",
+    'signer': report['signer_expected_cert_present'],
+    'build_ids': report['build_ids'],
+    'build_id_equal': report['build_id_equal'],
+    'p0': report['p0_continuity'],
+    'p1': report['p1_continuity'],
+    'telemetry': report['telemetry_literals'],
+    'b1b4_lits_ok': all(report['b1b4_literals']['embedded'].values()),
+    'diag_lits_ok': all(report['diag_literals']['embedded'].values()),
+    'repair_lits_ok': all(report['repair_literals']['embedded'].values()),
+    'syms_found': report['p2_symbols_found'],
+    'syms_missing': report['p2_symbols_missing_informational'],
+}, indent=2))

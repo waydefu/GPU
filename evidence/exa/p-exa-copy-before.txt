@@ -1,0 +1,1 @@
+RESULT exa-copy ok=102 fail=0 iters=50 geom=256x128

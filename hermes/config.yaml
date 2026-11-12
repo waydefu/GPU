@@ -1,0 +1,60 @@
+agent:
+  max_turns: none
+  api_max_retries: 3
+
+approvals:
+  mode: smart
+  timeout: 300
+
+  # 不要讓連續 guardian denial 把整個工作階段搞成死循環。
+  denial_breaker_threshold: 3
+
+  smart_policy: |
+    This is the F8 Termux:X11 GPU engineering project.
+
+    AUTO-APPROVE routine low-risk engineering work:
+    - git status, diff, show, log, blame
+    - grep, rg, sed without -i, cat, find
+    - nm, readelf, objdump
+    - hash/provenance collection
+    - CMake/Ninja/Gradle builds
+    - tests and benchmark execution
+    - read-only adb shell diagnostics
+    - logcat, dumpsys, pid/process inspection
+    - evidence generation under the project and /tmp
+    - fresh build directories under /tmp
+
+    ESCALATE destructive or state-changing operations:
+    - git reset --hard on the main working tree
+    - git clean
+    - git checkout/restore that discards changes
+    - recursive delete outside disposable build directories
+    - force push
+    - modification of Android SDK/NDK
+    - modification of vendored/third-party dependencies
+    - package install/uninstall/reinstall involving Stable Termux:X11
+    - killing Stable Termux:X11 processes
+    - commands that may change DISPLAY=:1 or com.termux.x11
+    - source changes affecting rendering semantics, EGL architecture,
+      synchronization, fences, AHardwareBuffer ownership, or ABI
+
+    The Stable environment is:
+    package: com.termux.x11
+    display: :1
+    It must never be modified, killed, replaced, or used for experiments.
+
+    Experimental environment:
+    package: com.waydefu.x11gpu
+    display: :3
+
+    A STOP condition means STOP MUTATION ONLY.
+    Continue safe read-only forensic work automatically.
+    Do not terminate the whole task merely because one mutation requires review.
+
+    For disposable isolated worktrees explicitly created for forensic testing,
+    cleanup/reset operations inside that exact worktree are acceptable when
+    the working tree has been verified to contain no user data.
+
+checkpoints:
+  enabled: true
+  max_snapshots: 20
