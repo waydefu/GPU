@@ -3,7 +3,7 @@
 完整 runtime 權威樹在工作站 `/root/projects/GPU加速`。
 這裡是 GitHub 上可把專案交給下一手的切面：**Markdown + 凍結 judge + 證據 + harness + core-src + skills**。
 
-[治理 CI](.github/workflows/governance-check.yml) 檢查文件、現役腳本與 PR 對凍結證據的異動。
+[治理 CI](.github/workflows/governance-check.yml) 檢查文件、現役腳本，以及 PR 和 `main` push 對既有證據的異動。詳見[治理檢查](docs/governance-checks.md)。
 裝置資格驗證依各測試的實機證據判定，實驗 APK 由 `waydefu/termux-x11` 的 artifact CI 建置。
 
 ## 先讀

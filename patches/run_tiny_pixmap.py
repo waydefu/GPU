@@ -2,20 +2,26 @@
 """Fresh 3/3 tiny-pixmap ladder on experimental :3. Never starts xfwm. Never touches Stable."""
 import datetime
 import os
+import re
 import signal
+import stat
 import subprocess
 import sys
+import tempfile
 import time
 
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-EVDIR = os.environ.get("TINY_PIXMAP_EVDIR", str(ROOT / "evidence/session/tiny-pixmap"))
+EVDIR = None
 TESTER = "/tmp/p-tiny-pixmap"
 XLOG = "/tmp/x11gpu-tiny-x.log"
 LCLOG = "/tmp/x11gpu-tiny-logcat.txt"
 LAUNCHER = "/data/data/com.termux/files/usr/bin/f8-x11gpu"
-STABLE = (10718, 18844, 18871)
+ADB = "/data/data/com.termux/files/usr/bin/adb"
+ADB_LANE = (ADB, "-H", "127.0.0.1", "-P", "5038")
+STABLE_X = (b"termux-x11", b"com.termux.x11", b":1", b"-legacy-drawing")
+STABLE_DESKTOP = (b"xfce4-session", b"xfwm4")
 STAGES = ("register", "solid", "copy", "multi")
 
 
@@ -39,7 +45,7 @@ def find_x3():
             cmd = open(f"/proc/{pid}/cmdline", "rb").read().replace(b"\0", b" ").decode().strip()
         except Exception:
             continue
-        if cmd.startswith("termux-x11gpu com.waydefu.x11gpu :3"):
+        if cmd.split()[:3] == ["termux-x11gpu", "com.waydefu.x11gpu", ":3"]:
             return int(pid)
     return None
 
@@ -65,11 +71,43 @@ def ppid_of(pid):
         return None
 
 
-def stable_ok():
-    for p in STABLE:
-        if not os.path.isdir(f"/proc/{p}"):
-            return False
-    return os.path.exists("/tmp/.X11-unix/X1")
+def process_identity(process):
+    fields = (process / "stat").read_bytes().rsplit(b")", 1)[1].split()
+    if fields[0] == b"Z":
+        return None
+    return int(process.name), int(fields[19])
+
+
+def stable_snapshot(proc=Path("/proc"), lock=Path("/tmp/.X1-lock"), socket=Path("/tmp/.X11-unix/X1")):
+    try:
+        pid = int(lock.read_text().strip())
+        server = proc / str(pid)
+        argv = (server / "cmdline").read_bytes().replace(b"\0", b" ").split()
+        sock = socket.stat()
+        if tuple(argv[:4]) != STABLE_X or not stat.S_ISSOCK(sock.st_mode):
+            return None
+        x11 = process_identity(server)
+        desktop = {name: [] for name in STABLE_DESKTOP}
+        for process in proc.iterdir():
+            if not process.name.isdecimal():
+                continue
+            try:
+                command = (process / "cmdline").read_bytes().split(b"\0", 1)[0]
+                name = os.path.basename(command)
+                if name not in desktop:
+                    continue
+                env = (process / "environ").read_bytes().split(b"\0")
+                if b"DISPLAY=:1" in env or b"DISPLAY=:1.0" in env:
+                    identity = process_identity(process)
+                    if identity:
+                        desktop[name].append(identity)
+            except (OSError, IndexError, ValueError):
+                continue
+        if not x11 or any(len(identities) != 1 for identities in desktop.values()):
+            return None
+        return x11, tuple(desktop[name][0] for name in STABLE_DESKTOP), (sock.st_dev, sock.st_ino)
+    except (OSError, IndexError, ValueError):
+        return None
 
 
 def xdpy_ok():
@@ -103,7 +141,7 @@ def kill_x3():
             pass
 
 
-def daemonize_exec(log_path, argv, extra_env=None):
+def daemonize_exec(log_path, argv, env=None):
     pid = os.fork()
     if pid > 0:
         os.waitpid(pid, 0)
@@ -120,50 +158,17 @@ def daemonize_exec(log_path, argv, extra_env=None):
     nulfd = os.open("/dev/null", os.O_RDONLY)
     os.dup2(nulfd, 0)
     os.close(nulfd)
-    env = os.environ.copy()
+    env = os.environ.copy() if env is None else env.copy()
     env.pop("DISPLAY", None)
     env.pop("MESA_LOADER_DRIVER_OVERRIDE", None)
     env.pop("VK_ICD_FILENAMES", None)
-    if extra_env:
-        env.update(extra_env)
     os.execvpe(argv[0], argv, env)
 
 
-def ensure_logcat():
-    marker = "adb logcat -v threadtime"
-    for pid in os.listdir("/proc"):
-        if not pid.isdigit():
-            continue
-        try:
-            cmd = open(f"/proc/{pid}/cmdline", "rb").read().replace(b"\0", b" ").decode().strip()
-        except Exception:
-            continue
-        if cmd.startswith(marker) or "logcat -v threadtime" in cmd:
-            # reuse any persistent logcat; also start ours if ours isn't writing
-            pass
-    pid = os.fork()
-    if pid > 0:
-        os.waitpid(pid, 0)
-        return
-    os.setsid()
-    pid2 = os.fork()
-    if pid2 > 0:
-        os._exit(0)
-    os.chdir("/")
-    fd = os.open(LCLOG, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o644)
-    os.dup2(fd, 1)
-    os.dup2(fd, 2)
-    os.close(fd)
-    nulfd = os.open("/dev/null", os.O_RDONLY)
-    os.dup2(nulfd, 0)
-    os.close(nulfd)
-    os.execvp("adb", ["adb", "logcat", "-v", "threadtime"])
-
-
-def start_activity():
+def start_activity(adb, env):
     subprocess.run(
         [
-            "adb",
+            *adb,
             "shell",
             "cmd",
             "activity",
@@ -177,15 +182,17 @@ def start_activity():
             "-n",
             "com.waydefu.x11gpu/com.termux.x11.MainActivity",
         ],
+        env=env,
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
-        check=False,
+        check=True,
+        timeout=8,
     )
 
 
-def start_x3():
+def start_x3(adb, env):
     kill_x3()
-    start_activity()
+    start_activity(adb, env)
     time.sleep(0.8)
     daemonize_exec(XLOG, [LAUNCHER, ":3"])
     deadline = time.time() + 15
@@ -195,13 +202,16 @@ def start_x3():
             time.sleep(1.0)
             return pid
         time.sleep(0.2)
-    return find_x3()
+    return None
 
 
-def snapshot_logcat(tag, around=None):
+def snapshot_logcat(tag, adb, env):
     path = os.path.join(EVDIR, f"{tag}.logcat.txt")
     try:
-        out = subprocess.check_output(["adb", "logcat", "-d", "-v", "threadtime", "-t", "200"], stderr=subprocess.STDOUT, timeout=8)
+        out = subprocess.check_output(
+            [*adb, "logcat", "-d", "-v", "threadtime", "-t", "200"],
+            env=env, stderr=subprocess.STDOUT, timeout=8,
+        )
     except Exception as e:
         with open(path, "w") as f:
             f.write(f"logcat dump failed: {e}\n")
@@ -258,44 +268,84 @@ def write_trial(stage, trial, body):
     return path
 
 
-def resolve_adb_serial():
-    serial = os.environ.get("ADB_SERIAL") or os.environ.get("ANDROID_SERIAL")
-    if serial:
-        return serial.strip()
-    probe = subprocess.run(
-        ["/data/data/com.termux/files/usr/bin/f8-adb-port"],
-        capture_output=True, text=True, check=False,
+def network_serial(serial):
+    host, _, port = serial.rpartition(":")
+    return (
+        re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9.-]*|\[[A-Fa-f0-9:]+\]", host)
+        and re.fullmatch(r"[0-9]{1,5}", port)
+        and 0 < int(port) <= 65535
     )
-    if probe.returncode == 0 and probe.stdout.strip():
-        return probe.stdout.strip().splitlines()[-1].strip()
-    raise RuntimeError("ADB_SERIAL / ANDROID_SERIAL unset and f8-adb-port unavailable")
+
+
+def adb_target():
+    env = os.environ.copy()
+    serial = (env.get("ADB_SERIAL") or env.get("ANDROID_SERIAL") or "").strip()
+    for key in ("ADB_SERVER_SOCKET", "ANDROID_ADB_SERVER_ADDRESS", "ANDROID_ADB_SERVER_PORT", "ANDROID_SERIAL"):
+        env.pop(key, None)
+
+    if not serial:
+        devices = subprocess.check_output([*ADB_LANE, "devices"], env=env, text=True, timeout=8)
+        candidates = [
+            parts[0] for line in devices.splitlines()
+            if len(parts := line.split()) >= 2 and parts[1] == "device" and network_serial(parts[0])
+        ]
+        if len(candidates) != 1:
+            raise RuntimeError("Expected one online network device on the isolated ADB server")
+        serial = candidates[0]
+    if not network_serial(serial):
+        raise RuntimeError("Expected network ADB serial in host:port form")
+    adb = (*ADB_LANE, "-s", serial)
+    if subprocess.check_output([*adb, "get-state"], env=env, text=True, timeout=8).strip() != "device":
+        raise RuntimeError("Selected device is not online on the isolated ADB server")
+    device = subprocess.check_output(
+        [*adb, "shell", "getprop", "ro.product.device"], env=env, text=True, timeout=8,
+    ).strip()
+    if device != "myron":
+        raise RuntimeError("Selected device is not the POCO F8 Ultra")
+    return adb, env
 
 
 def main():
-    os.makedirs(EVDIR, exist_ok=True)
-    os.environ["ANDROID_SERIAL"] = resolve_adb_serial()
-    os.environ["HOME"] = "/root"
+    global EVDIR
+    requested = os.environ.get("TINY_PIXMAP_EVDIR")
+    if requested:
+        Path(requested).mkdir(parents=True, exist_ok=False)
+        EVDIR = requested
+    else:
+        session = ROOT / "evidence/session"
+        session.mkdir(parents=True, exist_ok=True)
+        EVDIR = tempfile.mkdtemp(prefix="tiny-pixmap-", dir=session)
     if find_xfwm3():
         log("REFUSE: xfwm already on :3 — abort, do not start another")
         return 2
-    if not stable_ok():
-        log("FATAL stable missing")
+    stable = stable_snapshot()
+    if stable is None:
+        log("FATAL cannot identify Stable :1")
         return 2
-    ensure_logcat()
+    try:
+        adb, env = adb_target()
+    except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+        log(f"REFUSE: isolated ADB preflight failed ({type(error).__name__})")
+        return 2
+    daemonize_exec(LCLOG, [*adb, "logcat", "-v", "threadtime"], env=env)
     log("tiny-pixmap ladder start (no xfwm)")
 
     results = {}
     for stage in STAGES:
         wins = 0
         for trial in range(1, 4):
-            if not stable_ok():
+            if stable_snapshot() != stable:
                 log("FATAL stable died — freeze")
                 return 2
             if find_xfwm3():
                 log("REFUSE xfwm appeared — freeze")
                 return 2
             log(f"=== {stage} trial {trial}/3 fresh X ===")
-            xpid = start_x3()
+            try:
+                xpid = start_x3(adb, env)
+            except (OSError, subprocess.SubprocessError) as error:
+                log(f"FATAL experimental activity failed ({type(error).__name__})")
+                return 2
             alive_before = bool(xpid and os.path.isdir(f"/proc/{xpid}") and xdpy_ok())
             proto = "DOWN"
             if alive_before:
@@ -305,9 +355,10 @@ def main():
                 rc, out = -1, "X did not come up\n"
             x_after = find_x3()
             x_alive = bool(x_after and os.path.isdir(f"/proc/{x_after}") and xdpy_ok())
-            lcpath = snapshot_logcat(f"{stage}-t{trial}", xpid)
+            lcpath = snapshot_logcat(f"{stage}-t{trial}", adb, env)
             sent1, segsv, hits = classify_logcat(lcpath, xpid)
-            verdict = "PASS" if proto == "PASS" and x_alive else "FAIL"
+            stable_unchanged = stable_snapshot() == stable
+            verdict = "PASS" if proto == "PASS" and x_alive and stable_unchanged else "FAIL"
             if verdict == "PASS":
                 wins += 1
             body = (
@@ -318,7 +369,7 @@ def main():
                 f"tester_rc={rc} proto={proto} verdict={verdict}\n"
                 f"sent_shared_1x1={sent1} sigsegv={segsv}\n"
                 f"xfwm={find_xfwm3()}\n"
-                f"stable={stable_ok()}\n"
+                f"stable={stable_unchanged}\n"
                 f"--- tester ---\n{out}\n"
                 f"--- logcat hits ---\n" + "\n".join(hits) + "\n"
             )
@@ -330,9 +381,12 @@ def main():
                     f.write(body)
                     f.write(f"freeze logcat={lcpath}\nNO RESTART of this X instance\n")
                 log(f"FROZE first-failure of this instance → {freeze}")
-            # Fresh next trial: tear down this X only (never the crashed-instance "restart")
+            if not stable_unchanged or not alive_before or not x_alive:
+                log("FATAL display identity or experimental lifecycle changed — no retry")
+                return 2
+            # A completed trial permits teardown of this experimental X only.
             kill_x3()
-            if not stable_ok():
+            if stable_snapshot() != stable:
                 log("FATAL stable after kill_x3")
                 return 2
         results[stage] = wins

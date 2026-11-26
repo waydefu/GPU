@@ -4,7 +4,7 @@
 
 | 嚴重度 | 稽核項目 | 本次實查根因 | 處置方式與狀態 |
 |---|---|---|---|
-| **高** | **歷史測試證據遭修改** | 若直接修改 `evidence/session/gate-a-a1/` 等凍結目錄下的 capture / judge / script 檔案，會破壞既有資格結論與 sha256 清單。 | **保留唯讀＋CI 鎖護**：本次未修改任何凍結目錄；在 `waydefu/GPU` 新增 `.github/workflows/governance-check.yml`，凍結目錄的比對步驟適用於 PR。初版 push 的成功紀錄未執行此步驟。 |
+| **高** | **歷史測試證據遭修改** | 若直接修改 `evidence/session/gate-a-a1/` 等凍結目錄下的 capture / judge / script 檔案，會破壞既有資格結論與 sha256 清單。 | **保留唯讀＋CI 鎖護**：本次未修改任何凍結目錄；在 `waydefu/GPU` 新增 `.github/workflows/governance-check.yml`，PR/push 一旦異動 `evidence/session/gate-a-a1/` 內凍結判決／`sha256`／腳本即直接擋下。 |
 | **高** | **測試腳本寫死 ADB 端點** | 本機排除 `src/` 後，有 3 支凍結的 `evidence/session/gate-a-a1/p2-r3-drain-runtime/run-*.sh` 與現役旁側腳本 [`patches/run_tiny_pixmap.py`](../../../patches/run_tiny_pixmap.py) 含有硬編碼 `IP:PORT`（`192.168.1.101:35749`）。 | **已修現役、凍結保留**：改寫 `patches/run_tiny_pixmap.py` 為讀取 `ADB_SERIAL`/`ANDROID_SERIAL` 或即時呼叫 `f8-adb-port`；凍結的 `gate-a-a1/` 腳本不溯及修改；CI 禁止未來新增/異動腳本寫死 ADB `IP:PORT`。 |
 | **高** | **工程權威狀態不一致** | `AGENTS.md` 仍殘留超長單行舊 R7/R8 歷史流水帳與 `gpt-5.6-luna-900k` 舊模型名；`.claude/rules/gpu-structure.md` 仍指向舊 `STATUS-HANDOFF-*.md`；且 `waydefu/GPU#40`（2026-11-10 PR）過期並與今日重整衝突。 | **已全面對齊**：精簡 [`AGENTS.md`](../../../AGENTS.md) Redlines 指向歸檔台帳並更新為 `gpt-6-luna-900k`；更新 [`.claude/rules/gpu-structure.md`](../../../.claude/rules/gpu-structure.md) 指向 [`HANDOFF.md`](../../../HANDOFF.md)；關閉過期 PR `#40` 並同步最新權威檔至 `waydefu/GPU` `main`。 |
 | **高** | **壓縮工具存在證據遺失風險** | `evidence/COMPRESSED-LOGS-20260927.zlogs.sh` 使用 `set -u`（缺 `-eo pipefail`）、未檢查 `$h`/`$h2` 是否為合法 64 碼 SHA256（若管線異常導致兩者皆空字串會誤判 `[ "" = "" ]` 而 `rm` 原檔）、先寫入最終 `.zst` 再驗證、且含 `TEST_CORRUPT` 測試鉤子。 | **已新建安全版**：建立 [`scripts/zlogs-safe.sh`](../../../scripts/zlogs-safe.sh)（`set -euo pipefail`、雙端 `^[0-9a-f]{64}$` 校驗、`.tmp.$$` 原子寫入與更名、`--dry-run`、移除生產端破壞性測試鉤子），已通過失敗保原檔與正常壓縮 3 項 `/tmp` 測試。原歷史檔保留不改以維持歷史追溯。 |
@@ -22,10 +22,3 @@
   - `--dry-run` 與實際 2 MiB 壓縮校驗通過（`ZLOGS_SAFE ok=1 fail=0 ...`）。
 - `patches/run_tiny_pixmap.py`：`python3 -m py_compile` 通過。
 - `src/f8-proot-fast` 與 `src/termux-proot-upstream` 均維持 `dirty=0`。
-
-## 第二輪複查（2026-11-26）
-
-- 治理 CI 以 PR 事件的 base SHA 比對 checkout 的合併結果。原本 Git 找不到比對基準時，管線會回報成功。合成 Git 夾具已驗證乾淨差異可通過，基準缺失、基準無關及凍結檔案的新增、修改、刪除、改名、類型變更會拒絕。
-- 現役掃描加入 README 和測試矩陣，並核對主要文件與現役腳本。合成夾具確認本機會話路徑、憑證樣式、硬編碼 ADB 端點和讀檔失敗均會被拒絕，CI 只列出命中的檔名。既有矩陣判決和凍結證據保留。
-- 壓縮腳本原本忽略校驗管線的非零退出碼。合成工具在輸出有效雜湊或完整解壓資料後回報失敗時，修正前兩種情況都會移除原檔。修正後兩種情況均拒絕並保留原檔，回歸測試納入 CI。實際 zstd 在正常情況可解回逐位元一致的內容。
-- 在專案目錄以外驗證 Ubuntu PRoot 現役帳號可呼叫 `fd`、`duckdb`、`ast-grep`、`log-digest`。`log-digest` 的 stdin、純文字與 `.zst` 結果一致，截斷檔回傳失敗，也已驗證找不到 PATH 內的 zstd 時可使用 Termux 二進位檔。部署於 `/usr/local/bin` 的工具供此帳號跨專案使用。
