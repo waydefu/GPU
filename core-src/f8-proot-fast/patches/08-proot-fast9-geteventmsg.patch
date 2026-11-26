@@ -1,0 +1,158 @@
+diff -uNr a/src/syscall/seccomp.c b/src/syscall/seccomp.c
+--- a/src/syscall/seccomp.c	2026-11-26 14:14:30.814127872 +0800
++++ b/src/syscall/seccomp.c	2026-11-26 15:47:00.030125755 +0800
+@@ -498,7 +498,7 @@
+  * all of its future children.  This function returns -errno if an
+  * error occurred, otherwise 0.
+  */
+-int enable_syscall_filtering(const Tracee *tracee)
++static int collect_filtered_sysnums(const Tracee *tracee, FilteredSysnum **result)
+ {
+ 	FilteredSysnum *filtered_sysnums = NULL;
+ 	Extension *extension;
+@@ -532,13 +532,41 @@
+ 		}
+ 	}
+ 
+-	status = set_seccomp_filters(filtered_sysnums);
++	*result = filtered_sysnums;
++	return 0;
++}
++
++static word_t filtered_flags[PR_NB_SYSNUM];
++
++int remember_filtered_sysnums(const Tracee *tracee)
++{
++	FilteredSysnum *sysnums = NULL;
++	size_t i;
++	int status = collect_filtered_sysnums(tracee, &sysnums);
+ 	if (status < 0)
+ 		return status;
+-
++	memset(filtered_flags, 0, sizeof(filtered_flags));
++	for (i = 0; sysnums[i].value != PR_void; i++)
++		filtered_flags[sysnums[i].value] |= sysnums[i].flags;
++	TALLOC_FREE(sysnums);
+ 	return 0;
+ }
+ 
++int filtered_sysnum_flags(Sysnum sysnum)
++{
++	return (unsigned int) sysnum < PR_NB_SYSNUM ? filtered_flags[sysnum] : 0;
++}
++
++int enable_syscall_filtering(const Tracee *tracee)
++{
++	FilteredSysnum *sysnums = NULL;
++	int status = collect_filtered_sysnums(tracee, &sysnums);
++	if (status >= 0)
++		status = set_seccomp_filters(sysnums);
++	TALLOC_FREE(sysnums);
++	return status;
++}
++
+ #else
+ 
+ #include "tracee/tracee.h"
+@@ -548,5 +576,15 @@
+ {
+ 	return 0;
+ }
++
++int remember_filtered_sysnums(const Tracee *tracee UNUSED)
++{
++	return 0;
++}
++
++int filtered_sysnum_flags(Sysnum sysnum UNUSED)
++{
++	return 0;
++}
+ 
+ #endif /* defined(HAVE_SECCOMP_FILTER) */
+diff -uNr a/src/syscall/seccomp.h b/src/syscall/seccomp.h
+--- a/src/syscall/seccomp.h	2026-08-23 06:32:39.000000000 +0800
++++ b/src/syscall/seccomp.h	2026-11-26 15:47:00.030125755 +0800
+@@ -44,5 +44,7 @@
+ #define FILTER_SYSEXIT  0x1
+ 
+ extern int enable_syscall_filtering(const Tracee *tracee);
++extern int remember_filtered_sysnums(const Tracee *tracee);
++extern int filtered_sysnum_flags(Sysnum sysnum);
+ 
+ #endif /* SECCOMP_H */
+diff -uNr a/src/syscall/syscall.c b/src/syscall/syscall.c
+--- a/src/syscall/syscall.c	2026-08-23 06:32:39.000000000 +0800
++++ b/src/syscall/syscall.c	2026-11-26 15:47:00.030125755 +0800
+@@ -144,9 +144,12 @@
+ 
+ 	assert(tracee->exe != NULL);
+ 
+-	status = fetch_regs(tracee);
+-	if (status < 0)
+-		return;
++	if (!tracee->regs_fetched_at_stop) {
++		status = fetch_regs(tracee);
++		if (status < 0)
++			return;
++	}
++	tracee->regs_fetched_at_stop = false;
+ 
+ 	int suppressed_syscall_status = 0;
+ 
+diff -uNr a/src/tracee/event.c b/src/tracee/event.c
+--- a/src/tracee/event.c	2026-11-26 14:14:30.870127872 +0800
++++ b/src/tracee/event.c	2026-11-26 15:47:00.030125755 +0800
+@@ -91,6 +91,10 @@
+ 	if (tracee->verbose > 0)
+ 		list_open_fd(tracee);
+ 
++	status = remember_filtered_sysnums(tracee);
++	if (status < 0)
++		return status;
++
+ 	pid = fork();
+ 	switch(pid) {
+ 	case -1:
+@@ -449,6 +453,8 @@
+ 	int signal;
+ 	bool sysexit_necessary;
+ 
++	tracee->regs_fetched_at_stop = false;
++
+ 	if (!seccomp_after_ptrace_enter_checked) {
+ 		seccomp_after_ptrace_enter = getenv("PROOT_ASSUME_NEW_SECCOMP") != NULL;
+ 		seccomp_after_ptrace_enter_checked = true;
+@@ -654,7 +660,7 @@
+ 
+ 		case SIGTRAP | PTRACE_EVENT_SECCOMP2 << 8:
+ 		case SIGTRAP | PTRACE_EVENT_SECCOMP << 8: {
+-			unsigned long flags = 0;
++			int flags;
+ 
+ 			signal = 0;
+ 
+@@ -688,9 +694,11 @@
+ 			if (tracee->seccomp != ENABLED)
+ 				break;
+ 
+-			status = ptrace(PTRACE_GETEVENTMSG, tracee->pid, NULL, &flags);
++			status = fetch_regs(tracee);
+ 			if (status < 0)
+ 				break;
++			tracee->regs_fetched_at_stop = true;
++			flags = filtered_sysnum_flags(get_sysnum(tracee, CURRENT));
+ 
+ 			/* Use the common ptrace flow when
+ 			 * sysexit has to be handled.  */
+diff -uNr a/src/tracee/tracee.h b/src/tracee/tracee.h
+--- a/src/tracee/tracee.h	2026-11-26 14:14:30.870127872 +0800
++++ b/src/tracee/tracee.h	2026-11-26 15:47:00.030125755 +0800
+@@ -320,6 +320,7 @@
+ 
+ 	/* Ensure the sysexit stage is always hit under seccomp.  */
+ 	bool sysexit_pending;
++	bool regs_fetched_at_stop;
+ 
+ 	/* If true, syscall entry was handled by seccomp and next SIGTRAP | 0x80
+ 	 * has to be ignored as it's same syscall entry */

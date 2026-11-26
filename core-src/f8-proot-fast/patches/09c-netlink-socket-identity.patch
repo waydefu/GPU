@@ -1,0 +1,236 @@
+diff --git a/src/syscall/enter.c b/src/syscall/enter.c
+index f106fdc..74aeec3 100755
+--- a/src/syscall/enter.c
++++ b/src/syscall/enter.c
+@@ -611,7 +611,7 @@ blocked:
+ 
+ /* The bookkeeping entry for @fd, or NULL when PRoot didn't substitute
+  * that fd.  */
+-static struct fake_netlink_socket *fake_netlink_socket(Tracee *tracee, int fd)
++static struct fake_netlink_socket *fake_netlink_entry(Tracee *tracee, int fd)
+ {
+ 	int i;
+ 
+@@ -625,26 +625,34 @@ static struct fake_netlink_socket *fake_netlink_socket(Tracee *tracee, int fd)
+ 	return NULL;
+ }
+ 
+-static bool is_socket_fd(pid_t pid, int fd)
++unsigned long long socket_fd_inode(pid_t pid, int fd)
+ {
+ 	char link[PATH_MAX];
+-	return readlink_proc_pid_fd(pid, fd, link) == 0 && strncmp(link, "socket:[", 8) == 0;
++	unsigned long long inode;
++	int end = 0;
++
++	if (readlink_proc_pid_fd(pid, fd, link) < 0 ||
++	    sscanf(link, "socket:[%llu]%n", &inode, &end) != 1 ||
++	    end == 0 || link[end] != '\0')
++		return 0;
++	return inode;
+ }
+ 
+-static bool is_fake_netlink_fd(Tracee *tracee, int fd)
++static struct fake_netlink_socket *fake_netlink_socket(Tracee *tracee, int fd)
+ {
+-	if (fake_netlink_socket(tracee, fd) == NULL)
+-		return false;
+-	if (!is_socket_fd(tracee->pid, fd)) {
++	struct fake_netlink_socket *sock = fake_netlink_entry(tracee, fd);
++
++	/* The same descriptor number can now name a different socket. */
++	if (sock != NULL && sock->inode != socket_fd_inode(tracee->pid, fd)) {
+ 		unmark_fake_netlink_fd(tracee, fd);
+-		return false;
++		return NULL;
+ 	}
+-	return true;
++	return sock;
+ }
+ 
+ void unmark_fake_netlink_fd(Tracee *tracee, int fd)
+ {
+-	struct fake_netlink_socket *sock = fake_netlink_socket(tracee, fd);
++	struct fake_netlink_socket *sock = fake_netlink_entry(tracee, fd);
+ 
+ 	if (sock == NULL)
+ 		return;
+@@ -668,8 +676,8 @@ static bool is_netlink_route_fd(Tracee *tracee, int fd)
+ 	if (fd < 0)
+ 		return false;
+ 	for (i = 0; i < tracee->netlink_route_fds_count; i++) {
+-		if (tracee->netlink_route_fds[i] == fd) {
+-			if (!is_socket_fd(tracee->pid, fd)) {
++		if (tracee->netlink_route_fds[i].fd == fd) {
++			if (tracee->netlink_route_fds[i].inode != socket_fd_inode(tracee->pid, fd)) {
+ 				unmark_netlink_route_fd(tracee, fd);
+ 				return false;
+ 			}
+@@ -683,7 +691,7 @@ void unmark_netlink_route_fd(Tracee *tracee, int fd)
+ {
+ 	int i;
+ 	for (i = 0; i < tracee->netlink_route_fds_count; i++) {
+-		if (tracee->netlink_route_fds[i] == fd) {
++		if (tracee->netlink_route_fds[i].fd == fd) {
+ 			tracee->netlink_route_fds[i] =
+ 				tracee->netlink_route_fds[--tracee->netlink_route_fds_count];
+ 			break;
+@@ -2129,7 +2137,7 @@ int translate_syscall_enter(Tracee *tracee)
+ 		 * of the AF_NETLINK emulation, fail the bind silently
+ 		 * (the kernel would otherwise refuse our sockaddr_nl). */
+ 		if (syscall_number == PR_bind
+-		    && is_fake_netlink_fd(tracee, peek_reg(tracee, CURRENT, SYSARG_1))) {
++		    && fake_netlink_socket(tracee, peek_reg(tracee, CURRENT, SYSARG_1)) != NULL) {
+ 			poke_reg(tracee, SYSARG_RESULT, 0);
+ 			set_sysnum(tracee, PR_void);
+ 			status = 0;
+@@ -2184,7 +2192,7 @@ int translate_syscall_enter(Tracee *tracee)
+ 		 * so callers like iproute2 don't error out with "Wrong
+ 		 * address length 2" on the AF_UNIX sockname.  */
+ 		if ((syscall_number == PR_getsockname || syscall_number == PR_getpeername)
+-		    && is_fake_netlink_fd(tracee, peek_reg(tracee, CURRENT, SYSARG_1))) {
++		    && fake_netlink_socket(tracee, peek_reg(tracee, CURRENT, SYSARG_1)) != NULL) {
+ 			word_t addr_ptr = peek_reg(tracee, CURRENT, SYSARG_2);
+ 			word_t size_ptr = peek_reg(tracee, CURRENT, SYSARG_3);
+ 			int    rc = write_fake_netlink_sockname(tracee, addr_ptr, size_ptr,
+diff --git a/src/syscall/exit.c b/src/syscall/exit.c
+index f174f91..4f5d407 100755
+--- a/src/syscall/exit.c
++++ b/src/syscall/exit.c
+@@ -776,61 +776,36 @@ void translate_syscall_exit(Tracee *tracee)
+ 		goto end;
+ 
+ 	case PR_socket: {
+-		int new_sock_fd = (int) peek_reg(tracee, CURRENT, SYSARG_RESULT);
+-		if (new_sock_fd >= 0) {
+-			if (!tracee->pending_fake_netlink_socket)
+-				unmark_fake_netlink_fd(tracee, new_sock_fd);
+-			if (!tracee->pending_real_netlink_socket)
+-				unmark_netlink_route_fd(tracee, new_sock_fd);
++		int fd = (int) syscall_result;
++		unsigned long long inode = 0;
++
++		if (fd >= 0) {
++			unmark_fake_netlink_fd(tracee, fd);
++			unmark_netlink_route_fd(tracee, fd);
++			if (tracee->pending_fake_netlink_socket || tracee->pending_real_netlink_socket)
++				inode = socket_fd_inode(tracee->pid, fd);
+ 		}
+-	}
+-		/* Record the fd we substituted for an AF_NETLINK request.  */
+-		if (tracee->pending_fake_netlink_socket) {
+-			int fd = (int) peek_reg(tracee, CURRENT, SYSARG_RESULT);
+-			if (fd >= 0) {
+-				int i;
+-				if (tracee->fake_netlink_fds_count < MAX_FAKE_NETLINK_FDS) {
+-					/* Avoid duplicates.  */
+-					bool present = false;
+-					for (i = 0; i < tracee->fake_netlink_fds_count; i++) {
+-						if (tracee->fake_netlink_fds[i].fd == fd) {
+-							present = true;
+-							break;
+-						}
+-					}
+-					if (!present) {
+-						struct fake_netlink_socket *sock =
+-							&tracee->fake_netlink_fds[tracee->fake_netlink_fds_count++];
+-						memset(sock, 0, sizeof(*sock));
+-						sock->fd = fd;
+-					}
+-				}
+-			}
+-			tracee->pending_fake_netlink_socket = false;
+-		}
+-
+-		/* Same for a NETLINK_ROUTE socket the host granted as is:
+-		 * requests sent on it still need the ack emulation when
+-		 * the tracee thinks it owns a network namespace.  */
+-		if (tracee->pending_real_netlink_socket) {
+-			int fd = (int) peek_reg(tracee, CURRENT, SYSARG_RESULT);
+-			if (fd >= 0) {
+-				int i;
+-				if (tracee->netlink_route_fds_count < MAX_NETLINK_ROUTE_FDS) {
+-					bool present = false;
+-					for (i = 0; i < tracee->netlink_route_fds_count; i++) {
+-						if (tracee->netlink_route_fds[i] == fd) {
+-							present = true;
+-							break;
+-						}
+-					}
+-					if (!present)
+-						tracee->netlink_route_fds[tracee->netlink_route_fds_count++] = fd;
+-				}
+-			}
+-			tracee->pending_real_netlink_socket = false;
++
++		if (inode != 0 && tracee->pending_fake_netlink_socket &&
++		    tracee->fake_netlink_fds_count < MAX_FAKE_NETLINK_FDS) {
++			struct fake_netlink_socket *sock =
++				&tracee->fake_netlink_fds[tracee->fake_netlink_fds_count++];
++
++			*sock = (struct fake_netlink_socket) { .fd = fd, .inode = inode };
+ 		}
++
++		/* Real NETLINK_ROUTE sockets may still need ack emulation. */
++		if (inode != 0 && tracee->pending_real_netlink_socket &&
++		    tracee->netlink_route_fds_count < MAX_NETLINK_ROUTE_FDS) {
++			struct netlink_route_socket *sock =
++				&tracee->netlink_route_fds[tracee->netlink_route_fds_count++];
++
++			*sock = (struct netlink_route_socket) { .fd = fd, .inode = inode };
++		}
++		tracee->pending_fake_netlink_socket = false;
++		tracee->pending_real_netlink_socket = false;
+ 		goto end;
++	}
+ 
+ 	case PR_recvfrom:
+ 	case PR_recvmsg:
+diff --git a/src/syscall/syscall.h b/src/syscall/syscall.h
+index 7f116fa..0e698ee 100755
+--- a/src/syscall/syscall.h
++++ b/src/syscall/syscall.h
+@@ -59,6 +59,7 @@ extern void translate_syscall_exit(Tracee *tracee);
+ extern bool is_voided_syscall(const Tracee *tracee, RegVersion version);
+ 
+ extern void handle_netlink_reply_exit(Tracee *tracee, word_t syscall_number);
++extern unsigned long long socket_fd_inode(pid_t pid, int fd);
+ extern void unmark_fake_netlink_fd(Tracee *tracee, int fd);
+ extern void unmark_netlink_route_fd(Tracee *tracee, int fd);
+ 
+diff --git a/src/tracee/tracee.c b/src/tracee/tracee.c
+index 447d723..902d933 100755
+--- a/src/tracee/tracee.c
++++ b/src/tracee/tracee.c
+@@ -596,6 +596,7 @@ int new_child(Tracee *parent, word_t clone_flags)
+ 	 * whoever sent the request.  */
+ 	for (int i = 0; i < parent->fake_netlink_fds_count; i++) {
+ 		child->fake_netlink_fds[i].fd = parent->fake_netlink_fds[i].fd;
++		child->fake_netlink_fds[i].inode = parent->fake_netlink_fds[i].inode;
+ 		child->fake_netlink_fds[i].reply = NULL;
+ 		child->fake_netlink_fds[i].reply_len = 0;
+ 		child->fake_netlink_fds[i].reply_off = 0;
+diff --git a/src/tracee/tracee.h b/src/tracee/tracee.h
+index e0f45d3..dc921d1 100755
+--- a/src/tracee/tracee.h
++++ b/src/tracee/tracee.h
+@@ -138,6 +138,7 @@ typedef struct tracee {
+ #define MAX_FAKE_NETLINK_REPLY 8192
+ 	struct fake_netlink_socket {
+ 		int fd;
++		unsigned long long inode;
+ 		uint8_t *reply;
+ 		size_t reply_len;
+ 		size_t reply_off;
+@@ -153,7 +154,10 @@ typedef struct tracee {
+ 	 * netlink_ack_* remembers which reply to turn into a plain ack
+ 	 * (see handle_netlink_reply_exit).  */
+ #define MAX_NETLINK_ROUTE_FDS 8
+-	int netlink_route_fds[MAX_NETLINK_ROUTE_FDS];
++	struct netlink_route_socket {
++		int fd;
++		unsigned long long inode;
++	} netlink_route_fds[MAX_NETLINK_ROUTE_FDS];
+ 	int netlink_route_fds_count;
+ 	bool pending_real_netlink_socket;
+ 	bool netlink_ack_pending;

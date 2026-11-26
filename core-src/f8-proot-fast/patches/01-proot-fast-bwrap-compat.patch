@@ -1,0 +1,66 @@
+--- pristine/src/syscall/seccomp.c	2026-08-23 06:32:39.000000000 +0800
++++ proot-5.1.107.92/src/syscall/seccomp.c	2026-09-24 14:40:44.252973883 +0800
+@@ -33,7 +33,8 @@
+ #include <sys/queue.h>     /* LIST_FOREACH, */
+ #include <sys/types.h>     /* size_t, */
+ #include <talloc.h>        /* talloc_*, */
+-#include <errno.h>         /* E*, */
++#include <errno.h>
++#include <stdlib.h>         /* E*, */
+ #include <string.h>        /* memcpy(3), */
+ #include <stddef.h>        /* offsetof(3), */
+ #include <stdint.h>        /* uint*_t, UINT*_MAX, */
+@@ -340,16 +341,9 @@
+ 	{ PR_chown,		0 },
+ 	{ PR_chown32,		0 },
+ 	{ PR_chroot,		0 },
+-	{ PR_clone,		0 },
+-	{ PR_clone3,		0 },
+ 	{ PR_close,		0 },
+ 	{ PR_connect,		0 },
+ 	{ PR_creat,		0 },
+-	{ PR_recvfrom,		0 },
+-	{ PR_recvmsg,		0 },
+-	{ PR_sendmsg,		0 },
+-	{ PR_sendto,		0 },
+-	{ PR_socket,		FILTER_SYSEXIT },
+ 	{ PR_execve,		FILTER_SYSEXIT },
+ 	{ PR_execveat,		FILTER_SYSEXIT },
+ 	{ PR_faccessat,		0 },
+@@ -434,6 +428,23 @@
+ 	FILTERED_SYSNUM_END,
+ };
+ 
++/* proot-fast (2026-09-24): syscalls that termux/proot started filtering for bubblewrap only
++ * (4abc88b5c netlink emulation, 064617fa1 CLONE_NEW* stripping). seccomp cannot filter by socket
++ * type, so with these every send/recv and every thread creation of every tracee stops for the
++ * single-threaded tracer (measured inside PRoot: socket send+recv 55.5 us vs write+read 1.56 us).
++ * They are filtered only when PROOT_BWRAP_COMPAT is set in the tracer's environment. fake_id0
++ * still filters sendmsg (and kompat/fake_id0 socket) for their own needs. */
++static FilteredSysnum bwrap_compat_sysnums[] = {
++	{ PR_clone,		0 },
++	{ PR_clone3,		0 },
++	{ PR_recvfrom,		0 },
++	{ PR_recvmsg,		0 },
++	{ PR_sendmsg,		0 },
++	{ PR_sendto,		0 },
++	{ PR_socket,		FILTER_SYSEXIT },
++	FILTERED_SYSNUM_END,
++};
++
+ /**
+  * Add the @new_sysnums to the list of filtered @sysnums, using the
+  * given Talloc @context.  This function returns -errno if an error
+@@ -501,6 +512,12 @@
+ 	if (status < 0)
+ 		return status;
+ 
++	if (getenv("PROOT_BWRAP_COMPAT") != NULL) {
++		status = merge_filtered_sysnums(tracee->ctx, &filtered_sysnums, bwrap_compat_sysnums);
++		if (status < 0)
++			return status;
++	}
++
+ 	/* Merge the sysnums required by the extensions to the list
+ 	 * of filtered sysnums.  */
+ 	if (tracee->extensions != NULL) {
