@@ -46,7 +46,9 @@
 | `scripts/` | — | `android-host-audit-readonly.sh`（唯讀 Android 主機稽核腳本） |
 | `scripts/termux-bg-run` | `/usr/local/bin/termux-bg-run`（PRoot 內） | `738226b3d5022f2811322ba28849773cf61906c8848a884dbeb61c7066a71595`；缺 `ANDROID_ART_ROOT`／`BOOTCLASSPATH` 等 7 個變數時 exit `4`（Termux `am` 會靜默 exit 0 不送 intent） |
 | `scripts/restart-desktop.py` | 單次實測腳本（11-27 fast9+09c 換版） | PID／身分／SHA256 為該次專用；修正後只從呼叫端帶入上述 7 個變數（允許清單，不繼承其餘環境），並在 SIGTERM 舊桌面前檢查 |
-| `tests/` | — | 裁判單元測試、`fast9_regress.c`、mutation check、daemon fix3/fix4 離線回歸測試、`test_android_env_guard.py`（裝置上執行的非破壞性測試：不觸發 TermuxService、不重啟 Stable 桌面，並比對 Stable 身分前後不變） |
+| `scripts/restart-stable-desktop.py` | `~/build/proot-fast/tools/restart-stable-desktop.py` | `72f879c770df7859307ef843e1bdeade0e1e7a0d71fc9ae924adfa2341e911ef`；可重複使用的 Stable XFCE 重啟（現場偵測 pid，`--dry-run` 不送訊號，`--apply` 需 `--confirm-stable-restart`），步驟見根目錄 `HANDOFF.md` |
+| `scripts/restart-stable-desktop.{dryrun,apply}.sh` | 同上 `tools/` | `3eb19e0d…`／`102e6a72…`；固定模式的包裝（`termux-bg-run` 不能帶參數） |
+| `tests/` | — | `test_restart_stable_desktop.py`（非破壞性：不送訊號、不啟動桌面；5 個突變對照皆 FAIL）、裁判單元測試、`fast9_regress.c`、mutation check、daemon fix3/fix4 離線回歸測試、`test_android_env_guard.py`（裝置上執行的非破壞性測試：不觸發 TermuxService、不重啟 Stable 桌面，並比對 Stable 身分前後不變） |
 
 ## 常用環境開關與回退方式
 
