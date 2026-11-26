@@ -1,0 +1,522 @@
+From edc33195c461ef11c70a4a657813f998dcaa067f Mon Sep 17 00:00:00 2001
+From: root <root@localhost.localdomain>
+Date: Thu, 26 Nov 2026 11:18:38 +0800
+Subject: [PATCH] syscall: answer stat, fstat, and statx at seccomp enter stop
+
+Under seccomp acceleration (seccomp_after_ptrace_enter), newfstatat,
+fstatat64, fstat, and statx are filtered with FILTER_SYSEXIT so
+fake_id0 and link2symlink can adjust their results at sysexit.  Even
+after recent exit-stage optimizations, every call still pays a second
+ptrace stop and context switch.
+
+Answer safe native ABI_DEFAULT calls directly during the seccomp enter
+stop via a new STAT_SYSCALL extension event (and the existing
+STATX_SYSCALL event), voiding the syscall with PR_void and skipping the
+sysexit stop with PTRACE_CONT:
+
+- tracee/event.c & tracee.h: allow FILTER_SYSEXIT syscalls to skip
+  the sysexit stop when seccomp_after_ptrace_enter is active,
+  sysexit_necessary is false, and the enter stage answered the call.
+- extension.h, fake_id0, link2symlink: introduce STAT_SYSCALL with a
+  struct stat_syscall_state { host_path, stat_buf } so core code stays
+  decoupled from extensions.  fake_id0 updates st_uid/st_gid (and
+  falls back with -ENOSYS under USERLAND); link2symlink updates
+  st_nlink for backing files and falls back with -EAGAIN for unresolved
+  link2symlink symlinks.
+- tracee/statx.c & syscall/enter.c: handle newfstatat/fstatat64, fstat
+  (via pidfd_open + pidfd_getfd), and statx (reusing the already
+  translated host path in CURRENT SYSARG_2, or pidfd_getfd for
+  AT_EMPTY_PATH).  Unusual flags, /proc paths, non-native ABIs,
+  chained syscalls, 32-bit ARM (where the kernel runs SYSCALL_AVOIDER),
+  and host errors other than ENOENT/ENOTDIR fall back to the normal
+  enter+exit path.
+
+Tested on ARM64 Android (Termux + Ubuntu 24.04 PRoot): all stat,
+smoke, and link2symlink/fake_id0 checks match upstream with 0 diff;
+microbenchmarks improve by 36-45% and fstat context switches drop
+by 50%.
+
+Assisted-By: LLM
+---
+ src/extension/extension.h                 |  15 +++
+ src/extension/fake_id0/fake_id0.c         |   7 ++
+ src/extension/fake_id0/stat.c             |  20 ++++
+ src/extension/fake_id0/stat.h             |   1 +
+ src/extension/link2symlink/link2symlink.c |  34 ++++++
+ src/syscall/enter.c                       | 132 ++++++++++++++++++++++
+ src/tracee/event.c                        |   8 ++
+ src/tracee/statx.c                        |  91 +++++++++++++++
+ src/tracee/statx.h                        |   1 +
+ src/tracee/tracee.h                       |   6 +
+ 10 files changed, 315 insertions(+)
+
+diff --git a/src/extension/extension.h b/src/extension/extension.h
+index bf88f7b..8fb182b 100644
+--- a/src/extension/extension.h
++++ b/src/extension/extension.h
+@@ -32,6 +32,15 @@
+ #include "syscall/seccomp.h"
+ 
+ /* List of possible events.  */
++struct stat;
++
++/* Passed to extensions on STAT_SYSCALL when answering a stat-family
++ * syscall at the seccomp enter stop.  */
++struct stat_syscall_state {
++	const char *host_path;
++	struct stat *stat_buf;
++};
++
+ typedef enum {
+ 	/* A guest path passed as an argument of the current syscall
+ 	 * is about to be translated: "(char *) data1" is the base for
+@@ -154,6 +163,12 @@ typedef enum {
+          * a file */
+         LINK2SYMLINK_UNLINK,
+ 
++	/* A stat/fstatat/fstat syscall is being answered at the seccomp
++	 * enter stop: "(struct stat_syscall_state *) data1" holds the
++	 * host path (empty when unknown) and the struct stat buffer to
++	 * adjust.  Returning < 0 falls back to the normal exit stage.  */
++	STAT_SYSCALL,
++
+ 	/* statx() syscall was used by tracee and is being replaced by proot
+ 	 * data1 argument contains pointer to statx_syscall_state struct
+ 	 * defined in tracee/statx.h
+diff --git a/src/extension/fake_id0/fake_id0.c b/src/extension/fake_id0/fake_id0.c
+index 76f5c64..aa1dcdc 100644
+--- a/src/extension/fake_id0/fake_id0.c
++++ b/src/extension/fake_id0/fake_id0.c
+@@ -1574,6 +1574,13 @@ int fake_id0_callback(Extension *extension, ExtensionEvent event, intptr_t data1
+ 		return handle_sysexit_start(tracee, config);
+ 	}
+ 
++	case STAT_SYSCALL: {
++		Tracee *tracee = TRACEE(extension);
++		Config *config = talloc_get_type_abort(extension->config, Config);
++
++		return fake_id0_handle_stat_syscall(tracee, config, data1);
++	}
++
+ 	case STATX_SYSCALL: {
+ 		Tracee *tracee = TRACEE(extension);
+ 		Config *config = talloc_get_type_abort(extension->config, Config);
+diff --git a/src/extension/fake_id0/stat.c b/src/extension/fake_id0/stat.c
+index 18f95ff..07bcb57 100644
+--- a/src/extension/fake_id0/stat.c
++++ b/src/extension/fake_id0/stat.c
+@@ -1,3 +1,4 @@
++#include <errno.h>
+ #include <linux/limits.h>
+ #include <fcntl.h>       /* AT_EMPTY_PATH, */
+ #include <string.h>      /* strcpy(3), */
+@@ -179,6 +180,25 @@ int handle_stat_exit_end(Tracee *tracee, Config *config, word_t sysnum) {
+ }
+ #endif /* ifdef USERLAND */
+ 
++int fake_id0_handle_stat_syscall(Tracee *tracee, const Config *config, uintptr_t stat_state_raw)
++{
++#ifdef USERLAND
++	(void) tracee;
++	(void) config;
++	(void) stat_state_raw;
++	return -ENOSYS;
++#else
++	struct stat_syscall_state *state = (struct stat_syscall_state *) stat_state_raw;
++	(void) tracee;
++
++	if (state->stat_buf->st_uid == get_host_uid())
++		state->stat_buf->st_uid = config->suid;
++	if (state->stat_buf->st_gid == get_host_gid())
++		state->stat_buf->st_gid = config->sgid;
++	return 0;
++#endif
++}
++
+ int fake_id0_handle_statx_syscall(Tracee *tracee, Config *config, uintptr_t statx_state_raw) {
+ 	struct statx_syscall_state *state = (struct statx_syscall_state *) statx_state_raw;
+ #ifdef USERLAND
+diff --git a/src/extension/fake_id0/stat.h b/src/extension/fake_id0/stat.h
+index 9f2ed90..fc43fe4 100644
+--- a/src/extension/fake_id0/stat.h
++++ b/src/extension/fake_id0/stat.h
+@@ -7,6 +7,7 @@
+ 
+ int handle_stat_enter_end(Tracee *tracee, Reg fd_sysarg);
+ void override_stat_owner(Tracee *tracee, const Config *config, word_t address);
++int fake_id0_handle_stat_syscall(Tracee *tracee, const Config *config, uintptr_t stat_state_raw);
+ int fake_id0_handle_statx_syscall(Tracee *tracee, Config *config, uintptr_t statx_state_raw);
+ #ifndef USERLAND
+ int handle_stat_exit_end(Tracee *tracee, Config *config, Reg stat_sysarg);
+diff --git a/src/extension/link2symlink/link2symlink.c b/src/extension/link2symlink/link2symlink.c
+index 11f27bd..232a0fc 100644
+--- a/src/extension/link2symlink/link2symlink.c
++++ b/src/extension/link2symlink/link2symlink.c
+@@ -1580,6 +1580,37 @@ static void link2symlink_handle_statx(struct statx_syscall_state *state)
+ 	state->updated_stats = true;
+ }
+ 
++static int link2symlink_handle_stat(struct stat_syscall_state *state)
++{
++	char intermediate[PATH_MAX];
++	const char *name;
++	int link_count;
++
++	if (state->host_path == NULL || state->host_path[0] == '\0')
++		return 0;
++
++	if (S_ISLNK(state->stat_buf->st_mode)) {
++		name = strrchr(state->host_path, '/');
++		name = (name != NULL) ? name + 1 : state->host_path;
++		if (strncmp(name, PREFIX, strlen(PREFIX)) == 0)
++			return -EAGAIN;
++
++		if (my_readlink(state->host_path, intermediate) >= 0) {
++			name = strrchr(intermediate, '/');
++			name = (name != NULL) ? name + 1 : intermediate;
++			if (strncmp(name, PREFIX, strlen(PREFIX)) == 0)
++				return -EAGAIN;
++		}
++		return 0;
++	}
++
++	link_count = get_link_count(state->host_path);
++	if (link_count >= 0)
++		state->stat_buf->st_nlink = link_count;
++
++	return 0;
++}
++
+ /**
+  * Remember the name the tracee of @extension used for the file it is
+  * about to open, when @host_path -- the path this open was redirected
+@@ -2051,6 +2082,9 @@ int link2symlink_callback(Extension *extension, ExtensionEvent event,
+ 		translated_path(extension, (char *) data1);
+ 		return 0;
+ 
++	case STAT_SYSCALL:
++		return link2symlink_handle_stat((struct stat_syscall_state *) data1);
++
+ 	case STATX_SYSCALL:
+ 		link2symlink_handle_statx((struct statx_syscall_state *) data1);
+ 		return 0;
+diff --git a/src/syscall/enter.c b/src/syscall/enter.c
+index 56e9fa2..b9a360b 100644
+--- a/src/syscall/enter.c
++++ b/src/syscall/enter.c
+@@ -77,10 +77,12 @@
+ #include "tracee/mem.h"
+ #include "tracee/abi.h"
+ #include "tracee/event.h"
++#include "tracee/statx.h"
+ #include "path/path.h"
+ #include "path/canon.h"
+ #include "path/binding.h"
+ #include "arch.h"
++#include <sys/syscall.h>
+ 
+ /* Older kernel headers may lack these. */
+ #ifndef CLONE_NEWTIME
+@@ -2641,6 +2643,133 @@ static void maybe_redirect_userns_file(Tracee *tracee, Reg reg, int flags)
+ 	(void) set_sysarg_path(tracee, "/dev/null", reg);
+ }
+ 
++static void answer_syscall_at_enter(Tracee *tracee, word_t result)
++{
++	set_sysnum(tracee, PR_void);
++	poke_reg(tracee, SYSARG_2, peek_reg(tracee, ORIGINAL, SYSARG_2));
++	poke_reg(tracee, SYSARG_3, peek_reg(tracee, ORIGINAL, SYSARG_3));
++	poke_reg(tracee, SYSARG_4, peek_reg(tracee, ORIGINAL, SYSARG_4));
++	poke_reg(tracee, SYSARG_5, peek_reg(tracee, ORIGINAL, SYSARG_5));
++	poke_reg(tracee, SYSARG_6, peek_reg(tracee, ORIGINAL, SYSARG_6));
++	poke_reg(tracee, SYSARG_RESULT, result);
++	tracee->answered_at_enter = true;
++	tracee->restart_how = PTRACE_CONT;
++}
++
++/**
++ * Answer stat-family syscalls (newfstatat/fstatat64, fstat, statx) directly at
++ * the seccomp enter stop when safe, sparing the sysexit ptrace stop and
++ * duplicate exit-stage path resolution.  Unusual flags, /proc paths, non-native
++ * ABIs, chained syscalls, and host errors other than ENOENT/ENOTDIR fall back
++ * to the normal enter+exit path.
++ */
++static bool answer_stat_at_enter(Tracee *tracee)
++{
++#ifdef USERLAND
++	(void) tracee;
++	return false;
++#else
++	struct stat st;
++	struct stat_syscall_state state;
++	char path[PATH_MAX];
++	Sysnum sysnum;
++	Reg buffer;
++	int status;
++
++	/* Only when the kernel cancels PR_void (native 64-bit / non-ARM32). */
++	if ((long) SYSCALL_AVOIDER >= 0)
++		return false;
++
++	sysnum = get_sysnum(tracee, ORIGINAL);
++	if (get_sysnum(tracee, CURRENT) != sysnum || tracee->chain.syscalls != NULL
++	    || tracee->sysexit_pending || get_abi(tracee) != ABI_DEFAULT)
++		return false;
++
++	if (sysnum == PR_newfstatat || sysnum == PR_fstatat64) {
++#ifdef __NR_newfstatat
++		word_t flags = peek_reg(tracee, CURRENT, SYSARG_4);
++
++		if ((flags & ~(word_t) (AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT)) != 0)
++			return false;
++		status = read_path(tracee, path, peek_reg(tracee, CURRENT, SYSARG_2));
++		if (status < 0 || path[0] != '/')
++			return false;
++		if (strncmp(path, "/proc", 5) == 0 && (path[5] == '/' || path[5] == '\0'))
++			return false;
++
++		if (syscall(__NR_newfstatat, AT_FDCWD, path, &st, (int) flags) != 0) {
++			const int error = errno;
++			if (error != ENOENT && error != ENOTDIR) {
++				VERBOSE(tracee, 2, "stat_at_enter: skip host errno=%d %s", error, path);
++				return false;
++			}
++			VERBOSE(tracee, 2, "stat_at_enter: answered errno=%d %s", error, path);
++			answer_syscall_at_enter(tracee, (word_t) -error);
++			return true;
++		}
++		buffer = SYSARG_3;
++#else
++		return false;
++#endif
++	}
++	else if (sysnum == PR_statx) {
++		word_t result;
++		if (answer_statx_at_enter(tracee, &result) != 1)
++			return false;
++		VERBOSE(tracee, 2, "stat_at_enter: answered statx result=%ld", (long) result);
++		answer_syscall_at_enter(tracee, result);
++		return true;
++	}
++	else if (sysnum == PR_fstat) {
++#if defined(__NR_fstat) && defined(__NR_pidfd_open) && defined(__NR_pidfd_getfd)
++		const int fd = (int) peek_reg(tracee, CURRENT, SYSARG_1);
++		int pidfd, local, saved;
++
++		if (fd < 0)
++			return false;
++		pidfd = (int) syscall(__NR_pidfd_open, tracee->pid, 0);
++		if (pidfd < 0)
++			return false;
++		local = (int) syscall(__NR_pidfd_getfd, pidfd, fd, 0);
++		saved = errno;
++		close(pidfd);
++		if (local < 0) {
++			VERBOSE(tracee, 2, "stat_at_enter: skip fstat getfd errno=%d fd=%d", saved, fd);
++			return false;
++		}
++		status = (int) syscall(__NR_fstat, local, &st);
++		close(local);
++		if (status != 0)
++			return false;
++
++		path[0] = '\0';
++		if (tracee->extensions != NULL && readlink_proc_pid_fd(tracee->pid, fd, path) >= 0) {
++			const size_t length = strlen(path), suffix = strlen(" (deleted)");
++			if (length > suffix && strcmp(path + length - suffix, " (deleted)") == 0)
++				path[length - suffix] = '\0';
++		}
++		buffer = SYSARG_2;
++#else
++		return false;
++#endif
++	}
++	else
++		return false;
++
++	state.host_path = path;
++	state.stat_buf = &st;
++	if (notify_extensions(tracee, STAT_SYSCALL, (intptr_t) &state, 0) < 0)
++		return false;
++
++	if (write_data(tracee, peek_reg(tracee, ORIGINAL, buffer), &st, sizeof(st)) < 0)
++		return false;
++
++	VERBOSE(tracee, 2, "stat_at_enter: answered %s", sysnum == PR_fstat ? "fstat" : path);
++	answer_syscall_at_enter(tracee, 0);
++	return true;
++#endif
++}
++
+ /**
+  * Translate the input arguments of the current @tracee's syscall in the
+  * @tracee->pid process area. This function sets @tracee->status to
+@@ -4011,5 +4140,8 @@ end:
+ 		set_sysnum(tracee, PR_void);
+ 	}
+ 
++	if (status >= 0 && tracee->seccomp_enter_skippable)
++		(void) answer_stat_at_enter(tracee);
++
+ 	return status;
+ }
+diff --git a/src/tracee/event.c b/src/tracee/event.c
+index 9b8993f..b886a18 100644
+--- a/src/tracee/event.c
++++ b/src/tracee/event.c
+@@ -735,7 +735,15 @@ int handle_tracee_event(Tracee *tracee, int tracee_status)
+ 			if ((flags & FILTER_SYSEXIT) != 0 || sysexit_necessary) {
+ 				if (seccomp_after_ptrace_enter) {
+ 					tracee->restart_how = PTRACE_SYSCALL;
++					tracee->seccomp_enter_skippable = !sysexit_necessary;
++					tracee->answered_at_enter = false;
+ 					translate_syscall(tracee);
++					tracee->seccomp_enter_skippable = false;
++					if (tracee->answered_at_enter) {
++						tracee->answered_at_enter = false;
++						tracee->restart_how = PTRACE_CONT;
++						break;
++					}
+ 				}
+ 				tracee->restart_how = PTRACE_SYSCALL;
+ 				break;
+diff --git a/src/tracee/statx.c b/src/tracee/statx.c
+index 3ddc6bb..ec97c5c 100644
+--- a/src/tracee/statx.c
++++ b/src/tracee/statx.c
+@@ -1,8 +1,13 @@
+ #include <errno.h>          /* E*, */
++#include <fcntl.h>          /* AT_*, */
++#include <string.h>         /* strncmp(3), */
++#include <unistd.h>         /* syscall(2), close(2), */
++#include <sys/syscall.h>    /* __NR_statx, __NR_pidfd_*, */
+ #include <sys/sysmacros.h>  /* major, minor, */
+ 
+ #include "tracee/statx.h"
+ #include "tracee/mem.h"
++#include "tracee/reg.h"
+ 
+ int handle_statx_syscall(Tracee *tracee, bool from_sigsys) {
+ 	RegVersion regVersion = from_sigsys ? CURRENT : ORIGINAL;
+@@ -176,3 +181,89 @@ int handle_statx_syscall(Tracee *tracee, bool from_sigsys) {
+ 	}
+ 	return 0;
+ }
++
++#ifndef AT_STATX_SYNC_TYPE
++#define AT_STATX_SYNC_TYPE 0x6000
++#endif
++
++/**
++ * Answer statx(2) directly at the seccomp enter stop using the host path
++ * already translated in CURRENT SYSARG_2 (or pidfd_getfd() for AT_EMPTY_PATH),
++ * then invoke STATX_SYSCALL extensions and write the result back.  Returns 1
++ * with *result set when answered, or 0 to fall back to the normal enter+exit
++ * path (unusual flags, /proc paths, kernel lack of statx/pidfd_getfd, or host
++ * errors other than ENOENT/ENOTDIR).
++ */
++int answer_statx_at_enter(Tracee *tracee, word_t *result)
++{
++#if defined(__NR_statx)
++	struct statx_syscall_state state = {};
++	const word_t dirfd = peek_reg(tracee, CURRENT, SYSARG_1);
++	const word_t flags = peek_reg(tracee, CURRENT, SYSARG_3);
++	const word_t mask = peek_reg(tracee, CURRENT, SYSARG_4);
++	int status;
++	long rc;
++
++	if ((flags & ~(word_t) (AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT | AT_EMPTY_PATH | AT_STATX_SYNC_TYPE)) != 0)
++		return 0;
++
++	status = read_string(tracee, state.host_path, peek_reg(tracee, CURRENT, SYSARG_2), PATH_MAX);
++	if (status <= 0 || status >= PATH_MAX)
++		return 0;
++
++	if (status == 1) {
++#if defined(__NR_pidfd_open) && defined(__NR_pidfd_getfd)
++		int pidfd, local;
++
++		if ((flags & AT_EMPTY_PATH) == 0 || (int) dirfd < 0)
++			return 0;
++		if (readlink_proc_pid_fd(tracee->pid, (int) dirfd, state.host_path) < 0)
++			return 0;
++		pidfd = (int) syscall(__NR_pidfd_open, tracee->pid, 0);
++		if (pidfd < 0)
++			return 0;
++		local = (int) syscall(__NR_pidfd_getfd, pidfd, (int) dirfd, 0);
++		close(pidfd);
++		if (local < 0)
++			return 0;
++		rc = syscall(__NR_statx, local, "", (int) (flags & (AT_EMPTY_PATH | AT_NO_AUTOMOUNT | AT_STATX_SYNC_TYPE)),
++			     (unsigned int) mask, &state.statx_buf);
++		close(local);
++		if (rc != 0)
++			return 0;
++#else
++		return 0;
++#endif
++	}
++	else {
++		if (state.host_path[0] != '/')
++			return 0;
++		if (strncmp(state.host_path, "/proc", 5) == 0 && (state.host_path[5] == '/' || state.host_path[5] == '\0'))
++			return 0;
++		rc = syscall(__NR_statx, AT_FDCWD, state.host_path,
++			     (int) (flags & (AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT | AT_STATX_SYNC_TYPE)),
++			     (unsigned int) mask, &state.statx_buf);
++		if (rc != 0) {
++			const int error = errno;
++			if (error != ENOENT && error != ENOTDIR)
++				return 0;
++			*result = (word_t) -error;
++			return 1;
++		}
++	}
++
++	status = notify_extensions(tracee, STATX_SYSCALL, (intptr_t) &state, 0);
++	if (status < 0)
++		return 0;
++
++	if (write_data(tracee, peek_reg(tracee, ORIGINAL, SYSARG_5), &state.statx_buf, sizeof(state.statx_buf)) < 0)
++		return 0;
++
++	*result = 0;
++	return 1;
++#else
++	(void) tracee;
++	(void) result;
++	return 0;
++#endif
++}
+diff --git a/src/tracee/statx.h b/src/tracee/statx.h
+index d06dfae..156e413 100644
+--- a/src/tracee/statx.h
++++ b/src/tracee/statx.h
+@@ -28,6 +28,7 @@ struct statx_syscall_state {
+ };
+ 
+ int handle_statx_syscall(Tracee *tracee, bool from_sigsys);
++int answer_statx_at_enter(Tracee *tracee, word_t *result);
+ 
+ 
+ #endif // STATX_H
+diff --git a/src/tracee/tracee.h b/src/tracee/tracee.h
+index b4352ab..cb9a8f7 100644
+--- a/src/tracee/tracee.h
++++ b/src/tracee/tracee.h
+@@ -366,6 +366,12 @@ typedef struct tracee {
+ 	 * has to be ignored as it's same syscall entry */
+ 	bool seccomp_already_handled_enter;
+ 
++	/* Set by the event loop around the seccomp-stop enter translation of a
++	 * FILTER_SYSEXIT syscall; answered_at_enter becomes true when the enter
++	 * stage answered the syscall itself and skipped its sysexit stop.  */
++	bool seccomp_enter_skippable;
++	bool answered_at_enter;
++
+ 	/* Whether the tracee itself requested the "no new privileges" flag
+ 	 * via prctl(PR_SET_NO_NEW_PRIVS).  PRoot always sets the real kernel
+ 	 * flag in the child before execve (it is a precondition for installing
+-- 
+2.43.0
+
