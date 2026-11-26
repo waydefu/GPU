@@ -16,7 +16,7 @@
 
 ## 現況（2026-11-26）
 
-現役工作站使用 `proot-fast8` 與 `f8-shard` v2。Gate A 2D GPU 加速已完成研究並暫停，GL/VK 上屏已完成可行性研究並暫停。各戰線詳見 [`HANDOFF.md`](HANDOFF.md)。
+現役工作站使用 `fast9+09c`（沿用 `out8/bin/proot-fast8` 路徑）與 `f8-shard` v2。Gate A 2D GPU 加速已完成研究並暫停，GL/VK 上屏已完成可行性研究並暫停。各戰線詳見 [`HANDOFF.md`](HANDOFF.md)。
 
 ## 歷史快照（2026-09-22）
 
