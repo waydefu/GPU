@@ -1,0 +1,194 @@
+#!/usr/bin/env python3
+"""termux-bg-run — Launch a TermuxService native command and wait via inotify without busy loops or dropped timers."""
+from __future__ import annotations
+
+import argparse
+import ctypes
+import os
+from pathlib import Path
+import select
+import subprocess as sp
+import sys
+import time
+
+TERMUX_ROOT = "/data/data/com.termux/"
+AM_BIN = "/data/data/com.termux/files/usr/bin/am"
+TERMUX_SVC = "com.termux/com.termux.app.TermuxService"
+TERMUX_BASH = "/data/data/com.termux/files/usr/bin/bash"
+TERMUX_TIMEOUT = "/data/data/com.termux/files/usr/bin/timeout"
+CACHE_DIR = Path("/data/data/com.termux/files/home/.cache/termux-bg-run")
+# Termux `am` is an app_process wrapper: without these it exits 0 in ~5 ms and never sends the intent.
+AM_REQUIRED_ENV = (
+    "ANDROID_ART_ROOT", "ANDROID_I18N_ROOT", "ANDROID_TZDATA_ROOT",
+    "ANDROID_ROOT", "ANDROID_DATA", "BOOTCLASSPATH", "DEX2OATBOOTCLASSPATH",
+)
+
+IN_CREATE = 0x00000100
+IN_MOVED_TO = 0x00000080
+IN_CLOSE_WRITE = 0x00000008
+IN_NONBLOCK = 0o4000
+
+
+def _inotify_watch(directory: Path):
+    try:
+        libc = ctypes.CDLL(None, use_errno=True)
+        ifd = libc.inotify_init1(IN_NONBLOCK)
+        if ifd < 0:
+            return None, libc
+        wd = libc.inotify_add_watch(
+            ifd, os.fsencode(str(directory)), IN_CREATE | IN_MOVED_TO | IN_CLOSE_WRITE
+        )
+        if wd < 0:
+            os.close(ifd)
+            return None, libc
+        return ifd, libc
+    except Exception:
+        return None, None
+
+
+def _read_rc(rc_path: Path) -> int | None:
+    try:
+        txt = rc_path.read_text(encoding="utf-8", errors="replace").strip()
+    except OSError:
+        return None
+    if not txt:
+        return None
+    first = txt.splitlines()[-1].strip()
+    try:
+        return int(first)
+    except ValueError:
+        return None
+
+
+def _print_tail(log_path: Path | None, n: int) -> None:
+    if not log_path or n <= 0 or not log_path.exists():
+        return
+    lines = log_path.read_text(encoding="utf-8", errors="replace").splitlines()
+    if lines:
+        print(f"=== LOG TAIL ({min(n, len(lines))}/{len(lines)} lines: {log_path}) ===")
+        print("\n".join(lines[-n:]))
+
+
+def _make_wrapper(script: Path, rc_path: Path, log_path: Path, timeout_s: int) -> Path:
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    wrap = CACHE_DIR / f"wrap-{int(time.time())}-{os.getpid()}.sh"
+    body = (
+        f"#!{TERMUX_BASH}\n"
+        "set -u\n"
+        "unset BASH_ENV ENV\n"
+        f'"{TERMUX_TIMEOUT}" -k 5 {timeout_s} "{script}" > "{log_path}" 2>&1\n'
+        "rc=$?\n"
+        f'printf "%s\\n" "$rc" > "{rc_path}.tmp" && mv -f "{rc_path}.tmp" "{rc_path}"\n'
+        'exit "$rc"\n'
+    )
+    wrap.write_text(body, encoding="utf-8")
+    os.chmod(wrap, 0o755)
+    return wrap
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description="Run a TermuxService script synchronously via inotify wait")
+    ap.add_argument("--rc-file", help="Explicit exit-code file written by script on completion")
+    ap.add_argument("--log-file", help="Log file to tail on finish or timeout")
+    ap.add_argument("--timeout", type=int, default=300, help="Hard wait timeout in seconds (default: 300)")
+    ap.add_argument("--tail", type=int, default=40, help="Trailing log lines to print (default: 40)")
+    ap.add_argument("script", help="Path to Termux-accessible script under /data/data/com.termux/")
+    args = ap.parse_args(argv)
+
+    script = Path(args.script).resolve()
+    if not str(script).startswith(TERMUX_ROOT):
+        print(f"ERROR: script must reside under {TERMUX_ROOT}: {script}", file=sys.stderr)
+        return 2
+    if not script.is_file():
+        print(f"ERROR: script not found: {script}", file=sys.stderr)
+        return 2
+    if args.timeout <= 0:
+        print("ERROR: --timeout must be > 0", file=sys.stderr)
+        return 2
+    missing = [k for k in AM_REQUIRED_ENV if not os.environ.get(k)]
+    if missing:
+        print(
+            f"ERROR: am would exit 0 without sending the intent; missing env: {' '.join(missing)}. "
+            "The calling session was started with a stripped environment; restart it the normal way "
+            "or copy these vars from /proc/<com.termux pid>/environ.",
+            file=sys.stderr,
+        )
+        return 4
+    if not os.access(script, os.X_OK):
+        os.chmod(script, 0o755)
+
+    created_wrap: Path | None = None
+    if args.rc_file:
+        rc_path = Path(args.rc_file)
+        log_path = Path(args.log_file) if args.log_file else None
+        target_script = script
+    else:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        stamp = f"{int(time.time())}-{os.getpid()}"
+        rc_path = CACHE_DIR / f"run-{stamp}.rc"
+        log_path = Path(args.log_file) if args.log_file else (CACHE_DIR / f"run-{stamp}.log")
+        created_wrap = _make_wrapper(script, rc_path, log_path, args.timeout)
+        target_script = created_wrap
+
+    rc_path.parent.mkdir(parents=True, exist_ok=True)
+    for stale in (rc_path, Path(f"{rc_path}.tmp")):
+        if stale.exists():
+            stale.unlink()
+
+    ifd, _ = _inotify_watch(rc_path.parent)
+    try:
+        am_cmd = [
+            AM_BIN, "startservice", "--user", "0",
+            "-n", TERMUX_SVC,
+            "-a", "com.termux.service_execute",
+            "-d", f"file://{target_script}",
+            "--ez", "com.termux.execute.background", "true",
+        ]
+        p = sp.run(am_cmd, capture_output=True, text=True)
+        if p.returncode != 0:
+            print(f"ERROR: am startservice failed rc={p.returncode}: {p.stderr.strip()}", file=sys.stderr)
+            return 3
+
+        t0 = time.monotonic()
+        deadline = t0 + args.timeout
+        rc: int | None = _read_rc(rc_path)
+        while rc is None and time.monotonic() < deadline:
+            rem = max(0.0, deadline - time.monotonic())
+            wait_s = min(2.0, rem)
+            if ifd is not None:
+                rlist, _, _ = select.select([ifd], [], [], wait_s)
+                if rlist:
+                    try:
+                        os.read(ifd, 4096)
+                    except BlockingIOError:
+                        pass
+            else:
+                select.select([], [], [], wait_s)
+            rc = _read_rc(rc_path)
+
+        elapsed = time.monotonic() - t0
+        if rc is None:
+            print(
+                f"TERMUX_BG_RUN_TIMEOUT timeout_s={args.timeout} elapsed_s={elapsed:.2f} "
+                f"rc_file={rc_path} log_file={log_path or '-'}",
+                flush=True,
+            )
+            _print_tail(log_path, args.tail)
+            return 124
+
+        print(
+            f"TERMUX_BG_RUN_DONE rc={rc} elapsed_s={elapsed:.2f} "
+            f"rc_file={rc_path} log_file={log_path or '-'}",
+            flush=True,
+        )
+        _print_tail(log_path, args.tail)
+        return rc
+    finally:
+        if ifd is not None:
+            os.close(ifd)
+        if created_wrap is not None and created_wrap.exists():
+            created_wrap.unlink()
+
+
+if __name__ == "__main__":
+    sys.exit(main())
