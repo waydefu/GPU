@@ -17,6 +17,11 @@ TERMUX_SVC = "com.termux/com.termux.app.TermuxService"
 TERMUX_BASH = "/data/data/com.termux/files/usr/bin/bash"
 TERMUX_TIMEOUT = "/data/data/com.termux/files/usr/bin/timeout"
 CACHE_DIR = Path("/data/data/com.termux/files/home/.cache/termux-bg-run")
+# Termux `am` is an app_process wrapper: without these it exits 0 in ~5 ms and never sends the intent.
+AM_REQUIRED_ENV = (
+    "ANDROID_ART_ROOT", "ANDROID_I18N_ROOT", "ANDROID_TZDATA_ROOT",
+    "ANDROID_ROOT", "ANDROID_DATA", "BOOTCLASSPATH", "DEX2OATBOOTCLASSPATH",
+)
 
 IN_CREATE = 0x00000100
 IN_MOVED_TO = 0x00000080
@@ -100,6 +105,15 @@ def main(argv: list[str] | None = None) -> int:
     if args.timeout <= 0:
         print("ERROR: --timeout must be > 0", file=sys.stderr)
         return 2
+    missing = [k for k in AM_REQUIRED_ENV if not os.environ.get(k)]
+    if missing:
+        print(
+            f"ERROR: am would exit 0 without sending the intent; missing env: {' '.join(missing)}. "
+            "The calling session was started with a stripped environment; restart it the normal way "
+            "or copy these vars from /proc/<com.termux pid>/environ.",
+            file=sys.stderr,
+        )
+        return 4
     if not os.access(script, os.X_OK):
         os.chmod(script, 0o755)
 

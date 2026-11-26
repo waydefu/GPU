@@ -142,6 +142,26 @@ assert Path(f"/proc/{session}/comm").read_text().strip() == "xfce4-session"
 x = socket.stat()
 x_socket_id = x.st_dev, x.st_ino
 assert_server()
+
+# Inherit the caller's env (a TermuxService child) and only override what the
+# launch needs. A fresh dict dropped ANDROID_*/BOOTCLASSPATH on 2026-11-27, so
+# Termux `am` inside the new desktop exited 0 without sending intents and
+# termux-bg-run timed out. Check before touching the running desktop.
+AM_REQUIRED_ENV = (
+    "ANDROID_ART_ROOT", "ANDROID_I18N_ROOT", "ANDROID_TZDATA_ROOT",
+    "ANDROID_ROOT", "ANDROID_DATA", "BOOTCLASSPATH", "DEX2OATBOOTCLASSPATH",
+)
+env = dict(
+    os.environ,
+    PATH=f"{prefix}/bin:/system/bin",
+    HOME=str(termux_home),
+    PREFIX=str(prefix),
+    TMPDIR=str(prefix / "tmp"),
+    PD_PROOT_BIN=str(out / "auto/proot-fast8"),
+)
+missing_env = [k for k in AM_REQUIRED_ENV if not env.get(k)]
+assert not missing_env, ("caller env lacks Android runtime vars", missing_env)
+
 print(f"STABLE_BASELINE xserver={server} socket_inode={x.st_ino} desktop_tracer={old_tracer} codex_tracer={codex_tracer}", flush=True)
 
 test_fd = pidfd_open(os.getpid())
@@ -175,13 +195,6 @@ if active(old_tracer):
 assert_server()
 assert_original(codex_tracer)
 
-env = dict(
-    PATH=f"{prefix}/bin:/system/bin",
-    HOME=str(termux_home),
-    PREFIX=str(prefix),
-    TMPDIR=str(prefix / "tmp"),
-    PD_PROOT_BIN=str(out / "auto/proot-fast8"),
-)
 command = [
     str(prefix / "bin/proot-distro"), "login", "ubuntu", "--shared-tmp", "--",
     "/bin/bash", "-lc", "export DISPLAY=:1; exec /usr/local/bin/f8-xfce-session",
