@@ -62,8 +62,7 @@ while IFS= read -r -d '' f; do
     continue
   fi
 
-  h=$("$SHA256_BIN" < "$f" | awk '{print $1}' || true)
-  if ! is_sha256 "$h"; then
+  if ! h=$("$SHA256_BIN" < "$f" | awk '{print $1}') || ! is_sha256 "$h"; then
     echo "FAIL sha256 orig $rel (kept original)"
     fail=$((fail + 1))
     continue
@@ -79,8 +78,8 @@ while IFS= read -r -d '' f; do
     continue
   fi
 
-  h2=$("$ZSTD_BIN" -dc -- "$tmp" 2>/dev/null | "$SHA256_BIN" | awk '{print $1}' || true)
-  if is_sha256 "$h2" && [ "$h" = "$h2" ]; then
+  if h2=$("$ZSTD_BIN" -dc -- "$tmp" 2>/dev/null | "$SHA256_BIN" | awk '{print $1}') &&
+    is_sha256 "$h2" && [ "$h" = "$h2" ]; then
     mv -f -- "$tmp" "$f.zst"
     z=$(stat -c %s "$f.zst")
     touch -r "$f" "$f.zst"

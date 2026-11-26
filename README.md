@@ -3,18 +3,22 @@
 完整 runtime 權威樹在工作站 `/root/projects/GPU加速`。
 這裡是 GitHub 上可把專案交給下一手的切面：**Markdown + 凍結 judge + 證據 + harness + core-src + skills**。
 
-本倉庫 **沒有** GitHub status checks。Docs PR 綠燈 ≠ 裝置 qualification。
-`termux-x11` fork 的 artifact CI 是 **另一個倉庫**。
+[治理 CI](.github/workflows/governance-check.yml) 檢查文件、現役腳本與 PR 對凍結證據的異動。
+裝置資格驗證依各測試的實機證據判定，實驗 APK 由 `waydefu/termux-x11` 的 artifact CI 建置。
 
 ## 先讀
 
-1. **[`STATUS-HANDOFF-20260921.md`](STATUS-HANDOFF-20260921.md)** ← 入口（含 §6.5 R9 / §6.6 D-06 / §6.7 R10）
-2. [`V1-CORE-EXECUTOR-MASTER-PLAN-V2.3.md`](V1-CORE-EXECUTOR-MASTER-PLAN-V2.3.md) — 計畫書；**§8/§9 有部分已被 R9/R10 取代，以 handoff 的 SUPERSEDED 標記為準**
-3. [`ADB-CONNECT.md`](ADB-CONNECT.md) — 連線（endpoint 每次都變，一律用 mdns 重探，不要沿用舊值）
-4. [`WORKTREE-MAP.md`](WORKTREE-MAP.md) — source SHA / 遠端
-5. [`HANDOFF.md`](HANDOFF.md) — 完整歷史 ledger
+1. **[`HANDOFF.md`](HANDOFF.md)** — 現行狀態、紅線與各戰線的交接入口。
+2. [`WORKTREE-MAP.md`](WORKTREE-MAP.md) — 本機工作樹、獨立倉庫與遠端分工。
+3. [`ADB-CONNECT.md`](ADB-CONNECT.md) — 以 `f8-adb-port` 重探即時端點，使用獨立 5038 通道。
+4. [`TEST-MATRIX.md`](TEST-MATRIX.md) — 歷史測試矩陣與凍結結果。
+5. [`STATUS-HANDOFF-20260921.md`](STATUS-HANDOFF-20260921.md) 與 [V1-Core 計畫書](V1-CORE-EXECUTOR-MASTER-PLAN-V2.3.md) — Gate A 研究期交接與計畫。
 
-## 現況（2026-09-22）
+## 現況（2026-11-26）
+
+現役工作站使用 `proot-fast8` 與 `f8-shard` v2。Gate A 2D GPU 加速已完成研究並暫停，GL/VK 上屏已完成可行性研究並暫停。各戰線詳見 [`HANDOFF.md`](HANDOFF.md)。
+
+## 歷史快照（2026-09-22）
 
 | 項目 | 狀態 | 綁定的 artifact |
 |---|---|---|

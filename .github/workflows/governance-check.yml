@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Check HANDOFF.md line budget (<= 150 lines)
         run: |
@@ -24,22 +24,43 @@ jobs:
           bash -n scripts/zlogs-safe.sh
           python3 -m py_compile patches/run_tiny_pixmap.py
 
+      - name: Verify log compression preserves source files on failure
+        run: python3 scripts/test-zlogs-safe.py
+
       - name: Block leaked local session paths, secrets, and hardcoded ADB endpoints in active files
+        shell: bash
         run: |
-          targets=(HANDOFF.md AGENTS.md WORKTREE-MAP.md .claude/rules/gpu-structure.md scripts/ patches/run_tiny_pixmap.py)
-          if grep -rnE '(/root/\.gemini/|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AIza[0-9A-Za-z_-]{35})' "${targets[@]}"; then
-            echo "ERROR: leaked local path or credential-like string detected"
-            exit 1
-          fi
-          if grep -rnE '(10\.191\.[0-9]+\.[0-9]+:[0-9]+|192\.168\.[0-9]+\.[0-9]+:[0-9]+)' AGENTS.md HANDOFF.md scripts/ patches/run_tiny_pixmap.py; then
-            echo "ERROR: hardcoded ADB LAN endpoint in active authority/scripts"
-            exit 1
-          fi
+          targets=(HANDOFF.md AGENTS.md WORKTREE-MAP.md README.md TEST-MATRIX.md .claude/rules/gpu-structure.md scripts/ patches/run_tiny_pixmap.py)
+          reject_matches() {
+            local pattern=$1 message=$2 status
+            if grep -rIlE -- "$pattern" "${targets[@]}"; then
+              echo "::error::$message"
+              return 1
+            else
+              status=$?
+              if (( status != 1 )); then
+                echo "::error::Content scan failed (grep exit $status)"
+                return "$status"
+              fi
+            fi
+          }
+          reject_matches '(/root/\.gemini/|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AIza[0-9A-Za-z_-]{35})' \
+            'Local Antigravity path or credential-like string detected'
+          reject_matches '(10\.191\.[0-9]+\.[0-9]+:[0-9]+|192\.168\.[0-9]+\.[0-9]+:[0-9]+)' \
+            'Hardcoded ADB LAN endpoint in active authority or scripts'
 
       - name: Protect frozen Gate A evidence on PRs
         if: github.event_name == 'pull_request'
+        shell: bash
+        env:
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: |
-          if git diff --name-status origin/${{ github.base_ref }}...HEAD -- evidence/session/gate-a-a1/ | grep -E '^(M|D|R)'; then
-            echo "ERROR: frozen evidence under evidence/session/gate-a-a1/ must not be modified or deleted"
+          : "${PR_BASE_SHA:?Missing pull request base SHA}"
+          if ! git merge-base --is-ancestor "$PR_BASE_SHA" HEAD; then
+            echo "::error::Could not verify the PR base against the checked-out merge commit"
+            exit 1
+          fi
+          if ! git diff --exit-code --name-status --no-renames "$PR_BASE_SHA" HEAD -- evidence/session/gate-a-a1/; then
+            echo "::error::Frozen Gate A evidence changed or the comparison failed"
             exit 1
           fi

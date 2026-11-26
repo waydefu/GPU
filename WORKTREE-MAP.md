@@ -9,7 +9,8 @@
 | 文件與證據倉庫 | https://github.com/waydefu/GPU | Markdown + 凍結 judge + 證據快照 |
 | Termux:X11 實驗 fork | https://github.com/waydefu/termux-x11 | CI artifact 建置與歷史研究分支 |
 | Termux:X11 上游（只讀） | https://github.com/termux/termux-x11 | **禁止 origin PR / merge / push / force** |
-| PRoot 上游（本地移植） | https://github.com/termux/proot | 上游 `stat`/`statx` enter-time 回饋準備 |
+| PRoot fork | https://github.com/waydefu/proot | `stat-at-enter` 移植分支 |
+| PRoot 上游 | https://github.com/termux/proot | 上游參照與回饋目標 |
 
 ## 保留之工作站原始碼樹（2026-11-26）
 

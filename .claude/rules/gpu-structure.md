@@ -4,14 +4,16 @@
 > 現行狀態、redlines、指令一律以 `AGENTS.md` 與入口 `HANDOFF.md` 為準。
 > 本檔只記**不會隨進度改變**的結構，避免每次重新摸索。
 
-## 兩個 repo，分工不同，不要搞混
+## 相關倉庫與本地樹，分工不同，不要搞混
 
 | repo | 內容 | 本機位置 |
 |---|---|---|
-| `waydefu/GPU` | docs / planning / evidence / handoff。**唯一 current authority** | 無本地 clone；工作樹是 `.`（**不是 git repo**） |
-| `waydefu/termux-x11` | 產品 source + `tests/`（judge / verifier / fixture） | `./src/f8-ahb-gatea-r7-p1-arm`（git worktree） |
+| `waydefu/GPU` | docs / planning / evidence / handoff / CI。**文件與證據權威** | 專案資料在 `/root/projects/GPU加速`，Git 操作在獨立 clone 或 linked worktree |
+| `waydefu/termux-x11` | Termux:X11 實驗 source + `tests/`（judge / verifier） | `/root/projects/GPU加速/src/f8-ahb-exa-async`（及 `upstream` 等 5 個 worktree） |
+| `waydefu/proot` | PRoot 上游 fork（`stat-at-enter` 分支） | `/root/projects/GPU加速/src/termux-proot-upstream` |
+| `f8-proot-fast`（僅本地） | 現役 `proot-fast8` + `auto-shard` | `/root/projects/GPU加速/src/f8-proot-fast`（`main`，暫無 GitHub 遠端） |
 
-- `waydefu/GPU` 沒有 CI，docs PR 綠燈 ≠ 裝置 qualification。
+- `waydefu/GPU` 設有 `.github/workflows/governance-check.yml`（文件／衛生／凍結保護）；docs PR 綠燈仍 ≠ 裝置 qualification。
 - 要推 evidence 時：clone 到 scratchpad → 複製檔案 → branch → PR。
 - **evidence 只推判決依據那一份**：不含 `raw-logcat.txt`、`collect-input.txt`、
   `x3.maps`；`sha256sums.txt` 仍是完整本地清單，另附 `PUBLISHED-SUBSET.md` 說明。
