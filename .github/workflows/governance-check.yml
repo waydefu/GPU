@@ -1,0 +1,45 @@
+name: Governance & Hygiene Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  governance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check HANDOFF.md line budget (<= 150 lines)
+        run: |
+          lines=$(wc -l < HANDOFF.md)
+          echo "HANDOFF.md lines: $lines"
+          test "$lines" -le 150
+
+      - name: Check active script syntax
+        run: |
+          bash -n scripts/zlogs-safe.sh
+          python3 -m py_compile patches/run_tiny_pixmap.py
+
+      - name: Block leaked local session paths, secrets, and hardcoded ADB endpoints in active files
+        run: |
+          targets=(HANDOFF.md AGENTS.md WORKTREE-MAP.md .claude/rules/gpu-structure.md scripts/ patches/run_tiny_pixmap.py)
+          if grep -rnE '(/root/\.gemini/|ghp_[A-Za-z0-9]{20,}|gho_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AIza[0-9A-Za-z_-]{35})' "${targets[@]}"; then
+            echo "ERROR: leaked local path or credential-like string detected"
+            exit 1
+          fi
+          if grep -rnE '(10\.191\.[0-9]+\.[0-9]+:[0-9]+|192\.168\.[0-9]+\.[0-9]+:[0-9]+)' AGENTS.md HANDOFF.md scripts/ patches/run_tiny_pixmap.py; then
+            echo "ERROR: hardcoded ADB LAN endpoint in active authority/scripts"
+            exit 1
+          fi
+
+      - name: Protect frozen Gate A evidence on PRs
+        if: github.event_name == 'pull_request'
+        run: |
+          if git diff --name-status origin/${{ github.base_ref }}...HEAD -- evidence/session/gate-a-a1/ | grep -E '^(M|D|R)'; then
+            echo "ERROR: frozen evidence under evidence/session/gate-a-a1/ must not be modified or deleted"
+            exit 1
+          fi

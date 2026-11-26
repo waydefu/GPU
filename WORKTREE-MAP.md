@@ -1,54 +1,42 @@
-# Worktree / 遠端地圖 — 2026-09-17
+# Worktree / 倉庫地圖 — 2026-11-26
 
-程式碼不在 `waydefu/GPU`。資格 source 在 fork `waydefu/termux-x11`。
-`termux/termux-x11` origin：**禁止 PR / merge / push / force**。
+專案根目錄 `.` 本身**不是 Git 倉庫**，而是文件、證據與獨立原始碼工作樹的集合。
 
-## 遠端
+## 遠端對照
 
-| 角色 | URL |
-|---|---|
-| 本 docs 倉庫 | https://github.com/waydefu/GPU |
-| 資格 fork | https://github.com/waydefu/termux-x11 |
-| 上游 origin（只讀） | https://github.com/termux/termux-x11 |
-| 目前裝置 APK CI | https://github.com/waydefu/termux-x11/actions/runs/35103216566 |
+| 角色 | URL | 備註 |
+|---|---|---|
+| 文件與證據倉庫 | https://github.com/waydefu/GPU | Markdown + 凍結 judge + 證據快照 |
+| Termux:X11 實驗 fork | https://github.com/waydefu/termux-x11 | CI artifact 建置與歷史研究分支 |
+| Termux:X11 上游（只讀） | https://github.com/termux/termux-x11 | **禁止 origin PR / merge / push / force** |
+| PRoot 上游（本地移植） | https://github.com/termux/proot | 上游 `stat`/`statx` enter-time 回饋準備 |
 
-## 工作站工作樹（2026-09-17）
+## 保留之工作站原始碼樹（2026-11-26）
 
-| 路徑 | HEAD | 分支 | 角色 | 紀律 |
-|---|---|---|---|---|
-| `src/f8-ahb-gatea-case-loop` | `fdfb1ce44b429897eda17c43bf33fbd37afe67f3` | `fix/gatea-r7-fatal-propagation-20260916` | **已安裝** R7-04 修復 | 不要為 R7-05 改 source |
-| `src/f8-ahb-gatea-r6-retire` | `0f1e54699d0b11a781f2c044fbc77505f8a53bd8` | `fix/gatea-r6-present-retirement-20260915` | 凍結 R6 PASS | **不准改** |
-| `src/f8-ahb-gatea-r7` | `a7528bd` | `qualification/gatea-r7-20260916` | R7 support artifact | 歷史；未安裝 |
-| `src/f8-ahb-gatea-exa-timeout` | `0d72332c0e591b2137262d06d7dcab704be49383` | timeout 修復 | RCA-1 | 歷史 B-2 FAIL 凍結 |
-| `src/f8-ahb-gatea-a1` | `88e3f176d5be313b7dee058da9021cfe8d09e7de` | 凍結 control | 不准改 | |
-| `src/f8-ahb-gatea-xpump` | `d9b7f60` | 歷史 xpump | 不要當現行裝置 | |
+| 路徑 | 倉庫 / 分支 | HEAD | 狀態與角色 |
+|---|---|---|---|
+| `src/f8-proot-fast` | 獨立新 Git 倉庫（`main`） | `ee603b8` | **現役主力**：匯聚 `proot-fast` v1–v8 6 個 patch、wrapper、auto-shard 腳本與離線測試 |
+| `src/termux-proot-upstream` | `termux/proot` + `waydefu/proot`（`stat-at-enter`） | `edc3319` | 上游 [PR #430](https://github.com/termux/proot/pull/430)（`CLOSED / WITHDRAWN`；保留 `stat-at-enter` `STAT_SYSCALL` enter-time 移植與對比實測分支） |
+| `src/upstream` | `waydefu/termux-x11`（`f8-control`） | `11b82d9` | 對照基準主庫（凍結不改） |
+| `src/f8-ahb` | `waydefu/termux-x11`（`qualification/d0a-narrow-20260912`） | `a6cc795` | Serena `gpu-f8-ahb` 專案綁定路徑（保留不刪） |
+| `src/f8-ahb-exa-async` | `waydefu/termux-x11`（`feat/exa-async-proto-20260923`） | `8423f0a` | 最新實驗 APK 來源與 GL/XFCE 測試工具（`dirty=0`） |
+| `src/f8-ahb-gatea-r7-p1-arm` | `waydefu/termux-x11`（`feat/gatea-r8-lifecycle-support-20260918`） | `5d9c433` | 最新 Gate A R8/R9/R10 生命週期樹 |
+| `src/f8-ahb-d0b-r1` | `waydefu/termux-x11`（`qualification/d0b-r1-narrow-20260912`） | `a6cc795` | 保留（含 6 個未提交修改檔；遠端已有 `backup/snapshot-f8-ahb-d0b-r1-20261111` 備份，為免 `--force` 暫留） |
 
-fork 上 `fdfb1ce` 已 push。origin 分支 **ABSENT**（沒有往 termux/termux-x11 推）。
+## 已清理之歷史凍結 Worktree（2026-11-26）
 
-## 從空機拉現行候選
+以下 14 個已凍結、超專案 `dirty=0` 且已備份至遠端 `fork` / `fork-backup` 之 worktree 已自 `src/` 移除（`src/` 磁碟由 1.6G 降至 612M），同時保留所有遠端分支供隨時重建：
 
+- `f8-ahb-debug` (`c698164`), `f8-ahb-gatea-a1` (`88e3f17`), `f8-ahb-gatea-xpump` (`d9b7f60`), `f8-ahb-gatea-r5-fix` (`37d8393`)
+- `f8-ahb-gatea-r6` (`95e6f96`), `f8-ahb-gatea-r6-retire` (`0f1e546`), `f8-ahb-gatea-r7` (`a7528bd`)
+- `f8-ahb-gatea-exa-timeout` (`0d72332`), `f8-ahb-gatea-stall-diag` (`27d8d1b`), `f8-ahb-gatea-notify-diag` (`1f85b80`), `f8-ahb-gatea-notify-fn` (`feeaa56`)
+- `f8-ahb-gatea-case-loop` (`fdfb1ce`), `f8-ahb-gatea-r7-hup-preserve` (`a07d66c`), `f8-ahb-gatea-r7-10-hup` (`8545b26`)
+
+任一歷史樹若需查閱原始碼，可自 `src/upstream` 重建（例）：
 ```bash
-mkdir -p /root/projects/GPU加速/src
-git clone https://github.com/waydefu/termux-x11.git \
-  /root/projects/GPU加速/src/f8-ahb-gatea-case-loop
-git -C /root/projects/GPU加速/src/f8-ahb-gatea-case-loop \
-  checkout fdfb1ce44b429897eda17c43bf33fbd37afe67f3
-git -C /root/projects/GPU加速/src/f8-ahb-gatea-case-loop status --short
-# 必須乾淨
+git -C ./src/upstream worktree add ./src/f8-ahb-gatea-r6-retire 0f1e546
 ```
-
-凍結 R6（只要讀歷史）：
-
-```bash
-git clone https://github.com/waydefu/termux-x11.git \
-  /root/projects/GPU加速/src/f8-ahb-gatea-r6-retire
-git -C /root/projects/GPU加速/src/f8-ahb-gatea-r6-retire \
-  checkout 0f1e54699d0b11a781f2c044fbc77505f8a53bd8
-# 之後不要在這個 worktree 寫入
-```
-
-xserver submodule 在部分 worktree 未展開。`verify_r7_support.py` 需要 `xserver/present/present_vblank.c`；修補驗證可用 `core-src/` 與 case-loop `lorie/` + 歷史 patch。不要為了跑 verifier 去改契約。
 
 ## Serena
 
-既有專案名：`gpu-f8-ahb`。不要為交接新建。不要殺別人的 clangd/Serena。
+既有專案名：`gpu-f8-ahb`（綁定 `./src/f8-ahb`）。不要為交接新建專案，不要殺別人的 clangd/Serena。
