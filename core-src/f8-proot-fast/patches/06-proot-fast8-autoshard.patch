@@ -1,0 +1,216 @@
+--- proot-5.1.107.92-v7/src/execve/shebang.c	2026-08-23 06:32:39.000000000 +0800
++++ proot-5.1.107.92-v8/src/execve/shebang.c	2026-09-26 15:57:48.860937076 +0800
+@@ -31,10 +31,17 @@
+ #include <stdbool.h>       /* bool, */
+ #include <assert.h>        /* assert(3), */
+ 
++#include <stdio.h>         /* snprintf(3), */
++#include <stdlib.h>        /* getenv(3), */
++#include <string.h>        /* str*(3), */
++#include <time.h>          /* clock_gettime(2), */
++
+ #include "execve/shebang.h"
+ #include "execve/execve.h"
+ #include "execve/aoxp.h"
+ #include "tracee/tracee.h"
++#include "tracee/reg.h"
++#include "path/path.h"
+ #include "attribute.h"
+ 
+ /**
+@@ -197,6 +204,180 @@
+ 	return 1;
+ }
+ 
++/* proot-fast8 AUTO-SHARD (2026-09-26): with PROOT_F8_AUTOSHARD=1 in the tracer's environment, an execve
++ * of a Chromium/Electron binary (its directory holds v8_context_snapshot.bin) or of a terminal emulator
++ * is run as if the binary started with "#!<f8-shard> --auto=<class>", so it gets a proot tracer of its
++ * own (TRACER-SHARD-01: one single-threaded tracer shared by the whole desktop is what stalls it).
++ * Never sharded (the program then runs in place, exactly as before):
++ *  - stdout or stderr is a pipe/socket: someone reads the program's output (agent tools, Puppeteer) and
++ *    a shard would not hand it over;
++ *  - argv has --type= (Chromium child processes) or --remote-debugging-pipe (driven over inherited fds);
++ *  - env F8_NO_SHARD or ELECTRON_RUN_AS_NODE non-empty;
++ *  - env F8_SHARD_EXE names a program in the same directory (the app re-executing itself or one of its
++ *    helpers, e.g. chrome_crashpad_handler which also relies on an inherited fd);
++ *  - env F8_SHARDED set without F8_SHARD_EXE (started through an explicit f8-shard launcher block);
++ *  - f8-shard is not an executable file in the guest.
++ * Only classified binaries pay for any of these checks, and every decision about them is appended to
++ * PROOT_F8_AUTOSHARD_LOG when that is set.  Errors never fail the execve: they mean "run in place".  */
++enum { F8_AS_NONE = 0, F8_AS_ELECTRON, F8_AS_TERMINAL };
++
++static bool f8_autoshard_enabled(void)
++{
++	static int enabled = -1;
++	if (enabled < 0) {
++		const char *value = getenv("PROOT_F8_AUTOSHARD");
++		enabled = value != NULL && strcmp(value, "1") == 0;
++	}
++	return enabled == 1;
++}
++
++static void f8_log(const Tracee *tracee, const char *decision, const char *detail)
++{
++	const char *path = getenv("PROOT_F8_AUTOSHARD_LOG");
++	char line[PATH_MAX + 128];
++	struct timespec now;
++	int fd, length;
++
++	if (path == NULL || path[0] == '\0')
++		return;
++	fd = open(path, O_WRONLY | O_APPEND | O_CREAT | O_CLOEXEC, 0600);
++	if (fd < 0)
++		return;
++	clock_gettime(CLOCK_REALTIME, &now);
++	length = snprintf(line, sizeof(line), "%ld.%03ld pid=%d %s %s\n", (long) now.tv_sec,
++			now.tv_nsec / 1000000, tracee->pid, decision, detail);
++	if (length > 0)
++		(void) !write(fd, line, (size_t) length < sizeof(line) ? (size_t) length : sizeof(line) - 1);
++	close(fd);
++}
++
++static int f8_classify(const char host_path[PATH_MAX])
++{
++	const char *slash = strrchr(host_path, '/');
++	const char *base = slash != NULL ? slash + 1 : host_path;
++	char probe[PATH_MAX];
++	int length;
++
++	if (strcmp(base, "xfce4-terminal") == 0 || strcmp(base, "xterm") == 0)
++		return F8_AS_TERMINAL;
++	if (slash == NULL)
++		return F8_AS_NONE;
++	length = snprintf(probe, sizeof(probe), "%.*s/v8_context_snapshot.bin", (int) (slash - host_path), host_path);
++	if (length > 0 && (size_t) length < sizeof(probe) && access(probe, F_OK) == 0)
++		return F8_AS_ELECTRON;
++	return F8_AS_NONE;
++}
++
++static bool f8_fd_is_pipe_or_socket(pid_t pid, int fd)
++{
++	char path[64], target[64];
++	ssize_t length;
++
++	snprintf(path, sizeof(path), "/proc/%d/fd/%d", pid, fd);
++	length = readlink(path, target, sizeof(target) - 1);
++	if (length <= 0)
++		return false;
++	target[length] = '\0';
++	return strncmp(target, "pipe:", 5) == 0 || strncmp(target, "socket:", 7) == 0;
++}
++
++static bool f8_same_dir(const char *a, const char *b)
++{
++	const char *sa = strrchr(a, '/'), *sb = strrchr(b, '/');
++	return sa != NULL && sb != NULL && sa - a == sb - b && strncmp(a, b, (size_t) (sa - a)) == 0;
++}
++
++/* Returns the reason not to shard (a static string), or NULL to shard.  */
++static const char *f8_guest_refusal(Tracee *tracee, const char *guest_exe)
++{
++	ArrayOfXPointers *array = NULL;
++	const char *shard_exe = NULL;
++	bool sharded = false;
++	char *string;
++	size_t i;
++
++	if (f8_fd_is_pipe_or_socket(tracee->pid, 1) || f8_fd_is_pipe_or_socket(tracee->pid, 2))
++		return "stdio_pipe";
++
++	if (fetch_array_of_xpointers(tracee, &array, SYSARG_2, 0) < 0)
++		return "argv_unreadable";
++	for (i = 0; i < array->length; i++) {
++		if (read_xpointee_as_string(array, i, &string) < 0)
++			return "argv_unreadable";
++		if (string == NULL)
++			continue;
++		if (strncmp(string, "--type=", 7) == 0)
++			return "chromium_child";
++		if (strncmp(string, "--remote-debugging-pipe", 23) == 0)
++			return "debugging_pipe";
++	}
++
++	array = NULL;
++	if (fetch_array_of_xpointers(tracee, &array, SYSARG_3, 0) < 0)
++		return "envp_unreadable";
++	for (i = 0; i < array->length; i++) {
++		if (read_xpointee_as_string(array, i, &string) < 0)
++			return "envp_unreadable";
++		if (string == NULL)
++			continue;
++		if (strncmp(string, "F8_NO_SHARD=", 12) == 0 && string[12] != '\0')
++			return "f8_no_shard";
++		if (strncmp(string, "ELECTRON_RUN_AS_NODE=", 21) == 0 && string[21] != '\0')
++			return "electron_run_as_node";
++		if (strncmp(string, "F8_SHARDED=", 11) == 0 && string[11] != '\0')
++			sharded = true;
++		if (strncmp(string, "F8_SHARD_EXE=", 13) == 0 && string[13] != '\0')
++			shard_exe = string + 13;
++	}
++	if (shard_exe != NULL && f8_same_dir(shard_exe, guest_exe))
++		return "same_app";
++	if (sharded && shard_exe == NULL)
++		return "explicit_shard";
++	return NULL;
++}
++
++/* Returns 1 and sets @user_path/@argument like extract_shebang() when the program has to be sharded,
++ * otherwise 0.  */
++static int f8_autoshard(Tracee *tracee, const char host_path[PATH_MAX], char user_path[PATH_MAX],
++			char argument[BINPRM_BUF_SIZE])
++{
++	const char *bin = getenv("PROOT_F8_AUTOSHARD_BIN");
++	char guest_exe[PATH_MAX], bin_host[PATH_MAX];
++	const char *refusal;
++	int class;
++
++	if (!f8_autoshard_enabled())
++		return 0;
++	class = f8_classify(host_path);
++	if (class == F8_AS_NONE)
++		return 0;
++
++	strcpy(guest_exe, host_path);
++	if (detranslate_path(tracee, guest_exe, NULL) < 0) {
++		f8_log(tracee, "skip detranslate_failed", host_path);
++		return 0;
++	}
++	if (bin == NULL || bin[0] != '/')
++		bin = "/usr/local/bin/f8-shard";
++	if (strlen(bin) >= PATH_MAX || translate_path(tracee, bin_host, AT_FDCWD, bin, true) < 0
++	    || access(bin_host, X_OK) != 0) {
++		f8_log(tracee, "skip no_f8_shard", guest_exe);
++		return 0;
++	}
++	refusal = f8_guest_refusal(tracee, guest_exe);
++	if (refusal != NULL) {
++		char decision[64];
++		snprintf(decision, sizeof(decision), "skip %s", refusal);
++		f8_log(tracee, decision, guest_exe);
++		return 0;
++	}
++
++	strcpy(user_path, bin);
++	strcpy(argument, class == F8_AS_TERMINAL ? "--auto=terminal" : "--auto=electron");
++	f8_log(tracee, class == F8_AS_TERMINAL ? "shard terminal" : "shard electron", guest_exe);
++	return 1;
++}
++
+ /**
+  * Expand in argv[] the shebang of @user_path, if any.  This function
+  * returns -errno if an error occurred, 1 if a shebang was found and
+@@ -241,8 +422,12 @@
+ 		if (old_user_path == NULL)
+ 			return -ENOMEM;
+ 
+-		/* Extract into user_path and argument the shebang from host_path.  */
+-		status = extract_shebang(tracee, host_path, user_path, argument);
++		/* Extract into user_path and argument the shebang from host_path.  proot-fast8: the
++		 * program the tracee asked for (first round only) may get a virtual one, see
++		 * f8_autoshard().  */
++		status = i == 0 ? f8_autoshard(tracee, host_path, user_path, argument) : 0;
++		if (status == 0)
++			status = extract_shebang(tracee, host_path, user_path, argument);
+ 		if (status < 0)
+ 			return status;
+ 

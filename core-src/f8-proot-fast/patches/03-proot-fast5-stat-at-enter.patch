@@ -1,0 +1,346 @@
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v2/src/extension/extension.h v5/src/extension/extension.h
+--- v2/src/extension/extension.h	2026-08-23 06:32:39.000000000 +0800
++++ v5/src/extension/extension.h	2026-09-25 03:14:53.240987497 +0800
+@@ -213,6 +213,8 @@
+ extern int hidden_files_callback(Extension *extension, ExtensionEvent event, intptr_t d1, intptr_t d2);
+ extern int port_switch_callback(Extension *extension, ExtensionEvent event, intptr_t d1, intptr_t d2);
+ extern int link2symlink_callback(Extension *extension, ExtensionEvent event, intptr_t d1, intptr_t d2);
++struct stat;
++extern int l2s_stat_override(const char *original, struct stat *out);   /* proot-fast v5 */
+ extern int fix_symlink_size_callback(Extension *extension, ExtensionEvent event, intptr_t d1, intptr_t d2);
+ #if defined(__ANDROID__) || defined(__BIONIC__)
+ extern int ashmem_memfd_callback(Extension *extension, ExtensionEvent event, intptr_t d1, intptr_t d2);
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v2/src/extension/link2symlink/link2symlink.c v5/src/extension/link2symlink/link2symlink.c
+--- v2/src/extension/link2symlink/link2symlink.c	2026-08-23 06:32:39.000000000 +0800
++++ v5/src/extension/link2symlink/link2symlink.c	2026-09-25 03:14:23.952987508 +0800
+@@ -755,6 +755,76 @@
+  * Make it so fake hard links look like real hard link with respect to number of links and inode
+  * This function returns -errno if an error occured, otherwise 0.
+  */
++/**
++ * proot-fast v5: the l2s part of the stat-family sysexit handler, shared with the enter-stage answer of
++ * syscall/enter.c.  @original is the translated (host) path.  Returns 1 and fills @out (st_nlink from the l2s
++ * name) when the path is an l2s link or l2s file, 0 when it is not, -errno on failure -- exactly what the
++ * sysexit handler below did inline before.
++ */
++int l2s_stat_override(const char *original_in, struct stat *out)
++{
++	struct stat statl = {};
++	struct stat finalStat;
++	char original[PATH_MAX];
++	char intermediate[PATH_MAX];
++	char final[PATH_MAX];
++	char *name;
++	ssize_t size;
++	int status;
++
++	strncpy(original, original_in, PATH_MAX - 1);
++	original[PATH_MAX - 1] = '\0';
++
++	name = strrchr(original, '/');
++	if (name == NULL)
++		name = original;
++	else
++		name++;
++
++	/* Check if it is a link */
++	status = lstat(original, &statl);
++
++	if (strncmp(name, PREFIX, strlen(PREFIX)) == 0) {
++		if (S_ISLNK(statl.st_mode)) {
++			strcpy(intermediate, original);
++			goto intermediate_proc;
++		} else {
++			strcpy(final, original);
++			goto final_proc;
++		}
++	}
++
++	if (!S_ISLNK(statl.st_mode))
++		return 0;
++
++	size = my_readlink(original, intermediate);
++	if (size < 0)
++		return size;
++
++	name = strrchr(intermediate, '/');
++	if (name == NULL)
++		name = intermediate;
++	else
++		name++;
++
++	if (strncmp(name, PREFIX, strlen(PREFIX)) != 0)
++		return 0;
++
++intermediate_proc:
++	size = my_readlink(intermediate, final);
++	if (size < 0)
++		return size;
++
++final_proc:
++	status = lstat(final, &finalStat);
++	if (status < 0)
++		return status;
++
++	finalStat.st_nlink = atoi(final + strlen(final) - 4);
++	*out = finalStat;
++	return 1;
++}
++
+ static int handle_sysexit_end(Extension *extension)
+ {
+ 	Tracee *tracee = TRACEE(extension);
+@@ -827,51 +897,10 @@
+ 				return -ENAMETOOLONG;
+ 		}
+ 
+-		name = strrchr(original, '/');
+-		if (name == NULL)
+-			name = original;
+-		else
+-			name++;
+-
+-		/* Check if it is a link */
+-		status = lstat(original, &statl);
+-
+-		if (strncmp(name, PREFIX, strlen(PREFIX)) == 0) {
+-			if (S_ISLNK(statl.st_mode)) {
+-				strcpy(intermediate,original);
+-				goto intermediate_proc;
+-			} else {
+-				strcpy(final,original);
+-				goto final_proc;
+-			}
+-		}
+-
+-		if (!S_ISLNK(statl.st_mode))
+-			return 0;
+-
+-		size = my_readlink(original, intermediate);
+-		if (size < 0)
+-			return size;
+-
+-		name = strrchr(intermediate, '/');
+-		if (name == NULL)
+-			name = intermediate;
+-		else
+-			name++;
+-
+-		if (strncmp(name, PREFIX, strlen(PREFIX)) != 0)
+-			return 0;
+-
+-		intermediate_proc: size = my_readlink(intermediate, final);
+-		if (size < 0)
+-			return size;
+-
+-		final_proc: status = lstat(final,&finalStat);
+-		if (status < 0)
++		status = l2s_stat_override(original, &finalStat);
++		if (status <= 0)
+ 			return status;
+ 
+-		finalStat.st_nlink = atoi(final + strlen(final) - 4);
+-
+ 		/* Get the address of the 'stat' structure.  */
+ 		if (sysnum == PR_fstatat64 || sysnum == PR_newfstatat)
+ 			sysarg_stat = SYSARG_3;
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v2/src/syscall/enter.c v5/src/syscall/enter.c
+--- v2/src/syscall/enter.c	2026-08-23 06:32:39.000000000 +0800
++++ v5/src/syscall/enter.c	2026-09-25 03:24:00.040987288 +0800
+@@ -79,6 +79,8 @@
+ #include "path/binding.h"
+ #include "path/temp.h"
+ #include "arch.h"
++#include <sys/syscall.h>
++#include "extension/fake_id0/config.h"
+ 
+ /* Older kernel headers may lack these. */
+ #ifndef CLONE_NEWTIME
+@@ -1814,6 +1816,142 @@
+  * -errno if an error occured from the tracee's point-of-view (EFAULT
+  * for instance), otherwise 0.
+  */
++
++/**
++ * proot-fast v5 (2026-09-25): answer the stat family at the seccomp enter stop instead of letting the syscall run
++ * and stopping again at its exit (that exit stop exists only for fake_id0's st_uid/st_gid and link2symlink's
++ * st_nlink rewrites; every stop costs ~30 us: PROOT-STAT-COST-01).  Handled: newfstatat (PR_fstatat64 on arm64)
++ * on the already translated host path, and fstat on a duplicate of the tracee's descriptor (pidfd_getfd).  The
++ * tracer applies the same rewrites in the same order as the sysexit handlers (extensions run in reverse
++ * initialization order: link2symlink, then fake_id0), writes the result into the tracee's buffer, voids the
++ * syscall with the result and restores the tracee's other argument registers.  Anything unusual takes the normal
++ * path: flags other than AT_SYMLINK_NOFOLLOW / AT_NO_AUTOMOUNT, a non-absolute or /proc path, a non-native ABI,
++ * chained syscalls, a host error other than ENOENT / ENOTDIR (EACCES first: fake_id0 retries it).
++ * PROOT_STAT_AT_ENTER=0 disables it.
++ */
++static void v5_answer(Tracee *tracee, word_t result)
++{
++	set_sysnum(tracee, PR_void);
++	poke_reg(tracee, SYSARG_2, peek_reg(tracee, ORIGINAL, SYSARG_2));
++	poke_reg(tracee, SYSARG_3, peek_reg(tracee, ORIGINAL, SYSARG_3));
++	poke_reg(tracee, SYSARG_4, peek_reg(tracee, ORIGINAL, SYSARG_4));
++	poke_reg(tracee, SYSARG_5, peek_reg(tracee, ORIGINAL, SYSARG_5));
++	poke_reg(tracee, SYSARG_6, peek_reg(tracee, ORIGINAL, SYSARG_6));
++	poke_reg(tracee, SYSARG_RESULT, result);
++	tracee->v5_answered = true;
++	tracee->restart_how = PTRACE_CONT;
++}
++
++static bool v5_stat_at_enter(Tracee *tracee)
++{
++	static int enabled = -1;
++	struct stat st;
++	char path[PATH_MAX];
++	Extension *extension;
++	Sysnum sysnum;
++	Reg buffer;
++	int status;
++
++	if (enabled < 0) {
++		const char *value = getenv("PROOT_STAT_AT_ENTER");
++		enabled = !(value != NULL && strcmp(value, "0") == 0);
++	}
++	if (!enabled)
++		return false;
++
++	sysnum = get_sysnum(tracee, ORIGINAL);
++	if (get_sysnum(tracee, CURRENT) != sysnum || tracee->chain.syscalls != NULL || tracee->sysexit_pending
++	    || get_abi(tracee) != ABI_DEFAULT)
++		return false;
++
++	/* arm64's syscall 79 (newfstatat) is PR_fstatat64 in PRoot's table; on the native 64-bit ABI both take the
++	 * kernel's struct stat.  */
++	if (sysnum == PR_newfstatat || sysnum == PR_fstatat64) {
++		word_t flags = peek_reg(tracee, CURRENT, SYSARG_4);
++
++		if ((flags & ~(word_t) (AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT)) != 0)
++			return false;
++		status = read_path(tracee, path, peek_reg(tracee, CURRENT, SYSARG_2));
++		if (status < 0 || path[0] != '/')
++			return false;
++		if (strncmp(path, "/proc", 5) == 0 && (path[5] == '/' || path[5] == '\0'))
++			return false;
++
++		if (syscall(__NR_newfstatat, AT_FDCWD, path, &st, (int) flags) != 0) {
++			/* The same path fails the same way for the tracee: answer ENOENT / ENOTDIR right away
++			 * (neither fake_id0 nor link2symlink touch failed stats; Python's import probing is mostly
++			 * these).  */
++			const int error = errno;
++			if (error != ENOENT && error != ENOTDIR) {
++				VERBOSE(tracee, 2, "v5: skip host stat errno=%d %s", error, path);
++				return false;
++			}
++			VERBOSE(tracee, 2, "v5: answered errno=%d %s", error, path);
++			v5_answer(tracee, (word_t) -error);
++			return true;
++		}
++		buffer = SYSARG_3;
++	}
++	else if (sysnum == PR_fstat) {
++		const int fd = (int) peek_reg(tracee, CURRENT, SYSARG_1);
++		int pidfd, local, saved;
++
++		if (fd < 0)
++			return false;
++		pidfd = (int) syscall(__NR_pidfd_open, tracee->pid, 0);
++		if (pidfd < 0)
++			return false;
++		local = (int) syscall(__NR_pidfd_getfd, pidfd, fd, 0);
++		saved = errno;
++		close(pidfd);
++		if (local < 0) {
++			VERBOSE(tracee, 2, "v5: skip fstat getfd errno=%d fd=%d", saved, fd);
++			return false;
++		}
++		status = (int) syscall(__NR_fstat, local, &st);
++		close(local);
++		if (status != 0)
++			return false;
++
++		/* What link2symlink's fstat sysexit handler looks at: the descriptor's path.  */
++		path[0] = '\0';
++		if (get_extension(tracee, link2symlink_callback) != NULL
++		    && readlink_proc_pid_fd(tracee->pid, fd, path) >= 0) {
++			const size_t length = strlen(path), suffix = strlen(" (deleted)");
++			if (length > suffix && strcmp(path + length - suffix, " (deleted)") == 0)
++				path[length - suffix] = '\0';
++		}
++		buffer = SYSARG_2;
++	}
++	else
++		return false;
++
++	if (path[0] != '\0' && get_extension(tracee, link2symlink_callback) != NULL) {
++		struct stat l2s;
++		status = l2s_stat_override(path, &l2s);
++		if (status < 0)
++			return false;
++		if (status > 0)
++			st = l2s;
++	}
++
++	extension = get_extension(tracee, fake_id0_callback);
++	if (extension != NULL && extension->config != NULL) {
++		const Config *config = extension->config;
++		if (st.st_uid == getuid())
++			st.st_uid = config->suid;
++		if (st.st_gid == getgid())
++			st.st_gid = config->sgid;
++	}
++
++	if (write_data(tracee, peek_reg(tracee, ORIGINAL, buffer), &st, sizeof(st)) < 0)
++		return false;
++
++	VERBOSE(tracee, 2, "v5: answered %s", sysnum == PR_fstat ? "fstat" : path);
++	v5_answer(tracee, 0);
++	return true;
++}
++
+ int translate_syscall_enter(Tracee *tracee)
+ {
+ 	int flags;
+@@ -2868,5 +3006,8 @@
+ 	if (status2 < 0)
+ 		status = status2;
+ 
++	if (status >= 0 && tracee->v5_seccomp_enter)
++		(void) v5_stat_at_enter(tracee);
++
+ 	return status;
+ }
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v2/src/tracee/event.c v5/src/tracee/event.c
+--- v2/src/tracee/event.c	2026-08-23 06:32:39.000000000 +0800
++++ v5/src/tracee/event.c	2026-09-25 03:14:53.240987497 +0800
+@@ -697,7 +697,17 @@
+ 			if ((flags & FILTER_SYSEXIT) != 0 || sysexit_necessary) {
+ 				if (seccomp_after_ptrace_enter) {
+ 					tracee->restart_how = PTRACE_SYSCALL;
++					/* proot-fast v5: the enter stage may answer the syscall itself
++					 * (syscall/enter.c v5_stat_at_enter); then no sysexit stop.  */
++					tracee->v5_seccomp_enter = !sysexit_necessary;
++					tracee->v5_answered = false;
+ 					translate_syscall(tracee);
++					tracee->v5_seccomp_enter = false;
++					if (tracee->v5_answered) {
++						tracee->v5_answered = false;
++						tracee->restart_how = PTRACE_CONT;
++						break;
++					}
+ 				}
+ 				tracee->restart_how = PTRACE_SYSCALL;
+ 				break;
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v2/src/tracee/tracee.h v5/src/tracee/tracee.h
+--- v2/src/tracee/tracee.h	2026-08-23 06:32:39.000000000 +0800
++++ v5/src/tracee/tracee.h	2026-09-25 03:14:07.116987514 +0800
+@@ -325,6 +325,11 @@
+ 	 * has to be ignored as it's same syscall entry */
+ 	bool seccomp_already_handled_enter;
+ 
++	/* proot-fast v5: set by the event loop around the seccomp-stop enter translation of a FILTER_SYSEXIT
++	 * syscall; v5_answered when that enter stage answered the syscall itself (no sysexit stop).  */
++	bool v5_seccomp_enter;
++	bool v5_answered;
++
+ 	/* Whether the tracee itself requested the "no new privileges" flag
+ 	 * via prctl(PR_SET_NO_NEW_PRIVS).  PRoot always sets the real kernel
+ 	 * flag in the child before execve (it is a precondition for installing

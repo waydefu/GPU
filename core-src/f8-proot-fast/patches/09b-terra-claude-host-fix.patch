@@ -1,0 +1,293 @@
+--- a/src/extension/fake_id0/fake_id0.c
++++ b/src/extension/fake_id0/fake_id0.c
+@@ -751,6 +751,7 @@
+ 		char prefix[64];
+ 		char *end;
+ 		int fd_num;
++		word_t requested_flags;
+ 
+ 		/* Only apply when the tracee has fake root (DAC override). */
+ 		if (config->euid != 0)
+@@ -780,38 +781,21 @@
+ 		if (errno != 0 || end == path + strlen(prefix) || *end != '\0' || fd_num < 0)
+ 			return 0;
+ 
+-		/* If the existing fd was opened with O_PATH, dup() inherits
+-		 * that flag and lseek/read/write on the duplicate return
+-		 * EBADF.  This breaks the safe_open() pattern used by e.g.
+-		 * systemd-machine-id-setup, which opens a file with O_PATH
+-		 * first and then reopens it via /proc/self/fd/N with real
+-		 * access flags.  Skip the substitution in that case — the
+-		 * kernel reopens the underlying file with the requested
+-		 * flags, and override_permissions() ran during the original
+-		 * O_PATH open so the file is still accessible to the real
+-		 * uid. */
+-		{
+-			char fdinfo_path[64];
+-			char line[64];
+-			unsigned int existing_flags = 0;
+-			FILE *fdinfo;
+-
+-			snprintf(fdinfo_path, sizeof(fdinfo_path),
+-				 "/proc/%d/fdinfo/%d", tracee->pid, fd_num);
+-			fdinfo = fopen(fdinfo_path, "r");
+-			if (fdinfo != NULL) {
+-				while (fgets(line, sizeof(line), fdinfo) != NULL) {
+-					if (sscanf(line, "flags: %o", &existing_flags) == 1)
+-						break;
+-				}
+-				fclose(fdinfo);
+-			}
+-			if (existing_flags & O_PATH)
+-				return 0;
+-		}
++		/* Android rejects reopening its standard descriptor symlinks.  These
++		 * exact conventional modes are the compatibility exception; fcntl()
++		 * preserves O_CLOEXEC rather than silently dropping it as dup() does. */
++		requested_flags = peek_reg(tracee, ORIGINAL, SYSARG_3);
++		if ((requested_flags & ~(O_ACCMODE | O_CLOEXEC)) != 0)
++			return 0;
++		if (!((fd_num == STDIN_FILENO && (requested_flags & O_ACCMODE) == O_RDONLY) ||
++		      ((fd_num == STDOUT_FILENO || fd_num == STDERR_FILENO) &&
++		       (requested_flags & O_ACCMODE) == O_WRONLY)))
++			return 0;
+ 
+-		set_sysnum(tracee, PR_dup);
++		set_sysnum(tracee, PR_fcntl);
+ 		poke_reg(tracee, SYSARG_1, (word_t) fd_num);
++		poke_reg(tracee, SYSARG_2, (requested_flags & O_CLOEXEC) ? F_DUPFD_CLOEXEC : F_DUPFD);
++		poke_reg(tracee, SYSARG_3, 0);
+ 		return 0;
+ 	}
+ #endif /* ifndef USERLAND */
+--- a/src/syscall/enter.c
++++ b/src/syscall/enter.c
+@@ -2960,7 +2960,7 @@
+ 	
+ 	case PR_memfd_create:
+ 		{
+-			char memfd_name[20] = {};
++			char memfd_name[64] = {};
+ 			if (read_string(tracee, memfd_name, peek_reg(tracee, CURRENT, SYSARG_1), sizeof(memfd_name) - 1) < 0) {
+ 				/* Failed to read memfd name, do nothing and let normal memfd proceed.  */
+ 				break;
+@@ -2970,6 +2970,14 @@
+ 			if (0 == strncmp(memfd_name, "JITCode:", 8)) {
+ 				status = -EACCES;
+ 			}
++#if defined(__ANDROID__) || defined(__BIONIC__)
++			/* Android rejects the read-only /proc/self/fd reopen that Chromium
++			 * uses for this object.  ENOSYS selects Chromium's secure named-file
++			 * fallback instead of returning a writable descriptor as read-only. */
++			if (0 == strcmp(memfd_name, "shared-memory-region")) {
++				status = -ENOSYS;
++			}
++#endif
+ 			/* php8.3 attempts using memfd as lock through fcntl(F_SETLKW),
+ 			 * which is not allowed on Android,
+ 			 * deny memfd_create() call and let php fall back to open(O_TMPFILE).
+--- a/tests/test-terra-proc-fd-reopen.c
++++ b/tests/test-terra-proc-fd-reopen.c
+@@ -0,0 +1,202 @@
++#define _GNU_SOURCE
++#include <errno.h>
++#include <fcntl.h>
++#include <linux/memfd.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <sys/syscall.h>
++#include <sys/types.h>
++#include <sys/wait.h>
++#include <unistd.h>
++
++static int check_closed_after_exec(const char *self, int fd) {
++	int pipefd[2];
++	pid_t pid;
++	int status;
++	char result = 0;
++	char fd_text[32];
++	char pipe_text[32];
++
++	if (pipe(pipefd) != 0) {
++		perror("pipe");
++		return 1;
++	}
++	pid = fork();
++	if (pid < 0) {
++		perror("fork");
++		return 1;
++	}
++	if (pid == 0) {
++		close(pipefd[0]);
++		snprintf(fd_text, sizeof(fd_text), "%d", fd);
++		snprintf(pipe_text, sizeof(pipe_text), "%d", pipefd[1]);
++		execl(self, self, "--check-closed", fd_text, pipe_text, (char *)NULL);
++		perror("execl");
++		_exit(127);
++	}
++	close(pipefd[1]);
++	if (read(pipefd[0], &result, 1) != 1 || result != 'C') {
++		fprintf(stderr, "exec did not confirm FD_CLOEXEC for fd %d\n", fd);
++		return 1;
++	}
++	if (waitpid(pid, &status, 0) != pid || !WIFEXITED(status) || WEXITSTATUS(status) != 0) {
++		fprintf(stderr, "exec helper failed for fd %d\n", fd);
++		return 1;
++	}
++	return 0;
++}
++
++static int check_readonly_reopen(const char *name, const char *self, int source_fd,
++				 int use_proc_path) {
++	char proc_path[64];
++	const char *path = proc_path;
++	int reopened;
++	int status_flags;
++	int descriptor_flags;
++
++	if (use_proc_path) {
++		snprintf(proc_path, sizeof(proc_path), "/proc/self/fd/%d", source_fd);
++	} else {
++		path = name;
++	}
++	reopened = open(path, O_RDONLY | O_CLOEXEC);
++	if (reopened < 0) {
++		fprintf(stderr, "%s: open(%s) failed: %s\n", name, path, strerror(errno));
++		return 1;
++	}
++	status_flags = fcntl(reopened, F_GETFL);
++	if (status_flags < 0 || (status_flags & O_ACCMODE) != O_RDONLY) {
++		fprintf(stderr, "%s: F_GETFL=%#x, expected O_RDONLY\n", name, status_flags);
++		return 1;
++	}
++	descriptor_flags = fcntl(reopened, F_GETFD);
++	if (descriptor_flags < 0 || !(descriptor_flags & FD_CLOEXEC)) {
++		fprintf(stderr, "%s: F_GETFD=%#x, expected FD_CLOEXEC\n", name, descriptor_flags);
++		return 1;
++	}
++	if (write(reopened, "x", 1) != -1 || errno != EBADF) {
++		fprintf(stderr, "%s: readonly descriptor accepted write\n", name);
++		return 1;
++	}
++	if (check_closed_after_exec(self, reopened) != 0) {
++		return 1;
++	}
++	close(reopened);
++	printf("PASS %s\n", name);
++	return 0;
++}
++
++static int check_android_memfd_rejected(void) {
++	char proc_path[64];
++	int memfd;
++	int reopened;
++
++	memfd = (int)syscall(SYS_memfd_create, "terra-proc-fd", MFD_CLOEXEC);
++	if (memfd < 0 || ftruncate(memfd, 4096) != 0 || write(memfd, "data", 4) != 4) {
++		perror("memfd create/setup");
++		return 1;
++	}
++	snprintf(proc_path, sizeof(proc_path), "/proc/self/fd/%d", memfd);
++	errno = 0;
++	reopened = open(proc_path, O_RDONLY | O_CLOEXEC);
++	if (reopened != -1 || errno != EACCES) {
++		fprintf(stderr, "memfd proc reopen result=%d errno=%d, expected EACCES\n", reopened, errno);
++		return 1;
++	}
++	close(memfd);
++	puts("PASS memfd-proc-fd-is-rejected");
++	return 0;
++}
++
++static int check_chromium_fallback(const char *self) {
++	char path[] = "/tmp/terra-chromium-fallback-XXXXXX";
++	int memfd;
++	int fallback_fd;
++	int failed;
++
++	errno = 0;
++	memfd = (int)syscall(SYS_memfd_create, "shared-memory-region",
++		MFD_CLOEXEC | MFD_ALLOW_SEALING);
++	if (memfd != -1 || errno != ENOSYS) {
++		fprintf(stderr, "shared-memory-region result=%d errno=%d, expected ENOSYS\n", memfd, errno);
++		return 1;
++	}
++	fallback_fd = mkstemp(path);
++	if (fallback_fd < 0 || write(fallback_fd, "data", 4) != 4) {
++		perror("fallback file");
++		return 1;
++	}
++	failed = check_readonly_reopen(path, self, fallback_fd, 0);
++	close(fallback_fd);
++	unlink(path);
++	if (failed != 0)
++		return 1;
++	puts("PASS chromium-shared-memory-fallback");
++	return 0;
++}
++
++static int check_stdio_reopen(const char *self) {
++	int source_flags = fcntl(STDOUT_FILENO, F_GETFL);
++	int reopened = open("/dev/fd/1", O_WRONLY | O_CLOEXEC);
++	int status_flags;
++	int descriptor_flags;
++
++	if (source_flags < 0 || reopened < 0) {
++		perror("stdio /dev/fd");
++		return 1;
++	}
++	status_flags = fcntl(reopened, F_GETFL);
++	descriptor_flags = fcntl(reopened, F_GETFD);
++	if ((status_flags & O_ACCMODE) != (source_flags & O_ACCMODE) ||
++	    !(descriptor_flags & FD_CLOEXEC) || check_closed_after_exec(self, reopened) != 0) {
++		fprintf(stderr, "stdio source=%#x reopened=%#x fdflags=%#x\n",
++			source_flags, status_flags, descriptor_flags);
++		return 1;
++	}
++	if (write(reopened, "PASS stdio-dev-fd\n", 18) != 18) {
++		perror("stdio write");
++		return 1;
++	}
++	close(reopened);
++	return 0;
++}
++
++int main(int argc, char **argv) {
++	char path[] = "/tmp/terra-proc-fd-XXXXXX";
++	int regular_fd;
++	int opath_fd;
++	int failures = 0;
++
++	if (argc == 4 && strcmp(argv[1], "--check-closed") == 0) {
++		int closed_fd = atoi(argv[2]);
++		int notify_fd = atoi(argv[3]);
++		if (fcntl(closed_fd, F_GETFD) != -1 || errno != EBADF) {
++			return 1;
++		}
++		return write(notify_fd, "C", 1) == 1 ? 0 : 1;
++	}
++
++	regular_fd = mkstemp(path);
++	if (regular_fd < 0 || write(regular_fd, "data", 4) != 4) {
++		perror("mkstemp/write");
++		return 1;
++	}
++	failures += check_readonly_reopen(path, argv[0], regular_fd, 0);
++	failures += check_readonly_reopen("regular-proc-fd", argv[0], regular_fd, 1);
++	failures += check_android_memfd_rejected();
++	failures += check_chromium_fallback(argv[0]);
++
++	opath_fd = open(path, O_PATH | O_CLOEXEC);
++	if (opath_fd < 0) {
++		perror("open O_PATH");
++		return 1;
++	}
++	failures += check_readonly_reopen("O_PATH-proc-fd", argv[0], opath_fd, 1);
++	failures += check_stdio_reopen(argv[0]);
++
++	close(opath_fd);
++	close(regular_fd);
++	unlink(path);
++	return failures == 0 ? 0 : 1;
++}

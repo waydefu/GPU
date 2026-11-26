@@ -1,0 +1,51 @@
+--- v1/src/extension/kompat/kompat.c	2026-08-23 06:32:39.000000000 +0800
++++ v2/src/extension/kompat/kompat.c	2026-09-24 19:39:24.512997922 +0800
+@@ -65,6 +65,7 @@
+ typedef struct {
+ 	int actual_release;
+ 	int virtual_release;
++	bool lean;
+ 	struct utsname utsname;
+ 	word_t hwcap;
+ } Config;
+@@ -985,6 +986,20 @@
+ 	FILTERED_SYSNUM_END,
+ };
+ 
++/* proot-fast v2 (2026-09-24): when the actual kernel is newer than every version kompat emulates
++ * (the newest threshold below is 2.6.29), none of the handlers changes anything, yet every syscall in
++ * filtered_sysnums still stops the tracee for the single-threaded tracer - futex and epoll_pwait on
++ * every lock and event-loop turn, plus a forced sysexit stop on every openat/execve/fcntl/pipe2/...
++ * (measured on the daily PRoot: futex + epoll_pwait were 49% of tracee time in ptrace-stop).  Keep only
++ * what fakes the release string.  PROOT_KOMPAT_FULL restores the original list; PROOT_FORCE_KOMPAT
++ * (actual_release = 0) keeps it too.  */
++static FilteredSysnum lean_filtered_sysnums[] = {
++	{ PR_setdomainname,	FILTER_SYSEXIT },
++	{ PR_sethostname,	FILTER_SYSEXIT },
++	{ PR_uname, 		FILTER_SYSEXIT },
++	FILTERED_SYSNUM_END,
++};
++
+ /**
+  * Handler for this @extension.  It is triggered each time an @event
+  * occured.  See ExtensionEvent for the meaning of @data1 and @data2.
+@@ -1007,7 +1022,9 @@
+ 		if (status < 0)
+ 			return -1;
+ 
+-		extension->filtered_sysnums = filtered_sysnums;
++		config->lean = config->actual_release >= KERNEL_VERSION(2,6,29)
++			&& getenv("PROOT_KOMPAT_FULL") == NULL;
++		extension->filtered_sysnums = config->lean ? lean_filtered_sysnums : filtered_sysnums;
+ 		return 0;
+ 	}
+ 
+@@ -1038,7 +1055,7 @@
+ 
+ 		/* Note: this can be done only before PRoot pushes the
+ 		 * load script into tracee's stack.  */
+-		if ((int) result >= 0 && sysnum == PR_execve)
++		if ((int) result >= 0 && sysnum == PR_execve && !config->lean)
+ 			adjust_elf_auxv(tracee, config);
+ 		return 0;
+ 	}

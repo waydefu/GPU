@@ -1,0 +1,344 @@
+diff -uNr a/src/syscall/enter.c b/src/syscall/enter.c
+--- a/src/syscall/enter.c	2026-11-26 14:14:30.894127872 +0800
++++ b/src/syscall/enter.c	2026-11-26 15:47:00.674125755 +0800
+@@ -45,7 +45,6 @@
+ #include <netpacket/packet.h> /* struct sockaddr_ll (AF_PACKET) */
+ #include <sys/ioctl.h>   /* ioctl(2): SIOCGIFMTU / SIOCGIFHWADDR */
+ #include <sys/time.h>    /* struct timeval, for SO_RCVTIMEO */
+-#include "syscall/pipe_shadow.h"
+ 
+ /* ABI-stable rtnetlink constants we synthesise for the loopback reply.
+  * Defined locally so we needn't pull in <linux/if.h> / <linux/if_arp.h>,
+@@ -626,12 +625,24 @@
+ 	return NULL;
+ }
+ 
++static bool is_socket_fd(pid_t pid, int fd)
++{
++	char link[PATH_MAX];
++	return readlink_proc_pid_fd(pid, fd, link) == 0 && strncmp(link, "socket:[", 8) == 0;
++}
++
+ static bool is_fake_netlink_fd(Tracee *tracee, int fd)
+ {
+-	return fake_netlink_socket(tracee, fd) != NULL;
++	if (fake_netlink_socket(tracee, fd) == NULL)
++		return false;
++	if (!is_socket_fd(tracee->pid, fd)) {
++		unmark_fake_netlink_fd(tracee, fd);
++		return false;
++	}
++	return true;
+ }
+ 
+-static void unmark_fake_netlink_fd(Tracee *tracee, int fd)
++void unmark_fake_netlink_fd(Tracee *tracee, int fd)
+ {
+ 	struct fake_netlink_socket *sock = fake_netlink_socket(tracee, fd);
+ 
+@@ -651,18 +662,24 @@
+  * its requests need the ack emulation below.
+  */
+ 
+-static bool is_netlink_route_fd(const Tracee *tracee, int fd)
++static bool is_netlink_route_fd(Tracee *tracee, int fd)
+ {
+ 	int i;
+ 	if (fd < 0)
+ 		return false;
+-	for (i = 0; i < tracee->netlink_route_fds_count; i++)
+-		if (tracee->netlink_route_fds[i] == fd)
++	for (i = 0; i < tracee->netlink_route_fds_count; i++) {
++		if (tracee->netlink_route_fds[i] == fd) {
++			if (!is_socket_fd(tracee->pid, fd)) {
++				unmark_netlink_route_fd(tracee, fd);
++				return false;
++			}
+ 			return true;
++		}
++	}
+ 	return false;
+ }
+ 
+-static void unmark_netlink_route_fd(Tracee *tracee, int fd)
++void unmark_netlink_route_fd(Tracee *tracee, int fd)
+ {
+ 	int i;
+ 	for (i = 0; i < tracee->netlink_route_fds_count; i++) {
+@@ -1587,7 +1604,7 @@
+ 
+ /* True for a real NETLINK_ROUTE socket in the hands of a tracee that
+  * believes it configures a network namespace of its own.  */
+-static bool is_netns_netlink_fd(const Tracee *tracee, int fd)
++static bool is_netns_netlink_fd(Tracee *tracee, int fd)
+ {
+ 	return tracee->fake_netns && is_netlink_route_fd(tracee, fd);
+ }
+@@ -2990,21 +3007,14 @@
+ 	case PR_close: {
+ 		int closed_fd = (int) peek_reg(tracee, CURRENT, SYSARG_1);
+ 
+-		/* Stop tracking auxv_fd once the tracee closes it. */
++		/* close(2) isn't in the seccomp filter; this only runs as a
++		 * shortcut when PR_close happens to stop without seccomp or
++		 * under PTRACE_SYSCALL.  All fd trackers verify/clean lazily. */
+ 		if (tracee->auxv_fd >= 0 && closed_fd == tracee->auxv_fd)
+ 			tracee->auxv_fd = -1;
+ 
+-		/* Drop the fd from the netlink tracking sets, otherwise
+-		 * its number could be reused for an unrelated file and
+-		 * we'd keep intercepting sendto/recvfrom on it.  */
+ 		unmark_fake_netlink_fd(tracee, closed_fd);
+ 		unmark_netlink_route_fd(tracee, closed_fd);
+-
+-		/* Keep a shadow read end so child writers don't get
+-		 * EPIPE when the parent closes its copy first (ptrace
+-		 * serialisation makes this happen routinely, breaking
+-		 * process substitution like `echo <(echo a)`).  */
+-		shadow_pipe_read_end(tracee->pid, closed_fd);
+ 		break;
+ 	}
+ 
+diff -uNr a/src/syscall/exit.c b/src/syscall/exit.c
+--- a/src/syscall/exit.c	2026-08-23 06:32:39.000000000 +0800
++++ b/src/syscall/exit.c	2026-11-26 15:47:00.678125755 +0800
+@@ -36,6 +36,7 @@
+ #include "syscall/chain.h"
+ #include "syscall/heap.h"
+ #include "syscall/rlimit.h"
++#include "syscall/pipe_shadow.h"
+ #include "execve/execve.h"
+ #include "tracee/tracee.h"
+ #include "tracee/reg.h"
+@@ -561,6 +562,21 @@
+ 		if ((int) fd != tracee->auxv_fd)
+ 			goto end;
+ 
++		/* close(2) isn't filtered by seccomp, so verify this fd still
++		 * refers to /proc/<PID>/auxv before patching AT_EXECFN.  */
++		{
++			char link[PATH_MAX];
++			size_t length;
++
++			if (   readlink_proc_pid_fd(tracee->pid, (int) fd, link) < 0
++			    || strncmp(link, "/proc/", strlen("/proc/")) != 0
++			    || (length = strlen(link)) < strlen("/auxv")
++			    || strcmp(link + length - strlen("/auxv"), "/auxv") != 0) {
++				tracee->auxv_fd = -1;
++				goto end;
++			}
++		}
++
+ 		buf_addr   = peek_reg(tracee, ORIGINAL, SYSARG_2);
+ 		entry_size = 2 * sizeof_word(tracee);
+ 
+@@ -578,7 +594,8 @@
+ 			}
+ 		}
+ 
+-		/* Stay in PTRACE_SYSCALL mode to intercept close(auxv_fd). */
++		/* Stay in PTRACE_SYSCALL mode to intercept the next
++		 * read(2) -- not filtered -- or close(2) of auxv_fd.  */
+ 		tracee->sysexit_pending = true;
+ 		tracee->restart_how = PTRACE_SYSCALL;
+ 		goto end;
+@@ -732,6 +749,25 @@
+ 		status = handle_statx_syscall(tracee, false);
+ 		break;
+ 
++	case PR_pipe:
++	case PR_pipe2: {
++		int fds[2];
++
++		if ((int) syscall_result != 0)
++			goto end;
++
++#if defined(ARCH_SH4)
++		if (syscall_number == PR_pipe)
++			goto end;
++#endif
++
++		if (read_data(tracee, fds, peek_reg(tracee, ORIGINAL, SYSARG_1), sizeof(fds)) < 0)
++			goto end;
++
++		shadow_new_pipe(tracee->pid, fds[0]);
++		goto end;
++	}
++
+ 	case PR_ioctl:
+ 		if (peek_reg(tracee, ORIGINAL, SYSARG_2) == _IOW(0x94, 9, int) /* FICLONE */ &&
+ 				(int) peek_reg(tracee, CURRENT, SYSARG_RESULT) == -EACCES) {
+@@ -739,7 +775,15 @@
+ 		}
+ 		goto end;
+ 
+-	case PR_socket:
++	case PR_socket: {
++		int new_sock_fd = (int) peek_reg(tracee, CURRENT, SYSARG_RESULT);
++		if (new_sock_fd >= 0) {
++			if (!tracee->pending_fake_netlink_socket)
++				unmark_fake_netlink_fd(tracee, new_sock_fd);
++			if (!tracee->pending_real_netlink_socket)
++				unmark_netlink_route_fd(tracee, new_sock_fd);
++		}
++	}
+ 		/* Record the fd we substituted for an AF_NETLINK request.  */
+ 		if (tracee->pending_fake_netlink_socket) {
+ 			int fd = (int) peek_reg(tracee, CURRENT, SYSARG_RESULT);
+diff -uNr a/src/syscall/pipe_shadow.c b/src/syscall/pipe_shadow.c
+--- a/src/syscall/pipe_shadow.c	2026-08-23 06:32:39.000000000 +0800
++++ b/src/syscall/pipe_shadow.c	2026-11-26 15:47:00.670125755 +0800
+@@ -29,11 +29,20 @@
+  * The child's write() then returns EPIPE, causing bash to print
+  * "Broken pipe" for process substitution (`echo <(echo a)`).
+  *
+- * The fix: at PR_close sysenter (before the fd is released), if the fd
+- * is a pipe read end, proot opens its own reference via
+- * /proc/<pid>/fd/<fd>.  This keeps the pipe alive so writers do not
+- * get EPIPE.  We do NOT read from the shadow — the data remains in the
+- * pipe buffer for any legitimate reader (diff, cat, …).
++ * The fix: at the exit stage of pipe(2) and pipe2(2), proot opens its
++ * own reference to the new read end via /proc/<pid>/fd/<fd>.  This
++ * keeps the pipe alive so writers do not get EPIPE.  We do NOT read
++ * from the shadow — the data remains in the pipe buffer for any
++ * legitimate reader (diff, cat, …).  As long as the tracees hold read
++ * ends of their own, the shadow changes nothing.
++ *
++ * The shadow is taken when the pipe is created rather than when its
++ * read end is closed: nearly every open(2) is followed by a close(2),
++ * stopping the tracees at each of them would slow everything down,
++ * whereas pipes are created seldom.  And the race happens right after
++ * the creation of the pipe: a shell closes its copy of the read end
++ * as soon as it has forked the processes of a pipeline or of a
++ * process substitution.
+  *
+  * A shadow only papers over a scheduling race, so it must not outlive
+  * it: holding one forever hands the guest a reader that never reads,
+@@ -51,7 +60,7 @@
+  * timeout.
+  */
+ 
+-#include <stdio.h>    /* snprintf, fopen, fgets, fclose */
++#include <stdio.h>    /* snprintf */
+ #include <string.h>   /* strncmp */
+ #include <strings.h>  /* bzero */
+ #include <fcntl.h>    /* open, fcntl, O_RDONLY, O_CLOEXEC, F_GETPIPE_SZ */
+@@ -162,21 +171,20 @@
+ 	return buffered > (capacity > PIPE_BUF ? capacity - PIPE_BUF : 0);
+ }
+ 
+-void shadow_pipe_read_end(pid_t tracee_pid, int tracee_fd)
++void shadow_new_pipe(pid_t tracee_pid, int read_fd)
+ {
+ 	char path[64];
+ 	char link[32];
+-	char line[128];
+ 	ssize_t len;
+-	unsigned long flags;
+-	FILE *f;
+ 	int shadow_fd;
+ 	int i;
+ 
+ 	ensure_init();
+ 
+-	/* Check the fd is an anonymous pipe. */
+-	snprintf(path, sizeof(path), "/proc/%d/fd/%d", tracee_pid, tracee_fd);
++	/* Check the fd is still an anonymous pipe: another thread may
++	 * have reused it already.  Opening it doesn't block then, unlike
++	 * opening a FIFO.  */
++	snprintf(path, sizeof(path), "/proc/%d/fd/%d", tracee_pid, read_fd);
+ 	len = readlink(path, link, sizeof(link) - 1);
+ 	if (len < 0)
+ 		return;
+@@ -184,22 +192,6 @@
+ 	if (strncmp(link, "pipe:[", 6) != 0)
+ 		return;
+ 
+-	/* Confirm it is the read end (flags O_RDONLY = 0 in O_ACCMODE). */
+-	snprintf(path, sizeof(path), "/proc/%d/fdinfo/%d", tracee_pid, tracee_fd);
+-	f = fopen(path, "r");
+-	if (!f)
+-		return;
+-	flags = 1; /* default: not O_RDONLY */
+-	while (fgets(line, sizeof(line), f)) {
+-		if (strncmp(line, "flags:", 6) == 0) {
+-			sscanf(line + 6, " %lo", &flags);
+-			break;
+-		}
+-	}
+-	fclose(f);
+-	if ((flags & O_ACCMODE) != O_RDONLY)
+-		return;
+-
+ 	/* Find a free slot. */
+ 	for (i = 0; i < MAX_SHADOW_PIPES; i++) {
+ 		if (shadows[i].fd == -1)
+@@ -208,10 +200,8 @@
+ 	if (i == MAX_SHADOW_PIPES)
+ 		return; /* No room; skip silently. */
+ 
+-	/* Open shadow reference before the tracee's close() executes.
+-	 * We do NOT set O_NONBLOCK: we never read from this fd, we just
++	/* We do NOT set O_NONBLOCK: we never read from this fd, we just
+ 	 * hold it open so the pipe's read-end reference count stays > 0.  */
+-	snprintf(path, sizeof(path), "/proc/%d/fd/%d", tracee_pid, tracee_fd);
+ 	shadow_fd = open(path, O_RDONLY | O_CLOEXEC);
+ 	if (shadow_fd < 0)
+ 		return;
+diff -uNr a/src/syscall/pipe_shadow.h b/src/syscall/pipe_shadow.h
+--- a/src/syscall/pipe_shadow.h	2026-08-23 06:32:39.000000000 +0800
++++ b/src/syscall/pipe_shadow.h	2026-11-26 15:47:00.670125755 +0800
+@@ -27,9 +27,9 @@
+ #include <stdbool.h>
+ 
+ /**
+- * If @tracee_fd is a pipe read end in @tracee_pid's fd table, open a
+- * shadow reference to it in proot's own process space.  Must be called
+- * at sysenter of close(), before the fd is released.
++ * Open a shadow reference to @read_fd, the read end of the pipe
++ * @tracee_pid has just created, in proot's own process space.  Must be
++ * called at the exit stage of pipe(2) or pipe2(2).
+  *
+  * The shadow keeps the pipe alive for child writers after the parent
+  * closes its copy of the read end early (ptrace serialisation makes
+@@ -37,7 +37,7 @@
+  * The shadow is never read — data remains in the pipe buffer for any
+  * legitimate reader (diff, cat, …).
+  */
+-void shadow_pipe_read_end(pid_t tracee_pid, int tracee_fd);
++void shadow_new_pipe(pid_t tracee_pid, int read_fd);
+ 
+ /**
+  * Close any shadow fd that has become useless — no writer is left
+diff -uNr a/src/syscall/seccomp.c b/src/syscall/seccomp.c
+--- a/src/syscall/seccomp.c	2026-11-26 14:14:30.814127872 +0800
++++ b/src/syscall/seccomp.c	2026-11-26 15:47:00.670125755 +0800
+@@ -341,7 +341,6 @@
+ 	{ PR_chown,		0 },
+ 	{ PR_chown32,		0 },
+ 	{ PR_chroot,		0 },
+-	{ PR_close,		0 },
+ 	{ PR_connect,		0 },
+ 	{ PR_creat,		0 },
+ 	{ PR_execve,		FILTER_SYSEXIT },
+@@ -387,6 +386,8 @@
+ 	{ PR_open,		0 },
+ 	{ PR_openat,		0 },
+ 	{ PR_openat2,		0 },
++	{ PR_pipe,		FILTER_SYSEXIT },
++	{ PR_pipe2,		FILTER_SYSEXIT },
+ 	{ PR_pivot_root,	FILTER_SYSEXIT },
+ 	{ PR_prctl, 		0 },
+ 	{ PR_prlimit64,		FILTER_SYSEXIT },
+diff -uNr a/src/syscall/syscall.h b/src/syscall/syscall.h
+--- a/src/syscall/syscall.h	2026-08-23 06:32:39.000000000 +0800
++++ b/src/syscall/syscall.h	2026-11-26 15:47:00.670125755 +0800
+@@ -59,6 +59,8 @@
+ extern bool is_voided_syscall(const Tracee *tracee, RegVersion version);
+ 
+ extern void handle_netlink_reply_exit(Tracee *tracee, word_t syscall_number);
++extern void unmark_fake_netlink_fd(Tracee *tracee, int fd);
++extern void unmark_netlink_route_fd(Tracee *tracee, int fd);
+ 
+ extern void apply_emulated_mount(Tracee *tracee);
+ extern void apply_emulated_pivot_root(Tracee *tracee);

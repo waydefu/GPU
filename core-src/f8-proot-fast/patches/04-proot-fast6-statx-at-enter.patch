@@ -1,0 +1,135 @@
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v5/src/syscall/enter.c v6/src/syscall/enter.c
+--- v5/src/syscall/enter.c	2026-09-25 03:24:00.040987288 +0800
++++ v6/src/syscall/enter.c	2026-09-25 08:55:41.192979696 +0800
+@@ -75,6 +75,7 @@
+ #include "tracee/abi.h"
+ #include "tracee/event.h"
+ #include "path/path.h"
++#include "tracee/statx.h"
+ #include "path/canon.h"
+ #include "path/binding.h"
+ #include "path/temp.h"
+@@ -1892,6 +1893,15 @@
+ 		}
+ 		buffer = SYSARG_3;
+ 	}
++	else if (sysnum == PR_statx) {
++		/* proot-fast v6: statx has its own state and extension event (tracee/statx.c).  */
++		word_t result;
++		if (v6_statx_at_enter(tracee, &result) != 1)
++			return false;
++		VERBOSE(tracee, 2, "v6: answered statx result=%ld", (long) result);
++		v5_answer(tracee, result);
++		return true;
++	}
+ 	else if (sysnum == PR_fstat) {
+ 		const int fd = (int) peek_reg(tracee, CURRENT, SYSARG_1);
+ 		int pidfd, local, saved;
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v5/src/tracee/statx.c v6/src/tracee/statx.c
+--- v5/src/tracee/statx.c	2026-08-23 06:32:39.000000000 +0800
++++ v6/src/tracee/statx.c	2026-09-25 08:55:41.192979696 +0800
+@@ -1,4 +1,7 @@
+ #include <errno.h>          /* E*, */
++#include <string.h>         /* strncmp(3), */
++#include <unistd.h>         /* syscall(2), close(2), */
++#include <sys/syscall.h>    /* __NR_statx, __NR_pidfd_*, */
+ #include <sys/sysmacros.h>  /* major, minor, */
+ 
+ #include "tracee/statx.h"
+@@ -138,3 +141,85 @@
+ 	}
+ 	return 0;
+ }
++
++#ifndef AT_STATX_SYNC_TYPE
++#define AT_STATX_SYNC_TYPE 0x6000
++#endif
++
++/**
++ * proot-fast v6 (2026-09-25): answer statx(2) at the seccomp enter stop (called from syscall/enter.c
++ * v5_stat_at_enter), saving the sysexit stop and the second path translation handle_statx_syscall() does there.
++ * It builds the same statx_syscall_state -- host path from translate_path() on the ORIGINAL arguments with the
++ * same dereferencing, or readlink_proc_pid_fd() for AT_EMPTY_PATH -- but fills statx_buf with the real statx(2)
++ * the tracer performs on that path (on a pidfd_getfd() duplicate for AT_EMPTY_PATH), i.e. what the kernel returns
++ * to the tracee in the normal path, then sends the same STATX_SYSCALL notification (fake_id0 uid/gid,
++ * link2symlink nlink) and writes the whole struct back.  Returns 1 with *result set when answered, 0 to take the
++ * normal path (unexpected flags, /proc or non-absolute host path, any host error but ENOENT / ENOTDIR -- the normal
++ * path then keeps its stat() fallback).
++ */
++int v6_statx_at_enter(Tracee *tracee, word_t *result)
++{
++	struct statx_syscall_state state = {};
++	char guest_path[PATH_MAX] = {};
++	const word_t dirfd = peek_reg(tracee, ORIGINAL, SYSARG_1);
++	const word_t flags = peek_reg(tracee, ORIGINAL, SYSARG_3);
++	const word_t mask = peek_reg(tracee, ORIGINAL, SYSARG_4);
++	const bool do_lstat = ((flags & AT_SYMLINK_NOFOLLOW) != 0);
++	int status;
++	long rc;
++
++	if ((flags & ~(word_t) (AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT | AT_EMPTY_PATH | AT_STATX_SYNC_TYPE)) != 0)
++		return 0;
++
++	status = read_string(tracee, guest_path, peek_reg(tracee, ORIGINAL, SYSARG_2), PATH_MAX);
++	if (status <= 0 || status >= PATH_MAX)
++		return 0;
++
++	if (status == 1) {
++		int pidfd, local;
++
++		if ((flags & AT_EMPTY_PATH) == 0 || (int) dirfd < 0)
++			return 0;
++		if (readlink_proc_pid_fd(tracee->pid, (int) dirfd, state.host_path) < 0)
++			return 0;
++		pidfd = (int) syscall(__NR_pidfd_open, tracee->pid, 0);
++		if (pidfd < 0)
++			return 0;
++		local = (int) syscall(__NR_pidfd_getfd, pidfd, (int) dirfd, 0);
++		close(pidfd);
++		if (local < 0)
++			return 0;
++		rc = syscall(__NR_statx, local, "", (int) (flags & (AT_EMPTY_PATH | AT_NO_AUTOMOUNT | AT_STATX_SYNC_TYPE)),
++			     (unsigned int) mask, &state.statx_buf);
++		close(local);
++		if (rc != 0)
++			return 0;
++	}
++	else {
++		status = translate_path(tracee, state.host_path, dirfd, guest_path, !do_lstat);
++		if (status < 0 || state.host_path[0] != '/')
++			return 0;
++		if (strncmp(state.host_path, "/proc", 5) == 0 && (state.host_path[5] == '/' || state.host_path[5] == '\0'))
++			return 0;
++		rc = syscall(__NR_statx, AT_FDCWD, state.host_path,
++			     (int) (flags & (AT_SYMLINK_NOFOLLOW | AT_NO_AUTOMOUNT | AT_STATX_SYNC_TYPE)),
++			     (unsigned int) mask, &state.statx_buf);
++		if (rc != 0) {
++			const int error = errno;
++			if (error != ENOENT && error != ENOTDIR)
++				return 0;
++			*result = (word_t) -error;
++			return 1;
++		}
++	}
++
++	status = notify_extensions(tracee, STATX_SYSCALL, (intptr_t) &state, 0);
++	if (status < 0)
++		return 0;
++
++	if (write_data(tracee, peek_reg(tracee, ORIGINAL, SYSARG_5), &state.statx_buf, sizeof(state.statx_buf)) < 0)
++		return 0;
++
++	*result = 0;
++	return 1;
++}
+diff -ru -x '*.o' -x '*.d' -x proot -x 'loader*' -x '*.a' -x build.h -x '.check*' v5/src/tracee/statx.h v6/src/tracee/statx.h
+--- v5/src/tracee/statx.h	2026-08-23 06:32:39.000000000 +0800
++++ v6/src/tracee/statx.h	2026-09-25 08:55:41.192979696 +0800
+@@ -28,6 +28,7 @@
+ };
+ 
+ int handle_statx_syscall(Tracee *tracee, bool from_sigsys);
++int v6_statx_at_enter(Tracee *tracee, word_t *result);   /* proot-fast v6 */
+ 
+ 
+ #endif // STATX_H
