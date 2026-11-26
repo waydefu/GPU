@@ -1,6 +1,6 @@
 # TEST-MATRIX.md — POCO F8 Ultra Termux:X11 GPU 與 PRoot 效能研究（歷史測試矩陣）
 
-最新現況總表請見 [`HANDOFF.md`](HANDOFF.md)（2026-11-26：PRoot `proot-fast8` + `auto-shard` 為現役主力並已收斂至 工作站的 `src/f8-proot-fast/`；Gate A 2D GPU 加速為 **RESEARCH COMPLETE / PAUSED**；主線 #3 GL/VK 上屏為 **FEASIBILITY COMPLETE / PAUSED**；歷史凍結台帳保存在工作站的 `docs/archive/handoffs/`）。
+最新現況總表請見 [`HANDOFF.md`](HANDOFF.md)（2026-11-27：PRoot `fast9+09c`（路徑 `proot-fast8`）+ `auto-shard` 為現役主力並已收斂至 工作站的 `src/f8-proot-fast/`；Gate A 2D GPU 加速為 **RESEARCH COMPLETE / PAUSED**；主線 #3 GL/VK 上屏為 **FEASIBILITY COMPLETE / PAUSED**；歷史凍結台帳保存在工作站的 `docs/archive/handoffs/`）。
 
 以下保留 P0／P1／P2／Gate A 研究階段之歷史對照矩陣與基準紀錄（凍結證據不可覆寫）：
 

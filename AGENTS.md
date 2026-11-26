@@ -4,14 +4,14 @@ Project root `.` is a plain folder holding source trees (see `WORKTREE-MAP.md`),
 
 ## Entry order (every task)
 
-1. Read [`HANDOFF.md`](HANDOFF.md) first — current status authority across all tracks (PRoot `proot-fast8`/`auto-shard`, Gate A `RESEARCH COMPLETE / PAUSED`, Track #3 `FEASIBILITY COMPLETE / PAUSED`, upstream status).
+1. Read [`HANDOFF.md`](HANDOFF.md) first — current status authority across all tracks (PRoot `fast9+09c`/`auto-shard`, Gate A `RESEARCH COMPLETE / PAUSED`, Track #3 `FEASIBILITY COMPLETE / PAUSED`, upstream status).
 2. Read [`WORKTREE-MAP.md`](WORKTREE-MAP.md) for active source trees (`src/f8-proot-fast`, `src/termux-proot-upstream`, and the 5 preserved `termux-x11` worktrees).
 3. Read [`TEST-MATRIX.md`](TEST-MATRIX.md) and historical ledgers in `docs/archive/handoffs/` only when touching historical Gate A / GL / PRoot artifacts.
 4. F8 workstation redlines: `/root/.serena/memories/global/f8-workstation.md`.
 
 ## Current Track Boundary (2026-11-26)
 
-- **PRoot Performance & Auto-Shard (ACTIVE)**: `src/f8-proot-fast` (`main` `ee603b8`) holds `proot-fast8` patches, `f8-shard` v2, `shard-daemon.sh` fix 4, and offline tests. Do not mutate live `$PREFIX/home/build/proot-fast/out8/`, `shard2/`, `$PREFIX/bin/f8desk*`, or `/usr/local/bin/f8-shard` without explicit authorization.
+- **PRoot Performance & Auto-Shard (LIVE `fast9+09c`)**: the live `out8/bin/proot-fast8` is fast9+09c; source of record is GitHub `waydefu/GPU` `core-src/f8-proot-fast/` (`d5ddc73`), and the local `src/f8-proot-fast` (`main` `ab18e49`) is the 09b history. Together they hold `proot-fast8` patches, `f8-shard` v2, `shard-daemon.sh` fix 4, and offline tests. Do not mutate live `$PREFIX/home/build/proot-fast/out8/`, `shard2/`, `$PREFIX/bin/f8desk*`, or `/usr/local/bin/f8-shard` without explicit authorization.
 - **Gate A 2D GPU Acceleration (RESEARCH COMPLETE / PAUSED)**: R6 (`0f1e546`), R7 (13/13), R8–R10 technical qualification completed as research assets; `XFCE-NOTEL-01` proved daily 2D GPU yields no net gain over CPU once `GATEA_TELEMETRY` is disabled. Do not reopen closed gates (P0/P1/P2-A/P2-B.1/P2-B.2), do not overwrite or retry any frozen cells under `evidence/session/gate-a-a1/`, and do not enable Production Gate A.
 - **Track #3 GL/VK Present (FEASIBILITY COMPLETE / PAUSED)**: `GL-PRESENT-03` + `X3-DIRECT-FEAS` completed; X3 Vulkan copy yields too little net gain for its complexity. "EGL black-screen / no-present" remains conditional TODO.
 - **Historical Gate A ledger**: Archived verbatim at `docs/archive/handoffs/HANDOFF-LEDGER-20260919.md` (plus `STATUS-HANDOFF-20260921.md`, `HANDOFF-NEXT-SESSION-20260923..27.md`). All historical `do not retry` / `frozen` constraints on consumed device cells remain permanently in force.
