@@ -143,24 +143,25 @@ x = socket.stat()
 x_socket_id = x.st_dev, x.st_ino
 assert_server()
 
-# Inherit the caller's env (a TermuxService child) and only override what the
-# launch needs. A fresh dict dropped ANDROID_*/BOOTCLASSPATH on 2026-11-27, so
-# Termux `am` inside the new desktop exited 0 without sending intents and
-# termux-bg-run timed out. Check before touching the running desktop.
+# Pass through only the Android runtime vars from the caller (a TermuxService
+# child), plus the launch overrides. A fresh dict without them on 2026-11-27 made
+# Termux `am` inside the new desktop exit 0 without sending intents. An allowlist,
+# not os.environ, keeps caller secrets and LD_*/PROOT_* out of the Stable desktop.
+# Checked before touching the running desktop.
 AM_REQUIRED_ENV = (
     "ANDROID_ART_ROOT", "ANDROID_I18N_ROOT", "ANDROID_TZDATA_ROOT",
     "ANDROID_ROOT", "ANDROID_DATA", "BOOTCLASSPATH", "DEX2OATBOOTCLASSPATH",
 )
-env = dict(
-    os.environ,
+missing_env = [k for k in AM_REQUIRED_ENV if not os.environ.get(k)]
+assert not missing_env, ("caller env lacks Android runtime vars", missing_env)
+env = {k: os.environ[k] for k in AM_REQUIRED_ENV}
+env.update(
     PATH=f"{prefix}/bin:/system/bin",
     HOME=str(termux_home),
     PREFIX=str(prefix),
     TMPDIR=str(prefix / "tmp"),
     PD_PROOT_BIN=str(out / "auto/proot-fast8"),
 )
-missing_env = [k for k in AM_REQUIRED_ENV if not env.get(k)]
-assert not missing_env, ("caller env lacks Android runtime vars", missing_env)
 
 print(f"STABLE_BASELINE xserver={server} socket_inode={x.st_ino} desktop_tracer={old_tracer} codex_tracer={codex_tracer}", flush=True)
 
