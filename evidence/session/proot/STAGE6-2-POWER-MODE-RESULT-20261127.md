@@ -53,9 +53,7 @@
 - **注記 `B2` 取樣**：`B2` 於 `cpu6` 亦曾短暫觀察到 `2,227,200 kHz` 區間（`min=2,227,200`, `max=2,880,000`），但仍與 `B1`（`2324.89 ms`）持平（`2325.50 ms`）。
 - **紅色對照 `S1`（V8 通過）**：`cpu6` 全程鎖定 `768,000 kHz`，`late` 中位數 `2529.36 ms` 較 `B1`/`B2` 中位數 `2325.19 ms` 慢 **`+8.78%`**。
 
-### 4.3 次要指標、ZRAM 與 `vmstat`（經 `adb shell`；`PSI` 與 `zram0/mm_stat` 因權限不足不可取得）
-
-> **權限限制**：`/proc/pressure/*`（PSI）與 `/sys/block/zram0/mm_stat`（真實壓縮比）在非 Root `adb shell` 下皆 `Permission denied`（標記為 `UNAVAILABLE_DUE_TO_PERMISSION` / `null`），不視為完整量測通過；下表 ZRAM 數據僅取自 `dumpsys meminfo` 的實體／swap 淨配比。
+### 4.3 次要指標、ZRAM 與 `vmstat`（經 `adb shell`；PSI 為 `null`）
 
 | 區塊 | `launch_ms` | `tracer_cpu_ms` | `inner_total_ms` | `click_p50` | `peak_pss_mb` | `MemAvailable` 最低 | ZRAM 前→後 (`physical`/`swap` MiB) | `vmstat` 差值 (`pswpin`/`pswpout`/`pgmajfault`/`compact_stall`) |
 |---|---|---|---|---|---|---|---|---|
@@ -70,4 +68,4 @@
 ## 5. 最終建議與限制
 
 - **建議**：維持 **`balanced`（均衡模式）** 作為日常工作站預設；僅在**短時間（約 30–60 秒內）編譯或高互動需求，或有外接主動散熱器**時，由使用者手動切換至 `performance`。
-- **限制**：結論僅適用本機（POCO F8 Ultra `myron`）、本工作站複合負載、裸機電池放電（`status: 3`、`77%–79%`）狀態；未測第二輪 `B3 P3 P4 B4`（因 V7 離散鎖定 >4% 且 G4 已於 `P1`/`P2` 失敗）；`PSI` 與 `zram0/mm_stat` 因非 Root 權限不足不可取得；去敏後逐批原始 JSON 與 SHA256 清單存於 [`stage6-2-runs-20261127/`](stage6-2-runs-20261127/README.md)（本機完整原始檔於 `/data/data/com.termux/files/home/build/proot-fast/stage6_2_runs/`）。
+- **限制**：結論僅適用本機（POCO F8 Ultra `myron`）、本工作站複合負載、裸機電池放電（`status: 3`、`77%–79%`）狀態；未測第二輪 `B3 P3 P4 B4`（因 V7 離散鎖定 >4% 且 G4 已於 `P1`/`P2` 失敗）；原始 JSON 產物保留於手機本機 `/data/data/com.termux/files/home/build/proot-fast/stage6_2_runs/`。
