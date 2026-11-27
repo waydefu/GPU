@@ -22,6 +22,7 @@ from typing import Any
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import stage6_2_judge as J  # noqa: E402
+import stage6_adb as A  # noqa: E402
 
 PREFIX = Path("/data/data/com.termux/files/usr")
 TERMUX_HOME = Path("/data/data/com.termux/files/home")
@@ -29,7 +30,6 @@ LIVE_PROOT = TERMUX_HOME / "build/proot-fast/out8/bin/proot-fast8"
 UBU = PREFIX / "var/lib/proot-distro/containers/ubuntu/rootfs"
 SHM = UBU.parent / "shm"
 SYSD = UBU.parent / "sysdata"
-ADB_BIN = PREFIX / "bin/adb"
 CLK_TCK = os.sysconf("SC_CLK_TCK")
 
 
@@ -39,41 +39,10 @@ def check_native_tracer0() -> None:
         raise SystemExit("FAIL: must run natively with TracerPid=0 (use termux-bg-run)")
 
 
-def adb_env() -> dict[str, str]:
-    env = dict(os.environ)
-    env["HOME"] = str(TERMUX_HOME)
-    return env
-
-
-def run_adb(port: int, args: list[str], serial: str | None = None, timeout: float = 10.0) -> tuple[int, str]:
-    cmd = [str(ADB_BIN), "-H", "127.0.0.1", "-P", str(port)]
-    if serial:
-        cmd.extend(["-s", serial])
-    cmd.extend(args)
-    try:
-        r = sp.run(cmd, env=adb_env(), capture_output=True, text=True, timeout=timeout)
-        return r.returncode, r.stdout.strip()
-    except (sp.SubprocessError, OSError) as exc:
-        return -1, str(exc)
-
-
-def detect_myron_serial(port: int) -> str:
-    rc, out = run_adb(port, ["devices", "-l"], timeout=8.0)
-    if rc != 0:
-        raise SystemExit(f"FAIL: adb -P {port} devices failed: {out}")
-    candidates = []
-    for line in out.splitlines()[1:]:
-        parts = line.split()
-        if len(parts) >= 2 and parts[1] == "device":
-            candidates.append((parts[0], line))
-    for ser, line in candidates:
-        if "device:myron" in line or "model:25102PCBEG" in line:
-            return ser
-    if len(candidates) == 1:
-        rc2, dev = run_adb(port, ["shell", "getprop", "ro.product.device"], serial=candidates[0][0])
-        if rc2 == 0 and dev.strip() == "myron":
-            return candidates[0][0]
-    raise SystemExit(f"FAIL: no authorized myron device on ADB -P {port}")
+adb_env = A.adb_env
+run_adb = A.run_adb
+detect_myron_serial = A.detect_myron_serial
+verify_device_identity = A.verify_device_identity
 
 
 def read_local_thermal() -> tuple[float | None, dict[str, float]]:
@@ -128,24 +97,8 @@ def _parse_int_or_none(s: str) -> int | None:
     return None
 
 
-def parse_zram_line(text: str) -> dict[str, int] | None:
-    m = re.search(r"ZRAM:\s*([\d,]+)K\s+physical used for\s*([\d,]+)K\s+in swap\s*\(([\d,]+)K\s+total swap\)", text)
-    if not m:
-        return None
-    return {
-        "physical_kb": int(m.group(1).replace(",", "")),
-        "swap_kb": int(m.group(2).replace(",", "")),
-        "total_swap_kb": int(m.group(3).replace(",", "")),
-    }
-
-
-def parse_vmstat(text: str) -> dict[str, int] | None:
-    out: dict[str, int] = {}
-    for line in text.splitlines():
-        parts = line.split()
-        if len(parts) == 2 and parts[1].isdigit():
-            out[parts[0]] = int(parts[1])
-    return out or None
+parse_zram_line = A.parse_zram_line
+parse_vmstat = A.parse_vmstat
 
 
 def parse_battery_fields(out: str) -> dict[str, int | float | None]:
@@ -585,6 +538,7 @@ def run_block(slot: str, attempt: int, duration_s: float, port: int, out_dir: Pa
     check_native_tracer0()
     mode = "balanced" if is_dryrun else J.SLOT_MODES[slot]
     serial = detect_myron_serial(port)
+    device_identity = verify_device_identity(port, serial)
     proot_sha = hashlib.sha256(LIVE_PROOT.read_bytes()).hexdigest()
 
     wtmp = TERMUX_HOME / "build/proot-fast/stage6_2_tmp" / f"{slot}_a{attempt}_{int(time.time())}"
@@ -635,6 +589,7 @@ def run_block(slot: str, attempt: int, duration_s: float, port: int, out_dir: Pa
         "attempt": attempt,
         "mode": mode,
         "is_dryrun": is_dryrun,
+        "device_identity": device_identity,
         "proot_sha256": proot_sha,
         "duration_s": actual_dur,
         "pre": pre,

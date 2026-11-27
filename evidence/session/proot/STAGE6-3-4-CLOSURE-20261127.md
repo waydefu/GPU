@@ -27,7 +27,7 @@
 
 ### 1.2 候選 2：Node／Electron V8 記憶體配額與併發邊界實驗
 
-實測工具：`scripts/stage6_3_candidate2_bench.py`（原生端 `TracerPid=0` 執行、經 ADB `-P 5038` 讀 `/proc/vmstat`；`/proc/pressure/memory` 實證 `Permission denied`，`PSI` 記 `null`）。
+實測工具：`scripts/stage6_3_candidate2_bench.py` 與共用隔離模組 `scripts/stage6_adb.py`（強制原生端 `TracerPid=0`、清空 `ADB_SERVER_SOCKET`／`ANDROID_ADB_SERVER_ADDRESS`／`ANDROID_ADB_SERVER_PORT`、鎖定 `-H 127.0.0.1 -P 5038 -s <serial>` 與 `HOME`、並執行 `myron`/`25102PCBEG` 及 `com.termux.x11`/`com.waydefu.x11gpu` 身份驗證；原始逐次數據見 [`stage6-3-candidate2-20261127/`](stage6-3-candidate2-20261127/README.md)）。`/proc/pressure/memory`（`PSI`）與 `/sys/block/zram0/mm_stat`（ZRAM 真實壓縮率）皆實證 `Permission denied`，明確標記為 **`UNAVAILABLE_DUE_TO_PERMISSION`**（不可取得，不視為完整量測通過）。
 背景基線量測發現 V8 預設 `heap_size_limit` 極高：**`node v24.20.0 = 2,240 MB`**、**`electron 44.9.1 = 4,192 MB`**。
 
 #### 實驗 2A：V8 `--max-old-space-size=512` vs 預設（`2× Electron + 2× Python`，3 輪 ABBA = 6 對）
@@ -40,7 +40,7 @@
 | 峰值 RSS 中位數 | `395.0 MB` | `464.3 MB` | 無節省 |
 | `MemAvailable` 最低 | `3754.4 MB` | `3629.2 MB` | 無改善 |
 | `pgmajfault` 中位數 | `1620.5` | `789.0` | 高離散（區間 `191–31,405`，無穩定方向性淨益） |
-| `PSI` | `null` | `null` | ADB 不可讀 |
+| `PSI` | `UNAVAILABLE_DUE_TO_PERMISSION` | `UNAVAILABLE_DUE_TO_PERMISSION` | 非 Root `adb shell` `Permission denied`，不可取得 |
 
 **應用相容性探針（`2A_compat_probe`，實際保留 `250 MB` 與 `650 MB` V8 JS 物件）：**
 
@@ -63,7 +63,7 @@
 | 耗時中位數 (`wall_ms`) | `1179.14 ms` | `1690.99 ms` | **`+43.4%`**（序列化換取記憶體空間） |
 | `pgmajfault` 中位數 | `4107.5` | `6336.5` | 未降反略高（等量工作總觸頁數相近，受背景頁回收波動影響） |
 | `pswpin` / `pswpout` 中位數 | `3883.5` / `14081.0` | `5802.0` / `11685.0` | `pswpout` 略低、`pswpin` 略高 |
-| `PSI` | `null` | `null` | ADB 不可讀 |
+| `PSI` | `UNAVAILABLE_DUE_TO_PERMISSION` | `UNAVAILABLE_DUE_TO_PERMISSION` | 非 Root `adb shell` `Permission denied`，不可取得 |
 
 - **Native Hybrid 邊界**：沿用 Stage 5 Step 5 已凍結實測（`fast9+09c` 驗收）：僅對單次重型 `python3` 全樹掃描於 `TracerPid=0` 執行（`5.55×`、`1542.5 → 277.9 ms`），短高頻 CLI 留於 `proot-fast8` 內。
 - **2B 結論**：序列降併發（`4→2`）有顯著峰值記憶體保護（`-39.5%` PSS、`+547.6 MB` 可用空間），但以 `+43.4%` 耗時換取且未降低 `pgmajfault`；僅作為記憶體吃緊時的操作／排程守則，不強行硬改程式預設。
@@ -88,13 +88,28 @@
 
 ---
 
-## 三、Stage 6 計畫書 §5.2 結案驗收清單核對
+## 三、Stage 6 計畫書 §5.2 結案驗收清單核對（4 項完整通過、1 項權限受限部分達成）
 
-- [x] **連線與身份驗證**：2026-11-27 經 `-H 127.0.0.1 -P 5038` 驗證 `ro.product.model=25102PCBEG`、`ro.product.device=myron`；`com.termux.x11` 版號 `1.03.01-11b82d9-06.09.26`（`firstInstallTime=2026-09-03 22:35:10`）；`com.waydefu.x11gpu` 版號 `1.03.01-f592241-24.09.26`（`firstInstallTime=2026-09-07 03:45:30`）；ADB `5037` 全程未動。
-- [x] **Stage 6.1 基線補齊**：三模式閒置快照存檔於 [`stage6-audit-20261127/`](stage6-audit-20261127/README.md)；`PSI` 與 `zram0/mm_stat` 實證 Permission denied 記 `null`，ZRAM 改取自 `dumpsys meminfo`，`vmstat` 經 `adb shell` 補齊。
-- [x] **Stage 6.2 三模式受控對照**：完成第一輪 `B1 P1 P2 B2` 與紅色對照 `S1` 結案（[`STAGE6-2-POWER-MODE-RESULT-20261127.md`](STAGE6-2-POWER-MODE-RESULT-20261127.md)），已排除 `hw-trip`／`-273000` 假讀值，並完成乾跑解析度校準後之功耗換算。
+- [x] **連線與身份驗證**：2026-11-27 經 `-H 127.0.0.1 -P 5038` 驗證 `ro.product.model=25102PCBEG`、`ro.product.device=myron`；`com.termux.x11` 版號 `1.03.01-11b82d9-06.09.26`（`firstInstallTime=2026-09-03 22:35:10`）；`com.waydefu.x11gpu` 版號 `1.03.01-f592241-24.09.26`（`firstInstallTime=2026-09-07 03:45:30`）；ADB `5037` 全程未動。並已將裝置選擇、環境隔離與身份驗證補入 `scripts/stage6_adb.py`（經 `scripts/test_stage6_adb.py` 單元測試與實機驗證），供 `stage6_2_power_bench.py` 與 `stage6_3_candidate2_bench.py` 共用。
+- [ ] **Stage 6.1 基線補齊（`PARTIAL / UNAVAILABLE_DUE_TO_PERMISSION`，不視為完整量測通過）**：
+  - **已取得**：三模式閒置快照存檔於 [`stage6-audit-20261127/`](stage6-audit-20261127/README.md)；`dumpsys meminfo` ZRAM（實體／swap 淨配比 ~2.95–3.0×）、`/proc/vmstat`（經 `adb shell`）、`max_phantom_processes`、LMKD logcat 皆已補齊。
+  - **不可取得（權限不足）**：`/proc/pressure/*`（**PSI**）與 `/sys/block/zram0/mm_stat`（**ZRAM 真實壓縮率** `orig_data_size / compr_data_size`）在非 Root `adb shell`（`com.android.shell`）下實證 `Permission denied`，明確標記為 `UNAVAILABLE_DUE_TO_PERMISSION`，**不視為完整量測通過**。
+- [x] **Stage 6.2 三模式受控對照**：完成第一輪 `B1 P1 P2 B2` 與紅色對照 `S1` 結案（[`STAGE6-2-POWER-MODE-RESULT-20261127.md`](STAGE6-2-POWER-MODE-RESULT-20261127.md)），已排除 `hw-trip`／`-273000` 假讀值，並完成乾跑解析度校準後之功耗換算；唯該階段同樣受限於 `PSI` 與 `zram0/mm_stat` 不可取得。
 - [x] **Stage 6.3 合規與可逆性**：候選 1–4 維持非 Root、零 Android 系統設定寫入（zero mutation）。
 - [x] **Stage 6.4 裁決與全域潔淨**（2026-11-27 11:24 CST 實測核對）：
   - `out8/` 與凍結清單 `baselines/fast9-09c-20261127/sha256sums.txt` **5/5 OK**。
   - `src/f8-proot-fast`、`src/f8-proot-fast-fast9-fixes`、`src/f8-proot-fast-stage5` 三工作樹 `git status --short` 皆為空（`dirty=0`）。
   - Stable `:1`（`28218` `termux-x11 com.termux.x11 :1 -legacy-drawing`）全程未觸碰；`shard-daemon.sh` 單一實例 `17875`；6.2 與 6.3 全部批次 `orphan_pids = 0`。
+
+---
+
+## 四、證據索引與 SHA256 總覽
+
+| 項目 | 位置 | 內容與雜湊說明 |
+|---|---|---|
+| **Stage 6.1 唯讀基線** | [`stage6-audit-20261127/README.md`](stage6-audit-20261127/README.md) | 省電／均衡／效能 3 份閒置快照與權限實測紀錄 |
+| **Stage 6.2 凍結門檻** | [`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](STAGE6-2-POWER-MODE-FREEZE-20261127.md) | 凍結判定規則（未改動） |
+| **Stage 6.2 實測報告** | [`STAGE6-2-POWER-MODE-RESULT-20261127.md`](STAGE6-2-POWER-MODE-RESULT-20261127.md) | 第一輪 `B1 P1 P2 B2` ＋ `S1` 分析與圖表 |
+| **Stage 6.2 逐批原始檔** | [`stage6-2-runs-20261127/README.md`](stage6-2-runs-20261127/README.md) | 去敏後 `DRYRUN`、`B1`、`P1`、`P2`、`B2`、`S1`、`series_verdict` + [`SHA256SUMS`](stage6-2-runs-20261127/SHA256SUMS) + [`ORIGINAL_ON_DEVICE_SHA256SUMS`](stage6-2-runs-20261127/ORIGINAL_ON_DEVICE_SHA256SUMS) |
+| **Stage 6.3 候選 2 原始檔** | [`stage6-3-candidate2-20261127/README.md`](stage6-3-candidate2-20261127/README.md) | `2A`（6 對）+ 相容探針（6 次）+ `2B`（6 對）逐次 JSON + [`SHA256SUMS`](stage6-3-candidate2-20261127/SHA256SUMS) |
+| **Stage 6.2/6.3 腳本與測試** | `scripts/{stage6_adb.py,test_stage6_adb.py,stage6_2_judge.py,test_stage6_2_judge.py,stage6_2_power_bench.py,stage6_3_candidate2_bench.py}` | 隔離 ADB、判定器與實驗執行腳本 |

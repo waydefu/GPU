@@ -24,7 +24,7 @@
 - **Stage 6（Android 宿主最佳化）CLOSED / COMPLETE**：6.1–6.4 全案結案（無 Root、零 Android 系統寫入）：
   - **6.1 基線**（[快照](evidence/session/proot/stage6-audit-20261127/README.md)）：`PSI` 與 `zram0/mm_stat` 不可讀（`null`）；`vmstat` 唯經 `adb shell` 為真。
   - **6.2 電源模式（候選 3 → `PAUSE`）**：第一輪 `B1 P1 P2 B2` ＋ `S1`（5 塊皆 `BLOCK_VALID`、`370/370` 批、`S1` `+8.78%` 過 V8）。均衡極穩（`0.026%` 離散）；效能前 30s 快 `+6.39%`／`+6.45%`，但 90–180s 兩次皆破 `85.0 °C`（`87.2`／`85.7 °C`）且 `P2` 遭 `cpu6` 砍半至 `2.23 GHz` 歸零（`-0.00%`），日常維持 `balanced`。見 [6.2 報告](evidence/session/proot/STAGE6-2-POWER-MODE-RESULT-20261127.md)（凍結門檻 [FREEZE](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md) 未改動）。
-  - **6.3–6.4（候選 1 `GO` 操作紀律、候選 2 `PAUSE`、候選 4 `PAUSE`）**：Antigravity 佔 UID PSS `76.9%`（`547.6`/`711.9 MB`）；`--max-old-space-size=512` 無淨收益且 `650 MB` OOM 閃退（退回）；`4→2` 降併發以 `+43.4%` 耗時換 `-39.5%` 峰值 PSS（作操作紀律、不硬編碼）；全程 `com.termux` 零誤殺不改 Phantom 設定；§5.2 驗收 5/5 通過。見 [6.3/6.4 結案報告](evidence/session/proot/STAGE6-3-4-CLOSURE-20261127.md)。
+  - **6.3–6.4（候選 1 `GO` 操作紀律、候選 2 `PAUSE`、候選 4 `PAUSE`）**：Antigravity 佔 UID PSS `76.9%`（`547.6`/`711.9 MB`）；`--max-old-space-size=512` 無淨收益且 `650 MB` OOM 閃退（退回）；`4→2` 降併發以 `+43.4%` 耗時換 `-39.5%` 峰值 PSS（作操作紀律、不硬編碼）；全程 `com.termux` 零誤殺不改 Phantom 設定；§5.2 驗收 4 項通過、6.1 因非 Root 權限無法讀 `PSI`/`zram0/mm_stat` 標記為 `UNAVAILABLE_DUE_TO_PERMISSION`（不視為完整量測通過）。見 [6.3/6.4 結案報告](evidence/session/proot/STAGE6-3-4-CLOSURE-20261127.md)。
 
 ## 三條不可逾越的紅線
 
@@ -40,7 +40,7 @@
 - **fast9+09c 本機部署與驗收**：[FAST9-09C-LIVE-QUALIFICATION-20261127.md](evidence/session/proot/FAST9-09C-LIVE-QUALIFICATION-20261127.md)
 - **Stage 5 `proot-fast9` 部署、回退與 `fast9+09b` 現役重部署驗收**：[`STAGE5-FAST9-LIVE-DEPLOYMENT-AND-SOAK30M-20261126.md`](evidence/session/proot/STAGE5-FAST9-LIVE-DEPLOYMENT-AND-SOAK30M-20261126.md)
 - **Stage 6 Android 宿主效能與電源最佳化計畫**：[`STAGE6-ANDROID-HOST-OPTIMIZATION-PLAN-20261126.md`](evidence/session/proot/STAGE6-ANDROID-HOST-OPTIMIZATION-PLAN-20261126.md)
-- **Stage 6.2–6.4 電源與宿主最佳化結案**：凍結門檻 [`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)；6.2 實測 [`STAGE6-2-POWER-MODE-RESULT-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-RESULT-20261127.md)；6.3/6.4 結案 [`STAGE6-3-4-CLOSURE-20261127.md`](evidence/session/proot/STAGE6-3-4-CLOSURE-20261127.md)；基線快照 [`stage6-audit-20261127/`](evidence/session/proot/stage6-audit-20261127/README.md)
+- **Stage 6.2–6.4 電源與宿主最佳化結案**：凍結門檻 [`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)；6.2 實測 [`STAGE6-2-POWER-MODE-RESULT-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-RESULT-20261127.md)（[原始資料](evidence/session/proot/stage6-2-runs-20261127/README.md)）；6.3/6.4 結案 [`STAGE6-3-4-CLOSURE-20261127.md`](evidence/session/proot/STAGE6-3-4-CLOSURE-20261127.md)（[原始資料](evidence/session/proot/stage6-3-candidate2-20261127/README.md)）；6.1 基線 [`stage6-audit-20261127/`](evidence/session/proot/stage6-audit-20261127/README.md)
 - Stage 5 隔離驗證與 Phase 2 紀錄：[`STAGE5-ISOLATED-20261126.md`](evidence/session/proot/STAGE5-ISOLATED-20261126.md)、[`STAGE5-PHASE2-ACCEPTANCE-20261126.md`](evidence/session/proot/STAGE5-PHASE2-ACCEPTANCE-20261126.md)
 - 歷史測試矩陣：[`TEST-MATRIX.md`](TEST-MATRIX.md)
 - Stable 桌面驗收（2026-11-27）：事後查驗 [`STABLE-RESTART-E2E-20261127.md`](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)；`--apply` 實戰 [`STABLE-RESTART-APPLY-20261127.md`](evidence/session/proot/STABLE-RESTART-APPLY-20261127.md)

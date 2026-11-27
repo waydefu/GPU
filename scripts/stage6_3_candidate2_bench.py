@@ -8,6 +8,8 @@ reads /proc/vmstat via ADB -H 127.0.0.1 -P 5038, and mutates zero Android settin
 """
 from __future__ import annotations
 
+import argparse
+import hashlib
 import json
 import os
 import re
@@ -19,13 +21,16 @@ import threading
 import time
 from pathlib import Path
 
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE))
+import stage6_adb as A  # noqa: E402
+
 PREFIX = Path("/data/data/com.termux/files/usr")
 TERMUX_HOME = Path("/data/data/com.termux/files/home")
 LIVE_PROOT = TERMUX_HOME / "build/proot-fast/out8/bin/proot-fast8"
 UBU = PREFIX / "var/lib/proot-distro/containers/ubuntu/rootfs"
 SHM = UBU.parent / "shm"
 SYSD = UBU.parent / "sysdata"
-ADB_BIN = PREFIX / "bin/adb"
 
 
 def check_native() -> None:
@@ -34,34 +39,30 @@ def check_native() -> None:
         raise SystemExit("FAIL: must run natively with TracerPid=0")
 
 
-def adb_shell(cmd: str, port: int = 5038, timeout: float = 10.0) -> tuple[int, str]:
-    env = dict(os.environ)
-    env["HOME"] = str(TERMUX_HOME)
-    try:
-        r = sp.run([str(ADB_BIN), "-H", "127.0.0.1", "-P", str(port), "shell", cmd],
-                   env=env, capture_output=True, text=True, timeout=timeout)
-        return r.returncode, r.stdout
-    except (OSError, sp.SubprocessError) as exc:
-        return -1, str(exc)
+def adb_shell(cmd: str, port: int = 5038, serial: str | None = None, timeout: float = 10.0) -> tuple[int, str]:
+    return A.run_adb(port, ["shell", cmd], serial=serial, timeout=timeout)
 
 
-def read_vmstat_adb(port: int = 5038) -> dict[str, int] | None:
-    rc, out = adb_shell("grep -E '^(pswpin|pswpout|pgmajfault|allocstall|compact_stall)' /proc/vmstat", port=port)
+def read_vmstat_adb(port: int = 5038, serial: str | None = None) -> dict[str, int] | None:
+    rc, out = adb_shell("grep -E '^(pswpin|pswpout|pgmajfault|allocstall|compact_stall)' /proc/vmstat",
+                        port=port, serial=serial)
     if rc != 0:
         return None
-    res: dict[str, int] = {}
-    for ln in out.splitlines():
-        parts = ln.split()
-        if len(parts) == 2 and parts[1].isdigit():
-            res[parts[0]] = int(parts[1])
-    return res or None
+    return A.parse_vmstat(out)
 
 
-def read_psi_adb(port: int = 5038) -> None:
-    rc, out = adb_shell("cat /proc/pressure/memory 2>&1 || true", port=port)
+def read_psi_adb(port: int = 5038, serial: str | None = None) -> str:
+    rc, out = adb_shell("cat /proc/pressure/memory 2>&1 || true", port=port, serial=serial)
     if rc == 0 and "some " in out:
         raise RuntimeError(f"Unexpected readable PSI: {out}")
-    return None  # Permission denied on this device
+    return "UNAVAILABLE_DUE_TO_PERMISSION"
+
+
+def read_zram_mm_stat_adb(port: int = 5038, serial: str | None = None) -> str:
+    rc, out = adb_shell("cat /sys/block/zram0/mm_stat 2>&1 || true", port=port, serial=serial)
+    if rc == 0 and out.strip() and "Permission denied" not in out:
+        raise RuntimeError(f"Unexpected readable zram0/mm_stat: {out}")
+    return "UNAVAILABLE_DUE_TO_PERMISSION"
 
 
 def diff_vmstat(a: dict[str, int] | None, b: dict[str, int] | None) -> dict[str, int | None] | None:
@@ -116,7 +117,7 @@ def sample_tree_kb(root_pid: int) -> tuple[int, int]:
 
 
 def run_proot_guest(wtmp: Path, guest_cmd: list[str], extra_env: dict[str, str] | None = None,
-                    timeout: float = 90.0) -> dict:
+                    timeout: float = 90.0, port: int = 5038, serial: str | None = None) -> dict:
     host_env = {
         "PATH": f"{PREFIX}/bin:/system/bin",
         "HOME": str(wtmp), "TMPDIR": str(wtmp),
@@ -153,7 +154,7 @@ def run_proot_guest(wtmp: Path, guest_cmd: list[str], extra_env: dict[str, str] 
             box["min_avail_mb"] = min(box["min_avail_mb"], read_mem_avail_mb())
             stop_evt.wait(0.25)
 
-    vm0 = read_vmstat_adb()
+    vm0 = read_vmstat_adb(port=port, serial=serial)
     t0 = time.perf_counter_ns()
     with out_p.open("w") as fo, err_p.open("w") as fe:
         proc = sp.Popen(cmd, env=host_env, stdin=sp.DEVNULL, stdout=fo, stderr=fe)
@@ -169,7 +170,7 @@ def run_proot_guest(wtmp: Path, guest_cmd: list[str], extra_env: dict[str, str] 
             stop_evt.set()
             mt.join(timeout=3)
     wall_ms = round((time.perf_counter_ns() - t0) / 1e6, 2)
-    vm1 = read_vmstat_adb()
+    vm1 = read_vmstat_adb(port=port, serial=serial)
     vmd = diff_vmstat(vm0, vm1)
     return {
         "rc": rc,
@@ -263,9 +264,19 @@ def summarize(rows: list[dict]) -> dict:
     }
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
+    ap = argparse.ArgumentParser(description="Stage 6.3 Candidate 2 controlled benchmark")
+    ap.add_argument("--adb-port", type=int, default=5038)
+    args = ap.parse_args(argv)
+    port = args.adb_port
+
     check_native()
-    read_psi_adb()
+    serial = A.detect_myron_serial(port)
+    device_identity = A.verify_device_identity(port, serial)
+    proot_sha = hashlib.sha256(LIVE_PROOT.read_bytes()).hexdigest()
+    psi_status = read_psi_adb(port=port, serial=serial)
+    zram_mm_stat_status = read_zram_mm_stat_adb(port=port, serial=serial)
+
     out_dir = TERMUX_HOME / "build/proot-fast/stage6_3_runs"
     out_dir.mkdir(parents=True, exist_ok=True)
     wtmp = TERMUX_HOME / "build/proot-fast/stage6_3_tmp" / f"c2_{int(time.time())}"
@@ -273,7 +284,8 @@ def main() -> int:
 
     try:
         # Warmup
-        run_proot_guest(wtmp, ["/usr/bin/python3", "/tmp/multi_worker.py", "1", "2", "2", "180"])
+        run_proot_guest(wtmp, ["/usr/bin/python3", "/tmp/multi_worker.py", "1", "2", "2", "180"],
+                        port=port, serial=serial)
 
         # 2A: ABBA (default 4192 MB vs NODE_OPTIONS=--max-old-space-size=512), 2x Electron + 2x Python, 3 cycles = 6 pairs
         exp_2a = {"default": [], "cap_512": []}
@@ -281,7 +293,8 @@ def main() -> int:
             for seq in (("default", "cap_512"), ("cap_512", "default")):
                 for arm in seq:
                     env = {} if arm == "default" else {"NODE_OPTIONS": "--max-old-space-size=512"}
-                    r = run_proot_guest(wtmp, ["/usr/bin/python3", "/tmp/multi_worker.py", "1", "2", "2", "200"], extra_env=env)
+                    r = run_proot_guest(wtmp, ["/usr/bin/python3", "/tmp/multi_worker.py", "1", "2", "2", "200"],
+                                        extra_env=env, port=port, serial=serial)
                     assert r["rc"] == 0, (arm, r)
                     exp_2a[arm].append(r)
                     print(f"2A c={c} {arm:7s} wall={r['wall_ms']}ms pss={r['peak_pss_mb']}MB rss={r['peak_rss_mb']}MB maj={r['pgmajfault_delta']}", flush=True)
@@ -293,7 +306,8 @@ def main() -> int:
                                ("default", "")):
             for payload_mb in (250, 650):
                 env = {"NODE_OPTIONS": opt} if opt else {}
-                r = run_proot_guest(wtmp, ["/usr/bin/node", "/tmp/js_worker.js", str(payload_mb)], extra_env=env)
+                r = run_proot_guest(wtmp, ["/usr/bin/node", "/tmp/js_worker.js", str(payload_mb)],
+                                    extra_env=env, port=port, serial=serial)
                 compat.append({
                     "cap": cap_label, "payload_mb": payload_mb,
                     "rc": r["rc"], "wall_ms": r["wall_ms"],
@@ -307,13 +321,18 @@ def main() -> int:
         for c in range(3):
             for seq in (("par_4x4", "seq_2x2"), ("seq_2x2", "par_4x4")):
                 for arm in seq:
-                    args = ("2", "2", "2", "200") if arm == "seq_2x2" else ("1", "4", "4", "200")
-                    r = run_proot_guest(wtmp, ["/usr/bin/python3", "/tmp/multi_worker.py", *args])
+                    w_args = ("2", "2", "2", "200") if arm == "seq_2x2" else ("1", "4", "4", "200")
+                    r = run_proot_guest(wtmp, ["/usr/bin/python3", "/tmp/multi_worker.py", *w_args],
+                                        port=port, serial=serial)
                     assert r["rc"] == 0, (arm, r)
                     exp_2b[arm].append(r)
                     print(f"2B c={c} {arm:7s} wall={r['wall_ms']}ms pss={r['peak_pss_mb']}MB rss={r['peak_rss_mb']}MB maj={r['pgmajfault_delta']} av_min={r['mem_avail_min_mb']}MB", flush=True)
 
         report = {
+            "device_identity": device_identity,
+            "proot_sha256": proot_sha,
+            "psi_status": psi_status,
+            "zram_mm_stat_status": zram_mm_stat_status,
             "2A_v8_cap": {
                 "summary": {k: summarize(v) for k, v in exp_2a.items()},
                 "runs": exp_2a,
