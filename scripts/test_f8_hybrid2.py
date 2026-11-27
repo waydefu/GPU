@@ -1440,6 +1440,70 @@ class RawRelayDrainTests(unittest.TestCase):
 
 
 
+class SelectiveRelayDisconnectTests(unittest.TestCase):
+    def run_disconnect(self, send_response: bool) -> bytes:
+        import select
+
+        peer, child = socket.socketpair()
+        code = (
+            "import socket, sys; from f8_hybrid2_relay import bridge_stdio_to_uds; "
+            "rc, retry, _ = bridge_stdio_to_uds(socket.socket(fileno=int(sys.argv[1]))); "
+            "sys.exit(2 if retry else rc)"
+        )
+        proc = sp.Popen([sys.executable, "-B", "-c", code, str(child.fileno())],
+                        cwd=HERE, pass_fds=(child.fileno(),), stdin=sp.PIPE,
+                        stdout=sp.PIPE, stderr=sp.PIPE)
+        child.close()
+        peer.settimeout(5)
+        assert proc.stdin is not None and proc.stdout is not None
+        init = b'{"jsonrpc":"2.0","id":1,"method":"initialize"}\n'
+        initialized = b'{"jsonrpc":"2.0","id":1,"result":{}}\n'
+        request = (b'{"jsonrpc":"2.0","id":"request-2","method":"tools/call",'
+                   b'"params":{"name":"git_ro","arguments":{"cwd":"/ws","args":["status"]}}}\n')
+        response = (b'{"jsonrpc":"2.0","id":"request-2","result":{"text":"'
+                    + b"x" * (512 * 1024) + b'"}}\n')
+        try:
+            with peer.makefile("rb") as reader:
+                proc.stdin.write(init + request)
+                proc.stdin.flush()
+                self.assertEqual(reader.readline(), init)
+                self.assertEqual(reader.readline(), request)
+                peer.sendall(initialized + (response if send_response else b""))
+            peer.close()
+
+            # The downstream writer stays open while we consume the ordered replies.
+            output = bytearray()
+            deadline = time.monotonic() + 5
+            while True:
+                readable, _, _ = select.select([proc.stdout], [], [], max(0, deadline - time.monotonic()))
+                self.assertTrue(readable, "relay did not finish draining after peer EOF")
+                chunk = os.read(proc.stdout.fileno(), 65536)
+                if not chunk:
+                    break
+                output.extend(chunk)
+            self.assertEqual(proc.wait(timeout=3), 0)
+            self.assertTrue(output.startswith(initialized))
+            trailing = bytes(output[len(initialized):])
+            if send_response:
+                self.assertEqual(len(trailing), len(response))
+                self.assertTrue(trailing == response, "complete response changed during drain")
+            return trailing
+        finally:
+            peer.close()
+            if proc.poll() is None:
+                proc.kill()
+            proc.communicate(timeout=3)
+
+    def test_complete_response_drains_with_downstream_stdin_open(self):
+        self.run_disconnect(send_response=True)
+
+    def test_unanswered_git_request_gets_error_after_initialize(self):
+        response = json.loads(self.run_disconnect(send_response=False))
+        self.assertEqual(response["id"], "request-2")
+        self.assertEqual(response["error"]["code"], -32000)
+        self.assertIn("execution unconfirmed", response["error"]["message"])
+
+
 class ClientAdmissionTests(unittest.TestCase):
     def make_daemon(self):
         from f8_hybrid2_daemon import Hybrid2Daemon

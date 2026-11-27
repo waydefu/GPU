@@ -167,11 +167,12 @@ def bridge_stdio_to_uds(
         "local_replies": 0,
         "received_from_uds": 0,
         "uds_closed": False,
+        "uds_write_closed": False,
         "uds_closed_early": False,
         "sig_abort": False,
         "uds_frame_error": False,
     }
-    native_inflight: set[str] = set()
+    native_inflight: dict[str, Any] = {}
     local_active_lock = threading.Lock()
     local_active: dict[str, RequestContext] = {}
     deferred_local: list[tuple[Any, str, Any]] = []
@@ -250,7 +251,8 @@ def bridge_stdio_to_uds(
 
     def _mark_uds_closed() -> None:
         session_state["uds_closed"] = True
-        native_inflight.clear()
+        to_uds.clear()
+        uds_buf.clear()
         if session_state["received_from_uds"] == 0 and session_state["local_replies"] == 0:
             session_state["uds_closed_early"] = True
             deferred_local.clear()
@@ -258,8 +260,6 @@ def bridge_stdio_to_uds(
             return
         if not session_state["initialized"] and deferred_local:
             _fail_deferred_uninitialized()
-        if not stdin_eof:
-            stop.set()
 
     def _handle_stdin_line(raw_line: bytes) -> None:
         if len(raw_line) > MAX_FRAME_BYTES:
@@ -308,7 +308,7 @@ def bridge_stdio_to_uds(
                 if drk == cancel_rk:
                     deferred_local.pop(idx)
                     return
-            native_inflight.discard(cancel_rk)
+            native_inflight.pop(cancel_rk, None)
             if not session_state["uds_closed"]:
                 to_uds.extend(stripped + b"\n")
             return
@@ -335,7 +335,7 @@ def bridge_stdio_to_uds(
                 if session_state["uds_closed"]:
                     _emit_local_err(req_id, -32000, "Native daemon disconnected")
                     return
-                native_inflight.add(rk)
+                native_inflight[rk] = req_id
                 _record_route(tool_name, "native_uds")
                 to_uds.extend(stripped + b"\n")
                 return
@@ -360,6 +360,9 @@ def bridge_stdio_to_uds(
                 _emit_local_err(req_id, -32000, "Server busy: max local inflight requests reached")
             return
 
+        if rk in native_inflight:
+            _emit_local_err(req_id, -32600, "Duplicate active request id")
+            return
         if method == "initialize" and has_id:
             session_state["init_seen"] = True
             session_state["init_rk"] = rk
@@ -367,7 +370,7 @@ def bridge_stdio_to_uds(
             if session_state["uds_closed"]:
                 _emit_local_err(req_id, -32000, "Native daemon disconnected")
                 return
-            native_inflight.add(rk)
+            native_inflight[rk] = req_id
         if not session_state["uds_closed"]:
             to_uds.extend(stripped + b"\n")
 
@@ -377,10 +380,11 @@ def bridge_stdio_to_uds(
             return
         try:
             resp = json.loads(stripped.decode("utf-8"))
-            if isinstance(resp, dict) and "id" in resp:
+            if (isinstance(resp, dict) and resp.get("jsonrpc") == "2.0"
+                    and "id" in resp and ("result" in resp or "error" in resp)):
                 rk = canonical_req_key(resp.get("id"))
                 if rk is not None:
-                    native_inflight.discard(rk)
+                    native_inflight.pop(rk, None)
                     if session_state["init_rk"] is not None and rk == session_state["init_rk"]:
                         if "result" in resp:
                             session_state["initialized"] = True
@@ -410,7 +414,8 @@ def bridge_stdio_to_uds(
 
     def _refresh_sel() -> None:
         out_paused = len(to_stdout) >= MAX_FRAME_BYTES * 2
-        _set_interest(in_fd, None if (stdin_eof or out_paused) else selectors.EVENT_READ, "stdin")
+        accept_input = not (stdin_eof or out_paused or session_state["uds_closed"] or session_state["uds_write_closed"])
+        _set_interest(in_fd, selectors.EVENT_READ if accept_input else None, "stdin")
         _set_interest(local_r, None if out_paused else selectors.EVENT_READ, "local")
         if session_state["uds_closed"]:
             _set_interest(sock, None, "uds")
@@ -449,8 +454,14 @@ def bridge_stdio_to_uds(
                 local_busy_now = bool(local_active)
             with local_out_lock:
                 local_queued = bool(local_out_q)
-            if stdin_eof and session_state["uds_closed"] and not local_busy_now and not deferred_local and not local_queued and not to_stdout:
-                break
+            if session_state["uds_closed"]:
+                # Queue disconnect errors behind complete responses. Respect the
+                # stdout water mark even when many requests still need answers.
+                while native_inflight and len(to_stdout) < MAX_FRAME_BYTES * 2:
+                    _, req_id = native_inflight.popitem()
+                    _emit_local_err(req_id, -32000, "Native daemon disconnected before replying; execution unconfirmed")
+                if not (native_inflight or local_busy_now or deferred_local or local_queued or to_stdout):
+                    break
             _refresh_sel()
             for key, mask in sel.select(timeout=0.5):
                 tag = key.data
@@ -469,6 +480,8 @@ def bridge_stdio_to_uds(
                             to_stdout.extend(raw_resp)
                             session_state["local_replies"] += 1
                 elif tag == "stdin" and (mask & selectors.EVENT_READ):
+                    if session_state["uds_closed"] or session_state["uds_write_closed"]:
+                        continue
                     try:
                         chunk = os.read(in_fd, 65536)
                     except BlockingIOError:
@@ -488,12 +501,13 @@ def bridge_stdio_to_uds(
                         if stdin_buf.strip():
                             _handle_stdin_line(bytes(stdin_buf))
                             stdin_buf.clear()
-                        if not to_uds and not shut_wr_sent and not session_state["uds_closed"]:
+                        if not to_uds and not shut_wr_sent and not session_state["uds_write_closed"]:
                             try:
                                 sock.shutdown(socket.SHUT_WR)
                                 shut_wr_sent = True
                             except OSError:
-                                _mark_uds_closed()
+                                # Failed write shutdown does not invalidate the read half.
+                                session_state["uds_write_closed"] = True
                         break
                     if (
                         session_state["received_from_uds"] == 0
@@ -524,15 +538,15 @@ def bridge_stdio_to_uds(
                         except BlockingIOError:
                             pass
                         except OSError:
-                            _mark_uds_closed()
-                            break
-                        if stdin_eof and not to_uds and not shut_wr_sent and not session_state["uds_closed"]:
+                            # The daemon can close its read half while replies remain readable.
+                            session_state["uds_write_closed"] = True
+                            to_uds.clear()
+                        if stdin_eof and not to_uds and not shut_wr_sent and not session_state["uds_write_closed"]:
                             try:
                                 sock.shutdown(socket.SHUT_WR)
                                 shut_wr_sent = True
                             except OSError:
-                                _mark_uds_closed()
-                                break
+                                session_state["uds_write_closed"] = True
                     if (mask & selectors.EVENT_READ) and not session_state["uds_closed"]:
                         try:
                             chunk = sock.recv(65536)
