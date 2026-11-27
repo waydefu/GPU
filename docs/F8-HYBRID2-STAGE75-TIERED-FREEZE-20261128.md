@@ -23,7 +23,7 @@ Modes 2, 4, 6, 8 (`f8_hybrid2_budget.PROFILES`), each judged independently. Mode
 
 - **G1 functional**: every reply equals the PRoot local oracle (ungoverned fallback, same SHA) or the error the cell specifies; route log targets match the native tool set; no relay/daemon crash.
 - **G2 measured resources**: every 0.2 s sample ≤ 256 MiB PSS, ≤ 64 threads, ≤ 192 FDs. A sample with a restricted /proc read is counted and reported. Host stop gate (cell → INVALID, not FAIL): MemAvailable < 1.5 GiB, CPU > 85 °C or battery > 42 °C.
-- **G3 theoretical**: `budget_report(mode)` with measured inputs ≤ 256 MiB, 64 threads, 192 FDs. Inputs: daemon idle PSS (post-warm-up median), relay idle PSS (initialised idle relays / N, median of 3), execution envelope = max tracemalloc peak of one governed tool call on the C2 fixture on either Python × 1.25, child envelope = max sampled PSS of one observed child.
+- **G3 theoretical**: `budget_report(mode)` with measured inputs ≤ 256 MiB, 64 threads, 192 FDs. Inputs: daemon idle PSS (post-warm-up median), relay idle PSS (initialised idle relays / N, median of 3), execution envelope = max(tracemalloc peak of one governed tool call on the C2 fixture on either Python × 1.25, `ENFORCED_EXEC_WORST` = 26 MiB), child envelope = max sampled PSS of one observed child.
 - **G4 RSS (original, unchanged)**: daemon |ΔVmRSS| after drain vs post-warm-up idle ≤ 10 % for every C1 cycle.
 - **G5 retained memory (proposal, recorded separately)**: retained = daemon Pss + SwapPss. PASS iff every C1 cycle's post-drain retained ≤ 1.10 × idle retained, and the three values are not strictly increasing with a total rise > 2 % of idle. G5 never converts a G4 FAIL into a PASS.
 - **Soak thermal**: medians of the last three 20 s CPU-temperature windows within 2 °C.
@@ -35,3 +35,13 @@ Modes 2, 4, 6, 8 (`f8_hybrid2_budget.PROFILES`), each judged independently. Mode
 - **NO-GO**: G1 or G2 FAIL.
 
 Regression suite on PRoot and on Termux native for the same SHA, and GitHub governance CI, are reported separately; CI green is not device qualification.
+
+## Amendment A1 (before any judged data, tightening only)
+
+The first PRoot envelope probe on the C2 fixture peaked at 4,993 KiB, far below what the code permits (`tool_parse_budget` 24 MiB; git 2 MiB stdout decoded to at most 4 bytes per character plus trimming copies). Using the fixture value alone would understate the theoretical bound, so G3 takes the larger of the fixture envelope × 1.25 and `ENFORCED_EXEC_WORST` = 26 MiB. Directory fan-out of `repo_tree_scan` (os.walk lists one directory at a time) remains filesystem-dependent and is reported, not bounded. No gate was loosened. The mode-2 directory `s75g-m2.MGs0wn` is a tooling dry run and is not judged.
+
+## Amendment A2 (before any judged data; pacing and tooling, no gate change)
+
+- The mode-2 dry run's C2 tripped the host stop gate (one CPU sensor 93.4 °C; idle baseline 57–62 °C with the desktop running). The stop gate stays at 85 °C. Every cell now starts once the hottest CPU sensor is ≤ 65 °C (wait ≤ 600 s, start reading recorded), C2 sleeps 1.5 s between rounds per relay (payload sizes unchanged), and a cell that ends `INVALID` is run once more after cooling; both attempts are logged.
+- This kernel has no `/proc/PID/task/TID/children`. The Stage 7.5 `soak.py` (and the first version of this matrix) walked those files and silently observed no descendant, so earlier "observed descendants" peaks covered daemon and relays only. The matrix and envelope now build the process tree from a PPID scan of `/proc/*/stat`. The earlier records are not rewritten.
+- Profiles fixed for the judged candidate: exec slots 2/3/1/1 for modes 2/4/6/8. `budget_report()` charges each slot `max(in-process worst, child PSS + 2.25 MiB capture)`, because a slot's parse/decode/trim work starts only after its child exits.

@@ -105,6 +105,30 @@ class Client:
                 s.close()
 
 
+def descendants(roots: list[int]) -> list[int]:
+    """Roots plus every descendant, from a PPID scan of /proc/*/stat.
+
+    This kernel has no /proc/PID/task/TID/children (CONFIG_PROC_CHILDREN off),
+    so walking those files silently finds no child at all.
+    """
+    kids: dict[int, list[int]] = {}
+    for d in os.listdir("/proc"):
+        if d.isdigit():
+            try:
+                ppid = int(Path(f"/proc/{d}/stat").read_text().rsplit(")", 1)[1].split()[1])
+            except (OSError, ValueError, IndexError):
+                continue
+            kids.setdefault(ppid, []).append(int(d))
+    out, todo = [], [r for r in roots if r > 0]
+    while todo:
+        pid = todo.pop()
+        if pid in out:
+            continue
+        out.append(pid)
+        todo.extend(kids.get(pid, []))
+    return out
+
+
 def proc_status(pid: int) -> dict[str, str]:
     return dict(x.split(":", 1) for x in Path(f"/proc/{pid}/status").read_text().splitlines() if ":" in x)
 
@@ -134,7 +158,7 @@ class Sampler:
         return avail, cpu, batt
 
     def snapshot(self, roots: list[int]) -> dict[str, int]:
-        todo, seen = list(roots), set()
+        todo, seen = descendants(roots), set()
         tot = dict.fromkeys(("pss_kib", "rss_kib", "threads", "fds", "swap_pss_kib", "private_dirty_kib",
                              "rss_anon_kib", "rss_file_kib", "restricted"), 0)
         while todo:
@@ -144,11 +168,6 @@ class Sampler:
             seen.add(pid)
             proc = Path(f"/proc/{pid}")
             try:
-                for task in (proc / "task").iterdir():
-                    try:
-                        todo.extend(map(int, (task / "children").read_text().split()))
-                    except FileNotFoundError:
-                        pass
                 roll = dict(r.split(":", 1) for r in (proc / "smaps_rollup").read_text().splitlines() if ":" in r)
                 st = proc_status(pid)
                 pss = int(roll["Pss"].split()[0])
@@ -349,12 +368,24 @@ class Matrix:
         stat = Path(f"/proc/{self.daemon}/stat").read_text().rsplit(")", 1)[1].split()
         return int(stat[11]) + int(stat[12])
 
-    def cell(self, name: str, fn) -> dict:
+    def cool(self, limit: int = 65000, max_wait: float = 600) -> int:
+        """Start every cell from a comparable temperature (amendment A2); returns the start reading."""
+        probe = Sampler(self.roots)
+        deadline = time.monotonic() + max_wait
+        while True:
+            cpu = probe.host()[1]
+            if cpu <= limit or time.monotonic() > deadline:
+                return cpu
+            time.sleep(5)
+
+    def cell(self, name: str, fn, *, attempt: int = 1) -> dict:
+        start_cpu = self.cool()
         t0 = time.monotonic()
         dpid, d0 = self.daemon, self.daemon_ticks()
         with Sampler(self.roots) as smp:
             extra = fn(smp) or {}
-        res = {"cell": name, "mode": self.mode, "wall_s": round(time.monotonic() - t0, 2), **smp.summary(), **extra}
+        res = {"cell": name, "mode": self.mode, "attempt": attempt, "start_cpu_millic": start_cpu,
+               "wall_s": round(time.monotonic() - t0, 2), **smp.summary(), **extra}
         res["daemon_cpu_s"] = round((self.daemon_ticks() - d0) / CLK, 2) if self.daemon == dpid else None
         res["relay_cpu_s"] = round(sum(v for k, v in smp.ticks.items() if k != self.daemon) / CLK, 2)
         if "ops" in res and res.get("latencies_ms"):
@@ -366,6 +397,8 @@ class Matrix:
             res["G2"] = "INVALID"
         res["drain"] = self.drain()
         self.log(res)
+        if res["G2"] == "INVALID" and attempt == 1:
+            return self.cell(name, fn, attempt=2)  # A2: one recorded rerun after cooling
         assert res["G2"] == "PASS", res["G2"]
         return res
 
@@ -448,6 +481,7 @@ class Matrix:
                         r = c.recv(300)
                         lat.append((time.monotonic() - t) * 1000)
                         self.check(r, name, args)
+                    time.sleep(1.5)  # A2 pacing: payload size is the subject, not duty cycle
                 return lat
 
             with cf.ThreadPoolExecutor(self.mode) as ex:

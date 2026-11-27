@@ -1733,6 +1733,8 @@ class TieredGovernanceUnitTests(unittest.TestCase):
                     os.close(fd)
             with self.assertRaises(ValueError):
                 budget.init_budget_dir(tmp, 3)
+        from f8_hybrid2_tools import MAX_OUTPUT_BYTES
+        self.assertEqual(budget.CHILD_CAPTURE_BYTES, MAX_OUTPUT_BYTES + 256 * 1024)
         for mode in budget.PROFILES:
             row = budget.budget_report(mode, daemon_idle_kib=1, relay_idle_kib=1, exec_envelope_kib=1,
                                        child_envelope_kib=1, child_threads=1, child_fds=8)

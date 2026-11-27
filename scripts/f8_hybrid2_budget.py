@@ -37,13 +37,18 @@ class Profile:
     session_queue: int
 
 
-# exec_slots come from the capacity arithmetic in budget_report(); see the Stage 7.5 report.
+# exec_slots come from budget_report() with device-measured inputs (Stage 7.5 report).
+# Modes 6 and 8 exceed 256 MiB even with one slot; they keep one for functional tests.
 PROFILES: dict[int, Profile] = {
     2: Profile(mode=2, exec_slots=2, session_queue=4),
     4: Profile(mode=4, exec_slots=3, session_queue=4),
-    6: Profile(mode=6, exec_slots=2, session_queue=4),
+    6: Profile(mode=6, exec_slots=1, session_queue=4),
     8: Profile(mode=8, exec_slots=1, session_queue=4),
 }
+
+# f8_hybrid2_tools._run_supervised_popen keeps at most this much child output
+# (MAX_OUTPUT_BYTES stdout + 256 KiB stderr) while a git/regex child is alive.
+CHILD_CAPTURE_BYTES = 2 * MiB + 256 * 1024
 
 
 @dataclass(frozen=True)
@@ -294,8 +299,9 @@ def budget_report(mode: int, *, daemon_idle_kib: int, relay_idle_kib: int,
         "idle_relays": mode * relay_idle_kib,
         "relay_buffers": mode * kib(relay_buffer_bound(lim)),
         "daemon_sessions": mode * kib(daemon_session_bound(lim)),
-        "executions": p.exec_slots * exec_envelope_kib,
-        "external_children": p.exec_slots * child_envelope_kib,
+        # A slot's heavy in-process work (parse, decode, trim) starts after its child has
+        # exited; while the child lives the parent holds only the capture buffers.
+        "executions": p.exec_slots * max(exec_envelope_kib, child_envelope_kib + CHILD_CAPTURE_BYTES // 1024),
     }
     # daemon: main + sessions + workers; relay: main + local worker + fallback output thread.
     threads = 1 + mode + p.exec_slots + 3 * mode + p.exec_slots * child_threads
