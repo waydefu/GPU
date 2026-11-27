@@ -1,0 +1,341 @@
+{
+  "verdict": "INVALID",
+  "why": [
+    "schedule first-pass order ['B1', 'P1', 'P2', 'B2', 'S1'] != ['B1', 'P1', 'P2', 'B2', 'B3', 'P3', 'P4', 'B4', 'S1']",
+    "missing valid block for slots: ['B3', 'P3', 'P4', 'B4']"
+  ],
+  "blocks": [
+    {
+      "slot": "B1",
+      "attempt": 1,
+      "mode": "balanced",
+      "valid": true,
+      "why": [],
+      "v_gates": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4_block": true,
+        "V5": true,
+        "V6": true
+      },
+      "metrics": {
+        "slot": "B1",
+        "mode": "balanced",
+        "start_battery_level": 79,
+        "adb_fail_ratio": 0.0,
+        "bad_batch_ratio": 0.0,
+        "batches_total": 74,
+        "batches_valid": 74,
+        "early_batches": 13,
+        "late_batches": 37,
+        "early_wall_ms_median": 2329.37,
+        "late_wall_ms_median": 2324.89,
+        "late_early_ratio": 0.9980767331939537,
+        "late_click_p95_ms_median": 95.02,
+        "late_raf_p95_ms_median": 16.7,
+        "late_drop_gt33ms_total": 0,
+        "max_battery_temp_c": 32.0,
+        "max_cpu_real_c": 78.7,
+        "g3_late_thermal_status_0": true,
+        "g4_temp_safe": true,
+        "g5_clean": true,
+        "mem_avail_min_mb": 3591.5,
+        "power_w": 7.978,
+        "vmstat_delta": {
+          "allocstall_dma32": 0,
+          "allocstall_movable": 779,
+          "allocstall_normal": 56,
+          "compact_stall": 89,
+          "pgmajfault": 86499,
+          "pswpin": 77575,
+          "pswpout": 96553
+        },
+        "zram_before": {
+          "physical_kb": 2752252,
+          "swap_kb": 8204420,
+          "total_swap_kb": 16777212
+        },
+        "zram_after": {
+          "physical_kb": 2760612,
+          "swap_kb": 8259052,
+          "total_swap_kb": 16777212
+        },
+        "psi": null,
+        "secondary": {
+          "launch_ms_median": 180.595,
+          "tracer_cpu_ms_median": 530.0,
+          "inner_total_ms_median": 2224.9300000000003,
+          "click_p50_ms_median": 34.675,
+          "peak_pss_mb_median": 319.15
+        }
+      }
+    },
+    {
+      "slot": "P1",
+      "attempt": 1,
+      "mode": "performance",
+      "valid": true,
+      "why": [],
+      "v_gates": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4_block": true,
+        "V5": true,
+        "V6": true
+      },
+      "metrics": {
+        "slot": "P1",
+        "mode": "performance",
+        "start_battery_level": 79,
+        "adb_fail_ratio": 0.0,
+        "bad_batch_ratio": 0.0,
+        "batches_total": 79,
+        "batches_valid": 79,
+        "early_batches": 13,
+        "late_batches": 40,
+        "early_wall_ms_median": 2180.56,
+        "late_wall_ms_median": 2176.645,
+        "late_early_ratio": 0.9982045896466962,
+        "late_click_p95_ms_median": 85.91,
+        "late_raf_p95_ms_median": 16.7,
+        "late_drop_gt33ms_total": 0,
+        "max_battery_temp_c": 35.0,
+        "max_cpu_real_c": 87.2,
+        "g3_late_thermal_status_0": true,
+        "g4_temp_safe": false,
+        "g5_clean": true,
+        "mem_avail_min_mb": 3210.6,
+        "power_w": 8.95,
+        "vmstat_delta": {
+          "allocstall_dma32": 0,
+          "allocstall_movable": 157,
+          "allocstall_normal": 7,
+          "compact_stall": 27,
+          "pgmajfault": 36706,
+          "pswpin": 31266,
+          "pswpout": 44176
+        },
+        "zram_before": {
+          "physical_kb": 2651196,
+          "swap_kb": 7904548,
+          "total_swap_kb": 16777212
+        },
+        "zram_after": {
+          "physical_kb": 2635572,
+          "swap_kb": 7952304,
+          "total_swap_kb": 16777212
+        },
+        "psi": null,
+        "secondary": {
+          "launch_ms_median": 173.5,
+          "tracer_cpu_ms_median": 480.0,
+          "inner_total_ms_median": 2097.51,
+          "click_p50_ms_median": 35.11,
+          "peak_pss_mb_median": 306.7
+        }
+      }
+    },
+    {
+      "slot": "P2",
+      "attempt": 1,
+      "mode": "performance",
+      "valid": true,
+      "why": [],
+      "v_gates": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4_block": true,
+        "V5": true,
+        "V6": true
+      },
+      "metrics": {
+        "slot": "P2",
+        "mode": "performance",
+        "start_battery_level": 78,
+        "adb_fail_ratio": 0.0,
+        "bad_batch_ratio": 0.0,
+        "batches_total": 75,
+        "batches_valid": 75,
+        "early_batches": 13,
+        "late_batches": 36,
+        "early_wall_ms_median": 2175.3,
+        "late_wall_ms_median": 2325.6000000000004,
+        "late_early_ratio": 1.0690939180802648,
+        "late_click_p95_ms_median": 89.47,
+        "late_raf_p95_ms_median": 16.7,
+        "late_drop_gt33ms_total": 0,
+        "max_battery_temp_c": 36.0,
+        "max_cpu_real_c": 85.7,
+        "g3_late_thermal_status_0": true,
+        "g4_temp_safe": false,
+        "g5_clean": true,
+        "mem_avail_min_mb": 3517.6,
+        "power_w": 7.928,
+        "vmstat_delta": {
+          "allocstall_dma32": 0,
+          "allocstall_movable": 252,
+          "allocstall_normal": 60,
+          "compact_stall": 24,
+          "pgmajfault": 51121,
+          "pswpin": 44304,
+          "pswpout": 112556
+        },
+        "zram_before": {
+          "physical_kb": 2634340,
+          "swap_kb": 7879068,
+          "total_swap_kb": 16777212
+        },
+        "zram_after": {
+          "physical_kb": 2708428,
+          "swap_kb": 8132440,
+          "total_swap_kb": 16777212
+        },
+        "psi": null,
+        "secondary": {
+          "launch_ms_median": 176.85,
+          "tracer_cpu_ms_median": 490.0,
+          "inner_total_ms_median": 2122.08,
+          "click_p50_ms_median": 34.34,
+          "peak_pss_mb_median": 317.6
+        }
+      }
+    },
+    {
+      "slot": "B2",
+      "attempt": 1,
+      "mode": "balanced",
+      "valid": true,
+      "why": [],
+      "v_gates": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4_block": true,
+        "V5": true,
+        "V6": true
+      },
+      "metrics": {
+        "slot": "B2",
+        "mode": "balanced",
+        "start_battery_level": 79,
+        "adb_fail_ratio": 0.0,
+        "bad_batch_ratio": 0.0,
+        "batches_total": 74,
+        "batches_valid": 74,
+        "early_batches": 13,
+        "late_batches": 37,
+        "early_wall_ms_median": 2325.33,
+        "late_wall_ms_median": 2325.5,
+        "late_early_ratio": 1.0000731079029643,
+        "late_click_p95_ms_median": 87.75,
+        "late_raf_p95_ms_median": 16.7,
+        "late_drop_gt33ms_total": 0,
+        "max_battery_temp_c": 35.0,
+        "max_cpu_real_c": 68.3,
+        "g3_late_thermal_status_0": true,
+        "g4_temp_safe": true,
+        "g5_clean": true,
+        "mem_avail_min_mb": 3478.5,
+        "power_w": null,
+        "vmstat_delta": {
+          "allocstall_dma32": 0,
+          "allocstall_movable": 167,
+          "allocstall_normal": 61,
+          "compact_stall": 33,
+          "pgmajfault": 60099,
+          "pswpin": 53138,
+          "pswpout": 143377
+        },
+        "zram_before": {
+          "physical_kb": 2568648,
+          "swap_kb": 7661540,
+          "total_swap_kb": 16777212
+        },
+        "zram_after": {
+          "physical_kb": 2688480,
+          "swap_kb": 7979344,
+          "total_swap_kb": 16777212
+        },
+        "psi": null,
+        "secondary": {
+          "launch_ms_median": 180.49,
+          "tracer_cpu_ms_median": 530.0,
+          "inner_total_ms_median": 2219.1800000000003,
+          "click_p50_ms_median": 34.915000000000006,
+          "peak_pss_mb_median": 329.54999999999995
+        }
+      }
+    },
+    {
+      "slot": "S1",
+      "attempt": 1,
+      "mode": "power_saver",
+      "valid": true,
+      "why": [],
+      "v_gates": {
+        "V1": true,
+        "V2": true,
+        "V3": true,
+        "V4_block": true,
+        "V5": true,
+        "V6": true
+      },
+      "metrics": {
+        "slot": "S1",
+        "mode": "power_saver",
+        "start_battery_level": 77,
+        "adb_fail_ratio": 0.0,
+        "bad_batch_ratio": 0.0,
+        "batches_total": 68,
+        "batches_valid": 68,
+        "early_batches": 11,
+        "late_batches": 34,
+        "early_wall_ms_median": 2582.05,
+        "late_wall_ms_median": 2529.355,
+        "late_early_ratio": 0.9795917972153908,
+        "late_click_p95_ms_median": 94.765,
+        "late_raf_p95_ms_median": 16.7,
+        "late_drop_gt33ms_total": 0,
+        "max_battery_temp_c": 36.0,
+        "max_cpu_real_c": 62.1,
+        "g3_late_thermal_status_0": true,
+        "g4_temp_safe": true,
+        "g5_clean": true,
+        "mem_avail_min_mb": 3354.2,
+        "power_w": 7.032,
+        "vmstat_delta": {
+          "allocstall_dma32": 0,
+          "allocstall_movable": 1982,
+          "allocstall_normal": 292,
+          "compact_stall": 51,
+          "pgmajfault": 113593,
+          "pswpin": 103368,
+          "pswpout": 261663
+        },
+        "zram_before": {
+          "physical_kb": 2762920,
+          "swap_kb": 8193772,
+          "total_swap_kb": 16777212
+        },
+        "zram_after": {
+          "physical_kb": 2935380,
+          "swap_kb": 8773268,
+          "total_swap_kb": 16777212
+        },
+        "psi": null,
+        "secondary": {
+          "launch_ms_median": 174.36,
+          "tracer_cpu_ms_median": 640.0,
+          "inner_total_ms_median": 2439.45,
+          "click_p50_ms_median": 34.57,
+          "peak_pss_mb_median": 302.55
+        }
+      }
+    }
+  ],
+  "v_gates": {},
+  "g_gates": {}
+}
