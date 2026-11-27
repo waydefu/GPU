@@ -38,10 +38,11 @@ class Profile:
 
 
 # exec_slots come from budget_report() with device-measured inputs (Stage 7.5 report).
-# Modes 6 and 8 exceed 256 MiB even with one slot; they keep one for functional tests.
+# Native regex-worker children measured 35.5 MiB PSS, so mode 4 fits two slots, mode 6 one
+# (1.5 MiB margin) and mode 8 none; mode 8 keeps one slot for functional tests only.
 PROFILES: dict[int, Profile] = {
     2: Profile(mode=2, exec_slots=2, session_queue=4),
-    4: Profile(mode=4, exec_slots=3, session_queue=4),
+    4: Profile(mode=4, exec_slots=2, session_queue=4),
     6: Profile(mode=6, exec_slots=1, session_queue=4),
     8: Profile(mode=8, exec_slots=1, session_queue=4),
 }

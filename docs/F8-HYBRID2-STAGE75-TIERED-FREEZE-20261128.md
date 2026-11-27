@@ -45,3 +45,8 @@ The first PRoot envelope probe on the C2 fixture peaked at 4,993 KiB, far below 
 - The mode-2 dry run's C2 tripped the host stop gate (one CPU sensor 93.4 °C; idle baseline 57–62 °C with the desktop running). The stop gate stays at 85 °C. Every cell now starts once the hottest CPU sensor is ≤ 65 °C (wait ≤ 600 s, start reading recorded), C2 sleeps 1.5 s between rounds per relay (payload sizes unchanged), and a cell that ends `INVALID` is run once more after cooling; both attempts are logged.
 - This kernel has no `/proc/PID/task/TID/children`. The Stage 7.5 `soak.py` (and the first version of this matrix) walked those files and silently observed no descendant, so earlier "observed descendants" peaks covered daemon and relays only. The matrix and envelope now build the process tree from a PPID scan of `/proc/*/stat`. The earlier records are not rewritten.
 - Profiles fixed for the judged candidate: exec slots 2/3/1/1 for modes 2/4/6/8. `budget_report()` charges each slot `max(in-process worst, child PSS + 2.25 MiB capture)`, because a slot's parse/decode/trim work starts only after its child exits.
+
+## Amendment A3 (profile only; gates unchanged)
+
+Candidate `f538cb4` was judged in full: modes 2 and 6 GO, mode 4 HOLD (G3 265.2 MiB: three slots × the native regex-worker child, 35.5 MiB PSS, measured only after the dry run), mode 8 HOLD (G3). Those records stay as they are. The next candidate sets mode 4 to two execution slots and all four modes are re-run on that one SHA.
+
