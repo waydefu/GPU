@@ -59,7 +59,7 @@ unset F8_HYBRID2_BUDGET_DIR F8_NO_HYBRID
 run=${0%/*}
 grep -E '^(Uid|TracerPid):' /proc/self/status
 (cd "$run/scripts" && sha256sum -c --quiet ../scripts.sha256)
-python3 -B "$run/scripts/stage75_envelope.py" "$run/ws2" "$PATH/git" "$run/r" > "$run/envelope-native.json"
+F8_HYBRID2_TRUSTED_GIT_ROOTS='["/fixture"]' python3 -B "$run/scripts/stage75_envelope.py" "$run/ws2" "$PATH/git" "$run/r" > "$run/envelope-native.json"
 python3 -B "$run/scripts/test_f8_hybrid2.py" > "$run/native-suite.log" 2>&1
 EOF
 chmod 700 "$run/run-daemon" "$run/run-native"
