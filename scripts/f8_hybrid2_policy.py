@@ -13,13 +13,11 @@ Stage 5 `f8-hybrid-daemon.py`, upgraded per Stage 7.2 universal MCP audit:
 from __future__ import annotations
 
 import ctypes
-import fcntl
 import json
 import os
 import posixpath
 import re
 import socket
-import stat
 import struct
 from pathlib import Path
 from typing import BinaryIO
@@ -384,38 +382,6 @@ def open_nofollow(path: str | Path) -> BinaryIO:
         raise
 
 
-def acquire_budget_lease(directory: str, *, daemon: bool = False) -> int:
-    """Acquire a cooperative lock for one daemon or one of two relays.
-
-    The directory and files must be private and stable for the lifetime of all
-    participants; unlinking or replacing a slot breaks cross-process accounting.
-    """
-    dfd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
-    try:
-        st = os.fstat(dfd)
-        if st.st_uid != os.getuid() or st.st_mode & 0o077:
-            raise ValueError("budget directory must be owned by the user and private")
-        names = ("daemon",) if daemon else ("slot-0", "slot-1")
-        for name in names:
-            fd = os.open(name, os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_NONBLOCK, 0o600, dir_fd=dfd)
-            try:
-                st = os.fstat(fd)
-                if not stat.S_ISREG(st.st_mode) or st.st_uid != os.getuid() or st.st_mode & 0o077 or st.st_nlink != 1:
-                    raise ValueError("invalid budget slot")
-                try:
-                    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                except BlockingIOError:
-                    os.close(fd)
-                    continue
-                return fd
-            except BaseException:
-                os.close(fd)
-                raise
-        raise ValueError("budget exhausted")
-    finally:
-        os.close(dfd)
-
-
 def validate_unix_sock_path(sock_path: Path | str) -> Path:
     """Validate AF_UNIX socket path byte length before creating parent directories."""
     p = Path(sock_path)
@@ -470,7 +436,9 @@ class Policy:
         home: str,
         tmp: str,
         path_env: str = "/data/data/com.termux/files/usr/bin:/usr/bin:/bin",
+        single_thread_git: bool = False,
     ) -> None:
+        self.single_thread_git = single_thread_git
         cleaned: list[tuple[str, str]] = []
         for g_prefix, h_prefix in maps:
             gn = posixpath.normpath(g_prefix)
@@ -720,9 +688,15 @@ class Policy:
         env["GIT_TERMINAL_PROMPT"] = "0"
         env["GIT_OPTIONAL_LOCKS"] = "0"
         # Protected command-scope config: reject implicit bare repository discovery.
-        env["GIT_CONFIG_COUNT"] = "1"
-        env["GIT_CONFIG_KEY_0"] = "safe.bareRepository"
-        env["GIT_CONFIG_VALUE_0"] = "explicit"
+        git_cfg = [("safe.bareRepository", "explicit")]
+        if self.single_thread_git:
+            # Budget mode counts one task per git child; these settings change speed, not output.
+            git_cfg += [("core.preloadIndex", "false"), ("index.threads", "1"), ("grep.threads", "1"),
+                        ("pack.threads", "1")]
+        env["GIT_CONFIG_COUNT"] = str(len(git_cfg))
+        for i, (key, val) in enumerate(git_cfg):
+            env[f"GIT_CONFIG_KEY_{i}"] = key
+            env[f"GIT_CONFIG_VALUE_{i}"] = val
         ceilings = sorted({os.path.dirname(h) for _, h in self.maps if os.path.dirname(h) and os.path.dirname(h) != h})
         if ceilings:
             env["GIT_CEILING_DIRECTORIES"] = ":".join(ceilings)

@@ -12,6 +12,7 @@ auto-shutdown (`unlink` socket -> drain `accept()` backlog -> clean exit).
 from __future__ import annotations
 
 import argparse
+import collections
 import fcntl
 import json
 import os
@@ -24,9 +25,9 @@ import time
 from pathlib import Path
 from typing import Any
 
+from f8_hybrid2_budget import LEGACY, ExecPool, Governance, Limits, governance_from_env, parse_cost
 from f8_hybrid2_policy import (
     DEFAULT_DAEMON_MAPS,
-    acquire_budget_lease,
     DEFAULT_PID_PATH,
     DEFAULT_READY_PATH,
     DEFAULT_SOCK_PATH,
@@ -37,9 +38,16 @@ from f8_hybrid2_policy import (
     validate_unix_sock_path,
     verify_peercred,
 )
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, cancellation_req_key, canonical_req_key
+from f8_hybrid2_tools import (
+    MCPToolEngine,
+    RequestCancelled,
+    RequestContext,
+    RequestTimeout,
+    cancellation_req_key,
+    canonical_req_key,
+)
 
-MAX_LINE_BYTES = 4 * 1024 * 1024
+MAX_LINE_BYTES = LEGACY.request_frame
 MAX_OUTBUF_BYTES = 4 * 1024 * 1024
 MAX_OUTBUF_HARD_BYTES = 16 * 1024 * 1024
 AUDIT_ROTATE_BYTES = 5 * 1024 * 1024
@@ -62,15 +70,21 @@ class ClientSession:
         self.conn_id = conn_id
         self.peer_pid = peer_pid
         self.initialized = False
-        self._send_lock = threading.Lock()
+        self.limits = daemon.limits
+        self._send_lock = threading.Condition(threading.Lock())
         self._out_buf = bytearray()
         self._wake_r, self._wake_w = os.pipe()
         os.set_blocking(self._wake_r, False)
         os.set_blocking(self._wake_w, False)
         self._active_lock = threading.Lock()
         self._active: dict[str, RequestContext] = {}
+        self._active_cost: dict[str, int] = {}
+        self._queue: collections.deque[tuple[Any, str, Any, RequestContext]] = collections.deque()
         self._workers: list[threading.Thread] = []
         self.closed = threading.Event()
+
+    def soft_out_limit(self) -> int:
+        return self.limits.out_watermark if self.daemon.governed else MAX_OUTBUF_BYTES
 
     def _wake(self) -> None:
         try:
@@ -78,13 +92,27 @@ class ClientSession:
         except OSError:
             pass
 
-    def send_json(self, obj: dict[str, Any], *, ctx: RequestContext | None = None, wake: bool = True) -> bool:
+    def send_json(
+        self, obj: dict[str, Any], *, ctx: RequestContext | None = None, wake: bool = True, wait: bool = False
+    ) -> bool:
         raw = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
+        cap = self.limits.daemon_out_cap if wait else None
+        give_up = time.monotonic() + self.default_timeout_s
         with self._send_lock:
-            if self.closed.is_set():
-                return False
-            if ctx is not None and ctx.cancel_event.is_set():
-                return False
+            while True:
+                if self.closed.is_set():
+                    return False
+                if ctx is not None and ctx.cancel_event.is_set():
+                    return False
+                # Governed workers wait for a slow reader; the serve loop notifies after each send.
+                if cap is None or not self._out_buf or len(self._out_buf) + len(raw) <= cap:
+                    break
+                remaining = give_up - time.monotonic()
+                if remaining <= 0:
+                    self.closed.set()
+                    self._send_lock.notify_all()
+                    return False
+                self._send_lock.wait(min(remaining, 0.5))
             if len(self._out_buf) + len(raw) > MAX_OUTBUF_HARD_BYTES:
                 self.closed.set()
                 return False
@@ -97,8 +125,14 @@ class ClientSession:
         self.closed.set()
         with self._active_lock:
             ctxs = list(self._active.values())
+            for _req_id, rk, _params, _ctx in self._queue:
+                self._active.pop(rk, None)
+                self._active_cost.pop(rk, None)
+            self._queue.clear()
         for ctx in ctxs:
             ctx.cancel()
+        with self._send_lock:
+            self._send_lock.notify_all()
         self._wake()
         # Only shutdown here; let serve()'s finally own conn.close() so FD reuse cannot race.
         try:
@@ -114,33 +148,87 @@ class ClientSession:
             rem = max(0.05, deadline - time.monotonic())
             th.join(timeout=rem)
 
-    def _run_tool_worker(self, req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
+    def _run_tool_worker(self, req_id: Any, rk: str, params: Any, ctx: RequestContext, token: int) -> None:
         resp_to_send: dict[str, Any] | None = None
         try:
+            ctx.check()
             resp_to_send = self.engine.call_tool(req_id, params, ctx)
         except RequestCancelled:
             pass
+        except RequestTimeout:
+            resp_to_send = self.engine.jsonrpc_err(req_id, -32001, "Request timed out before execution")
         except Exception as exc:
             resp_to_send = self.engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}")
         finally:
             try:
                 if resp_to_send is not None:
-                    self.send_json(resp_to_send, ctx=ctx, wake=False)
+                    self.send_json(resp_to_send, ctx=ctx, wake=False, wait=self.daemon.governed)
             finally:
-                self.daemon.release_inflight()
+                self.daemon.release_inflight(token)
                 with self._active_lock:
                     self._active.pop(rk, None)
+                    self._active_cost.pop(rk, None)
                 self.daemon.touch_activity()
                 self._wake()
+                self.daemon.pump()
+
+    def start_worker(self, item: tuple[Any, str, Any, RequestContext], token: int) -> None:
+        """Run one admitted request; the caller has acquired capacity ``token``."""
+        req_id, rk, params, ctx = item
+        th = threading.Thread(target=self._run_tool_worker, args=(req_id, rk, params, ctx, token), daemon=True)
+        with self._active_lock:
+            self._workers = [w for w in self._workers if w.is_alive()]
+            self._workers.append(th)
+        try:
+            th.start()
+        except Exception:
+            with self._active_lock:
+                self._workers.remove(th)
+                self._active.pop(rk, None)
+                self._active_cost.pop(rk, None)
+            self.daemon.release_inflight(token)
+            self.daemon.write_audit({"ev": "tool", "conn_id": self.conn_id, "req_id": req_id, "decision": "refuse", "reason": "thread-start-failed"})
+            self.send_json(self.engine.jsonrpc_err(req_id, -32000, "Server busy: worker unavailable"))
+
+    def pop_queued(self) -> tuple[Any, str, Any, RequestContext] | None:
+        """Next queued request, or None when empty or output is backed up."""
+        with self._send_lock:
+            if len(self._out_buf) >= self.soft_out_limit():
+                return None
+        with self._active_lock:
+            return self._queue.popleft() if self._queue else None
+
+    def has_queued(self) -> bool:
+        with self._active_lock:
+            return bool(self._queue)
+
+    def expire_queued(self, now: float) -> None:
+        expired = []
+        with self._active_lock:
+            for item in list(self._queue):
+                if item[3].cancel_event.is_set() or now > item[3].deadline:
+                    self._queue.remove(item)
+                    self._active.pop(item[1], None)
+                    self._active_cost.pop(item[1], None)
+                    if not item[3].cancel_event.is_set():
+                        expired.append(item[0])
+        for req_id in expired:
+            self.daemon.write_audit({"ev": "tool", "conn_id": self.conn_id, "req_id": req_id, "decision": "timeout", "reason": "queued"})
+            self.send_json(self.engine.jsonrpc_err(req_id, -32001, "Request timed out before execution"))
 
     def _handle_message(self, raw_line: bytes) -> None:
         self.daemon.touch_activity()
-        if len(raw_line) > MAX_LINE_BYTES:
+        if len(raw_line) > self.limits.request_frame:
             self.send_json(self.engine.jsonrpc_err(None, -32600, "Frame too large"))
+            return
+        cost = parse_cost(raw_line) if self.limits.parse_budget is not None else 0
+        if self.limits.parse_budget is not None and cost > self.limits.parse_budget:
+            self.send_json(self.engine.jsonrpc_err(None, -32600, "Frame too complex"))
             return
         try:
             msg = json.loads(raw_line.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError):
+        except (ValueError, RecursionError):
+            # JSONDecodeError and UnicodeDecodeError are ValueErrors; so are over-long integers.
             self.send_json(self.engine.jsonrpc_err(None, -32700, "Parse error"))
             return
 
@@ -151,6 +239,7 @@ class ClientSession:
                     ctx = self._active.get(rk)
                 if ctx is not None:
                     ctx.cancel()
+                    self.expire_queued(time.monotonic())
             elif "id" in msg:
                 self.send_json(self.engine.jsonrpc_err(None, -32600, "Invalid cancellation"))
             return
@@ -169,35 +258,37 @@ class ClientSession:
                 self.send_json(self.engine.jsonrpc_err(None, -32600, "Invalid Request id"))
                 return
 
+            ctx = RequestContext(req_id, self.default_timeout_s)
+            item = (req_id, rk, msg.get("params"), ctx)
             with self._active_lock:
                 if rk in self._active:
                     self.send_json(self.engine.jsonrpc_err(req_id, -32600, "Duplicate active request id"))
                     return
-                if not self.daemon.try_acquire_inflight():
-                    self.daemon.write_audit(
-                        {"ev": "tool", "conn_id": self.conn_id, "req_id": req_id, "decision": "refuse", "reason": "busy-max-inflight"}
-                    )
-                    self.send_json(self.engine.jsonrpc_err(req_id, -32000, "Server busy: max inflight requests reached"))
-                    return
-
-                ctx = RequestContext(req_id, self.default_timeout_s)
-                self._active[rk] = ctx
-                th = threading.Thread(
-                    target=self._run_tool_worker,
-                    args=(req_id, rk, msg.get("params"), ctx),
-                    daemon=True,
+                if self.daemon.governed:
+                    held = sum(self._active_cost.values())
+                    if len(self._active) >= self.daemon.session_queue or held + cost > (self.limits.parse_budget or 0):
+                        self.daemon.write_audit(
+                            {"ev": "tool", "conn_id": self.conn_id, "req_id": req_id, "decision": "refuse", "reason": "busy-session-queue"}
+                        )
+                        self.send_json(self.engine.jsonrpc_err(req_id, -32000, "Server busy: max queued requests reached"))
+                        return
+                    self._active[rk] = ctx
+                    self._active_cost[rk] = cost
+                    self._queue.append(item)
+            if self.daemon.governed:
+                self.daemon.mark_ready(self)
+                self.daemon.pump()
+                return
+            token = self.daemon.try_acquire_inflight()
+            if token is None:
+                self.daemon.write_audit(
+                    {"ev": "tool", "conn_id": self.conn_id, "req_id": req_id, "decision": "refuse", "reason": "busy-max-inflight"}
                 )
-                self._workers = [w for w in self._workers if w.is_alive()]
-                self._workers.append(th)
-            try:
-                th.start()
-            except Exception:
-                with self._active_lock:
-                    self._active.pop(rk, None)
-                    self._workers.remove(th)
-                self.daemon.release_inflight()
-                self._wake()
-                raise
+                self.send_json(self.engine.jsonrpc_err(req_id, -32000, "Server busy: max inflight requests reached"))
+                return
+            with self._active_lock:
+                self._active[rk] = ctx
+            self.start_worker(item, token)
 
     def serve(self) -> None:
         buf = bytearray()
@@ -214,12 +305,12 @@ class ClientSession:
                 # A finished worker has already queued its response. Check liveness
                 # first so an empty buffer snapshot cannot precede its final enqueue.
                 with self._active_lock:
-                    still_running = any(w.is_alive() for w in self._workers)
+                    still_running = any(w.is_alive() for w in self._workers) or bool(self._queue)
                 with self._send_lock:
                     out_len = len(self._out_buf)
                 if read_eof and not still_running and out_len == 0:
                     break
-                want_in = not read_eof and out_len < MAX_OUTBUF_BYTES
+                want_in = not read_eof and out_len < self.soft_out_limit()
                 want_out = out_len > 0
                 desired = (select.POLLIN if want_in else 0) | (select.POLLOUT if want_out else 0) | base_hup
                 if desired != cur_mask:
@@ -250,6 +341,7 @@ class ClientSession:
                                 try:
                                     sent = self.conn.send(self._out_buf)
                                     del self._out_buf[:sent]
+                                    self._send_lock.notify_all()
                                 except BlockingIOError:
                                     pass
                                 except OSError:
@@ -273,7 +365,7 @@ class ClientSession:
                         while True:
                             nl = buf.find(b"\n", scan_from)
                             frame_len = len(buf) if nl < 0 else nl
-                            if frame_len > MAX_LINE_BYTES:
+                            if frame_len > self.limits.request_frame:
                                 self.send_json(self.engine.jsonrpc_err(None, -32600, "Line buffer overflow"), wake=False)
                                 buf.clear()
                                 read_eof = True
@@ -293,6 +385,7 @@ class ClientSession:
                     pass
             if not read_eof:
                 self.cancel_all()
+            self.daemon.forget_session(self)
             self.join_workers(timeout_s=5.0)
             self.closed.set()
             # Best-effort drain any small pending error/response if peer socket is still writable.
@@ -331,6 +424,7 @@ class Hybrid2Daemon:
         idle_timeout_s: float = 0.0,
         max_clients: int = 32,
         max_inflight: int = 16,
+        governance: Governance | None = None,
     ) -> None:
         self.sock_path = sock_path
         self.pidfile = pidfile
@@ -341,6 +435,15 @@ class Hybrid2Daemon:
         self.idle_timeout_s = max(0.0, float(idle_timeout_s))
         self.max_clients = max(1, int(max_clients))
         self.max_inflight = max(1, int(max_inflight))
+        self.governed = governance is not None
+        self.limits: Limits = governance.limits if governance is not None else LEGACY
+        self.exec_pool: ExecPool | None = governance.pool if governance is not None else None
+        self.session_queue = governance.profile.session_queue if governance is not None else 0
+        if governance is not None:
+            self.max_clients = min(self.max_clients, governance.profile.mode)
+            self.max_inflight = min(self.max_inflight, governance.profile.exec_slots)
+        self._sched_lock = threading.Lock()
+        self._ready: dict[ClientSession, None] = {}
 
         self._stop_event = threading.Event()
         self._lock_fh: Any = None
@@ -360,16 +463,78 @@ class Hybrid2Daemon:
     def touch_activity(self) -> None:
         self._last_active = time.monotonic()
 
-    def try_acquire_inflight(self) -> bool:
+    def try_acquire_inflight(self) -> int | None:
+        """Return a capacity token: an exec-slot FD, -1 without a pool, None if saturated."""
         with self._inflight_lock:
             if self._inflight >= self.max_inflight:
-                return False
+                return None
             self._inflight += 1
-            return True
+        if self.exec_pool is None:
+            return -1
+        try:
+            fd = self.exec_pool.try_acquire()
+        except (OSError, ValueError):
+            fd = None
+        if fd is None:
+            self.release_inflight(-1)
+        return fd
 
-    def release_inflight(self) -> None:
+    def release_inflight(self, token: int = -1) -> None:
+        ExecPool.release(token)
         with self._inflight_lock:
             self._inflight = max(0, self._inflight - 1)
+
+    def mark_ready(self, sess: ClientSession) -> None:
+        with self._sched_lock:
+            self._ready[sess] = None
+
+    def forget_session(self, sess: ClientSession) -> None:
+        with self._sched_lock:
+            self._ready.pop(sess, None)
+
+    def has_queued(self) -> bool:
+        with self._sched_lock:
+            return bool(self._ready)
+
+    def pump(self) -> None:
+        """Start queued requests round-robin across sessions while capacity lasts."""
+        if not self.governed:
+            return
+        while True:
+            with self._sched_lock:
+                if not self._ready:
+                    return
+                token = self.try_acquire_inflight()
+                if token is None:
+                    return
+                item = None
+                sess = None
+                for _ in range(len(self._ready)):
+                    cand = next(iter(self._ready))
+                    del self._ready[cand]
+                    item = cand.pop_queued()
+                    if cand.has_queued():
+                        self._ready[cand] = None  # back of the line
+                    if item is not None:
+                        sess = cand
+                        break
+            if sess is None or item is None:
+                self.release_inflight(token)
+                return
+            sess.start_worker(item, token)
+
+    def service_queues(self) -> None:
+        if not self.governed:
+            return
+        with self._sched_lock:
+            sessions = list(self._ready)
+        now = time.monotonic()
+        for sess in sessions:
+            sess.expire_queued(now)
+            if not sess.has_queued():
+                with self._sched_lock:
+                    self._ready.pop(sess, None)
+        self.pump()
 
     def write_audit(self, entry: dict[str, Any]) -> None:
         if self.log_path is None:
@@ -562,6 +727,8 @@ class Hybrid2Daemon:
                 "idle_timeout_s": self.idle_timeout_s,
                 "max_clients": self.max_clients,
                 "max_inflight": self.max_inflight,
+                "governed": self.governed,
+                "session_queue": self.session_queue,
             }
         )
         client_threads: list[threading.Thread] = []
@@ -570,6 +737,9 @@ class Hybrid2Daemon:
             assert self._srv_sock is not None
             while not self._stop_event.is_set():
                 client_threads = [t for t in client_threads if t.is_alive()]
+                # Slots freed by relay-local work or a drained reader are polled while requests wait.
+                self.service_queues()
+                self._srv_sock.settimeout(0.02 if self.has_queued() else 0.25)
                 try:
                     conn, _ = self._srv_sock.accept()
                     self._spawn_client_thread(conn, client_threads)
@@ -656,23 +826,19 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
-    directory = os.environ.get("F8_HYBRID2_BUDGET_DIR")
-    if not directory:
-        return _main(args)
     try:
-        fd = acquire_budget_lease(directory, daemon=True)
+        governance = governance_from_env(daemon=True)
     except (OSError, ValueError) as exc:
         print(f"error: daemon admission refused: {exc}", file=sys.stderr)
         return 3
     try:
-        args.max_clients = min(2, args.max_clients)
-        args.max_inflight = min(2, args.max_inflight)
-        return _main(args)
+        return _main(args, governance)
     finally:
-        os.close(fd)
+        if governance is not None:
+            os.close(governance.lease_fd)
 
 
-def _main(args: argparse.Namespace) -> int:
+def _main(args: argparse.Namespace, governance: Governance | None = None) -> int:
     try:
         sock_path = validate_unix_sock_path(args.socket)
     except ValueError as exc:
@@ -698,7 +864,7 @@ def _main(args: argparse.Namespace) -> int:
 
     ready_path = Path(args.ready) if args.ready else (sock_path.parent / Path(DEFAULT_READY_PATH).name)
 
-    policy = Policy(maps=maps, home=args.home, tmp=args.tmp)
+    policy = Policy(maps=maps, home=args.home, tmp=args.tmp, single_thread_git=governance is not None)
     daemon_holder: dict[str, Hybrid2Daemon] = {}
 
     def audit_cb(entry: dict[str, Any]) -> None:
@@ -711,6 +877,7 @@ def _main(args: argparse.Namespace) -> int:
         git_bin=args.git_bin,
         default_timeout_s=args.default_timeout,
         audit_cb=audit_cb,
+        parse_budget=governance.limits.tool_parse_budget if governance is not None else None,
     )
     daemon = Hybrid2Daemon(
         sock_path=sock_path,
@@ -722,6 +889,7 @@ def _main(args: argparse.Namespace) -> int:
         idle_timeout_s=args.idle_timeout,
         max_clients=args.max_clients,
         max_inflight=args.max_inflight,
+        governance=governance,
     )
     daemon_holder["d"] = daemon
 

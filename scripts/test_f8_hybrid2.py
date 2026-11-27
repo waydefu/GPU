@@ -40,6 +40,7 @@ HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
+import f8_hybrid2_budget as budget
 import f8_hybrid2_ctl as ctl
 from f8_hybrid2_policy import Policy, Refuse, read_tracer_pid
 from f8_hybrid2_tools import MAX_JSONL_LINE_BYTES, MCPToolEngine, RequestContext, _fit_json_payload
@@ -88,6 +89,7 @@ class CooperativeBudgetTests(unittest.TestCase):
     def test_lease_reclaimed_after_process_killed(self) -> None:
         import f8_hybrid2_relay as relay
         with tempfile.TemporaryDirectory() as tmp:
+            budget.init_budget_dir(tmp, 2)
             code = ("import sys,time; from f8_hybrid2_relay import acquire_budget_lease; "
                     "fd=acquire_budget_lease(sys.argv[1]); print('ready',flush=True); time.sleep(30)")
             holder = sp.Popen([sys.executable, "-B", "-c", code, tmp], cwd=HERE,
@@ -114,6 +116,7 @@ class CooperativeBudgetTests(unittest.TestCase):
     def test_two_process_slots_release_on_exit_and_reject_insecure_directory(self) -> None:
         import f8_hybrid2_relay as relay
         with tempfile.TemporaryDirectory() as tmp:
+            budget.init_budget_dir(tmp, 2)
             first = relay.acquire_budget_lease(tmp)
             second = relay.acquire_budget_lease(tmp)
             try:
@@ -182,13 +185,14 @@ class WorkerCleanupTests(unittest.TestCase):
         left, right = socket.socketpair()
         daemon = SimpleNamespace(engine=SimpleNamespace(call_tool=lambda *_: {"result": object()}),
                                  default_timeout_s=1, release_inflight=mock.Mock(),
-                                 touch_activity=mock.Mock())
+                                 touch_activity=mock.Mock(), limits=budget.LEGACY, governed=False,
+                                 pump=mock.Mock())
         session = ClientSession(left, daemon, 1, 1)
         ctx = RequestContext(1, 1)
         session._active["key"] = ctx
         try:
             with self.assertRaises(TypeError):
-                session._run_tool_worker(1, "key", {}, ctx)
+                session._run_tool_worker(1, "key", {}, ctx, -1)
             daemon.release_inflight.assert_called_once()
             self.assertNotIn("key", session._active)
         finally:
@@ -239,7 +243,7 @@ class SupervisionAndCancellationTests(unittest.TestCase):
         self.assertTrue(all(cancellation_req_key(x) is None for x in bad))
         sockets = [socket.socketpair(), socket.socketpair()]
         daemon = SimpleNamespace(engine=MCPToolEngine.__new__(MCPToolEngine), default_timeout_s=1,
-                                 touch_activity=mock.Mock())
+                                 touch_activity=mock.Mock(), limits=budget.LEGACY, governed=False)
         sessions = [ClientSession(pair[0], daemon, i, i) for i, pair in enumerate(sockets)]
         contexts = [RequestContext(7, 5), RequestContext(7, 5)]
         try:
@@ -1699,6 +1703,293 @@ class ClientAdmissionTests(unittest.TestCase):
         finally:
             conn.close()
             peer.close()
+
+
+
+def _hold_all_exec(directory: str, slots: int) -> list[int]:
+    pool = budget.ExecPool(directory, slots)
+    held = [pool.try_acquire() for _ in range(slots)]
+    assert all(fd is not None for fd in held) and pool.try_acquire() is None
+    return held
+
+
+class TieredGovernanceUnitTests(unittest.TestCase):
+    def test_profile_slots_reinit_and_capacity_table(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, "profile missing"):
+                budget.acquire_lease(tmp)
+            for mode in (2, 4, 6, 8):
+                budget.init_budget_dir(tmp, mode)
+                leases = [budget.acquire_lease(tmp) for _ in range(mode)]
+                self.assertTrue(all(prof.mode == mode for _, prof in leases))
+                with self.assertRaisesRegex(ValueError, "exhausted"):
+                    budget.acquire_lease(tmp)
+                with self.assertRaisesRegex(ValueError, "in use"):
+                    budget.init_budget_dir(tmp, 2)
+                daemon_fd, _ = budget.acquire_lease(tmp, daemon=True)
+                with self.assertRaisesRegex(ValueError, "exhausted"):
+                    budget.acquire_lease(tmp, daemon=True)
+                for fd in [daemon_fd, *(fd for fd, _ in leases)]:
+                    os.close(fd)
+            with self.assertRaises(ValueError):
+                budget.init_budget_dir(tmp, 3)
+        for mode in budget.PROFILES:
+            row = budget.budget_report(mode, daemon_idle_kib=1, relay_idle_kib=1, exec_envelope_kib=1,
+                                       child_envelope_kib=1, child_threads=1, child_fds=8)
+            self.assertLessEqual(row["threads_total"], 64)
+            self.assertLessEqual(row["fds_total"], 192)
+
+    def test_iter_lines_matches_splitlines(self) -> None:
+        from f8_hybrid2_tools import _iter_lines
+        rng = random.Random(75)
+        alphabet = ["a", "b", "\n", "\r", "\r\n", "\x0b", "\x1c", " ", "\x85", "中", ""]
+        for _ in range(300):
+            text = "".join(rng.choice(alphabet) for _ in range(rng.randint(0, 400)))
+            self.assertEqual(list(_iter_lines(text, chunk_chars=rng.randint(1, 16))), text.splitlines())
+
+    def test_parse_cost_bounds_and_tool_parse_budget(self) -> None:
+        dense = b"[" + b"{}," * 20000 + b"{}]"
+        self.assertGreater(budget.parse_cost(dense), budget.parse_cost(b'"' + b"a" * len(dense) + b'"'))
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, "dense.json").write_bytes(dense)
+            Path(tmp, "small.json").write_text(json.dumps([{"k": 1}]), encoding="utf-8")
+            Path(tmp, "dense.jsonl").write_bytes(dense + b"\n")
+            pol = Policy([("/w", tmp)], home=tmp, tmp=tmp)
+            plain = MCPToolEngine(pol)
+            capped = MCPToolEngine(pol, parse_budget=1024 * 1024)
+            for name in ("small.json",):
+                args = {"name": "python_json_summary", "arguments": {"path": f"/w/{name}"}}
+                self.assertEqual(plain.call_tool(1, args, RequestContext(1, 5)), capped.call_tool(1, args, RequestContext(1, 5)))
+            for name in ("dense.json", "dense.jsonl"):
+                resp = capped.call_tool(1, {"name": "python_json_summary", "arguments": {"path": f"/w/{name}"}}, RequestContext(1, 5))
+                self.assertEqual(resp["error"]["message"], "Policy refused: json-parse-budget")
+                self.assertNotIn("error", plain.call_tool(1, {"name": "python_json_summary", "arguments": {"path": f"/w/{name}"}}, RequestContext(1, 5)))
+
+    def test_single_thread_git_env_only_when_governed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            env = Policy([("/w", tmp)], home=tmp, tmp=tmp, single_thread_git=True).clean_env()
+            keys = {env[f"GIT_CONFIG_KEY_{i}"]: env[f"GIT_CONFIG_VALUE_{i}"] for i in range(int(env["GIT_CONFIG_COUNT"]))}
+            self.assertEqual(keys["safe.bareRepository"], "explicit")
+            self.assertEqual((keys["grep.threads"], keys["core.preloadIndex"]), ("1", "false"))
+            self.assertEqual(Policy([("/w", tmp)], home=tmp, tmp=tmp).clean_env()["GIT_CONFIG_COUNT"], "1")
+
+    def test_worker_thread_start_failure_answers_and_releases(self) -> None:
+        from f8_hybrid2_daemon import ClientSession
+        left, right = socket.socketpair()
+        daemon = SimpleNamespace(engine=MCPToolEngine.__new__(MCPToolEngine), default_timeout_s=1,
+                                 release_inflight=mock.Mock(), write_audit=mock.Mock(),
+                                 limits=budget.LEGACY, governed=False)
+        session = ClientSession(left, daemon, 1, 1)
+        ctx = RequestContext(5, 1)
+        session._active["i:5"] = ctx
+        try:
+            with mock.patch("threading.Thread.start", side_effect=RuntimeError("can't start new thread")):
+                session.start_worker((5, "i:5", {}, ctx), 7)
+            daemon.release_inflight.assert_called_once_with(7)
+            self.assertNotIn("i:5", session._active)
+            self.assertEqual(json.loads(bytes(session._out_buf))["error"]["code"], -32000)
+        finally:
+            left.close()
+            right.close()
+            os.close(session._wake_r)
+            os.close(session._wake_w)
+
+
+class RelayGovernanceTests(unittest.TestCase):
+    def _bridge(self, limits_name: str = "LEGACY") -> tuple[sp.Popen[bytes], socket.socket]:
+        peer, child = socket.socketpair()
+        code = ("import socket, sys, f8_hybrid2_budget as b; from f8_hybrid2_relay import bridge_stdio_to_uds; "
+                f"bridge_stdio_to_uds(socket.socket(fileno=int(sys.argv[1])), limits=b.{limits_name})")
+        proc = sp.Popen([sys.executable, "-B", "-c", code, str(child.fileno())], cwd=HERE,
+                        pass_fds=(child.fileno(),), stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+        child.close()
+        peer.settimeout(20)
+        return proc, peer
+
+    def test_forwarded_bytes_backpressure_instead_of_silent_stop(self) -> None:
+        proc, peer = self._bridge()
+        try:
+            pad = "x" * (3 * 1024 * 1024)
+            frames = [json.dumps({"jsonrpc": "2.0", "id": i, "method": "ping", "params": {"pad": pad}}).encode() + b"\n"
+                      for i in range(3)]
+            writer = __import__("threading").Thread(target=lambda: (proc.stdin.write(b"".join(frames)), proc.stdin.close()))
+            writer.start()
+            time.sleep(1.5)  # daemon side not reading: the relay must pause, not exit
+            self.assertIsNone(proc.poll())
+            with peer.makefile("rb") as stream:
+                got = [stream.readline() for _ in range(3)]
+            writer.join(timeout=20)
+            self.assertEqual(got, frames)
+            peer.close()
+            proc.stdin = None
+            _, err = proc.communicate(timeout=20)
+            self.assertEqual(proc.returncode, 0, err)
+        finally:
+            peer.close()
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait()
+
+    def test_valid_json_value_errors_and_complex_frames_are_answered(self) -> None:
+        for limits_name in ("LEGACY", "GOVERNED"):
+            proc, peer = self._bridge(limits_name)
+            try:
+                lines = [b'{"jsonrpc":"2.0","id":1,"method":"ping","params":{"n":' + b"1" * 5000 + b"}}",
+                         b"[" * 100000 + b"]" * 100000]
+                if limits_name == "GOVERNED":
+                    lines.append(b'{"jsonrpc":"2.0","id":3,"method":"ping","params":[' + b"{}," * 100000 + b"{}]}")
+                lines.append(b'{"jsonrpc":"2.0","id":9,"method":"ping"}')
+                proc.stdin.write(b"\n".join(lines) + b"\n")
+                proc.stdin.close()
+                proc.stdin = None
+                with peer.makefile("rb") as stream:
+                    self.assertEqual(json.loads(stream.readline())["id"], 9)
+                peer.close()
+                out, err = proc.communicate(timeout=20)
+                self.assertEqual(proc.returncode, 0, err)
+                errors = [m["error"]["message"] for m in map(json.loads, out.splitlines()) if m["id"] is None]
+                # Depth 100000 raises RecursionError on CPython 3.12/3.14; budget mode rejects it unparsed.
+                expected = (["Parse error", "Frame too complex", "Frame too complex"] if limits_name == "GOVERNED"
+                            else ["Parse error", "Parse error"])
+                self.assertEqual(errors, expected)
+            finally:
+                peer.close()
+                if proc.poll() is None:
+                    proc.kill()
+                    proc.wait()
+
+
+    def test_selective_sigterm_while_stdout_paused(self) -> None:
+        # Old code waited up to one 0.5 s select timeout; three trials under 0.15 s rule that out.
+        for _ in range(3):
+            proc, peer = self._bridge("GOVERNED")
+            try:
+                proc.stdin.write(b'{"jsonrpc":"2.0","id":1,"method":"ping"}\n')
+                proc.stdin.flush()
+                with peer.makefile("rb") as stream:
+                    stream.readline()
+                peer.sendall(json.dumps({"jsonrpc": "2.0", "id": 1, "result": {"pad": "y" * 600000}}).encode() + b"\n")
+                time.sleep(0.7)  # stdout is not read: the relay pauses at its watermark
+                t0 = time.monotonic()
+                proc.send_signal(signal.SIGTERM)
+                proc.wait(timeout=5)
+                self.assertLess(time.monotonic() - t0, 0.15)
+            finally:
+                peer.close()
+                if proc.poll() is None:
+                    proc.kill()
+                    proc.wait()
+                for stream in (proc.stdin, proc.stdout, proc.stderr):
+                    if stream is not None:
+                        stream.close()
+
+
+class GovernedDaemonTests(unittest.TestCase):
+    setUp = UniversalDaemonAndCtlTests.setUp
+    tearDown = UniversalDaemonAndCtlTests.tearDown
+    _start_daemon = UniversalDaemonAndCtlTests._start_daemon
+    _uds_rpc = staticmethod(UniversalDaemonAndCtlTests._uds_rpc)
+    _send = staticmethod(UniversalDaemonAndCtlTests._send)
+
+    def _governed(self, mode: int, extra: list[str] | None = None) -> str:
+        bdir = str(self.base / "budget")
+        budget.init_budget_dir(bdir, mode)
+        self.enterContext(mock.patch.dict(os.environ, {"F8_HYBRID2_BUDGET_DIR": bdir}))
+        self.proc = self._start_daemon(extra)
+        return bdir
+
+    def _session(self):
+        s, f = self._uds_rpc(self.sock)
+        self._send(s, {"jsonrpc": "2.0", "id": "i", "method": "initialize", "params": {}})
+        self.assertIn("result", json.loads(f.readline()))
+        self._send(s, {"jsonrpc": "2.0", "method": "notifications/initialized"})
+        return s, f
+
+    @staticmethod
+    def _scan(i: int) -> dict:
+        return {"jsonrpc": "2.0", "id": i, "method": "tools/call",
+                "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo", "max_entries": 5}}}
+
+    def test_exec_slots_shared_queue_fairness_timeout_cancel_and_limit(self) -> None:
+        bdir = self._governed(8, ["--default-timeout", "3"])
+        prof = budget.PROFILES[8]
+        held = _hold_all_exec(bdir, prof.exec_slots)
+        (a, fa), (b, fb) = self._session(), self._session()
+        try:
+            for i in range(prof.session_queue):
+                self._send(a, self._scan(100 + i))
+            self._send(a, self._scan(199))
+            self.assertEqual(json.loads(fa.readline())["error"]["message"], "Server busy: max queued requests reached")
+            self._send(b, self._scan(200))
+            self._send(a, {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 101}})
+            time.sleep(0.3)
+            for fd in held:
+                os.close(fd)
+            held = []
+            got_a = [json.loads(fa.readline()) for _ in range(prof.session_queue - 1)]
+            self.assertEqual(sorted(r["id"] for r in got_a), [100, 102, 103])
+            self.assertTrue(all("result" in r for r in got_a))
+            self.assertEqual(json.loads(fb.readline())["id"], 200)
+            audit = [json.loads(x) for x in self.log.read_text().splitlines()]
+            ok_order = [e["req_id"] for e in audit if e.get("ev") == "tool" and e.get("decision") == "ok"]
+            self.assertLess(ok_order.index(200), ok_order.index(103))  # round-robin, not FIFO by session
+            held = _hold_all_exec(bdir, prof.exec_slots)
+            self._send(b, self._scan(300))
+            self.assertEqual(json.loads(fb.readline())["error"],
+                             {"code": -32001, "message": "Request timed out before execution"})
+        finally:
+            for fd in held:
+                os.close(fd)
+            for sock in (a, b):
+                sock.close()
+
+    def test_governed_daemon_caps_sessions_and_parse_errors(self) -> None:
+        self._governed(2)
+        socks = [self._uds_rpc(self.sock) for _ in range(3)]
+        try:
+            line = json.loads(socks[2][1].readline())
+            self.assertEqual(line["error"]["message"], "Server busy: max clients reached")
+            s, f = socks[0]
+            s.sendall(b'{"jsonrpc":"2.0","id":1,"method":"ping","params":{"n":' + b"1" * 5000 + b"}}\n")
+            self.assertEqual(json.loads(f.readline())["error"]["code"], -32700)
+            s.sendall(b"[" * 100000 + b"]" * 100000 + b"\n")
+            self.assertEqual(json.loads(f.readline())["error"]["message"], "Frame too complex")
+            s.sendall(b'{"jsonrpc":"2.0","id":2,"method":"ping","params":[' + b"{}," * 100000 + b"{}]}\n")
+            self.assertEqual(json.loads(f.readline())["error"]["message"], "Frame too complex")
+            self._send(s, {"jsonrpc": "2.0", "id": 3, "method": "ping"})
+            self.assertEqual(json.loads(f.readline())["id"], 3)
+        finally:
+            for sock, stream in socks:
+                stream.close()
+                sock.close()
+
+    def test_governed_fallback_waits_for_group_slot(self) -> None:
+        bdir = str(self.base / "budget")
+        budget.init_budget_dir(bdir, 4)
+        held = _hold_all_exec(bdir, budget.PROFILES[4].exec_slots)
+        env = dict(os.environ, F8_HYBRID2_BUDGET_DIR=bdir, F8_NO_HYBRID="1")
+        cmd = [sys.executable, "-B", str(RELAY_PY), "--map", f"/ws={self.ws}", "--git-bin", SYSTEM_GIT,
+               "--default-timeout", "4"]
+        proc = sp.Popen(cmd, env=env, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+        try:
+            for msg in ({"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}},
+                        {"jsonrpc": "2.0", "method": "notifications/initialized"},
+                        {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                         "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}):
+                proc.stdin.write((json.dumps(msg) + "\n").encode())
+            proc.stdin.flush()
+            self.assertIn("result", json.loads(proc.stdout.readline()))
+            time.sleep(0.5)
+            self.assertIsNone(proc.poll())
+            os.close(held.pop())
+            self.assertIn("result", json.loads(proc.stdout.readline()))
+        finally:
+            for fd in held:
+                os.close(fd)
+            proc.stdin.close()
+            proc.wait(timeout=10)
+            proc.stdout.close()
+            proc.stderr.close()
 
 
 if __name__ == "__main__":

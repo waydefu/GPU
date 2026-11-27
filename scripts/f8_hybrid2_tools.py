@@ -30,6 +30,7 @@ _HERE = str(Path(__file__).resolve().parent)
 if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
+from f8_hybrid2_budget import parse_cost, parse_cost_parts, parse_cost_total
 from f8_hybrid2_policy import Policy, Refuse, open_nofollow, pidfd_open
 
 _MAY_BACKTRACK_RE = re.compile(r"[*+?{|]")
@@ -212,6 +213,20 @@ def cancellation_req_key(msg: Any) -> str | None:
     return key if request_key_fits(key) else None
 
 
+def _iter_lines(text: str, chunk_chars: int = 65536) -> Any:
+    """Yield exactly text.splitlines() while holding one bounded segment's lines.
+
+    Segments end right after a LF, which always ends a line and never splits CRLF.
+    """
+    start = 0
+    size = len(text)
+    while start < size:
+        cut = text.find("\n", start + chunk_chars)
+        end = size if cut < 0 else cut + 1
+        yield from text[start:end].splitlines()
+        start = end
+
+
 def _strict_int_arg(args: dict[str, Any], key: str, default: int, lo: int, hi: int) -> int:
     if key not in args:
         return default
@@ -300,7 +315,9 @@ class MCPToolEngine:
         git_bin: str = "/data/data/com.termux/files/usr/bin/git",
         default_timeout_s: float = 30.0,
         audit_cb: Callable[[dict[str, Any]], None] | None = None,
+        parse_budget: int | None = None,
     ) -> None:
+        self.parse_budget = parse_budget
         self.policy = policy
         self.git_bin = git_bin
         self.default_timeout_s = default_timeout_s
@@ -549,7 +566,7 @@ class MCPToolEngine:
                 return
             files_scanned += 1
             text = raw.decode("utf-8", errors="replace")
-            for lineno, line in enumerate(text.splitlines(), 1):
+            for lineno, line in enumerate(_iter_lines(text), 1):
                 if lineno % 256 == 0:
                     ctx.check()
                 slice_line = line[:MAX_SEARCH_LINE_CHARS]
@@ -756,11 +773,17 @@ class MCPToolEngine:
 
         h = hashlib.sha256()
         total_size = 0
+        tokens = 0
+        ascii_only = True
         with open_nofollow(host_path) as fh:
             while chunk := fh.read(262144):
                 ctx.check()
                 total_size += len(chunk)
                 h.update(chunk)
+                if self.parse_budget is not None:
+                    chunk_tokens, chunk_ascii = parse_cost_parts(chunk)
+                    tokens += chunk_tokens
+                    ascii_only = ascii_only and chunk_ascii
         sha256_hex = h.hexdigest()
 
         keys_seen: list[str] = []
@@ -773,6 +796,8 @@ class MCPToolEngine:
             if is_json_ext:
                 if total_size > MAX_JSON_DOC_BYTES:
                     raise Refuse("json-too-large")
+                if self.parse_budget is not None and parse_cost_total(total_size, tokens, ascii_only) > self.parse_budget:
+                    raise Refuse("json-parse-budget")
                 raw_doc = bfh.read(MAX_JSON_DOC_BYTES + 1)
                 if len(raw_doc) > MAX_JSON_DOC_BYTES:
                     raise Refuse("json-too-large")
@@ -822,6 +847,8 @@ class MCPToolEngine:
                     continue
                 record_count += 1
                 if record_count <= limit:
+                    if self.parse_budget is not None and parse_cost(raw_line) > self.parse_budget:
+                        raise Refuse("json-parse-budget")
                     try:
                         rec = json.loads(s)
                         if isinstance(rec, dict):
