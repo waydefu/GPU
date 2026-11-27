@@ -33,6 +33,10 @@ jobs:
           python3 scripts/test-zlogs-safe.py
           python3 scripts/test-governance.py
 
+      - name: Run Hybrid 2.0 regression tests
+        timeout-minutes: 3
+        run: python3 -B scripts/test_f8_hybrid2.py
+
       - name: Block sensitive content in active files
         run: python3 scripts/check-governance.py scan
 
