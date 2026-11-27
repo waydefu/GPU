@@ -21,14 +21,7 @@
 - **效能基準凍結（2026-11-27）**：fast9+09c 為新的穩定效能基準，凍結副本 `/data/data/com.termux/files/home/build/proot-fast/baselines/fast9-09c-20261127/`（`out8/` 5 檔，`sha256sums.txt` 與現役 5/5 一致；權限無法設唯讀，只靠雜湊比對）。數值與比較規則見 [基準凍結](evidence/session/proot/FAST9-09C-BASELINE-FREEZE-20261127.md)。
 - **`termux-bg-run` 無回報（根因已證實並驗收）**：11-27 00:48 `restart-desktop.py` 以手寫 5 個變數重啟 Stable 桌面，遺失 `ANDROID_ART_ROOT`／`BOOTCLASSPATH` 等 7 個變數，桌面內 Termux `am` 靜默 exit 0、intent 不送出；TermuxService 本身正常，與 09b／09c 無關。修正已合併 [waydefu/GPU PR #43](https://github.com/waydefu/GPU/pull/43)（`9530c13`）：`termux-bg-run` 缺變數即 exit 4。後續已完成 [事後驗收](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)（調查見 [調查報告](evidence/session/proot/TERMUX-BG-RUN-REPORT-INVESTIGATION-20261127.md)），並於 11-27 10:06 由原生 Termux 實跑 `restart-stable-desktop.py --apply` 通過：`xserver=28218`／`x1_inode=812663` 不變、`new_xfce=20772`／`20766`、`survivors_gone=none`、`android_env_missing=none`，新桌面不借變數 `termux-bg-run` `rc=0`，見 [實戰驗收](evidence/session/proot/STABLE-RESTART-APPLY-20261127.md)。
 - **操作降級**：單次略過分流可設 `F8_NO_SHARD=1`，停用 enter-time stat 可設 `PROOT_STAT_AT_ENTER=0`。切換原版的操作紀錄見前版部署報告。
-- **Stage 6（Android 宿主最佳化）進行中**：2026-11-27 完成第一次 ADB 唯讀基線（均衡／效能／省電三份閒置快照，[說明](evidence/session/proot/stage6-audit-20261127/README.md)）。發現：`adb shell` 也讀不到 PSI 與 `zram0/mm_stat`（記 `null`）；`/proc/vmstat` 只有經 `adb shell` 才是真的（PRoot 內是假檔案）；省電模式把 cpu6／7 鎖在 768 MHz；頻率上限均衡 2.7456／2.88 GHz、效能 3.6288／4.608 GHz。**6.2 判定門檻已凍結並批准**：[STAGE6-2-POWER-MODE-FREEZE-20261127.md](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)，與舊計畫書衝突處以它為準。
-
-## 待辦：Stage 6.2 接手清單
-
-1. 寫量測與判定工具（衍生自 `src/f8-proot-fast-stage5/tests/bench_workstation_abba.py`：單一 binary、連續 180 秒批次、5 秒取樣、vmstat 經 `adb shell`）。判定程式先用合成資料驗證，**必含會失敗的案例**（凍結文件 §7）；再做 30 秒乾跑（不計入結果）。
-2. 工具驗證通過後才上機；排程 `B1 P1 P2 B2 | B3 P3 P4 B4 | S1`，使用者手動切電源模式 5 次，每區塊結束先查有效性再進下一個。
-3. 結果另寫 `STAGE6-2-POWER-MODE-RESULT-*.md`，不回改凍結文件。
-4. ADB 注意：端點每次都變，用原生端 `f8-adb-port` 重探；**配對與所有 adb 指令一律帶 `-H 127.0.0.1 -P 5038`**（`adb pair` 不帶會偷開 5037）；配對碼只經 stdin，不寫檔；稽核腳本用 `termux-bg-run` 在原生端跑。無線偵錯會被 Wi-Fi 漫遊關掉，且需要連上某個 Wi-Fi（不必能上網）；沒有 Wi-Fi 時：另一支手機的熱點或不接網路的路由器即可；或用 USB 接電腦做一次 `adb tcpip 5555`，之後在 Termux 連 `127.0.0.1:5555`（重開機失效，未實測授權提示）；不靠 ADB 時只讀得到 meminfo、CPU／GPU 頻率、部分溫度，沒有 PSI、ZRAM、功耗。
+- **Stage 6.2（電源模式對照）完成（PAUSE／不常態採納）**：2026-11-27 依凍結門檻 [`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md) 實測第一輪 `B1 P1 P2 B2` ＋紅色對照 `S1`（5 塊皆 `BLOCK_VALID`、`370/370` 批零失敗、`termux_kills=[]`；`S1` 慢 `+8.78%` 過 V8）。工具對單一均衡基準極穩（`B1=2324.89 ms`、`B2=2325.50 ms`，離散 `0.026%`）；`performance` 前 30 秒快 `+6.39%`／`+6.45%`，但 90–180 秒兩次皆超過 G4 `85.0 °C`（`87.2`／`85.7 °C`），且 `P2` 遭 HyperOS 把 `cpu6` 砍半至 `2,227,200 kHz` 歸零（`-0.00%`），鎖定 V7 離散 `≥6.41% > 4%`（未跑第二輪即提前收斂）。結論：日常維持 `balanced`，`performance` 僅供短時爆發或搭配主動散熱使用；見 [實測報告](evidence/session/proot/STAGE6-2-POWER-MODE-RESULT-20261127.md)（基線快照見 [說明](evidence/session/proot/stage6-audit-20261127/README.md)）。
 
 ## 三條不可逾越的紅線
 
@@ -44,7 +37,7 @@
 - **fast9+09c 本機部署與驗收**：[FAST9-09C-LIVE-QUALIFICATION-20261127.md](evidence/session/proot/FAST9-09C-LIVE-QUALIFICATION-20261127.md)
 - **Stage 5 `proot-fast9` 部署、回退與 `fast9+09b` 現役重部署驗收**：[`STAGE5-FAST9-LIVE-DEPLOYMENT-AND-SOAK30M-20261126.md`](evidence/session/proot/STAGE5-FAST9-LIVE-DEPLOYMENT-AND-SOAK30M-20261126.md)
 - **Stage 6 Android 宿主效能與電源最佳化計畫**：[`STAGE6-ANDROID-HOST-OPTIMIZATION-PLAN-20261126.md`](evidence/session/proot/STAGE6-ANDROID-HOST-OPTIMIZATION-PLAN-20261126.md)
-- **Stage 6.2 電源模式對照凍結（已批准）**：[`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)；基線快照見 [`stage6-audit-20261127/`](evidence/session/proot/stage6-audit-20261127/README.md)
+- **Stage 6.2 電源模式對照**：凍結門檻 [`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)；實測結果 [`STAGE6-2-POWER-MODE-RESULT-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-RESULT-20261127.md)；基線快照見 [`stage6-audit-20261127/`](evidence/session/proot/stage6-audit-20261127/README.md)
 - Stage 5 隔離驗證與 Phase 2 紀錄：[`STAGE5-ISOLATED-20261126.md`](evidence/session/proot/STAGE5-ISOLATED-20261126.md)、[`STAGE5-PHASE2-ACCEPTANCE-20261126.md`](evidence/session/proot/STAGE5-PHASE2-ACCEPTANCE-20261126.md)
 - 歷史測試矩陣：[`TEST-MATRIX.md`](TEST-MATRIX.md)
 - Stable 桌面驗收（2026-11-27）：事後查驗 [`STABLE-RESTART-E2E-20261127.md`](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)；`--apply` 實戰 [`STABLE-RESTART-APPLY-20261127.md`](evidence/session/proot/STABLE-RESTART-APPLY-20261127.md)
