@@ -41,7 +41,18 @@ from f8_hybrid2_policy import (
 from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key
 
 MAX_FRAME_BYTES = 4 * 1024 * 1024
+# Daemon limits its serialized output buffer to 16 MiB. Its JSON response may
+# be larger than the input limit because the result text is JSON-escaped again.
+MAX_UDS_FRAME_BYTES = 16 * 1024 * 1024
 DEFAULT_MAX_LOCAL_INFLIGHT = 8
+
+
+def _check_uds_frame_size(size: int, limit: int = MAX_UDS_FRAME_BYTES) -> None:
+    """Bound both completed frames and the not-yet-terminated frame."""
+    if size > limit:
+        raise ValueError("UDS frame too large")
+
+
 ALL_TOOL_NAMES: frozenset[str] = frozenset(str(d["name"]) for d in TOOL_DEFS)
 DEFAULT_NATIVE_TOOLS: frozenset[str] = frozenset({"repo_tree_scan", "repo_text_search", "git_ro"})
 
@@ -158,6 +169,7 @@ def bridge_stdio_to_uds(
         "uds_closed": False,
         "uds_closed_early": False,
         "sig_abort": False,
+        "uds_frame_error": False,
     }
     native_inflight: set[str] = set()
     local_active_lock = threading.Lock()
@@ -427,7 +439,9 @@ def bridge_stdio_to_uds(
             del stdin_buf[: nl + 1]
             _handle_stdin_line(one)
         while not stop.is_set():
-            if len(to_stdout) > MAX_FRAME_BYTES * 4:
+            # One complete UDS frame can arrive while stdout is below the
+            # pause watermark, plus one bounded recv chunk of other frames.
+            if len(to_stdout) > MAX_FRAME_BYTES * 2 + MAX_UDS_FRAME_BYTES + 65536:
                 session_state["sig_abort"] = True
                 stop.set()
                 break
@@ -535,10 +549,23 @@ def bridge_stdio_to_uds(
                         while True:
                             nl = uds_buf.find(b"\n")
                             if nl < 0:
+                                try:
+                                    _check_uds_frame_size(len(uds_buf))
+                                except ValueError:
+                                    session_state["uds_frame_error"] = True
+                                    stop.set()
+                                break
+                            try:
+                                _check_uds_frame_size(nl)
+                            except ValueError:
+                                session_state["uds_frame_error"] = True
+                                stop.set()
                                 break
                             one = bytes(uds_buf[:nl]).rstrip(b"\r")
                             del uds_buf[: nl + 1]
                             _handle_uds_line(one)
+                        if session_state["uds_frame_error"]:
+                            print("[f8-hybrid2-relay] UDS response frame too large", file=sys.stderr, flush=True)
                 elif tag == "stdout" and (mask & selectors.EVENT_WRITE) and to_stdout:
                     try:
                         wrote = os.write(out_fd, to_stdout)
@@ -583,7 +610,7 @@ def bridge_stdio_to_uds(
         except OSError:
             pass
     return (
-        0,
+        2 if session_state["uds_frame_error"] else 0,
         bool(session_state["uds_closed_early"] and session_state["received_from_uds"] == 0 and session_state["local_replies"] == 0),
         bytes(sent_to_uds),
     )

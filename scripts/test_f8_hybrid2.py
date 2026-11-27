@@ -51,6 +51,19 @@ DEFAULT_TERMUX_GIT = "/data/data/com.termux/files/usr/bin/git"
 SYSTEM_GIT = DEFAULT_TERMUX_GIT if os.path.exists(DEFAULT_TERMUX_GIT) else shutil.which("git") or "git"
 
 
+class UdsFrameLimitTests(unittest.TestCase):
+    def test_frame_size_boundary_and_escaped_response_capacity(self) -> None:
+        import f8_hybrid2_relay as relay
+
+        relay._check_uds_frame_size(8, 8)
+        with self.assertRaises(ValueError):
+            relay._check_uds_frame_size(9, 8)
+        # The daemon nests serialized JSON text in a JSON-RPC response.
+        text = json.dumps({"value": "\\" * (1024 * 1024 // 2)})
+        encoded = json.dumps({"jsonrpc": "2.0", "id": 1, "result": {"content": [{"type": "text", "text": text}]}}).encode()
+        relay._check_uds_frame_size(len(encoded))
+
+
 def proc_count_fds(pid: int) -> int:
     return len(os.listdir(f"/proc/{pid}/fd"))
 
