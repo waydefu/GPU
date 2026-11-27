@@ -51,6 +51,86 @@ DEFAULT_TERMUX_GIT = "/data/data/com.termux/files/usr/bin/git"
 SYSTEM_GIT = DEFAULT_TERMUX_GIT if os.path.exists(DEFAULT_TERMUX_GIT) else shutil.which("git") or "git"
 
 
+class CooperativeBudgetTests(unittest.TestCase):
+    def test_selective_native_pending_limit_and_id_limit(self) -> None:
+        import f8_hybrid2_relay as relay
+        peer, child = socket.socketpair()
+        code = ("import socket, sys; from f8_hybrid2_relay import bridge_stdio_to_uds; "
+                "bridge_stdio_to_uds(socket.socket(fileno=int(sys.argv[1])))")
+        proc = sp.Popen([sys.executable, "-B", "-c", code, str(child.fileno())],
+                        cwd=HERE, pass_fds=(child.fileno(),), stdin=sp.PIPE,
+                        stdout=sp.PIPE, stderr=sp.PIPE)
+        child.close()
+        peer.settimeout(5)
+        try:
+            messages = [{"jsonrpc": "2.0", "id": i, "method": "ping"}
+                        for i in range(relay.MAX_NATIVE_PENDING + 1)]
+            messages.append({"jsonrpc": "2.0", "id": "x" * 1100, "method": "ping"})
+            assert proc.stdin is not None
+            proc.stdin.write(b"".join((json.dumps(m) + "\n").encode() for m in messages))
+            proc.stdin.close()
+            proc.stdin = None
+            with peer.makefile("rb") as stream:
+                forwarded = [json.loads(stream.readline()) for _ in range(relay.MAX_NATIVE_PENDING)]
+                self.assertEqual([m["id"] for m in forwarded], list(range(relay.MAX_NATIVE_PENDING)))
+            peer.close()
+            out, err = proc.communicate(timeout=5)
+            self.assertEqual(proc.returncode, 0, err)
+            responses = [json.loads(line) for line in out.splitlines()]
+            self.assertTrue(any(m.get("id") == relay.MAX_NATIVE_PENDING and m["error"]["code"] == -32000 for m in responses))
+            self.assertTrue(any(m.get("id") is None and m["error"]["message"] == "Request id too large" for m in responses))
+        finally:
+            peer.close()
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait()
+
+    def test_lease_reclaimed_after_process_killed(self) -> None:
+        import f8_hybrid2_relay as relay
+        with tempfile.TemporaryDirectory() as tmp:
+            code = ("import sys,time; from f8_hybrid2_relay import acquire_budget_lease; "
+                    "fd=acquire_budget_lease(sys.argv[1]); print('ready',flush=True); time.sleep(30)")
+            holder = sp.Popen([sys.executable, "-B", "-c", code, tmp], cwd=HERE,
+                              stdout=sp.PIPE, stderr=sp.PIPE, text=True)
+            second = None
+            try:
+                assert holder.stdout is not None
+                self.assertEqual(holder.stdout.readline().strip(), "ready")
+                second = relay.acquire_budget_lease(tmp)
+                with self.assertRaisesRegex(ValueError, "exhausted"):
+                    relay.acquire_budget_lease(tmp)
+                holder.kill()
+                holder.wait(timeout=5)
+                reclaimed = relay.acquire_budget_lease(tmp)
+                os.close(reclaimed)
+            finally:
+                if second is not None:
+                    os.close(second)
+                if holder.poll() is None:
+                    holder.kill()
+                    holder.wait()
+                holder.communicate()
+
+    def test_two_process_slots_release_on_exit_and_reject_insecure_directory(self) -> None:
+        import f8_hybrid2_relay as relay
+        with tempfile.TemporaryDirectory() as tmp:
+            first = relay.acquire_budget_lease(tmp)
+            second = relay.acquire_budget_lease(tmp)
+            try:
+                env = dict(os.environ, F8_HYBRID2_BUDGET_DIR=tmp, F8_NO_HYBRID="1")
+                denied = sp.run([sys.executable, str(RELAY_PY)], env=env, input=b"", capture_output=True, timeout=5)
+                self.assertEqual(denied.returncode, 3)
+                self.assertIn(b"budget exhausted", denied.stderr)
+            finally:
+                os.close(first)
+                os.close(second)
+            admitted = relay.acquire_budget_lease(tmp)
+            os.close(admitted)
+            os.chmod(tmp, 0o755)
+            with self.assertRaises(ValueError):
+                relay.acquire_budget_lease(tmp)
+
+
 class UdsFrameLimitTests(unittest.TestCase):
     def test_frame_size_boundary_and_escaped_response_capacity(self) -> None:
         import f8_hybrid2_relay as relay

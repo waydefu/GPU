@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import collections
+import fcntl
 import json
 import os
 import select
@@ -24,6 +25,7 @@ import selectors
 import shutil
 import signal
 import socket
+import stat
 import sys
 import tempfile
 import threading
@@ -45,6 +47,8 @@ MAX_FRAME_BYTES = 4 * 1024 * 1024
 # be larger than the input limit because the result text is JSON-escaped again.
 MAX_UDS_FRAME_BYTES = 16 * 1024 * 1024
 DEFAULT_MAX_LOCAL_INFLIGHT = 8
+MAX_NATIVE_PENDING = 16
+MAX_REQUEST_ID_BYTES = 1024
 
 
 def _check_uds_frame_size(size: int, limit: int = MAX_UDS_FRAME_BYTES) -> None:
@@ -283,6 +287,9 @@ def bridge_stdio_to_uds(
         has_id = "id" in msg
         req_id = msg.get("id")
         rk = canonical_req_key(req_id) if has_id else None
+        if has_id and rk is not None and len(rk.encode("utf-8")) > MAX_REQUEST_ID_BYTES:
+            _emit_local_err(None, -32600, "Request id too large")
+            return
         if has_id and rk is None:
             _emit_local_err(None, -32600, "Invalid Request id")
             return
@@ -335,6 +342,9 @@ def bridge_stdio_to_uds(
                 if session_state["uds_closed"]:
                     _emit_local_err(req_id, -32000, "Native daemon disconnected")
                     return
+                if len(native_inflight) >= MAX_NATIVE_PENDING:
+                    _emit_local_err(req_id, -32000, "Server busy: max native pending requests reached")
+                    return
                 native_inflight[rk] = req_id
                 _record_route(tool_name, "native_uds")
                 to_uds.extend(stripped + b"\n")
@@ -369,6 +379,9 @@ def bridge_stdio_to_uds(
         if has_id and rk is not None:
             if session_state["uds_closed"]:
                 _emit_local_err(req_id, -32000, "Native daemon disconnected")
+                return
+            if len(native_inflight) >= MAX_NATIVE_PENDING:
+                _emit_local_err(req_id, -32000, "Server busy: max native pending requests reached")
                 return
             native_inflight[rk] = req_id
         if not session_state["uds_closed"]:
@@ -1074,7 +1087,53 @@ def _try_connect_with_optional_autostart(
         return s2
 
 
+def acquire_budget_lease(directory: str) -> int:
+    """Acquire one of two administrator-provisioned cooperative relay slots.
+
+    The directory and files must be private and stable for the lifetime of all
+    participants; unlinking or replacing a slot breaks cross-process accounting.
+    """
+    dfd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    try:
+        st = os.fstat(dfd)
+        if st.st_uid != os.getuid() or st.st_mode & 0o077:
+            raise ValueError("budget directory must be owned by the user and private")
+        for slot in range(2):
+            fd = os.open(f"slot-{slot}", os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_NONBLOCK, 0o600, dir_fd=dfd)
+            try:
+                st = os.fstat(fd)
+                if not stat.S_ISREG(st.st_mode) or st.st_uid != os.getuid() or st.st_mode & 0o077 or st.st_nlink != 1:
+                    raise ValueError("invalid budget slot")
+                try:
+                    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                except BlockingIOError:
+                    os.close(fd)
+                    continue
+                return fd
+            except BaseException:
+                os.close(fd)
+                raise
+        raise ValueError("budget exhausted")
+    finally:
+        os.close(dfd)
+
+
 def main(argv: list[str] | None = None) -> int:
+    directory = os.environ.get("F8_HYBRID2_BUDGET_DIR")
+    if not directory:
+        return _main(argv)
+    try:
+        fd = acquire_budget_lease(directory)
+    except (OSError, ValueError) as exc:
+        print(f"[f8-hybrid2-relay] admission refused: {exc}", file=sys.stderr, flush=True)
+        return 3
+    try:
+        return _main(argv)
+    finally:
+        os.close(fd)
+
+
+def _main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     try:
         native_tools = parse_native_tools(args.native_tools)
