@@ -190,6 +190,18 @@ def canonical_req_key(req_id: Any) -> str | None:
     return f"{kind}:{req_id}"
 
 
+def cancellation_req_key(msg: Any) -> str | None:
+    """Return the target only for a valid JSON-RPC cancellation notification."""
+    if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0" or "id" in msg:
+        return None
+    if msg.get("method") != "notifications/cancelled":
+        return None
+    params = msg.get("params")
+    if not isinstance(params, dict) or "requestId" not in params:
+        return None
+    return canonical_req_key(params["requestId"])
+
+
 def _strict_int_arg(args: dict[str, Any], key: str, default: int, lo: int, hi: int) -> int:
     if key not in args:
         return default
@@ -557,33 +569,23 @@ class MCPToolEngine:
         ctx: RequestContext,
         stdin_bytes: bytes | None = None,
     ) -> tuple[int, bytes, bytes]:
-        """Run a child process under pidfd+wakeup-pipe supervision with SIGKILL on cancel/timeout."""
+        """Drain bounded pipes while supervising cancellation, deadline and child exit."""
         wake_r, wake_w = os.pipe()
         os.set_blocking(wake_r, False)
         os.set_blocking(wake_w, False)
         ctx.attach_wake_fd(wake_w)
         pfd = -1
-        rc: int | None = None
         proc: subprocess.Popen[bytes] | None = None
-
         try:
-            with (
-                tempfile.TemporaryFile(mode="w+b") as out_f,
-                tempfile.TemporaryFile(mode="w+b") as err_f,
-                tempfile.TemporaryFile(mode="w+b") as in_f,
-            ):
+            with tempfile.TemporaryFile(mode="w+b") as in_f:
                 if stdin_bytes is not None:
                     in_f.write(stdin_bytes)
                     in_f.seek(0)
                 proc = subprocess.Popen(
-                    cmd,
-                    cwd=cwd,
-                    env=env,
+                    cmd, cwd=cwd, env=env,
                     stdin=in_f if stdin_bytes is not None else subprocess.DEVNULL,
-                    stdout=out_f,
-                    stderr=err_f,
-                    shell=False,
-                    start_new_session=True,
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    shell=False, start_new_session=True,
                 )
                 ctx.set_proc(proc)
                 try:
@@ -592,22 +594,40 @@ class MCPToolEngine:
                     poller.register(wake_r, select.POLLIN)
                     if pfd >= 0:
                         poller.register(pfd, select.POLLIN)
-
+                    assert proc.stdout is not None and proc.stderr is not None
+                    streams = {proc.stdout.fileno(): (bytearray(), MAX_OUTPUT_BYTES),
+                               proc.stderr.fileno(): (bytearray(), 256 * 1024)}
+                    outputs = list(streams.values())
+                    for fd in streams:
+                        os.set_blocking(fd, False)
+                        poller.register(fd, select.POLLIN | select.POLLHUP | select.POLLERR)
                     while True:
                         ctx.check()
                         rc = proc.poll()
-                        if rc is not None:
+                        if rc is not None and not streams:
                             ctx.check()
-                            break
+                            return rc, bytes(outputs[0][0]), bytes(outputs[1][0])
                         rem_ms = max(1, int((ctx.deadline - time.monotonic()) * 1000.0))
-                        wait_ms = rem_ms if pfd >= 0 else min(rem_ms, 10)
-                        poller.poll(wait_ms)
+                        for fd, _events in poller.poll(min(rem_ms, 10) if pfd < 0 else rem_ms):
+                            if fd == pfd:
+                                poller.unregister(pfd)
+                                continue
+                            if fd not in streams:
+                                continue
+                            buf, limit = streams[fd]
+                            try:
+                                chunk = os.read(fd, min(65536, limit - len(buf) + 1))
+                            except BlockingIOError:
+                                continue
+                            if not chunk:
+                                poller.unregister(fd)
+                                del streams[fd]
+                            elif len(buf) + len(chunk) > limit:
+                                raise Refuse("subprocess-output-limit")
+                            else:
+                                buf.extend(chunk)
                 except BaseException:
-                    ctx.set_proc(proc)
-                    try:
-                        os.killpg(proc.pid, signal.SIGKILL)
-                    except OSError:
-                        pass
+                    RequestContext._kill_pgid(proc.pid)
                     try:
                         proc.wait(timeout=5)
                     except subprocess.TimeoutExpired:
@@ -615,22 +635,16 @@ class MCPToolEngine:
                     raise
                 finally:
                     ctx.set_proc(None)
-
-                out_f.seek(0)
-                err_f.seek(0)
-                return int(rc or 0), out_f.read(MAX_OUTPUT_BYTES), err_f.read(256 * 1024)
+                    if proc.stdout is not None:
+                        proc.stdout.close()
+                    if proc.stderr is not None:
+                        proc.stderr.close()
         finally:
             ctx.attach_wake_fd(None)
             if pfd >= 0:
-                try:
-                    os.close(pfd)
-                except OSError:
-                    pass
-            for fd in (wake_r, wake_w):
-                try:
-                    os.close(fd)
-                except OSError:
-                    pass
+                os.close(pfd)
+            os.close(wake_r)
+            os.close(wake_w)
 
     def _tool_text_search(self, args: dict[str, Any], ctx: RequestContext) -> dict[str, Any]:
         guest_root = args.get("root")

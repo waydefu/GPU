@@ -20,6 +20,7 @@ import shlex
 import signal
 import subprocess as sp
 import sys
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -27,6 +28,7 @@ from typing import Any
 from f8_hybrid2_policy import (
     DEFAULT_DAEMON_MAPS,
     DEFAULT_RUNTIME_DIR,
+    TRUSTED_GIT_ROOTS_ENV,
     parse_map_specs,
     proc_matches_cmdline,
     read_tracer_pid,
@@ -50,6 +52,15 @@ TERMUX_PYTHON = "/data/data/com.termux/files/usr/bin/python3"
 TERMUX_GIT = "/data/data/com.termux/files/usr/bin/git"
 DAEMON_SCRIPT = str(Path(__file__).resolve().parent / "f8_hybrid2_daemon.py")
 RELAY_SCRIPT = str(Path(__file__).resolve().parent / "f8_hybrid2_relay.py")
+DEPLOYED_TOOLS_RELAY = "/data/data/com.termux/files/home/build/proot-fast/tools/hybrid2/f8_hybrid2_relay.py"
+
+
+def resolve_host_daemon_py(daemon_py: str) -> str:
+    """Translate PRoot guest daemon_py path to Termux host path via DEFAULT_DAEMON_MAPS."""
+    for guest_prefix, host_prefix in DEFAULT_DAEMON_MAPS:
+        if daemon_py == guest_prefix or daemon_py.startswith(guest_prefix + "/"):
+            return host_prefix + daemon_py[len(guest_prefix) :]
+    return daemon_py
 
 
 def missing_am_env() -> list[str]:
@@ -166,7 +177,9 @@ def _start_native_direct(
     if skip_tracer_check:
         cmd.append("--skip-tracer-check")
     with open(paths["out"], "ab") as out_fh:
-        sp.Popen(cmd, stdin=sp.DEVNULL, stdout=out_fh, stderr=out_fh, start_new_session=True)
+        child = sp.Popen(cmd, stdin=sp.DEVNULL, stdout=out_fh, stderr=out_fh, start_new_session=True)
+    # Hold the child handle and reap it if this controller outlives the daemon.
+    threading.Thread(target=child.wait, daemon=True).start()
 
 
 def _start_via_termux_service(
@@ -182,6 +195,9 @@ def _start_via_termux_service(
         return False, "auto-start-env-stripped"
     if not str(paths["dir"]).startswith("/data/data/com.termux/"):
         return False, "runtime-dir-outside-termux"
+    host_daemon_py = resolve_host_daemon_py(daemon_py)
+    if not host_daemon_py.startswith("/data/data/com.termux/"):
+        return False, "daemon-path-outside-termux"
     for d in (paths["dir"], paths["home"], paths["tmp"]):
         d.mkdir(parents=True, exist_ok=True)
     os.chmod(paths["dir"], 0o700)
@@ -193,7 +209,8 @@ def _start_via_termux_service(
         "export PATH=/data/data/com.termux/files/usr/bin\n"
         "export HOME=/data/data/com.termux/files/home\n"
         "export TMPDIR=/data/data/com.termux/files/usr/tmp\n"
-        f"{shlex.quote(TERMUX_PYTHON)} {shlex.quote(daemon_py)} "
+        f"export {TRUSTED_GIT_ROOTS_ENV}={shlex.quote(os.environ.get(TRUSTED_GIT_ROOTS_ENV, '[]'))}\n"
+        f"{shlex.quote(TERMUX_PYTHON)} {shlex.quote(host_daemon_py)} "
         f"--socket {shlex.quote(str(paths['sock']))} {map_flags} "
         f"--home {shlex.quote(str(paths['home']))} --tmp {shlex.quote(str(paths['tmp']))} "
         f"--pidfile {shlex.quote(str(paths['pid']))} --ready {shlex.quote(str(paths['ready']))} "
@@ -348,15 +365,19 @@ def set_disabled(runtime_dir: Path, disabled: bool, timeout_s: float = 8.0) -> d
     return _with_ctl_lock(runtime_dir, _do)
 
 
-def client_config_snippets(sock_path: str, relay_path: str = RELAY_SCRIPT) -> dict[str, str]:
+def client_config_snippets(sock_path: str, relay_path: str | None = None) -> dict[str, str]:
     """Generate non-destructive copy-paste config snippets with --auto-start for all MCP clients."""
+    if relay_path is None:
+        relay_path = DEPLOYED_TOOLS_RELAY if os.path.exists(DEPLOYED_TOOLS_RELAY) else RELAY_SCRIPT
     return {
         "hermes": (
-            f"# $HERMES_HOME/config.yaml\nmcp_servers:\n  hybrid2:\n"
+            f"# $HERMES_HOME/config.yaml (add 7 AM_REQUIRED_ENV under env: for cold --auto-start without pre-start)\n"
+            f"mcp_servers:\n  hybrid2:\n"
             f"    command: /usr/bin/python3\n    args: [{relay_path}, --socket, {sock_path}, --auto-start]\n    enabled: true\n"
         ),
         "codex": (
-            f"# $CODEX_HOME/config.toml\n[mcp_servers.hybrid2]\n"
+            f"# $CODEX_HOME/config.toml (add env_vars = [...] in [shell_environment_policy] for cold --auto-start)\n"
+            f"[mcp_servers.hybrid2]\n"
             f'command = "/usr/bin/python3"\nargs = ["{relay_path}", "--socket", "{sock_path}", "--auto-start"]\n'
         ),
         "claude-code": (

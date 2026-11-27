@@ -13,6 +13,7 @@ Stage 5 `f8-hybrid-daemon.py`, upgraded per Stage 7.2 universal MCP audit:
 from __future__ import annotations
 
 import ctypes
+import json
 import os
 import posixpath
 import re
@@ -22,6 +23,7 @@ from pathlib import Path
 from typing import BinaryIO
 
 AF_UNIX_PATH_MAX = 107
+TRUSTED_GIT_ROOTS_ENV = "F8_HYBRID2_TRUSTED_GIT_ROOTS"
 
 TERMUX_HOME = "/data/data/com.termux/files/home"
 DEFAULT_RUNTIME_DIR = f"{TERMUX_HOME}/.f8hyb2"
@@ -458,6 +460,23 @@ class Policy:
                 prot_hosts.append(os.path.realpath(_ROOTFS_PREFIX + p))
         self._protected_real: tuple[str, ...] = tuple(dict.fromkeys(prot_hosts))
 
+        # Configuration comes from the launcher, outside the checkout.
+        try:
+            roots = json.loads(os.environ.get(TRUSTED_GIT_ROOTS_ENV, "[]"))
+        except (ValueError, RecursionError):
+            roots = []
+        guest_roots = tuple(roots) if isinstance(roots, list) and all(
+            isinstance(root, str) and root.startswith("/") and "\x00" not in root
+            for root in roots
+        ) else ()
+
+        self.trusted_git_roots: set[str] = set()
+        for root in guest_roots:
+            try:
+                self.trusted_git_roots.add(self.map_path(root, must_exist=True))
+            except Refuse:
+                continue
+
     def _is_protected_host(self, real_host: str, h_root: str) -> bool:
         for p in self._protected_real:
             # Never let a protected ancestor of an explicitly mapped root poison the whole mapped root.
@@ -518,6 +537,12 @@ class Policy:
         while True:
             if not any(os.path.commonpath([r, cur]) == r for r in allowed_roots):
                 return None, None
+            # Refuse implicit bare repositories, including nested ones before a
+            # parent worktree is discovered.
+            if (os.path.isfile(os.path.join(cur, "HEAD")) and
+                os.path.isdir(os.path.join(cur, "objects")) and
+                os.path.isdir(os.path.join(cur, "refs"))):
+                raise Refuse("git-bare-unsupported")
             dot_git = os.path.join(cur, ".git")
             if os.path.isdir(dot_git) or os.path.isfile(dot_git):
                 return cur, dot_git
@@ -530,13 +555,17 @@ class Policy:
         """Scan .git directory, config.worktree, and .git file; refuse unsafe directives."""
         repo_root, dot_git = self._find_git_root(host_dir)
         if dot_git is None or repo_root is None:
-            return
+            raise Refuse("git-repository-unidentified")
         cfg_paths: list[Path] = []
         allowed_roots = [h_root for _, h_root in self.maps]
+        if repo_root not in self.trusted_git_roots:
+            raise Refuse("git-checkout-not-trusted")
         dg = Path(dot_git)
         real_dg = os.path.realpath(dot_git)
         if not any(os.path.commonpath([r, real_dg]) == r for r in allowed_roots):
             raise Refuse("symlink-escape")
+        if any(self._is_protected_host(real_dg, r) for r in allowed_roots if os.path.commonpath([r, real_dg]) == r):
+            raise Refuse("protected-path")
         if dg.is_file():
             try:
                 with open_nofollow(dg) as fh:
@@ -551,6 +580,8 @@ class Policy:
             resolved_gitdir = os.path.realpath(os.path.join(repo_root, target))
             if not any(os.path.commonpath([r, resolved_gitdir]) == r for r in allowed_roots):
                 raise Refuse("symlink-escape")
+            if not os.path.isdir(resolved_gitdir):
+                raise Refuse("git-repository-unidentified")
             cfg_paths.append(Path(resolved_gitdir) / "config")
             cfg_paths.append(Path(resolved_gitdir) / "config.worktree")
             commondir = Path(resolved_gitdir) / "commondir"
@@ -565,9 +596,14 @@ class Policy:
                 cdir = os.path.realpath(os.path.join(resolved_gitdir, rel_c))
                 if not any(os.path.commonpath([r, cdir]) == r for r in allowed_roots):
                     raise Refuse("symlink-escape")
+                if not os.path.isdir(cdir):
+                    raise Refuse("git-repository-unidentified")
                 cfg_paths.append(Path(cdir) / "config")
                 cfg_paths.append(Path(cdir) / "config.worktree")
         else:
+            # A commondir on a non-gitfile layout is unsupported; do not ignore it.
+            if os.path.lexists(dg / "commondir"):
+                raise Refuse("git-commondir-unsupported")
             cfg_paths.append(dg / "config")
             cfg_paths.append(dg / "config.worktree")
             wt_dir = dg / "worktrees"
@@ -577,7 +613,42 @@ class Policy:
                         cfg_paths.append(sub / "config")
                         cfg_paths.append(sub / "config.worktree")
 
+        def check_metadata_path(path: str | Path) -> None:
+            resolved = os.path.realpath(path)
+            roots = [root for root in allowed_roots if os.path.commonpath([root, resolved]) == root]
+            if not roots:
+                raise Refuse("symlink-escape")
+            if any(self._is_protected_host(resolved, root) for root in roots):
+                raise Refuse("protected-path")
+
+        for metadata_dir in {cfg.parent for cfg in cfg_paths}:
+            objects = metadata_dir / "objects"
+            pack_dir = objects / "pack"
+            for candidate in (metadata_dir, objects, objects / "info", pack_dir):
+                check_metadata_path(candidate)
+            object_dirs = [pack_dir]
+            if objects.is_dir():
+                with os.scandir(objects) as entries:
+                    for entry in entries:
+                        if not re.fullmatch(r"[0-9a-fA-F]{2}", entry.name):
+                            continue
+                        # Validate a loose-object fan-out link before following it.
+                        if entry.is_symlink():
+                            check_metadata_path(entry.path)
+                        if entry.is_dir():
+                            object_dirs.append(Path(entry.path))
+            for object_dir in object_dirs:
+                if not object_dir.is_dir():
+                    continue
+                with os.scandir(object_dir) as entries:
+                    for entry in entries:
+                        if entry.is_symlink():
+                            check_metadata_path(entry.path)
+            # Alternates can recursively redirect reads outside the map.
+            if os.path.lexists(objects / "info/alternates"):
+                raise Refuse("git-alternates-unsupported")
         for cfg in cfg_paths:
+            check_metadata_path(cfg)
             if not cfg.is_file():
                 continue
             try:
@@ -588,8 +659,15 @@ class Policy:
             if len(raw_cfg) > 512 * 1024:
                 raise Refuse("git-config-too-large")
             content = raw_cfg.decode("utf-8", errors="replace")
+            # core.worktree changes Git's worktree root; conservatively refuse the key
+            # in any section, including inline section forms.
+            if re.search(r"(?im)(?:^\s*|\]\s*)worktree\s*(?:=|$)", content):
+                raise Refuse("git-config-unsafe")
             if GIT_BAD_CFG.search(content):
                 raise Refuse("git-config-unsafe")
+
+        if dg.is_file() or dg.is_symlink():
+            raise Refuse("git-worktree-not-supported")
 
     def clean_env(self, extra: dict[str, str] | None = None) -> dict[str, str]:
         """Build a scrubbed deterministic environment for native/fallback child execution."""
@@ -607,6 +685,10 @@ class Policy:
         env["GIT_CONFIG_GLOBAL"] = "/dev/null"
         env["GIT_TERMINAL_PROMPT"] = "0"
         env["GIT_OPTIONAL_LOCKS"] = "0"
+        # Protected command-scope config: reject implicit bare repository discovery.
+        env["GIT_CONFIG_COUNT"] = "1"
+        env["GIT_CONFIG_KEY_0"] = "safe.bareRepository"
+        env["GIT_CONFIG_VALUE_0"] = "explicit"
         ceilings = sorted({os.path.dirname(h) for _, h in self.maps if os.path.dirname(h) and os.path.dirname(h) != h})
         if ceilings:
             env["GIT_CEILING_DIRECTORIES"] = ":".join(ceilings)

@@ -16,6 +16,7 @@ Features:
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import os
 import select
@@ -37,9 +38,38 @@ from f8_hybrid2_policy import (
     read_tracer_pid,
     validate_unix_sock_path,
 )
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, canonical_req_key
+from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key
 
 MAX_FRAME_BYTES = 4 * 1024 * 1024
+# Daemon limits its serialized output buffer to 16 MiB. Its JSON response may
+# be larger than the input limit because the result text is JSON-escaped again.
+MAX_UDS_FRAME_BYTES = 16 * 1024 * 1024
+DEFAULT_MAX_LOCAL_INFLIGHT = 8
+
+
+def _check_uds_frame_size(size: int, limit: int = MAX_UDS_FRAME_BYTES) -> None:
+    """Bound both completed frames and the not-yet-terminated frame."""
+    if size > limit:
+        raise ValueError("UDS frame too large")
+
+
+ALL_TOOL_NAMES: frozenset[str] = frozenset(str(d["name"]) for d in TOOL_DEFS)
+DEFAULT_NATIVE_TOOLS: frozenset[str] = frozenset({"repo_tree_scan", "repo_text_search", "git_ro"})
+
+
+def parse_native_tools(spec: str | None) -> frozenset[str]:
+    if spec is None:
+        return DEFAULT_NATIVE_TOOLS
+    cleaned = spec.strip()
+    if not cleaned or cleaned.lower() == "none":
+        return frozenset()
+    if cleaned.lower() == "all":
+        return ALL_TOOL_NAMES
+    chosen = frozenset(tok.strip() for tok in cleaned.split(",") if tok.strip())
+    unknown = chosen - ALL_TOOL_NAMES
+    if unknown:
+        raise ValueError(f"Unknown --native-tools entries: {sorted(unknown)}")
+    return chosen
 
 
 def probe_daemon(sock_path: Path, timeout_s: float = 2.0) -> tuple[bool, str]:
@@ -90,8 +120,28 @@ def probe_daemon(sock_path: Path, timeout_s: float = 2.0) -> tuple[bool, str]:
             pass
 
 
-def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
-    """Bridge stdio <-> UDS cleanly. Returns (exit_rc, early_eof_no_reply, initial_sent_bytes)."""
+def bridge_stdio_to_uds(
+    sock: socket.socket,
+    *,
+    native_tools: frozenset[str] = DEFAULT_NATIVE_TOOLS,
+    local_maps: list[tuple[str, str]] | None = None,
+    git_bin: str = "/usr/bin/git",
+    default_timeout_s: float = 30.0,
+    max_local_inflight: int = DEFAULT_MAX_LOCAL_INFLIGHT,
+    route_log_path: Path | None = None,
+    prebuffered: bytes = b"",
+) -> tuple[int, bool, bytes]:
+    """Bridge stdio <-> UDS with selective Stage 7.4 tool routing (native UDS vs PRoot local)."""
+    if native_tools >= ALL_TOOL_NAMES:
+        return _bridge_raw_passthrough(sock, prebuffered=prebuffered)
+
+    max_local = max(1, min(16, int(max_local_inflight)))
+    home_dir = os.environ.get("HOME", tempfile.gettempdir())
+    tmp_dir = os.environ.get("TMPDIR", tempfile.gettempdir())
+    maps = list(local_maps) if local_maps is not None else list(DEFAULT_FALLBACK_MAPS)
+    policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"))
+    local_engine = MCPToolEngine(policy=policy, git_bin=git_bin, default_timeout_s=default_timeout_s)
+
     stop = threading.Event()
     in_fd = sys.stdin.fileno()
     out_fd = sys.stdout.fileno()
@@ -104,15 +154,249 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
     sel = selectors.DefaultSelector()
     stdin_eof = False
     shut_wr_sent = False
+    stdin_buf = bytearray(prebuffered)
+    uds_buf = bytearray()
     to_uds = bytearray()
     to_stdout = bytearray()
-    sent_to_uds = bytearray()
-    received_from_uds = 0
-    uds_closed_early = False
+    sent_to_uds = bytearray(prebuffered[:MAX_FRAME_BYTES])
+
+    session_state: dict[str, Any] = {
+        "init_seen": False,
+        "initialized": False,
+        "init_rk": None,
+        "local_replies": 0,
+        "received_from_uds": 0,
+        "uds_closed": False,
+        "uds_write_closed": False,
+        "uds_closed_early": False,
+        "sig_abort": False,
+        "uds_frame_error": False,
+    }
+    native_inflight: dict[str, Any] = {}
+    local_active_lock = threading.Lock()
+    local_active: dict[str, RequestContext] = {}
+    deferred_local: list[tuple[Any, str, Any]] = []
+    workers: list[threading.Thread] = []
+    local_out_lock = threading.Lock()
+    local_out_q: collections.deque[tuple[bytes, str | None]] = collections.deque()
+
     sig_r, sig_w = os.pipe()
-    os.set_blocking(sig_r, False)
-    os.set_blocking(sig_w, False)
+    local_r, local_w = os.pipe()
+    for pfd in (sig_r, sig_w, local_r, local_w):
+        os.set_blocking(pfd, False)
     sel.register(sig_r, selectors.EVENT_READ, "sig")
+    sel.register(local_r, selectors.EVENT_READ, "local")
+
+    def _record_route(tool_name: str, target: str) -> None:
+        if route_log_path is None:
+            return
+        try:
+            route_log_path.parent.mkdir(parents=True, exist_ok=True)
+            with open(route_log_path, "a", encoding="utf-8") as fh:
+                fh.write(json.dumps({"ev": "route", "tool": tool_name, "target": target}, separators=(",", ":")) + "\n")
+        except OSError:
+            pass
+
+    def _wake_local() -> None:
+        try:
+            os.write(local_w, b"\x01")
+        except OSError:
+            pass
+
+    def _queue_local_bytes(raw_bytes: bytes, rk: str | None = None, *, wake: bool = True) -> None:
+        with local_out_lock:
+            local_out_q.append((raw_bytes, rk))
+        if wake:
+            _wake_local()
+
+    def _local_worker(req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
+        raw_out: bytes | None = None
+        try:
+            resp = local_engine.call_tool(req_id, params, ctx)
+            if not stop.is_set() and not ctx.cancel_event.is_set():
+                raw_out = (json.dumps(resp, ensure_ascii=False) + "\n").encode("utf-8")
+        except RequestCancelled:
+            pass
+        except Exception as exc:
+            if not stop.is_set() and not ctx.cancel_event.is_set():
+                err = local_engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}")
+                raw_out = (json.dumps(err, ensure_ascii=False) + "\n").encode("utf-8")
+        finally:
+            if raw_out is not None:
+                _queue_local_bytes(raw_out, rk, wake=False)
+            with local_active_lock:
+                local_active.pop(rk, None)
+            _wake_local()
+
+    def _start_local_call(req_id: Any, rk: str, params: Any) -> bool:
+        ctx = RequestContext(req_id, default_timeout_s)
+        with local_active_lock:
+            if len(local_active) >= max_local:
+                return False
+            local_active[rk] = ctx
+            workers[:] = [w for w in workers if w.is_alive()]
+            th = threading.Thread(target=_local_worker, args=(req_id, rk, params, ctx), daemon=True)
+            workers.append(th)
+        th.start()
+        return True
+
+    def _emit_local_err(req_id: Any, code: int, msg: str) -> None:
+        to_stdout.extend((json.dumps(local_engine.jsonrpc_err(req_id, code, msg), ensure_ascii=False) + "\n").encode("utf-8"))
+        session_state["local_replies"] += 1
+
+    def _fail_deferred_uninitialized() -> None:
+        while deferred_local:
+            req_id, _rk, _params = deferred_local.pop(0)
+            _emit_local_err(req_id, -32002, "Server not initialized")
+
+    def _mark_uds_closed() -> None:
+        session_state["uds_closed"] = True
+        to_uds.clear()
+        uds_buf.clear()
+        if session_state["received_from_uds"] == 0 and session_state["local_replies"] == 0:
+            session_state["uds_closed_early"] = True
+            deferred_local.clear()
+            stop.set()
+            return
+        if not session_state["initialized"] and deferred_local:
+            _fail_deferred_uninitialized()
+
+    def _handle_stdin_line(raw_line: bytes) -> None:
+        if len(raw_line) > MAX_FRAME_BYTES:
+            _emit_local_err(None, -32600, "Frame too large")
+            return
+        stripped = raw_line.strip()
+        if not stripped:
+            return
+        try:
+            msg = json.loads(stripped.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            _emit_local_err(None, -32700, "Parse error")
+            return
+
+        # Strict JSON-RPC 2.0 validation before routing either local or UDS.
+        if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0":
+            raw_id = msg.get("id") if isinstance(msg, dict) else None
+            _emit_local_err(raw_id if canonical_req_key(raw_id) is not None else None, -32600, "Invalid Request")
+            return
+
+        has_id = "id" in msg
+        req_id = msg.get("id")
+        rk = canonical_req_key(req_id) if has_id else None
+        if has_id and rk is None:
+            _emit_local_err(None, -32600, "Invalid Request id")
+            return
+
+        method = msg.get("method")
+        if not isinstance(method, str) or not method:
+            if has_id:
+                _emit_local_err(req_id, -32600, "Missing method")
+            return
+
+        if method == "notifications/cancelled":
+            cancel_rk = cancellation_req_key(msg)
+            if cancel_rk is None:
+                if has_id:
+                    _emit_local_err(req_id, -32600, "Invalid cancellation")
+                return
+            with local_active_lock:
+                ctx = local_active.get(cancel_rk)
+            if ctx is not None:
+                ctx.cancel()
+                return
+            for idx, (_rid, drk, _dp) in enumerate(deferred_local):
+                if drk == cancel_rk:
+                    deferred_local.pop(idx)
+                    return
+            native_inflight.pop(cancel_rk, None)
+            if not session_state["uds_closed"]:
+                to_uds.extend(stripped + b"\n")
+            return
+
+        if method == "tools/call":
+            if not has_id or rk is None:
+                return
+            with local_active_lock:
+                local_busy = rk in local_active
+                live_local_cnt = len(local_active)
+            deferred_busy = any(drk == rk for _rid, drk, _dp in deferred_local)
+            if local_busy or deferred_busy or rk in native_inflight:
+                _emit_local_err(req_id, -32600, "Duplicate active request id")
+                return
+            params = msg.get("params")
+            if not isinstance(params, dict):
+                _emit_local_err(req_id, -32602, "Invalid params")
+                return
+            tool_name = params.get("name")
+            if not isinstance(tool_name, str):
+                _emit_local_err(req_id, -32602, "Invalid tool call params")
+                return
+            if tool_name in native_tools:
+                if session_state["uds_closed"]:
+                    _emit_local_err(req_id, -32000, "Native daemon disconnected")
+                    return
+                native_inflight[rk] = req_id
+                _record_route(tool_name, "native_uds")
+                to_uds.extend(stripped + b"\n")
+                return
+            if not session_state["initialized"]:
+                if not session_state["init_seen"]:
+                    _emit_local_err(req_id, -32002, "Server not initialized")
+                    return
+                if session_state["uds_closed"]:
+                    _emit_local_err(req_id, -32002, "Server not initialized")
+                    return
+                if live_local_cnt + len(deferred_local) >= max_local:
+                    _emit_local_err(req_id, -32000, "Server busy: max local inflight requests reached")
+                    return
+                _record_route(tool_name, "proot_local")
+                deferred_local.append((req_id, rk, params))
+                return
+            if live_local_cnt + len(deferred_local) >= max_local:
+                _emit_local_err(req_id, -32000, "Server busy: max local inflight requests reached")
+                return
+            _record_route(tool_name, "proot_local")
+            if not _start_local_call(req_id, rk, params):
+                _emit_local_err(req_id, -32000, "Server busy: max local inflight requests reached")
+            return
+
+        if rk in native_inflight:
+            _emit_local_err(req_id, -32600, "Duplicate active request id")
+            return
+        if method == "initialize" and has_id:
+            session_state["init_seen"] = True
+            session_state["init_rk"] = rk
+        if has_id and rk is not None:
+            if session_state["uds_closed"]:
+                _emit_local_err(req_id, -32000, "Native daemon disconnected")
+                return
+            native_inflight[rk] = req_id
+        if not session_state["uds_closed"]:
+            to_uds.extend(stripped + b"\n")
+
+    def _handle_uds_line(raw_line: bytes) -> None:
+        stripped = raw_line.strip()
+        if not stripped:
+            return
+        try:
+            resp = json.loads(stripped.decode("utf-8"))
+            if (isinstance(resp, dict) and resp.get("jsonrpc") == "2.0"
+                    and "id" in resp and ("result" in resp or "error" in resp)):
+                rk = canonical_req_key(resp.get("id"))
+                if rk is not None:
+                    native_inflight.pop(rk, None)
+                    if session_state["init_rk"] is not None and rk == session_state["init_rk"]:
+                        if "result" in resp:
+                            session_state["initialized"] = True
+                            while deferred_local:
+                                d_rid, d_rk, d_params = deferred_local.pop(0)
+                                if not _start_local_call(d_rid, d_rk, d_params):
+                                    _emit_local_err(d_rid, -32000, "Server busy: max local inflight requests reached")
+                        else:
+                            _fail_deferred_uninitialized()
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            pass
+        to_stdout.extend(stripped + b"\n")
 
     def _set_interest(fd_or_sock: Any, desired_events: int | None, tag: str) -> None:
         try:
@@ -129,12 +413,19 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
             sel.modify(fd_or_sock, desired_events, tag)
 
     def _refresh_sel() -> None:
-        _set_interest(in_fd, None if stdin_eof else selectors.EVENT_READ, "stdin")
-        uds_ev = selectors.EVENT_READ | (selectors.EVENT_WRITE if to_uds else 0)
-        _set_interest(sock, uds_ev, "uds")
+        out_paused = len(to_stdout) >= MAX_FRAME_BYTES * 2
+        accept_input = not (stdin_eof or out_paused or session_state["uds_closed"] or session_state["uds_write_closed"])
+        _set_interest(in_fd, selectors.EVENT_READ if accept_input else None, "stdin")
+        _set_interest(local_r, None if out_paused else selectors.EVENT_READ, "local")
+        if session_state["uds_closed"]:
+            _set_interest(sock, None, "uds")
+        else:
+            uds_ev = (0 if out_paused else selectors.EVENT_READ) | (selectors.EVENT_WRITE if to_uds else 0)
+            _set_interest(sock, uds_ev if uds_ev else None, "uds")
         _set_interest(out_fd, selectors.EVENT_WRITE if to_stdout else None, "stdout")
 
     def on_sig(_signum: int, _frame: Any) -> None:
+        session_state["sig_abort"] = True
         stop.set()
         try:
             os.write(sig_w, b"\x01")
@@ -145,14 +436,52 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
     prev_sigint = signal.signal(signal.SIGINT, on_sig)
 
     try:
+        while True:
+            nl = stdin_buf.find(b"\n")
+            if nl < 0:
+                break
+            one = bytes(stdin_buf[:nl]).rstrip(b"\r")
+            del stdin_buf[: nl + 1]
+            _handle_stdin_line(one)
         while not stop.is_set():
+            # One complete UDS frame can arrive while stdout is below the
+            # pause watermark, plus one bounded recv chunk of other frames.
+            if len(to_stdout) > MAX_FRAME_BYTES * 2 + MAX_UDS_FRAME_BYTES + 65536:
+                session_state["sig_abort"] = True
+                stop.set()
+                break
+            with local_active_lock:
+                local_busy_now = bool(local_active)
+            with local_out_lock:
+                local_queued = bool(local_out_q)
+            if session_state["uds_closed"]:
+                # Queue disconnect errors behind complete responses. Respect the
+                # stdout water mark even when many requests still need answers.
+                while native_inflight and len(to_stdout) < MAX_FRAME_BYTES * 2:
+                    _, req_id = native_inflight.popitem()
+                    _emit_local_err(req_id, -32000, "Native daemon disconnected before replying; execution unconfirmed")
+                if not (native_inflight or local_busy_now or deferred_local or local_queued or to_stdout):
+                    break
             _refresh_sel()
             for key, mask in sel.select(timeout=0.5):
                 tag = key.data
                 if tag == "sig":
+                    session_state["sig_abort"] = True
                     stop.set()
                     break
-                if tag == "stdin" and (mask & selectors.EVENT_READ):
+                if tag == "local":
+                    try:
+                        os.read(local_r, 4096)
+                    except OSError:
+                        pass
+                    with local_out_lock:
+                        while local_out_q:
+                            raw_resp, _rk = local_out_q.popleft()
+                            to_stdout.extend(raw_resp)
+                            session_state["local_replies"] += 1
+                elif tag == "stdin" and (mask & selectors.EVENT_READ):
+                    if session_state["uds_closed"] or session_state["uds_write_closed"]:
+                        continue
                     try:
                         chunk = os.read(in_fd, 65536)
                     except BlockingIOError:
@@ -162,16 +491,42 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
                         break
                     if not chunk:
                         stdin_eof = True
-                        if not to_uds and not shut_wr_sent:
+                        while True:
+                            nl = stdin_buf.find(b"\n")
+                            if nl < 0:
+                                break
+                            one = bytes(stdin_buf[:nl]).rstrip(b"\r")
+                            del stdin_buf[: nl + 1]
+                            _handle_stdin_line(one)
+                        if stdin_buf.strip():
+                            _handle_stdin_line(bytes(stdin_buf))
+                            stdin_buf.clear()
+                        if not to_uds and not shut_wr_sent and not session_state["uds_write_closed"]:
                             try:
                                 sock.shutdown(socket.SHUT_WR)
                                 shut_wr_sent = True
                             except OSError:
-                                stop.set()
+                                # Failed write shutdown does not invalidate the read half.
+                                session_state["uds_write_closed"] = True
                         break
-                    to_uds.extend(chunk)
-                    if len(sent_to_uds) < MAX_FRAME_BYTES:
+                    if (
+                        session_state["received_from_uds"] == 0
+                        and session_state["local_replies"] == 0
+                        and len(sent_to_uds) < MAX_FRAME_BYTES
+                    ):
                         sent_to_uds.extend(chunk[: MAX_FRAME_BYTES - len(sent_to_uds)])
+                    stdin_buf.extend(chunk)
+                    while True:
+                        nl = stdin_buf.find(b"\n")
+                        if nl < 0:
+                            break
+                        one = bytes(stdin_buf[:nl]).rstrip(b"\r")
+                        del stdin_buf[: nl + 1]
+                        _handle_stdin_line(one)
+                    if len(stdin_buf) > MAX_FRAME_BYTES * 2:
+                        _emit_local_err(None, -32600, "Line buffer overflow")
+                        stop.set()
+                        break
                     if len(to_uds) > MAX_FRAME_BYTES * 2:
                         stop.set()
                         break
@@ -183,32 +538,48 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
                         except BlockingIOError:
                             pass
                         except OSError:
-                            stop.set()
-                            break
-                        if stdin_eof and not to_uds and not shut_wr_sent:
+                            # The daemon can close its read half while replies remain readable.
+                            session_state["uds_write_closed"] = True
+                            to_uds.clear()
+                        if stdin_eof and not to_uds and not shut_wr_sent and not session_state["uds_write_closed"]:
                             try:
                                 sock.shutdown(socket.SHUT_WR)
                                 shut_wr_sent = True
                             except OSError:
-                                stop.set()
-                                break
-                    if mask & selectors.EVENT_READ:
+                                session_state["uds_write_closed"] = True
+                    if (mask & selectors.EVENT_READ) and not session_state["uds_closed"]:
                         try:
                             chunk = sock.recv(65536)
                         except BlockingIOError:
                             continue
                         except OSError:
-                            if received_from_uds == 0:
-                                uds_closed_early = True
-                            stop.set()
+                            _mark_uds_closed()
                             break
                         if not chunk:
-                            if received_from_uds == 0:
-                                uds_closed_early = True
-                            stop.set()
+                            _mark_uds_closed()
                             break
-                        received_from_uds += len(chunk)
-                        to_stdout.extend(chunk)
+                        session_state["received_from_uds"] += len(chunk)
+                        uds_buf.extend(chunk)
+                        while True:
+                            nl = uds_buf.find(b"\n")
+                            if nl < 0:
+                                try:
+                                    _check_uds_frame_size(len(uds_buf))
+                                except ValueError:
+                                    session_state["uds_frame_error"] = True
+                                    stop.set()
+                                break
+                            try:
+                                _check_uds_frame_size(nl)
+                            except ValueError:
+                                session_state["uds_frame_error"] = True
+                                stop.set()
+                                break
+                            one = bytes(uds_buf[:nl]).rstrip(b"\r")
+                            del uds_buf[: nl + 1]
+                            _handle_uds_line(one)
+                        if session_state["uds_frame_error"]:
+                            print("[f8-hybrid2-relay] UDS response frame too large", file=sys.stderr, flush=True)
                 elif tag == "stdout" and (mask & selectors.EVENT_WRITE) and to_stdout:
                     try:
                         wrote = os.write(out_fd, to_stdout)
@@ -216,18 +587,187 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
                     except BlockingIOError:
                         pass
                     except OSError:
+                        session_state["sig_abort"] = True
                         stop.set()
                         break
 
-        # Flush remaining stdout cleanly if pipe is still open.
-        if to_stdout:
-            os.set_blocking(out_fd, True)
-            while to_stdout:
+    finally:
+        signal.signal(signal.SIGTERM, prev_sigterm)
+        signal.signal(signal.SIGINT, prev_sigint)
+        if stop.is_set():
+            with local_active_lock:
+                ctxs = list(local_active.values())
+            for c in ctxs:
+                c.cancel()
+        for w in workers:
+            w.join(timeout=max(default_timeout_s + 2.0, 10.0))
+        sel.close()
+        for fd in (sig_r, sig_w, local_r, local_w):
+            try:
+                os.close(fd)
+            except OSError:
+                pass
+        try:
+            os.set_blocking(in_fd, in_was_blocking)
+        except OSError:
+            pass
+        try:
+            os.set_blocking(out_fd, out_was_blocking)
+        except OSError:
+            pass
+        try:
+            sock.shutdown(socket.SHUT_RDWR)
+        except OSError:
+            pass
+        try:
+            sock.close()
+        except OSError:
+            pass
+    return (
+        2 if session_state["uds_frame_error"] else 0,
+        bool(session_state["uds_closed_early"] and session_state["received_from_uds"] == 0 and session_state["local_replies"] == 0),
+        bytes(sent_to_uds),
+    )
+
+
+def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") -> tuple[int, bool, bytes]:
+    """Raw passthrough stdio <-> UDS (used only when --native-tools all)."""
+    import time
+
+    in_fd = sys.stdin.fileno()
+    out_fd = sys.stdout.fileno()
+    in_was_blocking = os.get_blocking(in_fd)
+    out_was_blocking = os.get_blocking(out_fd)
+    os.set_blocking(in_fd, False)
+    os.set_blocking(out_fd, False)
+    sock.setblocking(False)
+
+    sel = selectors.DefaultSelector()
+    stdin_eof = False
+    uds_eof = False
+    uds_write_closed = False
+    to_uds = bytearray(prebuffered)
+    to_stdout = bytearray()
+    sent_to_uds = bytearray(prebuffered[:MAX_FRAME_BYTES])
+    received_from_uds = 0
+    uds_closed_early = False
+    interrupted_at = None
+    buffer_limit = MAX_FRAME_BYTES * 2
+    sig_r, sig_w = os.pipe()
+    os.set_blocking(sig_r, False)
+    os.set_blocking(sig_w, False)
+    sel.register(sig_r, selectors.EVENT_READ, "sig")
+
+    def _set_interest(fd_or_sock: Any, events: int, tag: str) -> None:
+        try:
+            key = sel.get_key(fd_or_sock)
+        except KeyError:
+            key = None
+        if not events:
+            if key is not None:
+                sel.unregister(fd_or_sock)
+        elif key is None:
+            sel.register(fd_or_sock, events, tag)
+        elif key.events != events:
+            sel.modify(fd_or_sock, events, tag)
+
+    def on_sig(_signum: int, _frame: Any) -> None:
+        nonlocal interrupted_at
+        if interrupted_at is None:
+            interrupted_at = time.monotonic()
+        try:
+            os.write(sig_w, b"\x01")
+        except OSError:
+            pass
+
+    prev_sigterm = signal.signal(signal.SIGTERM, on_sig)
+    prev_sigint = signal.signal(signal.SIGINT, on_sig)
+
+    try:
+        while True:
+            # Once the peer closes its output, or a signal arrives, flush bytes
+            # already accepted for stdout without accepting more input.
+            draining = uds_eof or interrupted_at is not None
+            if draining and not to_stdout and (uds_eof or not to_uds or uds_write_closed):
+                break
+            if interrupted_at is not None and time.monotonic() - interrupted_at >= 1.0:
+                break
+            if stdin_eof and not to_uds and not uds_write_closed and not draining:
                 try:
-                    wrote = os.write(out_fd, to_stdout)
-                    del to_stdout[:wrote]
+                    sock.shutdown(socket.SHUT_WR)
                 except OSError:
-                    break
+                    pass
+                uds_write_closed = True
+
+            _set_interest(in_fd, selectors.EVENT_READ if not draining and not stdin_eof
+                          and not uds_write_closed and len(to_uds) < buffer_limit else 0, "stdin")
+            uds_events = 0
+            if not draining and len(to_stdout) < buffer_limit:
+                uds_events |= selectors.EVENT_READ
+            if not uds_eof and to_uds and not uds_write_closed:
+                uds_events |= selectors.EVENT_WRITE
+            _set_interest(sock, uds_events, "uds")
+            _set_interest(out_fd, selectors.EVENT_WRITE if to_stdout else 0, "stdout")
+
+            for key, mask in sel.select(timeout=0.1 if interrupted_at is not None else 0.5):
+                tag = key.data
+                if tag == "sig":
+                    try:
+                        os.read(sig_r, 4096)
+                    except BlockingIOError:
+                        pass
+                elif tag == "stdin" and interrupted_at is None and not uds_eof:
+                    try:
+                        chunk = os.read(in_fd, min(65536, buffer_limit - len(to_uds)))
+                    except BlockingIOError:
+                        continue
+                    except OSError:
+                        chunk = b""
+                    if not chunk:
+                        stdin_eof = True
+                    else:
+                        to_uds.extend(chunk)
+                        if len(sent_to_uds) < MAX_FRAME_BYTES:
+                            sent_to_uds.extend(chunk[:MAX_FRAME_BYTES - len(sent_to_uds)])
+                elif tag == "uds" and not uds_eof:
+                    if mask & selectors.EVENT_WRITE and to_uds:
+                        try:
+                            sent = sock.send(to_uds)
+                            if sent:
+                                del to_uds[:sent]
+                            else:
+                                uds_write_closed = True
+                        except BlockingIOError:
+                            pass
+                        except OSError:
+                            uds_write_closed = True
+                    if mask & selectors.EVENT_READ and interrupted_at is None:
+                        try:
+                            chunk = sock.recv(min(65536, buffer_limit - len(to_stdout)))
+                        except BlockingIOError:
+                            continue
+                        except OSError:
+                            chunk = b""
+                        if not chunk:
+                            uds_eof = True
+                            uds_closed_early = received_from_uds == 0
+                        else:
+                            received_from_uds += len(chunk)
+                            to_stdout.extend(chunk)
+                elif tag == "stdout" and to_stdout:
+                    try:
+                        wrote = os.write(out_fd, to_stdout)
+                        if wrote:
+                            del to_stdout[:wrote]
+                        else:
+                            break
+                    except BlockingIOError:
+                        pass
+                    except OSError:
+                        # A closed downstream cannot receive queued bytes.
+                        to_stdout.clear()
+                        uds_eof = True
+                        break
     finally:
         signal.signal(signal.SIGTERM, prev_sigterm)
         signal.signal(signal.SIGINT, prev_sigint)
@@ -261,8 +801,10 @@ def run_local_fallback(
     git_bin: str,
     default_timeout_s: float,
     prebuffered: bytes = b"",
+    max_inflight: int = DEFAULT_MAX_LOCAL_INFLIGHT,
 ) -> int:
     """Execute the same read-only MCP engine locally inside PRoot with fast SIGTERM wakeup."""
+    max_local = max(1, min(16, int(max_inflight)))
     home_dir = os.environ.get("HOME", tempfile.gettempdir())
     tmp_dir = os.environ.get("TMPDIR", tempfile.gettempdir())
     policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"))
@@ -277,17 +819,50 @@ def run_local_fallback(
     sig_r, sig_w = os.pipe()
     os.set_blocking(sig_r, False)
     os.set_blocking(sig_w, False)
+    out_fd = sys.stdout.fileno()
+    out_was_blocking = os.get_blocking(out_fd)
+    os.set_blocking(out_fd, False)
+    out_buf = bytearray()
+    out_done = threading.Event()
 
     def write_resp(obj: dict[str, Any], *, ctx: RequestContext | None = None) -> None:
         raw = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
         with send_lock:
-            if ctx is not None and ctx.cancel_event.is_set():
+            if stop.is_set() or (ctx is not None and ctx.cancel_event.is_set()):
                 return
-            try:
-                sys.stdout.buffer.write(raw)
-                sys.stdout.buffer.flush()
-            except OSError:
+            if len(out_buf) + len(raw) > MAX_FRAME_BYTES * 4:
                 stop.set()
+                return
+            out_buf.extend(raw)
+
+    def output_worker() -> None:
+        poller = select.poll()
+        poller.register(out_fd, select.POLLOUT | select.POLLERR | select.POLLHUP)
+        while not stop.is_set():
+            with send_lock:
+                pending = bool(out_buf)
+            if not pending:
+                if out_done.wait(0.05):
+                    with send_lock:
+                        if not out_buf:
+                            break
+                continue
+            for _fd, ev in poller.poll(100):
+                if ev & (select.POLLERR | select.POLLHUP):
+                    stop.set()
+                    break
+                if ev & select.POLLOUT:
+                    try:
+                        with send_lock:
+                            del out_buf[:os.write(out_fd, out_buf)]
+                    except BlockingIOError:
+                        pass
+                    except OSError:
+                        stop.set()
+                        break
+
+    output_thread = threading.Thread(target=output_worker, daemon=True)
+    output_thread.start()
 
     def worker(req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
         try:
@@ -317,14 +892,14 @@ def run_local_fallback(
             return
 
         if isinstance(msg, dict) and msg.get("method") == "notifications/cancelled":
-            params = msg.get("params") if isinstance(msg.get("params"), dict) else {}
-            if "requestId" in params:
-                rk = canonical_req_key(params["requestId"])
-                if rk is not None:
-                    with active_lock:
-                        ctx = active.get(rk)
-                    if ctx is not None:
-                        ctx.cancel()
+            rk = cancellation_req_key(msg)
+            if rk is not None:
+                with active_lock:
+                    ctx = active.get(rk)
+                if ctx is not None:
+                    ctx.cancel()
+            elif "id" in msg:
+                write_resp(engine.jsonrpc_err(None, -32600, "Invalid cancellation"))
             return
 
         sync_resp, action = engine.handle_sync_control(msg, initialized=state["initialized"])
@@ -341,6 +916,9 @@ def run_local_fallback(
             with active_lock:
                 if rk in active:
                     write_resp(engine.jsonrpc_err(req_id, -32600, "Duplicate active request id"))
+                    return
+                if len(active) >= max_local:
+                    write_resp(engine.jsonrpc_err(req_id, -32000, "Server busy: max local inflight requests reached"))
                     return
                 ctx = RequestContext(req_id, default_timeout_s)
                 active[rk] = ctx
@@ -404,6 +982,12 @@ def run_local_fallback(
         join_wait = max(default_timeout_s + 2.0, 10.0)
         for w in workers:
             w.join(timeout=join_wait)
+        out_done.set()
+        output_thread.join()
+        try:
+            os.set_blocking(out_fd, out_was_blocking)
+        except OSError:
+            pass
         for fd in (sig_r, sig_w):
             try:
                 os.close(fd)
@@ -434,6 +1018,22 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     ap.add_argument("--probe", action="store_true", help="Run initialize+ping readiness probe and exit")
     ap.add_argument("--auto-start", action="store_true", help="Try single-flight auto-start via controller if socket down")
     ap.add_argument("--no-fallback", action="store_true", help="Fail instead of falling back to local PRoot")
+    ap.add_argument(
+        "--native-tools",
+        default=os.environ.get("F8_HYBRID2_NATIVE_TOOLS"),
+        help="Comma-separated tools routed to native UDS daemon (default: repo_tree_scan,repo_text_search,git_ro; 'all' for passthrough)",
+    )
+    ap.add_argument(
+        "--route-log",
+        default=os.environ.get("F8_HYBRID2_ROUTE_LOG", ""),
+        help="Optional JSONL route audit log path (records tool->native_uds/proot_local)",
+    )
+    ap.add_argument(
+        "--max-local-inflight",
+        type=int,
+        default=int(os.environ.get("F8_HYBRID2_MAX_LOCAL_INFLIGHT", str(DEFAULT_MAX_LOCAL_INFLIGHT))),
+        help="Max concurrent locally routed/fallback requests in relay",
+    )
     return ap.parse_args(argv)
 
 
@@ -476,6 +1076,13 @@ def _try_connect_with_optional_autostart(
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    try:
+        native_tools = parse_native_tools(args.native_tools)
+    except ValueError as exc:
+        print(f"[f8-hybrid2-relay] invalid --native-tools: {exc}", file=sys.stderr, flush=True)
+        return 2
+    route_log_path = Path(args.route_log) if args.route_log else None
+    local_maps = parse_map_specs(args.map, DEFAULT_FALLBACK_MAPS)
     sock_path = Path(args.socket)
     disabled_flag = Path(args.disabled_flag) if args.disabled_flag else (sock_path.parent / "disabled.flag")
     autostart_maps = args.daemon_map or (args.map if read_tracer_pid() == 0 else [])
@@ -492,13 +1099,13 @@ def main(argv: list[str] | None = None) -> int:
         print("[f8-hybrid2-relay] fallback=proot reason=F8_NO_HYBRID=1", file=sys.stderr, flush=True)
         if args.no_fallback:
             return 3
-        return run_local_fallback(parse_map_specs(args.map, DEFAULT_FALLBACK_MAPS), args.git_bin, args.default_timeout)
+        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight)
 
     if disabled_flag.exists():
         print("[f8-hybrid2-relay] fallback=proot reason=global-disabled", file=sys.stderr, flush=True)
         if args.no_fallback:
             return 3
-        return run_local_fallback(parse_map_specs(args.map, DEFAULT_FALLBACK_MAPS), args.git_bin, args.default_timeout)
+        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight)
 
     try:
         s = _try_connect_with_optional_autostart(sock_path, args.connect_timeout, args.auto_start, autostart_maps)
@@ -507,16 +1114,45 @@ def main(argv: list[str] | None = None) -> int:
             print(f"[f8-hybrid2-relay] daemon-unavailable reason={exc}", file=sys.stderr, flush=True)
             return 2
         print(f"[f8-hybrid2-relay] fallback=proot reason=daemon-unavailable ({exc})", file=sys.stderr, flush=True)
-        return run_local_fallback(parse_map_specs(args.map, DEFAULT_FALLBACK_MAPS), args.git_bin, args.default_timeout)
+        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight)
 
-    rc, early_eof, initial_bytes = bridge_stdio_to_uds(s)
+    rc, early_eof, initial_bytes = bridge_stdio_to_uds(
+        s,
+        native_tools=native_tools,
+        local_maps=local_maps,
+        git_bin=args.git_bin,
+        default_timeout_s=args.default_timeout,
+        max_local_inflight=args.max_local_inflight,
+        route_log_path=route_log_path,
+    )
     if early_eof:
+        # Once Git may have run, a lost response leaves its execution unconfirmed.
+        # Refuse to replay partial or truncated input whose contents are uncertain.
+        if len(initial_bytes) >= MAX_FRAME_BYTES or (initial_bytes and not initial_bytes.endswith(b"\n")):
+            return 2
+        for line in initial_bytes.splitlines():
+            try:
+                request = json.loads(line)
+            except (ValueError, RecursionError):
+                continue
+            if isinstance(request, dict) and request.get("method") == "tools/call":
+                params = request.get("params")
+                if isinstance(params, dict) and params.get("name") == "git_ro":
+                    print("[f8-hybrid2-relay] Git execution unconfirmed after early EOF", file=sys.stderr)
+                    return 2
         # Idle-exit or transient close before any reply arrived: retry connect once or fall back.
         try:
             s_retry = _try_connect_with_optional_autostart(sock_path, args.connect_timeout, args.auto_start, autostart_maps)
-            if initial_bytes:
-                s_retry.sendall(initial_bytes)
-            rc2, early2, _ = bridge_stdio_to_uds(s_retry)
+            rc2, early2, _ = bridge_stdio_to_uds(
+                s_retry,
+                native_tools=native_tools,
+                local_maps=local_maps,
+                git_bin=args.git_bin,
+                default_timeout_s=args.default_timeout,
+                max_local_inflight=args.max_local_inflight,
+                route_log_path=route_log_path,
+                prebuffered=initial_bytes,
+            )
             if not early2:
                 return rc2
         except (OSError, ValueError):
@@ -525,10 +1161,11 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         print("[f8-hybrid2-relay] fallback=proot reason=early-eof-on-connect", file=sys.stderr, flush=True)
         return run_local_fallback(
-            parse_map_specs(args.map, DEFAULT_FALLBACK_MAPS),
+            local_maps,
             args.git_bin,
             args.default_timeout,
             prebuffered=initial_bytes,
+            max_inflight=args.max_local_inflight,
         )
     return rc
 
