@@ -86,7 +86,8 @@ GIT_PRE_FLAGS: dict[str, bool] = {
     "--no-optional-locks": False,
 }
 
-GIT_NOEXT_SUBS: frozenset[str] = frozenset({"diff", "log", "show", "grep", "blame"})
+GIT_NOEXT_DIFF_SUBS: frozenset[str] = frozenset({"diff", "log", "show", "blame"})
+GIT_NOTEXTCONV_SUBS: frozenset[str] = frozenset({"diff", "log", "show", "grep", "blame"})
 
 _COMMON_COLOR_FLAGS = frozenset({"--color", "--no-color"})
 _COMMON_DIFF_FLAGS = frozenset(
@@ -792,8 +793,9 @@ class Policy:
 
         clean_args = list(out_pre)
         clean_args.append(sub)
-        if sub in GIT_NOEXT_SUBS:
+        if sub in GIT_NOEXT_DIFF_SUBS:
             clean_args.append("--no-ext-diff")
+        if sub in GIT_NOTEXTCONV_SUBS:
             clean_args.append("--no-textconv")
         clean_args.extend(mapped_sub_args)
         return clean_args, host_cwd, self.clean_env()

@@ -148,6 +148,7 @@ class PolicyAndSecurityTests(unittest.TestCase):
             ["rev-parse", "HEAD"],
             ["rev-parse", "--abbrev-ref", "HEAD"],
             ["ls-files"],
+            ["grep", "-n", "init"],
             ["diff"],
             ["diff", "--", "/ws/repo/hello.txt"],
             ["-C", "/ws/repo", "show", "--stat", "HEAD"],
@@ -169,6 +170,9 @@ class PolicyAndSecurityTests(unittest.TestCase):
             self.assertIn("GIT_CEILING_DIRECTORIES", env)
             if "diff" in cmd or "show" in cmd:
                 self.assertIn("--no-ext-diff", clean)
+                self.assertIn("--no-textconv", clean)
+            if "grep" in cmd:
+                self.assertNotIn("--no-ext-diff", clean)
                 self.assertIn("--no-textconv", clean)
 
         denied = (
