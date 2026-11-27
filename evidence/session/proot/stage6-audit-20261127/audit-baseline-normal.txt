@@ -1,0 +1,205 @@
+=== ANDROID_HOST_AUDIT label=baseline-normal ts=2026-11-27T09:44:48+08:00 ===
+--- 1. MEMORY / SWAP / VMSTAT ---
+MemTotal:       15373988 kB
+MemFree:          172160 kB
+MemAvailable:    3223376 kB
+Buffers:            1568 kB
+Cached:          2770224 kB
+SwapCached:        25980 kB
+Active:          3456312 kB
+Inactive:        2165020 kB
+SwapTotal:      16777212 kB
+SwapFree:        7227260 kB
+grep: /proc/vmstat: Permission denied
+--- 2. THERMAL ZONES (READABLE) ---
+thermal_zone0 (cpullc-0-0): 43000
+thermal_zone1 (cpullc-0-1): 43000
+thermal_zone10 (cpu-0-2-1): 42000
+thermal_zone11 (cpu-0-3-0): 43200
+thermal_zone12 (cpu-0-3-1): 43600
+thermal_zone13 (cpu-0-4-0): 43200
+thermal_zone14 (cpu-0-4-1): 44000
+thermal_zone15 (cpu-0-5-0): 43600
+thermal_zone16 (cpu-0-5-1): 42400
+thermal_zone17 (cpullc-1-0): 42000
+thermal_zone18 (cpullc-1-1): 41700
+thermal_zone24 (cpu-1-0-0): 41300
+thermal_zone25 (cpu-1-0-1): 41300
+thermal_zone26 (cpu-1-1-0): 41300
+thermal_zone27 (cpu-1-1-1): 41300
+thermal_zone36 (gpuss-0): 39700
+thermal_zone37 (gpuss-1): 39300
+thermal_zone38 (gpuss-2): 39700
+thermal_zone39 (gpuss-3): 39700
+thermal_zone40 (gpuss-4): 39300
+thermal_zone41 (gpuss-5): 40100
+thermal_zone42 (gpuss-6): 40900
+thermal_zone43 (gpuss-7): 40500
+thermal_zone44 (gpuss-8): 40500
+thermal_zone45 (gpuss-9): 40100
+thermal_zone46 (gpuss-10): 40100
+thermal_zone47 (ddr): 40900
+thermal_zone5 (cpu-0-0-0): 43200
+thermal_zone55 (pmh0101-bcl-lvl0): 0
+thermal_zone56 (pmh0101-bcl-lvl1): 0
+thermal_zone57 (pmh0101-bcl-lvl2): 0
+thermal_zone59 (pmih010x-ibat-lvl0): 62
+thermal_zone6 (cpu-0-0-1): 42400
+thermal_zone60 (pmih010x-ibat-lvl1): 103
+thermal_zone61 (pmih010x-bcl-lvl0): 0
+--- 3. CPUFREQ / GOVERNOR & GPU ---
+cpu0 gov=walt cur=1555200 max=2745600 info_max=3628800
+cpu1 gov=walt cur=2745600 max=2745600 info_max=3628800
+cpu2 gov=walt cur=2496000 max=2745600 info_max=3628800
+cpu3 gov=walt cur=1324800 max=2745600 info_max=3628800
+cpu4 gov=walt cur=1785600 max=2745600 info_max=3628800
+cpu5 gov=walt cur=1900800 max=2745600 info_max=3628800
+cpu6 gov=walt cur=883200 max=2880000 info_max=4608000
+cpu7 gov=walt cur=883200 max=2880000 info_max=4608000
+kgsl.gpu_model=Adreno840v2
+kgsl.gpubusy=  60567 1003000
+--- 4. GPU & BATTERY READABLE NODES ---
+crw-rw-rw-. 1 root   root    10, 124 Feb 20  1970 /dev/ashmem
+crw-rw-rw-. 1 system system 452,   0 Feb 20  1970 /dev/kgsl-3d0
+
+ls: cannot open directory '/dev/dri': Permission denied
+--- 5. CURRENT UID TOP-15 PSS/RSS & PHANTOM PROCS COUNT ---
+uid_visible_procs=89 total_pss_mb=1091.8 total_rss_mb=1921.4
+  pid= 28942 tracer= 28709 pss_mb=  415.1 rss_mb=  460.0 comm=claude-desktop
+  pid= 29293 tracer= 28709 pss_mb=  284.2 rss_mb=  285.9 comm=claude
+  pid= 28715 tracer= 28709 pss_mb=  123.8 rss_mb=  163.1 comm=claude-desktop
+  pid=  8982 tracer= 16923 pss_mb=   72.2 rss_mb=   73.4 comm=hermes
+  pid= 28218 tracer=     0 pss_mb=   34.4 rss_mb=  172.5 comm=main
+  pid= 28760 tracer= 28709 pss_mb=   25.9 rss_mb=   60.3 comm=claude-desktop
+  pid= 28848 tracer= 28709 pss_mb=   14.6 rss_mb=   37.6 comm=claude-desktop
+  pid= 16964 tracer=     0 pss_mb=   14.0 rss_mb=  125.3 comm=com.termux
+  pid= 25561 tracer= 28709 pss_mb=   11.2 rss_mb=   13.0 comm=python3
+  pid= 25930 tracer=     0 pss_mb=   11.2 rss_mb=   14.1 comm=python3
+  pid= 28763 tracer= 28709 pss_mb=   11.0 rss_mb=   33.4 comm=claude-desktop
+  pid= 28391 tracer= 28175 pss_mb=    5.4 rss_mb=   16.4 comm=xfdesktop
+  pid= 28379 tracer= 28175 pss_mb=    4.9 rss_mb=   16.3 comm=xfce4-panel
+  pid= 28434 tracer= 28175 pss_mb=    4.7 rss_mb=   12.7 comm=fcitx5
+  pid= 10938 tracer= 17917 pss_mb=    3.2 rss_mb=    6.1 comm=adb
+--- 6. READ-ONLY ADB (-P 5038) AUDIT ---
+f8-adb-port: 40397
+adb -P 5038 get-state: device
+[dumpsys activity settings]
+  max_cached_processes=1000
+  background_settle_time=60000
+  max_phantom_processes=32
+  default_background_activity_starts_enabled=false
+  default_background_fgs_starts_restriction_enabled=true
+  no_kill_cached_processes_until_boot_completed=true
+  no_kill_cached_processes_post_boot_completed_duration_millis=600000
+  use_tiered_cached_adj=false
+  tiered_cached_adj_decay_time=60000
+  tiered_cached_adj_ui_tier_size=10
+[phantom & power flags]
+device_config get activity_manager max_phantom_processes => null 
+settings get global settings_enable_monitor_phantom_procs => null 
+settings get global low_power => 0 
+settings get system POWER_PERFORMANCE_MODE_OPEN => 0 
+settings get system speed_mode => 0 
+[PSI & ZRAM via ADB]
+cat: /proc/pressure/cpu: Permission denied
+cat: /proc/pressure/memory: Permission denied
+cat: /proc/pressure/io: Permission denied
+cat: /sys/block/zram0/mm_stat: Permission denied
+[dumpsys meminfo com.termux + summary]
+Applications Memory Usage (in Kilobytes):
+Uptime: 1680283301 Realtime: 2142057575
+
+** MEMINFO in pid 16964 [com.termux] **
+                   Pss  Private  Private  SwapPss      Rss     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty    Total     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------   ------
+  Native Heap     2866     2860        0    20858     4212    48072    25834    17192
+  Dalvik Heap     1379     1084      100     3311     3240    13276     5084     8192
+ Dalvik Other      891      708        0     2172     1364                           
+        Stack      288      288        0     1068      300                           
+       Ashmem        0        0        0        0       96                           
+      Gfx dev     1240     1240        0        0     1244                           
+    Other dev        4        0        4        0      544                           
+     .so mmap      959       64       36      773    44324                           
+    .jar mmap      919        0        0        0    49572                           
+    .apk mmap     1135        0      980        0     3596                           
+    .ttf mmap        7        0        0        0      256                           
+    .dex mmap      581        0      576        0     1380                           
+    .oat mmap        9        0        0        0     1512                           
+    .art mmap     1940     1584       68     6589    12772                           
+   Other mmap     1845     1792        0        0     3184                           
+    GL mtrack      384      384        0        0      384                           
+      Unknown      160      152        4     7098      684                           
+        TOTAL    56476    10156     1768    41869   128664    61348    30918    25384
+ 
+ App Summary
+                       Pss(KB)                        Rss(KB)
+                        ------                         ------
+           Java Heap:     2736                          16012
+         Native Heap:     2860                           4212
+                Code:     1792                         101136
+               Stack:      288                            300
+            Graphics:     1624                           1628
+       Private Other:     2624
+              System:    44552
+             Unknown:                                    5376
+ 
+           TOTAL PSS:    56476            TOTAL RSS:   128664       TOTAL SWAP PSS:    41869
+ 
+ Objects
+               Views:       39         ViewRootImpl:        1
+         AppContexts:        9           Activities:        1
+              Assets:       59        AssetManagers:        0
+       Local Binders:       34        Proxy Binders:      112
+[dumpsys thermalservice & battery]
+IsStatusOverride: false
+ThermalEventListeners:
+	callbacks: 4
+	killed: false
+	broadcasts count: -1
+ThermalStatusListeners:
+	callbacks: 22
+	killed: false
+	broadcasts count: -1
+Thermal Status: 0
+Cached temperatures:
+	Temperature{mValue=40.9, mType=2, mName=battery, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU0, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU1, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU2, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU3, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU4, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU5, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU6, mStatus=0}
+	Temperature{mValue=99.6, mType=0, mName=CPU7, mStatus=0}
+	Temperature{mValue=69.9, mType=1, mName=GPU0, mStatus=0}
+	Temperature{mValue=71.0, mType=1, mName=GPU1, mStatus=0}
+	Temperature{mValue=71.8, mType=1, mName=GPU2, mStatus=0}
+	Temperature{mValue=69.1, mType=1, mName=GPU3, mStatus=0}
+	Temperature{mValue=99.6, mType=1, mName=GPU4, mStatus=0}
+	Temperature{mValue=70.2, mType=1, mName=GPU5, mStatus=0}
+	Temperature{mValue=73.7, mType=1, mName=GPU6, mStatus=0}
+	Temperature{mValue=99.6, mType=1, mName=GPU7, mStatus=0}
+	Temperature{mValue=72.9, mType=1, mName=GPU8, mStatus=0}
+	Temperature{mValue=74.1, mType=1, mName=GPU9, mStatus=0}
+Current Battery Service state:
+  AC powered: false
+  USB powered: false
+  Wireless powered: false
+  Dock powered: false
+  Max charging current: 0
+ Time when the latest updated value of the Max charging current was sent via battery changed broadcast: +13s496ms
+  Max charging voltage: 0
+  Charge counter: 5278000
+  status: 3
+  health: 2
+  present: true
+  level: 86
+  scale: 100
+  voltage: 4240
+ Time when the latest updated value of the voltage was sent via battery changed broadcast: +24d18h59m22s727ms
+ The last voltage value sent via the battery changed broadcast: 4242
+  temperature: 330
+  technology: Li-poly
+  Charging state: 0
+=== END ANDROID_HOST_AUDIT ===
