@@ -39,11 +39,13 @@ from f8_hybrid2_policy import (
 from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, canonical_req_key
 
 MAX_LINE_BYTES = 4 * 1024 * 1024
+MAX_OUTBUF_BYTES = 4 * 1024 * 1024
+MAX_OUTBUF_HARD_BYTES = 16 * 1024 * 1024
 AUDIT_ROTATE_BYTES = 5 * 1024 * 1024
 
 
 class ClientSession:
-    """Tracks one connected UDS client, its initialization state, and active request workers."""
+    """Tracks one connected UDS client, its initialization state, and non-blocking I/O loop."""
 
     def __init__(
         self,
@@ -60,23 +62,35 @@ class ClientSession:
         self.peer_pid = peer_pid
         self.initialized = False
         self._send_lock = threading.Lock()
+        self._out_buf = bytearray()
+        self._wake_r, self._wake_w = os.pipe()
+        os.set_blocking(self._wake_r, False)
+        os.set_blocking(self._wake_w, False)
         self._active_lock = threading.Lock()
         self._active: dict[str, RequestContext] = {}
         self._workers: list[threading.Thread] = []
         self.closed = threading.Event()
 
-    def send_json(self, obj: dict[str, Any], *, ctx: RequestContext | None = None) -> bool:
+    def _wake(self) -> None:
+        try:
+            os.write(self._wake_w, b"\x01")
+        except OSError:
+            pass
+
+    def send_json(self, obj: dict[str, Any], *, ctx: RequestContext | None = None, wake: bool = True) -> bool:
         raw = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
         with self._send_lock:
             if self.closed.is_set():
                 return False
             if ctx is not None and ctx.cancel_event.is_set():
                 return False
-            try:
-                self.conn.sendall(raw)
-                return True
-            except OSError:
+            if len(self._out_buf) + len(raw) > MAX_OUTBUF_HARD_BYTES:
+                self.closed.set()
                 return False
+            self._out_buf.extend(raw)
+        if wake:
+            self._wake()
+        return True
 
     def cancel_all(self) -> None:
         self.closed.set()
@@ -84,6 +98,7 @@ class ClientSession:
             ctxs = list(self._active.values())
         for ctx in ctxs:
             ctx.cancel()
+        self._wake()
         # Only shutdown here; let serve()'s finally own conn.close() so FD reuse cannot race.
         try:
             self.conn.shutdown(socket.SHUT_RDWR)
@@ -107,12 +122,15 @@ class ClientSession:
         except Exception as exc:
             resp_to_send = self.engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}")
         finally:
-            self.daemon.release_inflight()
-            with self._active_lock:
-                self._active.pop(rk, None)
-            self.daemon.touch_activity()
-        if resp_to_send is not None:
-            self.send_json(resp_to_send, ctx=ctx)
+            try:
+                if resp_to_send is not None:
+                    self.send_json(resp_to_send, ctx=ctx, wake=False)
+            finally:
+                self.daemon.release_inflight()
+                with self._active_lock:
+                    self._active.pop(rk, None)
+                self.daemon.touch_activity()
+                self._wake()
 
     def _handle_message(self, raw_line: bytes) -> None:
         self.daemon.touch_activity()
@@ -170,61 +188,122 @@ class ClientSession:
                 )
                 self._workers = [w for w in self._workers if w.is_alive()]
                 self._workers.append(th)
-            th.start()
+            try:
+                th.start()
+            except Exception:
+                with self._active_lock:
+                    self._active.pop(rk, None)
+                    self._workers.remove(th)
+                self.daemon.release_inflight()
+                self._wake()
+                raise
 
     def serve(self) -> None:
         buf = bytearray()
+        self.conn.setblocking(False)
         conn_fd = self.conn.fileno()
         poller = select.poll()
-        poller.register(conn_fd, select.POLLIN | select.POLLHUP | getattr(select, "POLLRDHUP", 0))
+        base_hup = select.POLLHUP | select.POLLERR | select.POLLNVAL
+        cur_mask = select.POLLIN | base_hup
+        poller.register(conn_fd, cur_mask)
+        poller.register(self._wake_r, select.POLLIN)
         read_eof = False
         try:
             while not self.closed.is_set():
+                # A finished worker has already queued its response. Check liveness
+                # first so an empty buffer snapshot cannot precede its final enqueue.
+                with self._active_lock:
+                    still_running = any(w.is_alive() for w in self._workers)
+                with self._send_lock:
+                    out_len = len(self._out_buf)
+                if read_eof and not still_running and out_len == 0:
+                    break
+                want_in = not read_eof and out_len < MAX_OUTBUF_BYTES
+                want_out = out_len > 0
+                desired = (select.POLLIN if want_in else 0) | (select.POLLOUT if want_out else 0) | base_hup
+                if desired != cur_mask:
+                    poller.modify(conn_fd, desired)
+                    cur_mask = desired
+
                 events = poller.poll(50 if read_eof else 500)
-                hup = any(ev & (select.POLLHUP | select.POLLERR | select.POLLNVAL) for _, ev in events)
-                if hup:
-                    self.cancel_all()
+                if self.closed.is_set():
                     break
-                if read_eof:
-                    with self._active_lock:
-                        still_running = any(w.is_alive() for w in self._workers)
-                    if not still_running:
+                for fd, ev in events:
+                    if fd == self._wake_r:
+                        try:
+                            os.read(self._wake_r, 4096)
+                        except OSError:
+                            pass
+                        continue
+                    if fd != conn_fd:
+                        continue
+                    if ev & (select.POLLERR | select.POLLNVAL):
+                        self.cancel_all()
                         break
-                    continue
-                if not any(ev & select.POLLIN for _, ev in events):
-                    continue
-                try:
-                    chunk = self.conn.recv(65536)
-                except BlockingIOError:
-                    continue
-                except OSError:
-                    self.cancel_all()
-                    break
-                if not chunk:
-                    read_eof = True
-                    poller.modify(conn_fd, select.POLLHUP | select.POLLERR)
-                    continue
-                buf.extend(chunk)
-                if len(buf) > MAX_LINE_BYTES:
-                    self.send_json(self.engine.jsonrpc_err(None, -32600, "Line buffer overflow"))
-                    break
-                while True:
-                    nl = buf.find(b"\n")
-                    if nl < 0:
+                    if (ev & select.POLLHUP) and not (ev & select.POLLIN):
+                        self.cancel_all()
                         break
-                    line = bytes(buf[:nl]).rstrip(b"\r")
-                    del buf[: nl + 1]
-                    if line:
-                        self._handle_message(line)
+                    if ev & select.POLLOUT:
+                        with self._send_lock:
+                            if self._out_buf:
+                                try:
+                                    sent = self.conn.send(self._out_buf)
+                                    del self._out_buf[:sent]
+                                except BlockingIOError:
+                                    pass
+                                except OSError:
+                                    self.closed.set()
+                                    break
+                    if ev & select.POLLIN:
+                        try:
+                            chunk = self.conn.recv(65536)
+                        except BlockingIOError:
+                            continue
+                        except OSError:
+                            self.cancel_all()
+                            break
+                        if not chunk:
+                            read_eof = True
+                            continue
+                        buf.extend(chunk)
+                        if len(buf) > MAX_LINE_BYTES:
+                            self.send_json(self.engine.jsonrpc_err(None, -32600, "Line buffer overflow"), wake=False)
+                            read_eof = True
+                            break
+                        while True:
+                            nl = buf.find(b"\n")
+                            if nl < 0:
+                                break
+                            line = bytes(buf[:nl]).rstrip(b"\r")
+                            del buf[: nl + 1]
+                            if line:
+                                self._handle_message(line)
         finally:
-            try:
-                poller.unregister(conn_fd)
-            except (OSError, KeyError, ValueError):
-                pass
+            for fd in (conn_fd, self._wake_r):
+                try:
+                    poller.unregister(fd)
+                except (OSError, KeyError, ValueError):
+                    pass
             if not read_eof:
                 self.cancel_all()
             self.join_workers(timeout_s=5.0)
             self.closed.set()
+            # Best-effort drain any small pending error/response if peer socket is still writable.
+            try:
+                with self._send_lock:
+                    rem = bytes(self._out_buf)
+                    self._out_buf.clear()
+                if rem:
+                    self.conn.setblocking(True)
+                    self.conn.settimeout(0.2)
+                    self.conn.sendall(rem)
+            except OSError:
+                pass
+            for pfd in (self._wake_r, self._wake_w):
+                try:
+                    os.close(pfd)
+                except OSError:
+                    pass
             try:
                 self.conn.close()
             except OSError:

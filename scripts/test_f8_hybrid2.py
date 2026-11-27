@@ -31,6 +31,8 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest import mock
+from types import SimpleNamespace
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -79,6 +81,28 @@ def git_run(args: list[str], cwd: Path) -> None:
         "GIT_COMMITTER_EMAIL": "test@example.com",
     }
     sp.run([SYSTEM_GIT, *args], cwd=cwd, env=env, check=True, stdout=sp.PIPE, stderr=sp.PIPE)
+
+
+class WorkerCleanupTests(unittest.TestCase):
+    def test_send_failure_releases_slot_and_request(self) -> None:
+        from f8_hybrid2_daemon import ClientSession
+        left, right = socket.socketpair()
+        daemon = SimpleNamespace(engine=SimpleNamespace(call_tool=lambda *_: {"result": object()}),
+                                 default_timeout_s=1, release_inflight=mock.Mock(),
+                                 touch_activity=mock.Mock())
+        session = ClientSession(left, daemon, 1, 1)
+        ctx = RequestContext(1, 1)
+        session._active["key"] = ctx
+        try:
+            with self.assertRaises(TypeError):
+                session._run_tool_worker(1, "key", {}, ctx)
+            daemon.release_inflight.assert_called_once()
+            self.assertNotIn("key", session._active)
+        finally:
+            left.close()
+            right.close()
+            os.close(session._wake_r)
+            os.close(session._wake_w)
 
 
 class PolicyAndSecurityTests(unittest.TestCase):
@@ -140,6 +164,24 @@ class PolicyAndSecurityTests(unittest.TestCase):
 
         mapped = self.pol.map_path("sub/../a.py", cwd="/ws", must_exist=True)
         self.assertEqual(mapped, str((self.ws / "a.py").resolve()))
+
+    def test_git_metadata_fail_closed(self) -> None:
+        self._refused("git-repository-unidentified", self.pol.validate_git_ro, ["status"], "/ws/sub")
+        bare = self.repo / "nested.git"
+        bare.mkdir()
+        git_run(["init", "--bare", "-q"], bare)
+        self._refused("git-bare-unsupported", self.pol.validate_git_ro, ["status"], "/ws/repo/nested.git")
+        self.assertEqual(self.pol.clean_env()["GIT_CONFIG_VALUE_0"], "explicit")
+        config = self.repo / ".git/config"
+        original = config.read_text()
+        config.write_text(original + "\n[core]\n worktree = ../sub\n")
+        self._refused("git-config-unsafe", self.pol.validate_git_ro, ["status"], "/ws/repo")
+        config.write_text(original)
+        alternates = self.repo / ".git/objects/info/alternates"
+        alternates.write_text("../../objects\n")
+        self._refused("git-alternates-unsupported", self.pol.validate_git_ro, ["status"], "/ws/repo")
+        alternates.unlink()
+        self.pol.validate_git_ro(["status"], "/ws/repo")
 
     def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
@@ -880,6 +922,246 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
         mapped_host = ctl.resolve_host_daemon_py("/root/projects/GPU加速/scripts/f8_hybrid2_daemon.py")
         self.assertTrue(mapped_host.startswith("/data/data/com.termux/"))
         self.assertTrue(mapped_host.endswith("/root/projects/GPU加速/scripts/f8_hybrid2_daemon.py"))
+
+    def test_relay_strict_jsonrpc_native_cancel_deferred_eof_and_bounded_local(self) -> None:
+        import f8_hybrid2_relay as relay
+
+        maps_arg = f"/ws={self.ws}"
+        # Prepare a multi-MiB JSONL file so local calls take measurable work if launched concurrently
+        big_jsonl = self.ws / "heavy.jsonl"
+        row = json.dumps({"k": "v" * 200, "n": 1}) + "\n"
+        big_jsonl.write_bytes(row.encode() * 6000)
+
+        # A) Mock UDS closes immediately without replying while init + deferred_local + stdin EOF
+        mock_sock = self.rdir / "mock1.sock"
+        srv = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        srv.bind(str(mock_sock))
+        srv.listen(4)
+
+        def accept_and_drop() -> None:
+            for _ in range(4):
+                try:
+                    c, _ = srv.accept()
+                    c.recv(4096)
+                    c.close()
+                except OSError:
+                    break
+
+        t_srv = __import__("threading").Thread(target=accept_and_drop, daemon=True)
+        t_srv.start()
+        try:
+            init_and_json = "\n".join([
+                json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+                json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}),
+                json.dumps({"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+            ]) + "\n"
+            t0 = time.monotonic()
+            p_nofb = sp.run(
+                [sys.executable, str(RELAY_PY), "--socket", str(mock_sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--no-fallback"],
+                input=init_and_json.encode(),
+                capture_output=True,
+                timeout=8,
+            )
+            self.assertEqual(p_nofb.returncode, 2)
+            self.assertLess(time.monotonic() - t0, 4.0)
+
+            t1 = time.monotonic()
+            p_fb = sp.run(
+                [sys.executable, str(RELAY_PY), "--socket", str(mock_sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT],
+                input=init_and_json.encode(),
+                capture_output=True,
+                timeout=8,
+            )
+            self.assertEqual(p_fb.returncode, 0, p_fb.stderr)
+            self.assertLess(time.monotonic() - t1, 4.0)
+            fb_out = {r["id"]: r for r in (json.loads(ln) for ln in p_fb.stdout.decode().splitlines() if ln.strip())}
+            self.assertIn("result", fb_out[1])
+            self.assertIn("result", fb_out[2])
+            self.assertFalse(fb_out[2]["result"].get("isError"))
+        finally:
+            srv.close()
+            t_srv.join(timeout=2.0)
+            mock_sock.unlink(missing_ok=True)
+
+        # B) Mock UDS replies after initial ping, then receives init + deferred_local + stdin EOF and drops before init reply
+        mock_sock2 = self.rdir / "mock2.sock"
+        srv2 = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        srv2.bind(str(mock_sock2))
+        srv2.listen(4)
+
+        def accept_ping_then_drop_init() -> None:
+            c, _ = srv2.accept()
+            f = c.makefile("rb")
+            ln = f.readline()
+            ping_msg = json.loads(ln.decode())
+            c.sendall((json.dumps({"jsonrpc": "2.0", "id": ping_msg["id"], "result": {}}) + "\n").encode())
+            f.readline()  # initialize -> drop before replying
+            f.close()
+            c.close()
+
+        t_srv2 = __import__("threading").Thread(target=accept_ping_then_drop_init, daemon=True)
+        t_srv2.start()
+        try:
+            seq2 = "\n".join([
+                json.dumps({"jsonrpc": "2.0", "id": 90, "method": "ping"}),
+                json.dumps({"jsonrpc": "2.0", "id": 91, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+                json.dumps({"jsonrpc": "2.0", "id": 92, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+            ]) + "\n"
+            t0 = time.monotonic()
+            p_drop = sp.run(
+                [sys.executable, str(RELAY_PY), "--socket", str(mock_sock2), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--no-fallback"],
+                input=seq2.encode(),
+                capture_output=True,
+                timeout=8,
+            )
+            self.assertEqual(p_drop.returncode, 0, p_drop.stderr)
+            self.assertLess(time.monotonic() - t0, 4.0)
+            out2 = {r["id"]: r for r in (json.loads(ln) for ln in p_drop.stdout.decode().splitlines() if ln.strip())}
+            self.assertIn(90, out2)
+            self.assertEqual(out2[92]["error"]["code"], -32002)
+        finally:
+            srv2.close()
+            t_srv2.join(timeout=2.0)
+            mock_sock2.unlink(missing_ok=True)
+
+        # C) Real daemon: jsonrpc="1.0" MUST be rejected (-32600), native cancel clears native_inflight,
+        # bounded --max-local-inflight rejects burst with -32000, and SIGTERM kills active local relay fast
+        self.proc = self._start_daemon(["--max-inflight", "1"])
+        base_fds = proc_count_fds(self.proc.pid)
+        bad_and_cancel = "\n".join([
+            json.dumps({"jsonrpc": "1.0", "id": 101, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+            json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+            json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}),
+            json.dumps({"jsonrpc": "2.0", "id": 103, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/bigtree", "pattern": "zzznomatch", "fixed_string": True}}}),
+            json.dumps({"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 103}}),
+            # Relay MUST clear native_inflight on notifications/cancelled so immediate reuse on local route works!
+            json.dumps({"jsonrpc": "2.0", "id": 103, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+            json.dumps({"jsonrpc": "1.0", "id": 102, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+            json.dumps({"jsonrpc": "2.0", "id": True, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+        ]) + "\n"
+        p_proto = sp.run(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--no-fallback"],
+            input=bad_and_cancel.encode(),
+            capture_output=True,
+            timeout=15,
+        )
+        self.assertEqual(p_proto.returncode, 0, p_proto.stderr)
+        res_p = [json.loads(ln) for ln in p_proto.stdout.decode().splitlines() if ln.strip()]
+        by_id = {}
+        null_errs = []
+        for r in res_p:
+            if r.get("id") is None:
+                null_errs.append(r)
+            else:
+                by_id[r["id"]] = r
+        self.assertEqual(by_id[101]["error"]["code"], -32600)
+        self.assertEqual(by_id[102]["error"]["code"], -32600)
+        self.assertTrue(any(e["error"]["code"] == -32600 for e in null_errs), res_p)
+        self.assertIn("result", by_id[103], res_p)
+        self.assertFalse(by_id[103]["result"].get("isError"))
+
+        # Interactive native cancel + reuse req_id on native route after cancel settles
+        p_reuse = sp.Popen(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--no-fallback"],
+            stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, text=True, bufsize=1,
+        )
+        try:
+            assert p_reuse.stdin and p_reuse.stdout
+            p_reuse.stdin.write(json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}) + "\n")
+            p_reuse.stdin.flush()
+            self.assertIn("result", json.loads(p_reuse.stdout.readline()))
+            p_reuse.stdin.write(json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}) + "\n")
+            p_reuse.stdin.write(json.dumps({"jsonrpc": "2.0", "id": 110, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/bigtree", "pattern": "zzznomatch", "fixed_string": True}}}) + "\n")
+            p_reuse.stdin.flush()
+            time.sleep(0.01)
+            p_reuse.stdin.write(json.dumps({"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 110}}) + "\n")
+            p_reuse.stdin.flush()
+            for _ in range(100):
+                if self.log.exists() and '"req_id": 110' in self.log.read_text(encoding="utf-8"):
+                    break
+                time.sleep(0.02)
+            p_reuse.stdin.write(json.dumps({"jsonrpc": "2.0", "id": 110, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]}}}) + "\n")
+            p_reuse.stdin.flush()
+            r_reuse = json.loads(p_reuse.stdout.readline())
+            self.assertEqual(r_reuse["id"], 110)
+            self.assertIn("result", r_reuse, r_reuse)
+            p_reuse.stdin.close()
+            self.assertEqual(p_reuse.wait(timeout=5), 0)
+        finally:
+            for pipe in (p_reuse.stdin, p_reuse.stdout, p_reuse.stderr):
+                if pipe is not None:
+                    try:
+                        pipe.close()
+                    except OSError:
+                        pass
+
+        # Burst 16 local python_json_summary calls with --max-local-inflight 2 -> excess hit -32000
+        burst = "\n".join(
+            [
+                json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+                json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}),
+            ]
+            + [
+                json.dumps({"jsonrpc": "2.0", "id": 200 + i, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/heavy.jsonl", "limit_records": 6000}}})
+                for i in range(16)
+            ]
+        ) + "\n"
+        p_burst = sp.run(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--max-local-inflight", "2", "--no-fallback"],
+            input=burst.encode(),
+            capture_output=True,
+            timeout=20,
+        )
+        self.assertEqual(p_burst.returncode, 0, p_burst.stderr)
+        burst_res = [json.loads(ln) for ln in p_burst.stdout.decode().splitlines() if ln.strip()]
+        busy_cnt = sum(1 for r in burst_res if r.get("error", {}).get("code") == -32000)
+        ok_cnt = sum(1 for r in burst_res if isinstance(r.get("id"), int) and r["id"] >= 200 and "result" in r)
+        self.assertGreaterEqual(busy_cnt, 10, f"expected -32000 backpressure on burst, got {burst_res}")
+        self.assertGreaterEqual(ok_cnt, 1)
+        self.assertLessEqual(ok_cnt, 4)
+
+        # Slow-reader UDS backpressure test: daemon with --max-inflight 1 must NOT accumulate worker threads!
+        s_slow, f_slow = self._uds_rpc(self.sock)
+        try:
+            s_slow.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 4096)
+            self._send(s_slow, {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
+            self.assertIn("result", json.loads(f_slow.readline()))
+            for i in range(16):
+                self._send(s_slow, {"jsonrpc": "2.0", "id": 300 + i, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree", "max_entries": 1500}}})
+                time.sleep(0.03)
+            threads_during = len(os.listdir(f"/proc/{self.proc.pid}/task"))
+            self.assertLessEqual(threads_during, 6, f"slow-reader caused thread accumulation: {threads_during}")
+        finally:
+            f_slow.close()
+            s_slow.close()
+
+        time.sleep(0.2)
+        self.assertEqual(proc_count_fds(self.proc.pid), base_fds)
+
+        # SIGTERM during selective UDS + local mode exits fast (<0.8s)
+        p_sig = sp.Popen(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--no-fallback"],
+            stdin=sp.PIPE,
+            stdout=sp.PIPE,
+            stderr=sp.PIPE,
+            start_new_session=True,
+        )
+        try:
+            assert p_sig.stdin and p_sig.stdout
+            p_sig.stdin.write((json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}) + "\n").encode())
+            p_sig.stdin.flush()
+            self.assertIn(b"f8-hybrid2", p_sig.stdout.readline())
+            t0 = time.monotonic()
+            p_sig.send_signal(signal.SIGTERM)
+            self.assertEqual(p_sig.wait(timeout=3), 0)
+            self.assertLess(time.monotonic() - t0, 0.8)
+        finally:
+            for pipe in (p_sig.stdin, p_sig.stdout, p_sig.stderr):
+                if pipe is not None:
+                    try:
+                        pipe.close()
+                    except OSError:
+                        pass
 
 
 if __name__ == "__main__":
