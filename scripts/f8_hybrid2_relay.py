@@ -590,7 +590,8 @@ def bridge_stdio_to_uds(
 
 def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") -> tuple[int, bool, bytes]:
     """Raw passthrough stdio <-> UDS (used only when --native-tools all)."""
-    stop = threading.Event()
+    import time
+
     in_fd = sys.stdin.fileno()
     out_fd = sys.stdout.fileno()
     in_was_blocking = os.get_blocking(in_fd)
@@ -601,39 +602,37 @@ def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") ->
 
     sel = selectors.DefaultSelector()
     stdin_eof = False
-    shut_wr_sent = False
+    uds_eof = False
+    uds_write_closed = False
     to_uds = bytearray(prebuffered)
     to_stdout = bytearray()
     sent_to_uds = bytearray(prebuffered[:MAX_FRAME_BYTES])
     received_from_uds = 0
     uds_closed_early = False
+    interrupted_at = None
+    buffer_limit = MAX_FRAME_BYTES * 2
     sig_r, sig_w = os.pipe()
     os.set_blocking(sig_r, False)
     os.set_blocking(sig_w, False)
     sel.register(sig_r, selectors.EVENT_READ, "sig")
 
-    def _set_interest(fd_or_sock: Any, desired_events: int | None, tag: str) -> None:
+    def _set_interest(fd_or_sock: Any, events: int, tag: str) -> None:
         try:
             key = sel.get_key(fd_or_sock)
         except KeyError:
             key = None
-        if desired_events is None:
+        if not events:
             if key is not None:
                 sel.unregister(fd_or_sock)
-            return
-        if key is None:
-            sel.register(fd_or_sock, desired_events, tag)
-        elif key.events != desired_events:
-            sel.modify(fd_or_sock, desired_events, tag)
-
-    def _refresh_sel() -> None:
-        _set_interest(in_fd, None if stdin_eof else selectors.EVENT_READ, "stdin")
-        uds_ev = selectors.EVENT_READ | (selectors.EVENT_WRITE if to_uds else 0)
-        _set_interest(sock, uds_ev, "uds")
-        _set_interest(out_fd, selectors.EVENT_WRITE if to_stdout else None, "stdout")
+        elif key is None:
+            sel.register(fd_or_sock, events, tag)
+        elif key.events != events:
+            sel.modify(fd_or_sock, events, tag)
 
     def on_sig(_signum: int, _frame: Any) -> None:
-        stop.set()
+        nonlocal interrupted_at
+        if interrupted_at is None:
+            interrupted_at = time.monotonic()
         try:
             os.write(sig_w, b"\x01")
         except OSError:
@@ -643,96 +642,89 @@ def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") ->
     prev_sigint = signal.signal(signal.SIGINT, on_sig)
 
     try:
-        while not stop.is_set():
-            _refresh_sel()
-            for key, mask in sel.select(timeout=0.5):
+        while True:
+            # Once the peer closes its output, or a signal arrives, flush bytes
+            # already accepted for stdout without accepting more input.
+            draining = uds_eof or interrupted_at is not None
+            if draining and not to_stdout and (uds_eof or not to_uds or uds_write_closed):
+                break
+            if interrupted_at is not None and time.monotonic() - interrupted_at >= 1.0:
+                break
+            if stdin_eof and not to_uds and not uds_write_closed and not draining:
+                try:
+                    sock.shutdown(socket.SHUT_WR)
+                except OSError:
+                    pass
+                uds_write_closed = True
+
+            _set_interest(in_fd, selectors.EVENT_READ if not draining and not stdin_eof
+                          and not uds_write_closed and len(to_uds) < buffer_limit else 0, "stdin")
+            uds_events = 0
+            if not draining and len(to_stdout) < buffer_limit:
+                uds_events |= selectors.EVENT_READ
+            if not uds_eof and to_uds and not uds_write_closed:
+                uds_events |= selectors.EVENT_WRITE
+            _set_interest(sock, uds_events, "uds")
+            _set_interest(out_fd, selectors.EVENT_WRITE if to_stdout else 0, "stdout")
+
+            for key, mask in sel.select(timeout=0.1 if interrupted_at is not None else 0.5):
                 tag = key.data
                 if tag == "sig":
-                    stop.set()
-                    break
-                if tag == "stdin" and (mask & selectors.EVENT_READ):
                     try:
-                        chunk = os.read(in_fd, 65536)
+                        os.read(sig_r, 4096)
+                    except BlockingIOError:
+                        pass
+                elif tag == "stdin" and interrupted_at is None and not uds_eof:
+                    try:
+                        chunk = os.read(in_fd, min(65536, buffer_limit - len(to_uds)))
                     except BlockingIOError:
                         continue
                     except OSError:
-                        stdin_eof = True
-                        break
+                        chunk = b""
                     if not chunk:
                         stdin_eof = True
-                        if not to_uds and not shut_wr_sent:
-                            try:
-                                sock.shutdown(socket.SHUT_WR)
-                                shut_wr_sent = True
-                            except OSError:
-                                stop.set()
-                        break
-                    to_uds.extend(chunk)
-                    if len(sent_to_uds) < MAX_FRAME_BYTES:
-                        sent_to_uds.extend(chunk[: MAX_FRAME_BYTES - len(sent_to_uds)])
-                    if len(to_uds) > MAX_FRAME_BYTES * 2:
-                        stop.set()
-                        break
-                elif tag == "uds":
-                    if (mask & selectors.EVENT_WRITE) and to_uds:
+                    else:
+                        to_uds.extend(chunk)
+                        if len(sent_to_uds) < MAX_FRAME_BYTES:
+                            sent_to_uds.extend(chunk[:MAX_FRAME_BYTES - len(sent_to_uds)])
+                elif tag == "uds" and not uds_eof:
+                    if mask & selectors.EVENT_WRITE and to_uds:
                         try:
                             sent = sock.send(to_uds)
-                            del to_uds[:sent]
+                            if sent:
+                                del to_uds[:sent]
+                            else:
+                                uds_write_closed = True
                         except BlockingIOError:
                             pass
                         except OSError:
-                            stop.set()
-                            break
-                        if stdin_eof and not to_uds and not shut_wr_sent:
-                            try:
-                                sock.shutdown(socket.SHUT_WR)
-                                shut_wr_sent = True
-                            except OSError:
-                                stop.set()
-                                break
-                    if mask & selectors.EVENT_READ:
+                            uds_write_closed = True
+                    if mask & selectors.EVENT_READ and interrupted_at is None:
                         try:
-                            chunk = sock.recv(65536)
+                            chunk = sock.recv(min(65536, buffer_limit - len(to_stdout)))
                         except BlockingIOError:
                             continue
                         except OSError:
-                            if received_from_uds == 0:
-                                uds_closed_early = True
-                            stop.set()
-                            break
+                            chunk = b""
                         if not chunk:
-                            if received_from_uds == 0:
-                                uds_closed_early = True
-                            stop.set()
-                            break
-                        received_from_uds += len(chunk)
-                        to_stdout.extend(chunk)
-                elif tag == "stdout" and (mask & selectors.EVENT_WRITE) and to_stdout:
+                            uds_eof = True
+                            uds_closed_early = received_from_uds == 0
+                        else:
+                            received_from_uds += len(chunk)
+                            to_stdout.extend(chunk)
+                elif tag == "stdout" and to_stdout:
                     try:
                         wrote = os.write(out_fd, to_stdout)
-                        del to_stdout[:wrote]
+                        if wrote:
+                            del to_stdout[:wrote]
+                        else:
+                            break
                     except BlockingIOError:
                         pass
                     except OSError:
-                        stop.set()
-                        break
-
-        # Drain without switching stdout to blocking mode; signal remains actionable.
-        while to_stdout and not stop.is_set():
-            ready = select.poll()
-            ready.register(out_fd, select.POLLOUT | select.POLLERR | select.POLLHUP)
-            ready.register(sig_r, select.POLLIN)
-            for fd, ev in ready.poll(500):
-                if fd == sig_r or (fd == out_fd and ev & (select.POLLERR | select.POLLHUP)):
-                    stop.set()
-                    break
-                if fd == out_fd and ev & select.POLLOUT:
-                    try:
-                        del to_stdout[:os.write(out_fd, to_stdout)]
-                    except BlockingIOError:
-                        pass
-                    except OSError:
-                        stop.set()
+                        # A closed downstream cannot receive queued bytes.
+                        to_stdout.clear()
+                        uds_eof = True
                         break
     finally:
         signal.signal(signal.SIGTERM, prev_sigterm)

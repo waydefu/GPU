@@ -1164,5 +1164,101 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
                         pass
 
 
+class RawRelayDrainTests(unittest.TestCase):
+    """Exercise the raw bridge with local socketpairs and pipe-backed stdio."""
+
+    def _start_bridge(self):
+        parent, child = socket.socketpair()
+        code = ("import socket, sys; from f8_hybrid2_relay import _bridge_raw_passthrough; "
+                "r = _bridge_raw_passthrough(socket.socket(fileno=int(sys.argv[1]))); "
+                "print(repr(r), file=sys.stderr)")
+        proc = sp.Popen([sys.executable, "-c", code, str(child.fileno())],
+                        cwd=HERE, pass_fds=(child.fileno(),), stdin=sp.PIPE,
+                        stdout=sp.PIPE, stderr=sp.PIPE)
+        child.close()
+        self.addCleanup(parent.close)
+        self.addCleanup(lambda: proc.poll() is None and proc.kill())
+        return parent, proc
+
+    def test_eof_drains_queued_responses_and_stdin_half_close(self):
+        import threading
+        peer, proc = self._start_bridge()
+        request = b'{"jsonrpc":"2.0","id":1,"method":"initialize"}\n'
+        frame = b'{"jsonrpc":"2.0","id":1,"result":{}}\n'
+        response = frame * 4096
+        observed = []
+
+        def serve():
+            data = bytearray()
+            while True:
+                chunk = peer.recv(4096)
+                if not chunk:
+                    break
+                data.extend(chunk)
+            observed.append(bytes(data))
+            peer.sendall(response)
+            peer.shutdown(socket.SHUT_WR)
+
+        worker = threading.Thread(target=serve, daemon=True)
+        worker.start()
+        out, err = proc.communicate(request, timeout=10)
+        worker.join(timeout=2)
+        self.assertFalse(worker.is_alive())
+        self.assertEqual(observed, [request])
+        self.assertEqual(out, response)
+        self.assertIn(b'(0, False, ', err)
+        self.assertEqual(proc.returncode, 0)
+
+    def test_early_eof_keeps_retry_input(self):
+        peer, proc = self._start_bridge()
+        request = b'{"jsonrpc":"2.0","id":1,"method":"initialize"}\n'
+        assert proc.stdin is not None
+        proc.stdin.write(request)
+        proc.stdin.flush()
+        peer.settimeout(5)
+        self.assertEqual(peer.recv(4096), request)
+        peer.shutdown(socket.SHUT_WR)
+        out, err = proc.communicate(timeout=5)
+        self.assertEqual(out, b"")
+        self.assertIn(b'(0, True, ', err)
+        self.assertIn(b'initialize', err)
+        self.assertEqual(proc.returncode, 0)
+
+    def test_signal_exits_when_output_reader_stalls(self):
+        import threading
+        peer, proc = self._start_bridge()
+        frame = b'{"jsonrpc":"2.0","id":1,"result":{}}\n'
+
+        def send_responses():
+            try:
+                peer.sendall(frame * 4096)
+            except OSError:
+                pass
+
+        worker = threading.Thread(target=send_responses, daemon=True)
+        worker.start()
+        # Read a complete response to establish that the bridge is active, then
+        # leave stdout unread while requesting termination.
+        assert proc.stdout is not None
+        self.assertEqual(proc.stdout.readline(), frame)
+        proc.send_signal(signal.SIGTERM)
+        self.assertEqual(proc.wait(timeout=3), 0)
+        peer.close()
+        worker.join(timeout=2)
+        for pipe in (proc.stdin, proc.stdout, proc.stderr):
+            if pipe is not None:
+                pipe.close()
+
+    def test_closed_stdout_is_graceful(self):
+        peer, proc = self._start_bridge()
+        assert proc.stdout is not None
+        proc.stdout.close()
+        proc.stdout = None
+        peer.sendall(b'{"jsonrpc":"2.0","id":1,"result":{}}\n')
+        peer.shutdown(socket.SHUT_WR)
+        _, err = proc.communicate(timeout=5)
+        self.assertEqual(proc.returncode, 0, err)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2, failfast=False)
