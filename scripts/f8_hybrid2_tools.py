@@ -2,8 +2,12 @@
 """Shared MCP JSON-RPC 2.0 dispatcher and read-only tool implementations for Stage 7.2.
 
 Used both by the native Termux UDS daemon (`f8_hybrid2_daemon.py`) and by the
-local PRoot fallback path inside `f8_hybrid2_relay.py` so protocol semantics
-and tool results stay identical across native and fallback paths.
+local PRoot fallback path inside `f8_hybrid2_relay.py`.
+Upgraded per Stage 7.2 universal audit:
+- Enforces MCP `initialize` state machine (`-32002` before initialization)
+- Supports pidfd_open + wakeup-pipe `select.poll()` in `git_ro` (<1ms cancel/exit)
+- Uses O_NOFOLLOW + chunked reads + JSON size caps + regex line cap (anti-OOM/ReDoS)
+- UTF-8 byte-safe payload trimming inside valid JSON (`truncated: true`)
 """
 
 from __future__ import annotations
@@ -12,14 +16,15 @@ import hashlib
 import json
 import os
 import re
+import select
 import signal
 import subprocess
+import tempfile
 import threading
 import time
-from pathlib import Path
 from typing import Any, Callable
 
-from f8_hybrid2_policy import Policy, Refuse, pidfd_open
+from f8_hybrid2_policy import Policy, Refuse, open_nofollow, pidfd_open
 
 SUPPORTED_PROTOCOL_VERSIONS = (
     "2025-11-25",
@@ -28,8 +33,14 @@ SUPPORTED_PROTOCOL_VERSIONS = (
     "2024-11-05",
 )
 DEFAULT_PROTOCOL_VERSION = "2025-03-26"
-MAX_TEXT_BYTES = 1024 * 1024  # 1 MiB cap per serialized tool response
+MAX_TEXT_BYTES = 1024 * 1024  # 1 MiB UTF-8 cap
 MAX_OUTPUT_BYTES = 2 * 1024 * 1024
+MAX_JSON_DOC_BYTES = 16 * 1024 * 1024
+MAX_JSONL_BYTES = 32 * 1024 * 1024
+MAX_JSONL_LINE_BYTES = 1024 * 1024
+MAX_SEARCH_FILE_BYTES = 2 * 1024 * 1024
+MAX_SEARCH_LINE_CHARS = 4096
+MAX_REGEX_CHARS = 512
 
 TOOL_DEFS: list[dict[str, Any]] = [
     {
@@ -102,7 +113,7 @@ class RequestTimeout(Exception):
 
 
 class RequestContext:
-    """Per-request cancellation, timeout deadline, and subprocess pgid tracker."""
+    """Per-request cancellation, timeout deadline, wakeup pipe, and subprocess pgid tracker."""
 
     def __init__(self, req_id: Any, timeout_s: float) -> None:
         self.req_id = req_id
@@ -111,15 +122,25 @@ class RequestContext:
         self.deadline = time.monotonic() + max(0.001, float(timeout_s))
         self._lock = threading.Lock()
         self._proc_pgid: int | None = None
+        self._wake_w: int | None = None
+
+    def attach_wake_fd(self, w_fd: int | None) -> None:
+        with self._lock:
+            self._wake_w = w_fd
+            if w_fd is not None and self.cancel_event.is_set():
+                try:
+                    os.write(w_fd, b"\x01")
+                except OSError:
+                    pass
 
     def set_proc(self, proc: subprocess.Popen[bytes] | None) -> None:
         with self._lock:
             self._proc_pgid = proc.pid if proc is not None else None
-            already_cancelled = self.cancel_event.is_set()
-        if already_cancelled and proc is not None:
-            self._kill_pgid(proc.pid)
+            if proc is not None and self.cancel_event.is_set():
+                self._kill_pgid(proc.pid)
 
-    def _kill_pgid(self, pgid: int) -> None:
+    @staticmethod
+    def _kill_pgid(pgid: int) -> None:
         try:
             os.killpg(pgid, signal.SIGKILL)
         except ProcessLookupError:
@@ -131,22 +152,90 @@ class RequestContext:
                 pass
 
     def cancel(self) -> None:
-        self.cancel_event.set()
+        # Hold _lock while signaling pgid and wake_w so attach_wake_fd(None)+close() cannot race.
         with self._lock:
-            pgid = self._proc_pgid
-        if pgid is not None:
-            self._kill_pgid(pgid)
+            self.cancel_event.set()
+            if self._proc_pgid is not None:
+                self._kill_pgid(self._proc_pgid)
+            if self._wake_w is not None:
+                try:
+                    os.write(self._wake_w, b"\x01")
+                except OSError:
+                    pass
 
     def check(self) -> None:
         if self.cancel_event.is_set():
             raise RequestCancelled("cancelled")
         if time.monotonic() > self.deadline:
-            self.timed_out = True
             with self._lock:
-                pgid = self._proc_pgid
-            if pgid is not None:
-                self._kill_pgid(pgid)
+                self.timed_out = True
+                if self._proc_pgid is not None:
+                    self._kill_pgid(self._proc_pgid)
             raise RequestTimeout("timeout")
+
+
+def canonical_req_key(req_id: Any) -> str | None:
+    """Strictly validate JSON-RPC request id (str or int, excluding bool) and normalize key."""
+    if isinstance(req_id, bool) or not isinstance(req_id, (str, int)):
+        return None
+    kind = "s" if isinstance(req_id, str) else "i"
+    return f"{kind}:{req_id}"
+
+
+def _strict_int_arg(args: dict[str, Any], key: str, default: int, lo: int, hi: int) -> int:
+    if key not in args:
+        return default
+    val = args[key]
+    if isinstance(val, bool) or not isinstance(val, int):
+        raise Refuse(f"bad-{key}")
+    return max(lo, min(val, hi))
+
+
+def _fit_json_payload(payload: dict[str, Any], limit_bytes: int = MAX_TEXT_BYTES) -> str:
+    """Serialize payload cleanly within UTF-8 byte budget without breaking JSON syntax."""
+    text = json.dumps(payload, ensure_ascii=False)
+    if len(text.encode("utf-8")) <= limit_bytes:
+        return text
+
+    trimmed = dict(payload)
+    trimmed["truncated"] = True
+    for list_key in ("entries", "matches"):
+        if list_key in trimmed and isinstance(trimmed[list_key], list):
+            items = trimmed[list_key]
+            lo, hi = 0, len(items)
+            best = 0
+            while lo <= hi:
+                mid = (lo + hi) // 2
+                trimmed[list_key] = items[:mid]
+                cand = json.dumps(trimmed, ensure_ascii=False)
+                if len(cand.encode("utf-8")) <= limit_bytes:
+                    best = mid
+                    lo = mid + 1
+                else:
+                    hi = mid - 1
+            trimmed[list_key] = items[:best]
+            return json.dumps(trimmed, ensure_ascii=False)
+
+    if any(k in trimmed and isinstance(trimmed[k], str) for k in ("stdout", "stderr")):
+        for str_key in ("stdout", "stderr"):
+            if str_key in trimmed and isinstance(trimmed[str_key], str):
+                other_key = "stderr" if str_key == "stdout" else "stdout"
+                saved_other = trimmed.get(other_key, "")
+                # Iteratively halve whichever string fields exceed budget until combined JSON fits.
+                cand = json.dumps(trimmed, ensure_ascii=False)
+                while len(cand.encode("utf-8")) > limit_bytes and trimmed[str_key]:
+                    cur = trimmed[str_key]
+                    trimmed[str_key] = cur[: len(cur) // 2]
+                    cand = json.dumps(trimmed, ensure_ascii=False)
+                if len(cand.encode("utf-8")) <= limit_bytes:
+                    return cand
+                if isinstance(saved_other, str) and not trimmed.get(other_key):
+                    continue
+        cand = json.dumps(trimmed, ensure_ascii=False)
+        if len(cand.encode("utf-8")) <= limit_bytes:
+            return cand
+
+    return json.dumps({"tool": payload.get("tool"), "truncated": True, "error": "output-too-large"})
 
 
 class MCPToolEngine:
@@ -182,19 +271,26 @@ class MCPToolEngine:
     def jsonrpc_err(req_id: Any, code: int, message: str) -> dict[str, Any]:
         return {"jsonrpc": "2.0", "id": req_id, "error": {"code": code, "message": message}}
 
-    def handle_sync_control(self, msg: dict[str, Any]) -> tuple[dict[str, Any] | None, str | None]:
-        """Handle lightweight non-tool JSON-RPC requests; return (response_or_None, tool_call_name_if_async)."""
+    def handle_sync_control(
+        self, msg: dict[str, Any], *, initialized: bool = True
+    ) -> tuple[dict[str, Any] | None, str | None]:
+        """Handle control JSON-RPC methods and enforce initialize gating."""
         if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0":
-            return self.jsonrpc_err(msg.get("id") if isinstance(msg, dict) else None, -32600, "Invalid Request"), None
+            raw_id = msg.get("id") if isinstance(msg, dict) else None
+            return self.jsonrpc_err(raw_id if canonical_req_key(raw_id) is not None else None, -32600, "Invalid Request"), None
 
         method = msg.get("method")
+        has_id = "id" in msg
         req_id = msg.get("id")
-        is_notif = "id" not in msg
+        if has_id and canonical_req_key(req_id) is None:
+            return self.jsonrpc_err(None, -32600, "Invalid Request id"), None
 
         if not isinstance(method, str) or not method:
-            return (None if is_notif else self.jsonrpc_err(req_id, -32600, "Missing method")), None
+            return (None if not has_id else self.jsonrpc_err(req_id, -32600, "Missing method")), None
 
         if method == "initialize":
+            if not has_id:
+                return None, None
             params = msg.get("params") if isinstance(msg.get("params"), dict) else {}
             proto = self.negotiate_protocol(params.get("protocolVersion"))
             return self.jsonrpc_ok(
@@ -202,25 +298,28 @@ class MCPToolEngine:
                 {
                     "protocolVersion": proto,
                     "capabilities": {"tools": {"listChanged": False}},
-                    "serverInfo": {"name": "f8-hybrid2", "version": "0.1.0"},
+                    "serverInfo": {"name": "f8-hybrid2", "version": "0.2.0"},
                 },
-            ), None
+            ), "initialized"
 
         if method == "notifications/initialized":
-            return None, None
+            return None, "initialized"
 
         if method == "ping":
-            return (None if is_notif else self.jsonrpc_ok(req_id, {})), None
+            return (None if not has_id else self.jsonrpc_ok(req_id, {})), None
+
+        if not initialized:
+            return (None if not has_id else self.jsonrpc_err(req_id, -32002, "Server not initialized")), None
 
         if method == "tools/list":
-            return (None if is_notif else self.jsonrpc_ok(req_id, {"tools": TOOL_DEFS})), None
+            return (None if not has_id else self.jsonrpc_ok(req_id, {"tools": TOOL_DEFS})), None
 
         if method == "tools/call":
-            if is_notif:
+            if not has_id:
                 return None, None
             return None, "tools/call"
 
-        if is_notif:
+        if not has_id:
             return None, None
         return self.jsonrpc_err(req_id, -32601, f"Method not found: {method}"), None
 
@@ -237,7 +336,7 @@ class MCPToolEngine:
             return self.jsonrpc_err(req_id, -32602, "Invalid tool call params")
 
         raw_timeout = args.get("timeout_s")
-        if isinstance(raw_timeout, (int, float)) and raw_timeout > 0:
+        if isinstance(raw_timeout, (int, float)) and not isinstance(raw_timeout, bool) and raw_timeout > 0:
             ctx.deadline = min(ctx.deadline, t0 + float(raw_timeout))
 
         try:
@@ -272,9 +371,7 @@ class MCPToolEngine:
                 {"content": [{"type": "text", "text": json.dumps({"error": str(exc)})}], "isError": True},
             )
 
-        text = json.dumps(payload, ensure_ascii=False)
-        if len(text.encode("utf-8")) > MAX_TEXT_BYTES:
-            text = text[: MAX_TEXT_BYTES - 64] + '..."}'
+        text = _fit_json_payload(payload, MAX_TEXT_BYTES)
         elapsed_ms = round((time.monotonic() - t0) * 1000.0, 2)
         self._audit(
             ev="tool",
@@ -300,8 +397,7 @@ class MCPToolEngine:
         if not os.path.isdir(host_root):
             raise Refuse("root-not-dir")
 
-        max_entries = int(args.get("max_entries", 2000))
-        max_entries = max(1, min(max_entries, 50000))
+        max_entries = _strict_int_arg(args, "max_entries", 2000, 1, 50000)
         compute_sha = bool(args.get("compute_sha256", True))
         exclude_git = bool(args.get("exclude_git", True))
 
@@ -327,13 +423,15 @@ class MCPToolEngine:
                 rel = os.path.relpath(full, host_root)
                 try:
                     if compute_sha:
-                        with open(full, "rb") as fh:
-                            data = fh.read()
-                        size = len(data)
+                        size = 0
                         assert digest is not None
                         digest.update(rel.encode("utf-8", errors="replace"))
                         digest.update(b"\0")
-                        digest.update(data)
+                        with open_nofollow(full) as fh:
+                            while chunk := fh.read(262144):
+                                ctx.check()
+                                size += len(chunk)
+                                digest.update(chunk)
                     else:
                         size = os.lstat(full).st_size
                 except OSError:
@@ -360,10 +458,12 @@ class MCPToolEngine:
         pattern = args.get("pattern")
         if not isinstance(guest_root, str) or not isinstance(pattern, str) or not pattern:
             raise Refuse("bad-search-args")
+        if len(pattern) > MAX_REGEX_CHARS:
+            raise Refuse("pattern-too-long")
         host_root = self.policy.map_path(guest_root, cwd="/", must_exist=True)
         fixed = bool(args.get("fixed_string", False))
         case_sensitive = bool(args.get("case_sensitive", True))
-        max_matches = max(1, min(int(args.get("max_matches", 200)), 5000))
+        max_matches = _strict_int_arg(args, "max_matches", 200, 1, 5000)
         raw_exts = args.get("include_ext")
         exts: tuple[str, ...] | None = None
         if isinstance(raw_exts, list) and raw_exts:
@@ -382,17 +482,22 @@ class MCPToolEngine:
 
         matches: list[dict[str, Any]] = []
         files_scanned = 0
+        skipped_oversize = 0
         truncated = False
 
         def scan_file(fpath: str, rel: str) -> None:
-            nonlocal files_scanned, truncated
+            nonlocal files_scanned, skipped_oversize, truncated
             ctx.check()
             if exts is not None and not any(rel.endswith(e) for e in exts):
                 return
             try:
-                with open(fpath, "rb") as fh:
-                    raw = fh.read(2 * 1024 * 1024)
+                with open_nofollow(fpath) as fh:
+                    raw = fh.read(MAX_SEARCH_FILE_BYTES + 1)
             except OSError:
+                return
+            if len(raw) > MAX_SEARCH_FILE_BYTES:
+                skipped_oversize += 1
+                truncated = True
                 return
             if b"\x00" in raw:
                 return
@@ -401,16 +506,17 @@ class MCPToolEngine:
             for lineno, line in enumerate(text.splitlines(), 1):
                 if lineno % 256 == 0:
                     ctx.check()
+                slice_line = line[:MAX_SEARCH_LINE_CHARS]
                 hit = (
-                    (needle in (line if case_sensitive else line.lower()))
+                    (needle in (slice_line if case_sensitive else slice_line.lower()))
                     if fixed
-                    else bool(rx.search(line))
+                    else bool(rx.search(slice_line))
                 )
                 if hit:
                     if len(matches) >= max_matches:
                         truncated = True
                         return
-                    matches.append({"file": rel, "line": lineno, "text": line[:300]})
+                    matches.append({"file": rel, "line": lineno, "text": slice_line[:300]})
 
         if os.path.isfile(host_root):
             scan_file(host_root, os.path.basename(host_root))
@@ -425,15 +531,16 @@ class MCPToolEngine:
                     if os.path.islink(full):
                         continue
                     scan_file(full, os.path.relpath(full, host_root))
-                    if truncated:
+                    if truncated and len(matches) >= max_matches:
                         break
-                if truncated:
+                if truncated and len(matches) >= max_matches:
                     break
 
         return {
             "tool": "repo_text_search",
             "root": guest_root,
             "files_scanned": files_scanned,
+            "skipped_oversize": skipped_oversize,
             "match_count": len(matches),
             "truncated": truncated,
             "matches": matches,
@@ -446,56 +553,75 @@ class MCPToolEngine:
             raise Refuse("bad-git-args")
         clean_args, host_cwd, env = self.policy.validate_git_ro(git_args, cwd_guest)
 
-        # Write child stdout/stderr to temporary unlinked files instead of PIPEs
-        # so polling + killpg on cancel/timeout can never deadlock on full pipe buffers.
-        import tempfile
+        wake_r, wake_w = os.pipe()
+        os.set_blocking(wake_r, False)
+        os.set_blocking(wake_w, False)
+        ctx.attach_wake_fd(wake_w)
+        pfd = -1
+        rc: int | None = None
 
-        with (
-            tempfile.TemporaryFile(mode="w+b") as out_f,
-            tempfile.TemporaryFile(mode="w+b") as err_f,
-        ):
-            proc = subprocess.Popen(
-                [self.git_bin, *clean_args],
-                cwd=host_cwd,
-                env=env,
-                stdin=subprocess.DEVNULL,
-                stdout=out_f,
-                stderr=err_f,
-                shell=False,
-                start_new_session=True,
-            )
-            ctx.set_proc(proc)
-            pfd = pidfd_open(proc.pid)
-            try:
-                while True:
-                    rc = proc.poll()
-                    if rc is not None:
-                        break
-                    ctx.check()
-                    ctx.cancel_event.wait(0.02)
-            except (RequestCancelled, RequestTimeout):
-                ctx.set_proc(proc)  # guarantees killpg if race
-                try:
-                    os.killpg(proc.pid, signal.SIGKILL)
-                except OSError:
-                    pass
-                try:
-                    proc.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    pass
-                raise
-            finally:
+        try:
+            with (
+                tempfile.TemporaryFile(mode="w+b") as out_f,
+                tempfile.TemporaryFile(mode="w+b") as err_f,
+            ):
+                proc = subprocess.Popen(
+                    [self.git_bin, *clean_args],
+                    cwd=host_cwd,
+                    env=env,
+                    stdin=subprocess.DEVNULL,
+                    stdout=out_f,
+                    stderr=err_f,
+                    shell=False,
+                    start_new_session=True,
+                )
+                ctx.set_proc(proc)
+                pfd = pidfd_open(proc.pid)
+                poller = select.poll()
+                poller.register(wake_r, select.POLLIN)
                 if pfd >= 0:
+                    poller.register(pfd, select.POLLIN)
+
+                try:
+                    while True:
+                        ctx.check()
+                        rc = proc.poll()
+                        if rc is not None:
+                            ctx.check()
+                            break
+                        rem_ms = max(1, int((ctx.deadline - time.monotonic()) * 1000.0))
+                        wait_ms = rem_ms if pfd >= 0 else min(rem_ms, 10)
+                        poller.poll(wait_ms)
+                except (RequestCancelled, RequestTimeout):
+                    ctx.set_proc(proc)
                     try:
-                        os.close(pfd)
+                        os.killpg(proc.pid, signal.SIGKILL)
                     except OSError:
                         pass
-                ctx.set_proc(None)
+                    try:
+                        proc.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        pass
+                    raise
+                finally:
+                    ctx.set_proc(None)
 
-            out_f.seek(0)
-            err_f.seek(0)
-            stdout_b = out_f.read(MAX_OUTPUT_BYTES)
-            stderr_b = err_f.read(256 * 1024)
+                out_f.seek(0)
+                err_f.seek(0)
+                stdout_b = out_f.read(MAX_OUTPUT_BYTES)
+                stderr_b = err_f.read(256 * 1024)
+        finally:
+            ctx.attach_wake_fd(None)
+            if pfd >= 0:
+                try:
+                    os.close(pfd)
+                except OSError:
+                    pass
+            for fd in (wake_r, wake_w):
+                try:
+                    os.close(fd)
+                except OSError:
+                    pass
 
         return {
             "tool": "git_ro",
@@ -512,12 +638,14 @@ class MCPToolEngine:
         host_path = self.policy.map_path(guest_path, cwd="/", must_exist=True)
         if not os.path.isfile(host_path):
             raise Refuse("not-a-file")
-        limit = max(1, min(int(args.get("limit_records", 50000)), 200000))
+        limit = _strict_int_arg(args, "limit_records", 50000, 1, 200000)
 
         h = hashlib.sha256()
-        with open(host_path, "rb") as fh:
-            while chunk := fh.read(256 * 1024):
+        total_size = 0
+        with open_nofollow(host_path) as fh:
+            while chunk := fh.read(262144):
                 ctx.check()
+                total_size += len(chunk)
                 h.update(chunk)
         sha256_hex = h.hexdigest()
 
@@ -526,41 +654,56 @@ class MCPToolEngine:
         record_count = 0
         fmt = "jsonl"
 
-        with open(host_path, "r", encoding="utf-8", errors="replace") as fh:
-            first_chunk = fh.read(4096)
-            fh.seek(0)
-            stripped = first_chunk.lstrip()
-            if guest_path.endswith(".json") and not guest_path.endswith(".jsonl") or stripped.startswith("["):
-                if not guest_path.endswith(".jsonl"):
-                    try:
-                        obj = json.load(fh)
-                        fmt = "json"
-                        if isinstance(obj, list):
-                            record_count = len(obj)
-                            for item in obj[:100]:
-                                if isinstance(item, dict):
-                                    for k in item.keys():
-                                        if k not in keys_set and len(keys_seen) < 40:
-                                            keys_set.add(k)
-                                            keys_seen.append(str(k))
-                        elif isinstance(obj, dict):
-                            record_count = 1
-                            keys_seen = [str(k) for k in list(obj.keys())[:40]]
-                        return {
-                            "tool": "python_json_summary",
-                            "path": guest_path,
-                            "format": fmt,
-                            "record_count": record_count,
-                            "keys_sample": keys_seen,
-                            "sha256": sha256_hex,
-                        }
-                    except json.JSONDecodeError:
-                        fh.seek(0)
+        with open_nofollow(host_path) as bfh:
+            is_json_ext = guest_path.endswith(".json") and not guest_path.endswith(".jsonl")
+            if is_json_ext:
+                if total_size > MAX_JSON_DOC_BYTES:
+                    raise Refuse("json-too-large")
+                raw_doc = bfh.read(MAX_JSON_DOC_BYTES + 1)
+                if len(raw_doc) > MAX_JSON_DOC_BYTES:
+                    raise Refuse("json-too-large")
+                try:
+                    obj = json.loads(raw_doc.decode("utf-8", errors="replace"))
+                    fmt = "json"
+                    if isinstance(obj, list):
+                        record_count = len(obj)
+                        for item in obj[:100]:
+                            if isinstance(item, dict):
+                                for k in item.keys():
+                                    if k not in keys_set and len(keys_seen) < 40:
+                                        keys_set.add(k)
+                                        keys_seen.append(str(k))
+                    elif isinstance(obj, dict):
+                        record_count = 1
+                        keys_seen = [str(k) for k in list(obj.keys())[:40]]
+                    return {
+                        "tool": "python_json_summary",
+                        "path": guest_path,
+                        "format": fmt,
+                        "record_count": record_count,
+                        "keys_sample": keys_seen,
+                        "sha256": sha256_hex,
+                    }
+                except json.JSONDecodeError:
+                    bfh.seek(0)
 
-            for idx, line in enumerate(fh, 1):
+            if total_size > MAX_JSONL_BYTES:
+                raise Refuse("jsonl-too-large")
+            bytes_seen = 0
+            idx = 0
+            while True:
+                idx += 1
                 if idx % 256 == 0:
                     ctx.check()
-                s = line.strip()
+                raw_line = bfh.readline(MAX_JSONL_LINE_BYTES + 1)
+                if not raw_line:
+                    break
+                if len(raw_line) > MAX_JSONL_LINE_BYTES:
+                    raise Refuse("jsonl-line-too-large")
+                bytes_seen += len(raw_line)
+                if bytes_seen > MAX_JSONL_BYTES:
+                    raise Refuse("jsonl-too-large")
+                s = raw_line.decode("utf-8", errors="replace").strip()
                 if not s:
                     continue
                 record_count += 1

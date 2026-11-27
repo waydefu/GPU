@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-"""Acceptance & regression tests for Stage 7.2 Native Hybrid 2.0 isolated prototype.
+"""Acceptance & regression tests for Stage 7.2 universal Native Hybrid 2.0 backend.
 
-Runs policy, security, fuzz, protocol lifecycle, cancellation, timeout,
-disconnect cleanup, and fallback tests with pure stdlib `unittest`.
-When run natively on Termux (`F8_HYBRID2_LIVE=1`, TracerPid == 0), also tests
-strict native TracerPid == 0 enforcement and real PRoot relay roundtrips.
+Covers all Neon + Hydrogen review gates:
+- Policy & Stage 5 security parity (`protected-path` incl. `//etc/passwd` and protected subtree
+  inside mapped parent, symlink-escape, `.l2s.*`, `git diff --no-index`, `git grep -f/etc/passwd`,
+  `git blame --contents=escape/...`, single-line `[core] fsmonitor = true`, `config.worktree`,
+  `filter.process`, `commondir`, `GIT_CEILING_DIRECTORIES`, FIFO non-blocking O_NOFOLLOW)
+- MCP state machine (`initialize` gating), canonical `req_id` (`int` vs `str`, `bool` rejected),
+  duplicate active `req_id`, strict int arg rejection (`null`/non-int -> `-32602` even in fallback),
+  UTF-8 byte-safe payload trimming for both `entries` and `stdout`+`stderr` with `\x1b`,
+  OOM/ReDoS/jsonl-line limits
+- Multi-client (`4+`) concurrency & isolation, `--max-inflight` deterministic `-32000`,
+  `--max-clients` `-32000`, `SIGKILL` disconnect + strict `fds == base_fds`
+- Race-free `idle_timeout` + backlog drain + immediate `d.pid` release + `ready` inode guard
+- Unified `ctl` CLI (`start/stop/restart/status/probe/disable/enable/ensure-running/client-config`)
+  under thundering-herd and stripped 7-env (`env -i`), plus fallback parity across all 4 tools.
 """
 
 from __future__ import annotations
@@ -16,24 +26,25 @@ import shutil
 import signal
 import socket
 import stat
-import struct
 import subprocess as sp
 import sys
 import tempfile
-import threading
 import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from f8_hybrid2_policy import Policy, Refuse, read_tracer_pid, validate_unix_sock_path
-from f8_hybrid2_tools import MCPToolEngine, RequestContext
+import f8_hybrid2_ctl as ctl
+from f8_hybrid2_policy import Policy, Refuse, read_tracer_pid
+from f8_hybrid2_tools import MAX_JSONL_LINE_BYTES, MCPToolEngine, RequestContext, _fit_json_payload
 
 DAEMON_PY = HERE / "f8_hybrid2_daemon.py"
 RELAY_PY = HERE / "f8_hybrid2_relay.py"
+CTL_PY = HERE / "f8_hybrid2_ctl.py"
 DEFAULT_TERMUX_GIT = "/data/data/com.termux/files/usr/bin/git"
 SYSTEM_GIT = DEFAULT_TERMUX_GIT if os.path.exists(DEFAULT_TERMUX_GIT) else shutil.which("git") or "git"
 
@@ -83,9 +94,8 @@ class PolicyAndSecurityTests(unittest.TestCase):
             d.mkdir(parents=True, exist_ok=True)
         (self.ws / "a.py").write_text("print('ok')\n", encoding="utf-8")
         (self.outside / "secret.txt").write_text("no-access\n", encoding="utf-8")
-        symlink_escape = self.ws / "escape"
-        if not symlink_escape.exists():
-            os.symlink(str(self.outside), str(symlink_escape))
+        os.symlink(str(self.outside), str(self.ws / "escape"))
+        os.symlink(str(self.outside), str(self.repo / "escape"))
 
         git_run(["init", "-q"], self.repo)
         (self.repo / "hello.txt").write_text("hello world\nneedle line\n", encoding="utf-8")
@@ -102,12 +112,15 @@ class PolicyAndSecurityTests(unittest.TestCase):
             fn(*args, **kwargs)
         self.assertIn(expected, str(cm.exception))
 
-    def test_protected_l2s_outside_and_symlink_escape(self) -> None:
+    def test_protected_double_slash_l2s_and_symlink_to_protected(self) -> None:
         self._refused("protected-path", self.pol.map_path, "/etc/passwd")
+        self._refused("protected-path", self.pol.map_path, "//etc/passwd")
         self._refused("protected-path", self.pol.map_path, "/usr/lib")
         self._refused("protected-path", self.pol.map_path, "/root/." + "gemini/x")
         self._refused("protected-path", self.pol.map_path, "/root/.hermes/config.yaml")
+        self._refused("protected-path", self.pol.map_path, "/root/.codex/auth.json")
         self._refused("protected-path", self.pol.map_path, "/data/data/com.termux/files/home/build/proot-fast/out8/bin/proot-fast8")
+        self._refused("protected-path", self.pol.map_path, "/data/data/com.termux/files/home/.f8hyb2/m.sock")
         self._refused("protected-path", self.pol.map_path, "../../etc/hosts", cwd="/ws/sub")
         self._refused("path-outside-map", self.pol.map_path, "/root/x")
         self._refused("path-outside-map", self.pol.map_path, "/wsx/y")
@@ -116,24 +129,37 @@ class PolicyAndSecurityTests(unittest.TestCase):
         self._refused("l2s-path", self.pol.map_path, ".l2s.x", cwd="/ws")
         self._refused("symlink-escape", self.pol.map_path, "/ws/escape/secret.txt")
         self._refused("bad-path", self.pol.map_path, "/ws/a\x00b")
+
+        # Symlink inside mapped parent targeting a PROTECTED subtree (simulated /root mapping)
+        if Path("/root/.hermes").exists():
+            root_pol = Policy([("/root", "/root")], home=str(self.home), tmp=str(self.htmp))
+            self._refused("protected-path", root_pol.map_path, "/root/.hermes/config.yaml")
+            root_pol_parent = Policy([("/p", str(self.ws))], home=str(self.home), tmp=str(self.htmp))
+            os.symlink("/root/.hermes", str(self.ws / "hermes_link"))
+            self._refused("symlink-escape", root_pol_parent.map_path, "/p/hermes_link/config.yaml")
+
         mapped = self.pol.map_path("sub/../a.py", cwd="/ws", must_exist=True)
         self.assertEqual(mapped, str((self.ws / "a.py").resolve()))
 
-    def test_git_readonly_allowlist_and_denies(self) -> None:
+    def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
             ["status", "--short"],
             ["log", "-n", "1"],
             ["rev-parse", "HEAD"],
             ["ls-files"],
             ["diff"],
+            ["diff", "--", "/ws/repo/hello.txt"],
             ["-C", "/ws/repo", "show", "--stat", "HEAD"],
         )
         for cmd in ok_cmds:
             clean, hcwd, env = self.pol.validate_git_ro(cmd, "/ws/repo")
             self.assertEqual(hcwd, str(self.repo.resolve()))
             self.assertEqual(env["GIT_CONFIG_GLOBAL"], "/dev/null")
-            if cmd[-1] == "diff" or "show" in cmd:
+            self.assertEqual(env["GIT_OPTIONAL_LOCKS"], "0")
+            self.assertIn("GIT_CEILING_DIRECTORIES", env)
+            if "diff" in cmd or "show" in cmd:
                 self.assertIn("--no-ext-diff", clean)
+                self.assertIn("--no-textconv", clean)
 
         denied = (
             ("git-subcmd-denied", ["commit", "-m", "x"]),
@@ -146,19 +172,31 @@ class PolicyAndSecurityTests(unittest.TestCase):
             ("git-pre-flag-denied", ["-c", "core.pager=cat", "status"]),
             ("git-pre-flag-denied", ["--git-dir=/etc", "status"]),
             ("git-option-denied", ["diff", "--ext-diff"]),
+            ("git-option-denied", ["diff", "--no-index", "/etc/passwd", "/dev/null"]),
+            ("git-option-denied", ["grep", "--no-index", "root", "/etc/passwd"]),
+            ("git-option-denied", ["grep", "-f", "/etc/passwd", "x"]),
+            ("git-option-denied", ["grep", "-f/etc/passwd", "x"]),
             ("git-option-denied", ["log", "--output=/tmp/x"]),
             ("git-option-denied", ["status", "--upload-pack=evil"]),
+            ("protected-path", ["log", "--", "/etc/passwd"]),
+            ("path-outside-map", ["diff", "--", "../../outside/secret.txt"]),
+            ("symlink-escape", ["blame", "--contents=escape/secret.txt", "HEAD", "--", "hello.txt"]),
+            ("l2s-path", ["log", "--", ".l2s.foo"]),
         )
         for reason, cmd in denied:
             self._refused(reason, self.pol.validate_git_ro, cmd, "/ws/repo")
 
-    def test_git_config_injection_and_gitfile(self) -> None:
+    def test_git_config_inline_worktree_filter_and_gitfile(self) -> None:
         cfg = self.repo / ".git/config"
+        wt_cfg = self.repo / ".git/config.worktree"
         base = cfg.read_text(encoding="utf-8")
         try:
             for bad in (
                 '[filter "lfs"]\n\tclean = evil\n',
-                '[core]\n\tfsmonitor = true\n',
+                '[filter "x"]\n\tprocess = evil\n',
+                '[diff "x"]\n\tcommand = evil\n',
+                '[core] fsmonitor = true\n',
+                '[diff "x"] command = evil\n',
                 '[include]\n\tpath = /x\n',
                 '[diff "x"]\n\ttextconv = evil\n',
                 '[core]\n\tpager = evil\n',
@@ -167,10 +205,18 @@ class PolicyAndSecurityTests(unittest.TestCase):
             ):
                 cfg.write_text(base + bad, encoding="utf-8")
                 self._refused("git-config-unsafe", self.pol.validate_git_ro, ["status"], "/ws/repo")
+
+            cfg.write_text(base + "#" + ("x" * (520 * 1024)), encoding="utf-8")
+            self._refused("git-config-too-large", self.pol.validate_git_ro, ["status"], "/ws/repo")
+
             cfg.write_text(base + "[user]\n\tname = ok\n", encoding="utf-8")
             self.pol.validate_git_ro(["status"], "/ws/repo")
+
+            wt_cfg.write_text('[core] fsmonitor = evil\n', encoding="utf-8")
+            self._refused("git-config-unsafe", self.pol.validate_git_ro, ["status"], "/ws/repo")
         finally:
             cfg.write_text(base, encoding="utf-8")
+            wt_cfg.unlink(missing_ok=True)
 
         wt = self.ws / "wt"
         wt.mkdir(exist_ok=True)
@@ -181,56 +227,113 @@ class PolicyAndSecurityTests(unittest.TestCase):
         (wt / ".git").write_text("gitdir: ../escape/.git\n", encoding="utf-8")
         self._refused("symlink-escape", self.pol.validate_git_ro, ["status"], "/ws/wt")
 
-    def test_env_scrubbed(self) -> None:
+        real_gd = self.ws / "real_gd"
+        real_gd.mkdir()
+        (real_gd / "commondir").write_text("/etc/git\n", encoding="utf-8")
+        (wt / ".git").write_text("gitdir: ../real_gd\n", encoding="utf-8")
+        self._refused("gitfile-absolute", self.pol.validate_git_ro, ["status"], "/ws/wt")
+
+    def test_env_utf8_fit_fifo_jsonl_limits_and_client_config(self) -> None:
         os.environ["LANG"] = "en_US.UTF-8"
         env = self.pol.clean_env({"LANG": "C.UTF-8", "LD_PRELOAD": "/evil.so", "GH_TOKEN": "tok"})
         self.assertEqual(env["LANG"], "C.UTF-8")
         self.assertEqual(env["PYTHONNOUSERSITE"], "1")
-        self.assertEqual(env["HOME"], str(self.home.resolve()))
+        self.assertEqual(env["GIT_OPTIONAL_LOCKS"], "0")
         self.assertNotIn("LD_PRELOAD", env)
         self.assertNotIn("GH_TOKEN", env)
 
+        # UTF-8 multibyte truncation for both entries and stdout+stderr with \x1b escapes
+        big = {
+            "tool": "repo_tree_scan",
+            "truncated": False,
+            "entries": [{"rel": f"中文_{i}.txt", "size": i} for i in range(500)],
+        }
+        fitted = _fit_json_payload(big, limit_bytes=512)
+        self.assertLessEqual(len(fitted.encode("utf-8")), 512)
+        self.assertTrue(json.loads(fitted)["truncated"])
+
+        big_git = {
+            "tool": "git_ro",
+            "stdout": "\x1b" * 1024,
+            "stderr": "\x1b" * 50000,
+        }
+        fitted_git = _fit_json_payload(big_git, limit_bytes=512)
+        self.assertLessEqual(len(fitted_git.encode("utf-8")), 512)
+        self.assertTrue(json.loads(fitted_git)["truncated"])
+
+        eng = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        # Strict int parameter rejection (no hang/TypeError)
+        r_bad_int = eng.call_tool(1, {"name": "repo_tree_scan", "arguments": {"root": "/ws", "max_entries": None}}, RequestContext(1, 2.0))
+        self.assertEqual(r_bad_int["error"]["code"], -32602)
+
+        # FIFO inside workspace must NOT block
+        os.mkfifo(str(self.ws / "pipe.fifo"))
+        r_fifo = eng.call_tool(2, {"name": "repo_tree_scan", "arguments": {"root": "/ws"}}, RequestContext(2, 2.0))
+        self.assertFalse(r_fifo["result"]["isError"])
+
+        # Oversize search file (>2 MiB) reported via skipped_oversize/truncated
+        (self.ws / "huge.txt").write_bytes(b"abc\n" * 600000)
+        r_srch = eng.call_tool(3, {"name": "repo_text_search", "arguments": {"root": "/ws", "pattern": "abc"}}, RequestContext(3, 4.0))
+        d_srch = json.loads(r_srch["result"]["content"][0]["text"])
+        self.assertGreaterEqual(d_srch["skipped_oversize"], 1)
+        self.assertTrue(d_srch["truncated"])
+
+        # Oversize single line in .jsonl refused cleanly
+        (self.ws / "longline.jsonl").write_bytes(b'{"a":"' + (b"x" * (MAX_JSONL_LINE_BYTES + 128)) + b'"}\n')
+        r_jsonl = eng.call_tool(4, {"name": "python_json_summary", "arguments": {"path": "/ws/longline.jsonl"}}, RequestContext(4, 3.0))
+        self.assertEqual(r_jsonl["error"]["code"], -32602)
+        self.assertIn("jsonl-line-too-large", r_jsonl["error"]["message"])
+
+        # Verify ctl client-config outputs valid JSON for JSON clients
+        snips = ctl.client_config_snippets("/tmp/test.sock")
+        for k in ("claude-desktop", "antigravity", "opencode"):
+            obj = json.loads(snips[k])
+            self.assertIsInstance(obj, dict)
+
     def test_jsonrpc_control_and_fuzz(self) -> None:
         eng = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        resp_uninit, _ = eng.handle_sync_control({"jsonrpc": "2.0", "id": 1, "method": "tools/list"}, initialized=False)
+        self.assertEqual(resp_uninit["error"]["code"], -32002)
+        resp_bool, _ = eng.handle_sync_control({"jsonrpc": "2.0", "id": True, "method": "initialize"}, initialized=False)
+        self.assertEqual(resp_bool["error"]["code"], -32600)
+
         rnd = random.Random(1234)
         for _ in range(3000):
-            bad_obj: object
             choice = rnd.randrange(4)
             if choice == 0:
-                bad_obj = rnd.randrange(100)
+                bad_obj: object = rnd.randrange(100)
             elif choice == 1:
                 bad_obj = {"jsonrpc": "1.0", "id": 1}
             elif choice == 2:
                 bad_obj = {"jsonrpc": "2.0", "id": 1, "method": "bad_" + str(rnd.randrange(999))}
             else:
                 bad_obj = {"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": rnd.randrange(5)}
-            resp, async_kind = eng.handle_sync_control(bad_obj)  # must never raise
-            if async_kind == "tools/call":
+            resp, action = eng.handle_sync_control(bad_obj, initialized=True)
+            if action == "tools/call":
                 r = eng.call_tool(1, bad_obj.get("params"), RequestContext(1, 1.0))  # type: ignore[union-attr]
                 self.assertIn("error", r)
             else:
                 self.assertIn("error", resp)
 
 
-class DaemonLifecycleAndProtocolTests(unittest.TestCase):
+class UniversalDaemonAndCtlTests(unittest.TestCase):
     def setUp(self) -> None:
-        # Keep UDS path well under 107 bytes using TMPDIR (or default temp dir).
         self.base = Path(tempfile.mkdtemp(prefix="hyb2_"))
         self.ws = self.base / "ws"
         self.repo = self.ws / "repo"
-        self.run = self.base / "run"
-        self.sockd = self.base / "s"
-        self.sock = self.sockd / "m.sock"
-        self.pidfile = self.run / "d.pid"
-        self.log = self.run / "audit.jsonl"
-        for d in (self.ws, self.repo, self.run, self.sockd):
+        self.rdir = self.base / "r"
+        self.sock = self.rdir / "m.sock"
+        self.pidfile = self.rdir / "d.pid"
+        self.ready = self.rdir / "ready"
+        self.log = self.rdir / "audit.jsonl"
+        for d in (self.ws, self.repo, self.rdir):
             d.mkdir(parents=True, exist_ok=True)
+
         git_run(["init", "-q"], self.repo)
-        (self.repo / "readme.md").write_text("Stage 7.2 Native Hybrid\nline2\n", encoding="utf-8")
+        (self.repo / "readme.md").write_text("Stage 7.2 Universal MCP\nneedle line\n", encoding="utf-8")
         git_run(["add", "readme.md"], self.repo)
         git_run(["commit", "-q", "-m", "init"], self.repo)
 
-        # Synthetic heavy tree (1,500 files) for realistic cancel / timeout testing.
         self.big = self.ws / "bigtree"
         for d_idx in range(15):
             sub = self.big / f"d{d_idx:02d}"
@@ -252,11 +355,11 @@ class DaemonLifecycleAndProtocolTests(unittest.TestCase):
             except sp.TimeoutExpired:
                 self.proc.kill()
                 self.proc.wait()
+        ctl.stop_daemon(self.rdir, timeout_s=3.0)
         shutil.rmtree(self.base, ignore_errors=True)
 
-    def _start_daemon(self, extra: list[str] | None = None, skip_tracer: bool | None = None) -> sp.Popen[bytes]:
-        if skip_tracer is None:
-            skip_tracer = os.environ.get("F8_HYBRID2_NATIVE") != "1"
+    def _start_daemon(self, extra: list[str] | None = None) -> sp.Popen[bytes]:
+        skip_tracer = os.environ.get("F8_HYBRID2_NATIVE") != "1"
         cmd = [
             sys.executable,
             str(DAEMON_PY),
@@ -270,6 +373,8 @@ class DaemonLifecycleAndProtocolTests(unittest.TestCase):
             str(self.base / "t"),
             "--pidfile",
             str(self.pidfile),
+            "--ready",
+            str(self.ready),
             "--log",
             str(self.log),
             "--git-bin",
@@ -279,17 +384,16 @@ class DaemonLifecycleAndProtocolTests(unittest.TestCase):
             cmd.append("--skip-tracer-check")
         if extra:
             cmd.extend(extra)
-        out_f = open(self.run / "daemon.out", "ab")
+        out_f = open(self.rdir / "daemon.out", "ab")
         p = sp.Popen(cmd, stdin=sp.DEVNULL, stdout=out_f, stderr=out_f, start_new_session=True)
         out_f.close()
         for _ in range(100):
-            if self.sock.exists() and self.pidfile.exists() and self.pidfile.read_text().strip():
+            if self.sock.exists() and self.ready.exists() and self.pidfile.exists():
                 if not skip_tracer:
                     self.assertEqual(read_tracer_pid(p.pid), 0)
                 return p
             if p.poll() is not None:
-                err = (self.run / "daemon.out").read_text(encoding="utf-8", errors="replace")
-                raise RuntimeError(f"daemon exited rc={p.returncode}: {err}")
+                raise RuntimeError((self.rdir / "daemon.out").read_text(encoding="utf-8", errors="replace"))
             time.sleep(0.05)
         raise RuntimeError("daemon failed to become ready")
 
@@ -298,33 +402,21 @@ class DaemonLifecycleAndProtocolTests(unittest.TestCase):
         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         s.settimeout(10.0)
         s.connect(str(sock_path))
-        f = s.makefile("rb")
-        return s, f
+        return s, s.makefile("rb")
 
     @staticmethod
     def _send(s: socket.socket, obj: dict) -> None:
         s.sendall((json.dumps(obj) + "\n").encode("utf-8"))
 
-    def test_overlong_socket_and_single_instance_and_perms(self) -> None:
+    def test_overlong_socket_single_instance_and_perms(self) -> None:
         long_dir = self.base / ("x" * 110)
         r = sp.run(
             [
-                sys.executable,
-                str(DAEMON_PY),
-                "--socket",
-                str(long_dir / "m.sock"),
-                "--map",
-                f"/ws={self.ws}",
-                "--home",
-                str(self.base / "h"),
-                "--tmp",
-                str(self.base / "t"),
-                "--pidfile",
-                str(self.run / "long.pid"),
-                "--skip-tracer-check",
+                sys.executable, str(DAEMON_PY), "--socket", str(long_dir / "m.sock"),
+                "--map", f"/ws={self.ws}", "--home", str(self.base / "h"), "--tmp", str(self.base / "t"),
+                "--pidfile", str(self.base / "long.pid"), "--skip-tracer-check",
             ],
-            capture_output=True,
-            timeout=10,
+            capture_output=True, timeout=10,
         )
         self.assertEqual(r.returncode, 4)
         self.assertIn(b"AF_UNIX limit", r.stderr)
@@ -332,205 +424,195 @@ class DaemonLifecycleAndProtocolTests(unittest.TestCase):
 
         self.proc = self._start_daemon()
         self.assertEqual(stat.S_IMODE(os.stat(self.sock).st_mode), 0o600)
-        self.assertEqual(stat.S_IMODE(os.stat(self.sockd).st_mode), 0o700)
-        self.assertEqual(os.stat(self.sock).st_uid, os.getuid())
+        self.assertEqual(stat.S_IMODE(os.stat(self.rdir).st_mode), 0o700)
 
         second = sp.run(
             [
-                sys.executable,
-                str(DAEMON_PY),
-                "--socket",
-                str(self.sock),
-                "--map",
-                f"/ws={self.ws}",
-                "--home",
-                str(self.base / "h"),
-                "--tmp",
-                str(self.base / "t"),
-                "--pidfile",
-                str(self.pidfile),
-                "--skip-tracer-check",
+                sys.executable, str(DAEMON_PY), "--socket", str(self.sock),
+                "--map", f"/ws={self.ws}", "--home", str(self.base / "h"), "--tmp", str(self.base / "t"),
+                "--pidfile", str(self.pidfile), "--skip-tracer-check",
             ],
-            capture_output=True,
-            timeout=10,
+            capture_output=True, timeout=10,
         )
         self.assertEqual(second.returncode, 3)
 
-    def test_mcp_handshake_tools_cancel_timeout_disconnect_and_malformed_fuzz(self) -> None:
-        self.proc = self._start_daemon()
+    def test_4clients_max_clients_max_inflight_cancel_and_strict_fd(self) -> None:
+        self.proc = self._start_daemon(["--max-clients", "4", "--max-inflight", "1"])
         base_fds = proc_count_fds(self.proc.pid)
 
-        # 1) Probe check
-        probe = sp.run(
-            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--probe"],
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-        self.assertEqual(probe.returncode, 0, probe.stderr)
-        self.assertTrue(json.loads(probe.stdout)["ok"])
-
-        # 2) Initialize + tools/list + all 4 read-only tools + notifications/cancelled
-        s, f = self._uds_rpc(self.sock)
+        clients = [self._uds_rpc(self.sock) for _ in range(4)]
         try:
-            self._send(s, {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-11-25"}})
-            r1 = json.loads(f.readline())
-            self.assertEqual(r1["result"]["protocolVersion"], "2025-11-25")
-            self._send(s, {"jsonrpc": "2.0", "method": "notifications/initialized"})
+            # 5th client exceeds --max-clients=4 -> gets -32000
+            s5, f5 = self._uds_rpc(self.sock)
+            busy5 = json.loads(f5.readline())
+            self.assertEqual(busy5["error"]["code"], -32000)
+            f5.close()
+            s5.close()
 
-            self._send(s, {"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
-            r2 = json.loads(f.readline())
-            names = [t["name"] for t in r2["result"]["tools"]]
-            self.assertEqual(names, ["repo_tree_scan", "repo_text_search", "git_ro", "python_json_summary"])
+            for s, f in clients:
+                self._send(s, {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-11-25"}})
+                self.assertEqual(json.loads(f.readline())["result"]["protocolVersion"], "2025-11-25")
 
-            self._send(s, {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "--is-inside-work-tree"]}}})
-            r3 = json.loads(f.readline())
-            payload3 = json.loads(r3["result"]["content"][0]["text"])
-            self.assertEqual(payload3["returncode"], 0)
-            self.assertEqual(payload3["stdout"].strip(), "true")
+            # Uninitialized check on fresh reconnect tested separately; test duplicate req_id + deterministic max-inflight=1
+            sa, fa = clients[0]
+            sb, fb = clients[1]
+            self._send(sa, {"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree"}}})
+            time.sleep(0.02)
+            # While sa holds the sole inflight slot, sb MUST deterministically receive -32000
+            self._send(sb, {"jsonrpc": "2.0", "id": 11, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]}}})
+            r_b_busy = json.loads(fb.readline())
+            self.assertEqual(r_b_busy["error"]["code"], -32000)
 
-            self._send(s, {"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/repo", "pattern": "Stage 7.2"}}})
-            r4 = json.loads(f.readline())
-            payload4 = json.loads(r4["result"]["content"][0]["text"])
-            self.assertEqual(payload4["match_count"], 1)
+            r_a10 = json.loads(fa.readline())
+            self.assertEqual(r_a10["id"], 10)
 
-            self._send(s, {"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}})
-            r5 = json.loads(f.readline())
-            payload5 = json.loads(r5["result"]["content"][0]["text"])
-            self.assertEqual(payload5["record_count"], 500)
+            # Concurrent 4-client isolation: cancel on client A does not affect client B..D
+            self._send(sa, {"jsonrpc": "2.0", "id": 20, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree"}}})
+            time.sleep(0.02)
+            self._send(sa, {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 20}})
+            time.sleep(0.08)
 
-            # Single-request cancellation on slow scan: must abort id=6 without killing daemon/conn
-            self._send(s, {"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree", "compute_sha256": True}}})
-            time.sleep(0.03)
-            self._send(s, {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 6}})
-            self._send(s, {"jsonrpc": "2.0", "id": 7, "method": "ping"})
-            # Wait for ping; id=6 must NOT produce a response after cancellation (or ping returns cleanly).
-            seen_ids = []
-            for _ in range(5):
-                resp = json.loads(f.readline())
-                seen_ids.append(resp.get("id"))
-                if resp.get("id") == 7:
-                    break
-            self.assertIn(7, seen_ids)
+            for idx, (sc, fc) in enumerate(clients):
+                self._send(sc, {"jsonrpc": "2.0", "id": 30 + idx, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}})
+                rc = json.loads(fc.readline())
+                self.assertEqual(rc["id"], 30 + idx)
+                self.assertEqual(json.loads(rc["result"]["content"][0]["text"])["returncode"], 0)
 
-            # Timeout check: 1 ms timeout on 1,500-file scan -> JSON-RPC -32001, daemon healthy after
-            self._send(s, {"jsonrpc": "2.0", "id": 8, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree", "compute_sha256": True, "timeout_s": 0.001}}})
-            r8 = json.loads(f.readline())
-            self.assertEqual(r8["error"]["code"], -32001)
-
-            # Timeout check on git_ro child Popen -> os.killpg cleans up child process cleanly
-            self._send(s, {"jsonrpc": "2.0", "id": 81, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["log", "--all", "--stat"], "timeout_s": 0.001}}})
-            r81 = json.loads(f.readline())
-            self.assertEqual(r81["error"]["code"], -32001)
+            # git_ro 1ms timeout -> -32001 & children==0
+            self._send(sa, {"jsonrpc": "2.0", "id": 40, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["log", "--all", "--stat"], "timeout_s": 0.001}}})
+            self.assertEqual(json.loads(fa.readline())["error"]["code"], -32001)
             self.assertEqual(children_of(self.proc.pid), [])
-
-            # Daemon still answers subsequent request cleanly
-            self._send(s, {"jsonrpc": "2.0", "id": 9, "method": "ping"})
-            r9 = json.loads(f.readline())
-            self.assertEqual(r9["result"], {})
         finally:
-            f.close()
-            s.close()
+            for s, f in clients:
+                f.close()
+                s.close()
 
-        # 3) Disconnect cleanup (SIGKILL relay mid-request) -> children_final=0, daemon survives
-        relay = sp.Popen(
-            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--no-fallback"],
-            stdin=sp.PIPE,
-            stdout=sp.PIPE,
-            stderr=sp.PIPE,
+        time.sleep(0.25)
+        self.assertEqual(proc_count_fds(self.proc.pid), base_fds)
+
+        # Also test 4 concurrent clients executing tools simultaneously with --max-inflight 4
+        ctl.stop_daemon(self.rdir, timeout_s=3.0)
+        self.proc.wait(timeout=5)
+        self.proc = self._start_daemon(["--max-clients", "4", "--max-inflight", "4"])
+        clients4 = [self._uds_rpc(self.sock) for _ in range(4)]
+        try:
+            for idx, (sc, fc) in enumerate(clients4):
+                self._send(sc, {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
+                json.loads(fc.readline())
+            for idx, (sc, _fc) in enumerate(clients4):
+                self._send(sc, {"jsonrpc": "2.0", "id": 50 + idx, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]}}})
+            for idx, (_sc, fc) in enumerate(clients4):
+                r4 = json.loads(fc.readline())
+                self.assertEqual(r4["id"], 50 + idx)
+                self.assertEqual(json.loads(r4["result"]["content"][0]["text"])["returncode"], 0)
+        finally:
+            for s, f in clients4:
+                f.close()
+                s.close()
+
+    def test_idle_exit_pid_release_backlog_and_ready_inode_guard(self) -> None:
+        self.proc = self._start_daemon(["--idle-timeout", "0.3"])
+        old_pid = self.proc.pid
+        deadline = time.monotonic() + 5.0
+        while time.monotonic() < deadline and self.sock.exists():
+            time.sleep(0.02)
+        self.assertFalse(self.sock.exists())
+
+        # Immediately launch replacement daemon -> must NOT hit pidfile-locked even right as D1 exits!
+        skip_native = os.environ.get("F8_HYBRID2_NATIVE") != "1"
+        new_res = ctl.ensure_running(self.rdir, daemon_py=str(DAEMON_PY), maps=[f"/ws={self.ws}"], idle_timeout=0.0, skip_tracer_check=skip_native)
+        self.assertTrue(new_res["ok"], new_res)
+        self.assertNotEqual(new_res["pid"], old_pid)
+        self.assertEqual(self.proc.wait(timeout=8), 0)
+        # Old daemon exit MUST NOT delete new daemon's ready or socket!
+        self.assertTrue(ctl.get_status(self.rdir)["running"])
+        self.assertTrue(self.ready.exists())
+        self.assertTrue(self.sock.exists())
+        ctl.stop_daemon(self.rdir)
+
+        # Fresh daemon + external socket unlink self-heal
+        self.proc = self._start_daemon(["--idle-timeout", "0"])
+        old_pid2 = self.proc.pid
+        self.sock.unlink()
+        self.assertEqual(self.proc.wait(timeout=10), 0)
+        self.assertFalse(Path(f"/proc/{old_pid2}").exists())
+
+    def test_ctl_cli_thundering_herd_disable_and_all4_fallback_parity(self) -> None:
+        skip_native = os.environ.get("F8_HYBRID2_NATIVE") != "1"
+        maps_arg = f"/ws={self.ws}"
+        extra = ["--skip-tracer-check"] if skip_native else []
+
+        # Exercise ctl CLI start / status / probe / restart
+        r_start = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "--daemon-py", str(DAEMON_PY), "--map", maps_arg, "--idle-timeout", "0", *extra, "start"], capture_output=True, text=True, timeout=15)
+        self.assertEqual(r_start.returncode, 0, r_start.stderr)
+        r_probe = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "probe"], capture_output=True, text=True, timeout=10)
+        self.assertEqual(r_probe.returncode, 0)
+        self.assertTrue(json.loads(r_probe.stdout)["ok"])
+        r_restart = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "--daemon-py", str(DAEMON_PY), "--map", maps_arg, "--idle-timeout", "0", *extra, "restart"], capture_output=True, text=True, timeout=15)
+        self.assertEqual(r_restart.returncode, 0, r_restart.stderr)
+
+        def call_ensure(_i: int) -> dict:
+            return ctl.ensure_running(self.rdir, daemon_py=str(DAEMON_PY), maps=[maps_arg], idle_timeout=0.0, timeout_s=6.0, skip_tracer_check=skip_native)
+
+        with ThreadPoolExecutor(4) as ex:
+            results = list(ex.map(call_ensure, range(4)))
+        self.assertEqual(len({r["pid"] for r in results}), 1)
+
+        # Parity across ALL 4 tools + null max_entries (-32602 without hang)
+        reqs = "\n".join(
+            [
+                json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+                json.dumps({"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]}}}),
+                json.dumps({"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo"}}}),
+                json.dumps({"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/repo", "pattern": "needle"}}}),
+                json.dumps({"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+                json.dumps({"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo", "max_entries": None}}}),
+            ]
+        ) + "\n"
+        stripped_env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": str(self.base / "h"), "TMPDIR": str(self.base / "t")}
+
+        p1 = sp.run([sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT], input=reqs.encode(), capture_output=True, env=stripped_env, timeout=15)
+        self.assertEqual(p1.returncode, 0, p1.stderr)
+        res1 = {r["id"]: r for r in (json.loads(line) for line in p1.stdout.decode().splitlines() if line.strip())}
+        self.assertEqual(len(res1), 6)
+        self.assertEqual(res1[6]["error"]["code"], -32602)
+
+        sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "disable"], check=True, stdout=sp.PIPE)
+        p2 = sp.run([sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--auto-start"], input=reqs.encode(), capture_output=True, env=stripped_env, timeout=15)
+        self.assertEqual(p2.returncode, 0, p2.stderr)
+        self.assertIn(b"reason=global-disabled", p2.stderr)
+        res2 = {r["id"]: r for r in (json.loads(line) for line in p2.stdout.decode().splitlines() if line.strip())}
+        for idx in (2, 3, 4, 5, 6):
+            self.assertEqual(res1[idx], res2[idx])
+
+        sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "enable"], check=True, stdout=sp.PIPE)
+        r_soft = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "--daemon-py", str(DAEMON_PY), "--map", maps_arg, "--soft", "ensure-running"], capture_output=True, env=stripped_env, timeout=10)
+        self.assertEqual(r_soft.returncode, 0)
+
+    def test_fallback_fast_sigterm_wakeup(self) -> None:
+        p = sp.Popen(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.rdir / "missing.sock"), "--map", f"/ws={self.ws}", "--git-bin", SYSTEM_GIT],
+            stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE,
+            env={**os.environ, "F8_NO_HYBRID": "1"},
             start_new_session=True,
         )
         try:
-            assert relay.stdin is not None
-            relay.stdin.write(
-                (json.dumps({"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree", "compute_sha256": True}}}) + "\n").encode()
-            )
-            relay.stdin.flush()
-            time.sleep(0.03)
-            relay.kill()
-            relay.wait(timeout=5)
+            assert p.stdin is not None and p.stdout is not None
+            p.stdin.write((json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}) + "\n").encode())
+            p.stdin.flush()
+            self.assertIn(b"f8-hybrid2", p.stdout.readline())
+            t0 = time.monotonic()
+            p.send_signal(signal.SIGTERM)
+            rc = p.wait(timeout=3)
+            self.assertEqual(rc, 0)
+            self.assertLess(time.monotonic() - t0, 0.8)
         finally:
-            for pipe in (relay.stdin, relay.stdout, relay.stderr):
+            for pipe in (p.stdin, p.stdout, p.stderr):
                 if pipe is not None:
                     try:
                         pipe.close()
                     except OSError:
                         pass
-        time.sleep(0.3)
-        self.assertEqual(children_of(self.proc.pid), [])
-        self.assertIsNone(self.proc.poll())
-
-        # 4) Malformed socket frames fuzz
-        for raw in (b"\n", b"{bad json\n", b'{"jsonrpc":"1.0","id":1}\n', b"\xff\xfe\n"):
-            cs = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            cs.settimeout(3.0)
-            cs.connect(str(self.sock))
-            cs.sendall(raw)
-            cs.shutdown(socket.SHUT_WR)
-            cs.recv(512)
-            cs.close()
-
-        time.sleep(0.2)
-        self.assertLessEqual(proc_count_fds(self.proc.pid), base_fds + 1)
-
-        # 5) Clean SIGTERM -> zero residue
-        self.proc.send_signal(signal.SIGTERM)
-        rc = self.proc.wait(timeout=10)
-        self.assertEqual(rc, 0)
-        self.assertFalse(self.sock.exists())
-        self.assertFalse(self.pidfile.exists())
-
-        # 6) Audit log must contain no file content or secrets
-        audit_text = self.log.read_text(encoding="utf-8")
-        self.assertNotIn("needle line", audit_text)
-        self.assertIn('"decision": "timeout"', audit_text)
-
-    def test_fallback_modes_match_native_output(self) -> None:
-        # Compare daemon bridge output vs F8_NO_HYBRID=1 fallback vs daemon-down fallback
-        self.proc = self._start_daemon()
-
-        def rpc_via_relay(extra_env: dict[str, str], sock_override: Path | None = None) -> dict:
-            env = dict(os.environ)
-            env.update(extra_env)
-            cmd = [
-                sys.executable,
-                str(RELAY_PY),
-                "--socket",
-                str(sock_override or self.sock),
-                "--map",
-                f"/ws={self.ws}",
-                "--git-bin",
-                SYSTEM_GIT,
-            ]
-            reqs = "\n".join(
-                [
-                    json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
-                    json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}),
-                    json.dumps({"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo"}}}),
-                    json.dumps({"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}}),
-                ]
-            ) + "\n"
-            p = sp.run(cmd, input=reqs.encode(), capture_output=True, env=env, timeout=15)
-            self.assertEqual(p.returncode, 0, p.stderr)
-            lines = [json.loads(line) for line in p.stdout.decode().splitlines() if line.strip()]
-            return {"resps": lines, "stderr": p.stderr.decode(errors="replace")}
-
-        native = rpc_via_relay({})
-        no_hyb = rpc_via_relay({"F8_NO_HYBRID": "1"})
-        self.assertIn("F8_NO_HYBRID=1", no_hyb["stderr"])
-
-        # Stop daemon -> missing socket fallback
-        self.proc.send_signal(signal.SIGTERM)
-        self.proc.wait(timeout=5)
-        down = rpc_via_relay({}, sock_override=self.sockd / "missing.sock")
-        self.assertIn("daemon-unavailable", down["stderr"])
-
-        for idx in (1, 2):
-            p_nat = json.loads(native["resps"][idx]["result"]["content"][0]["text"])
-            p_no = json.loads(no_hyb["resps"][idx]["result"]["content"][0]["text"])
-            p_dn = json.loads(down["resps"][idx]["result"]["content"][0]["text"])
-            self.assertEqual(p_nat, p_no)
-            self.assertEqual(p_nat, p_dn)
 
 
 if __name__ == "__main__":

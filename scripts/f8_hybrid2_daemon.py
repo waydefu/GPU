@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Native Termux persistent MCP JSON-RPC 2.0 daemon over AF_UNIX (Stage 7.2).
+"""Native Termux persistent universal MCP JSON-RPC 2.0 daemon over AF_UNIX (Stage 7.2).
 
-Intended to run outside PRoot (TracerPid == 0) via `termux-bg-run`.
-Enforces 0700 socket dir, 0600 socket mode, <=107-byte AF_UNIX path check,
-single-instance flock pidfile, SO_PEERCRED UID verification, per-request
-cancellation (`notifications/cancelled`), per-call timeout with process-group
-SIGKILL, clean client disconnect teardown, and zero-residue SIGTERM shutdown.
+Intended to run outside PRoot (`TracerPid == 0`).
+Supports multiple concurrent MCP clients with per-connection isolation,
+backpressure (`--max-clients` / `--max-inflight`), duplicate active req_id
+rejection, MCP `initialize` gating, atomic `.ready` marker, inode-verified
+socket/pidfile self-check (`TermuxService` wipe defense), and race-free idle
+auto-shutdown (`unlink` socket -> drain `accept()` backlog -> clean exit).
 """
 
 from __future__ import annotations
@@ -23,36 +24,53 @@ import time
 from pathlib import Path
 from typing import Any
 
-from f8_hybrid2_policy import Policy, Refuse, read_tracer_pid, validate_unix_sock_path, verify_peercred
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext
+from f8_hybrid2_policy import (
+    DEFAULT_DAEMON_MAPS,
+    DEFAULT_PID_PATH,
+    DEFAULT_READY_PATH,
+    DEFAULT_SOCK_PATH,
+    Policy,
+    Refuse,
+    parse_map_specs,
+    read_tracer_pid,
+    validate_unix_sock_path,
+    verify_peercred,
+)
+from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, canonical_req_key
 
 MAX_LINE_BYTES = 4 * 1024 * 1024
-CONN_IDLE_READ_TIMEOUT = 1.0
+AUDIT_ROTATE_BYTES = 5 * 1024 * 1024
 
 
 class ClientSession:
-    """Tracks one connected UDS client and its active request workers."""
+    """Tracks one connected UDS client, its initialization state, and active request workers."""
 
-    def __init__(self, conn: socket.socket, engine: MCPToolEngine, default_timeout_s: float) -> None:
+    def __init__(
+        self,
+        conn: socket.socket,
+        daemon: Hybrid2Daemon,
+        conn_id: int,
+        peer_pid: int,
+    ) -> None:
         self.conn = conn
-        self.engine = engine
-        self.default_timeout_s = default_timeout_s
+        self.daemon = daemon
+        self.engine = daemon.engine
+        self.default_timeout_s = daemon.default_timeout_s
+        self.conn_id = conn_id
+        self.peer_pid = peer_pid
+        self.initialized = False
         self._send_lock = threading.Lock()
         self._active_lock = threading.Lock()
         self._active: dict[str, RequestContext] = {}
         self._workers: list[threading.Thread] = []
         self.closed = threading.Event()
 
-    @staticmethod
-    def _req_key(req_id: Any) -> str:
-        return json.dumps(req_id, sort_keys=True)
-
-    def send_json(self, obj: dict[str, Any]) -> bool:
-        if self.closed.is_set():
-            return False
+    def send_json(self, obj: dict[str, Any], *, ctx: RequestContext | None = None) -> bool:
         raw = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
         with self._send_lock:
             if self.closed.is_set():
+                return False
+            if ctx is not None and ctx.cancel_event.is_set():
                 return False
             try:
                 self.conn.sendall(raw)
@@ -66,12 +84,9 @@ class ClientSession:
             ctxs = list(self._active.values())
         for ctx in ctxs:
             ctx.cancel()
+        # Only shutdown here; let serve()'s finally own conn.close() so FD reuse cannot race.
         try:
             self.conn.shutdown(socket.SHUT_RDWR)
-        except OSError:
-            pass
-        try:
-            self.conn.close()
         except OSError:
             pass
 
@@ -83,21 +98,25 @@ class ClientSession:
             rem = max(0.05, deadline - time.monotonic())
             th.join(timeout=rem)
 
-    def _run_tool_worker(self, req_id: Any, req_key: str, params: Any, ctx: RequestContext) -> None:
+    def _run_tool_worker(self, req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
         try:
             resp = self.engine.call_tool(req_id, params, ctx)
-            if not ctx.cancel_event.is_set() and not self.closed.is_set():
-                self.send_json(resp)
+            self.send_json(resp, ctx=ctx)
         except RequestCancelled:
             pass
         except Exception as exc:
-            if not ctx.cancel_event.is_set() and not self.closed.is_set():
-                self.send_json(self.engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}"))
+            self.send_json(
+                self.engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}"),
+                ctx=ctx,
+            )
         finally:
+            self.daemon.release_inflight()
             with self._active_lock:
-                self._active.pop(req_key, None)
+                self._active.pop(rk, None)
+            self.daemon.touch_activity()
 
     def _handle_message(self, raw_line: bytes) -> None:
+        self.daemon.touch_activity()
         if len(raw_line) > MAX_LINE_BYTES:
             self.send_json(self.engine.jsonrpc_err(None, -32600, "Frame too large"))
             return
@@ -110,22 +129,40 @@ class ClientSession:
         if isinstance(msg, dict) and msg.get("method") == "notifications/cancelled":
             params = msg.get("params") if isinstance(msg.get("params"), dict) else {}
             if "requestId" in params:
-                rk = self._req_key(params["requestId"])
-                with self._active_lock:
-                    ctx = self._active.get(rk)
-                if ctx is not None:
-                    ctx.cancel()
+                rk = canonical_req_key(params["requestId"])
+                if rk is not None:
+                    with self._active_lock:
+                        ctx = self._active.get(rk)
+                    if ctx is not None:
+                        ctx.cancel()
             return
 
-        sync_resp, async_kind = self.engine.handle_sync_control(msg)
+        sync_resp, action = self.engine.handle_sync_control(msg, initialized=self.initialized)
+        if action == "initialized":
+            self.initialized = True
         if sync_resp is not None:
             self.send_json(sync_resp)
             return
-        if async_kind == "tools/call":
+
+        if action == "tools/call":
             req_id = msg.get("id")
-            rk = self._req_key(req_id)
-            ctx = RequestContext(req_id, self.default_timeout_s)
+            rk = canonical_req_key(req_id)
+            if rk is None:
+                self.send_json(self.engine.jsonrpc_err(None, -32600, "Invalid Request id"))
+                return
+
             with self._active_lock:
+                if rk in self._active:
+                    self.send_json(self.engine.jsonrpc_err(req_id, -32600, "Duplicate active request id"))
+                    return
+                if not self.daemon.try_acquire_inflight():
+                    self.daemon.write_audit(
+                        {"ev": "tool", "conn_id": self.conn_id, "req_id": req_id, "decision": "refuse", "reason": "busy-max-inflight"}
+                    )
+                    self.send_json(self.engine.jsonrpc_err(req_id, -32000, "Server busy: max inflight requests reached"))
+                    return
+
+                ctx = RequestContext(req_id, self.default_timeout_s)
                 self._active[rk] = ctx
                 th = threading.Thread(
                     target=self._run_tool_worker,
@@ -137,17 +174,16 @@ class ClientSession:
             th.start()
 
     def serve(self) -> None:
-        self.conn.settimeout(CONN_IDLE_READ_TIMEOUT)
         buf = bytearray()
+        conn_fd = self.conn.fileno()
         poller = select.poll()
-        poller.register(self.conn.fileno(), select.POLLIN | select.POLLHUP | getattr(select, "POLLRDHUP", 0))
+        poller.register(conn_fd, select.POLLIN | select.POLLHUP | getattr(select, "POLLRDHUP", 0))
         read_eof = False
         try:
             while not self.closed.is_set():
                 events = poller.poll(50 if read_eof else 500)
                 hup = any(ev & (select.POLLHUP | select.POLLERR | select.POLLNVAL) for _, ev in events)
                 if hup:
-                    # Peer closed whole socket or was killed -> abort active workers immediately.
                     self.cancel_all()
                     break
                 if read_eof:
@@ -166,9 +202,8 @@ class ClientSession:
                     self.cancel_all()
                     break
                 if not chunk:
-                    # Half-close (SHUT_WR): let already-dispatched requests finish while watching for POLLHUP.
                     read_eof = True
-                    poller.modify(self.conn.fileno(), select.POLLHUP | select.POLLERR)
+                    poller.modify(conn_fd, select.POLLHUP | select.POLLERR)
                     continue
                 buf.extend(chunk)
                 if len(buf) > MAX_LINE_BYTES:
@@ -184,8 +219,8 @@ class ClientSession:
                         self._handle_message(line)
         finally:
             try:
-                poller.unregister(self.conn.fileno())
-            except (OSError, KeyError):
+                poller.unregister(conn_fd)
+            except (OSError, KeyError, ValueError):
                 pass
             if not read_eof:
                 self.cancel_all()
@@ -198,27 +233,58 @@ class ClientSession:
 
 
 class Hybrid2Daemon:
-    """Single-instance AF_UNIX MCP server."""
+    """Single-instance universal AF_UNIX MCP server with idle auto-shutdown and backpressure."""
 
     def __init__(
         self,
         sock_path: Path,
         pidfile: Path,
+        ready_path: Path,
         log_path: Path | None,
         engine: MCPToolEngine,
         default_timeout_s: float,
+        idle_timeout_s: float = 0.0,
+        max_clients: int = 32,
+        max_inflight: int = 16,
     ) -> None:
         self.sock_path = sock_path
         self.pidfile = pidfile
+        self.ready_path = ready_path
         self.log_path = log_path
         self.engine = engine
         self.default_timeout_s = default_timeout_s
+        self.idle_timeout_s = max(0.0, float(idle_timeout_s))
+        self.max_clients = max(1, int(max_clients))
+        self.max_inflight = max(1, int(max_inflight))
+
         self._stop_event = threading.Event()
         self._lock_fh: Any = None
+        self._pid_ino: int | None = None
+        self._sock_ino: int | None = None
+        self._ready_ino: int | None = None
         self._srv_sock: socket.socket | None = None
         self._sess_lock = threading.Lock()
         self._sessions: set[ClientSession] = set()
+        self._next_conn_id = 1
+        self._inflight_lock = threading.Lock()
+        self._inflight = 0
+        self._last_active = time.monotonic()
         self._log_lock = threading.Lock()
+        self._idle_exiting = False
+
+    def touch_activity(self) -> None:
+        self._last_active = time.monotonic()
+
+    def try_acquire_inflight(self) -> bool:
+        with self._inflight_lock:
+            if self._inflight >= self.max_inflight:
+                return False
+            self._inflight += 1
+            return True
+
+    def release_inflight(self) -> None:
+        with self._inflight_lock:
+            self._inflight = max(0, self._inflight - 1)
 
     def write_audit(self, entry: dict[str, Any]) -> None:
         if self.log_path is None:
@@ -226,8 +292,14 @@ class Hybrid2Daemon:
         payload = {"ts": round(time.time(), 3), **entry}
         line = json.dumps(payload, ensure_ascii=False) + "\n"
         with self._log_lock:
-            with open(self.log_path, "a", encoding="utf-8") as fh:
-                fh.write(line)
+            try:
+                if self.log_path.exists() and self.log_path.stat().st_size >= AUDIT_ROTATE_BYTES:
+                    backup = Path(str(self.log_path) + ".1")
+                    os.replace(self.log_path, backup)
+                with open(self.log_path, "a", encoding="utf-8") as fh:
+                    fh.write(line)
+            except OSError:
+                pass
 
     def _acquire_pidfile(self) -> None:
         self.pidfile.parent.mkdir(parents=True, exist_ok=True)
@@ -241,6 +313,7 @@ class Hybrid2Daemon:
         fh.truncate()
         fh.write(f"{os.getpid()}\n")
         fh.flush()
+        self._pid_ino = os.fstat(fh.fileno()).st_ino
         self._lock_fh = fh
 
     def _bind_socket(self) -> None:
@@ -257,19 +330,100 @@ class Hybrid2Daemon:
             os.umask(old_umask)
         os.chmod(self.sock_path, 0o600)
         srv.listen(64)
-        srv.settimeout(0.5)
+        srv.settimeout(0.25)
+        self._sock_ino = os.stat(self.sock_path).st_ino
         self._srv_sock = srv
+
+    def _write_ready_marker(self) -> None:
+        self.ready_path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = self.ready_path.with_suffix(".tmp")
+        tmp.write_text(
+            json.dumps(
+                {
+                    "pid": os.getpid(),
+                    "tracer_pid": read_tracer_pid(),
+                    "sock_ino": self._sock_ino,
+                    "pid_ino": self._pid_ino,
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        os.chmod(tmp, 0o600)
+        os.replace(tmp, self.ready_path)
+        try:
+            self._ready_ino = self.ready_path.stat().st_ino
+        except OSError:
+            self._ready_ino = None
+
+    def _inodes_still_owned(self) -> bool:
+        """Detect external unlink/replacement (split-brain defense)."""
+        try:
+            if self._sock_ino is None or self.sock_path.stat().st_ino != self._sock_ino:
+                return False
+            if self._pid_ino is None or self.pidfile.stat().st_ino != self._pid_ino:
+                return False
+        except OSError:
+            return False
+        return True
+
+    def _unlink_owned_files(self) -> None:
+        try:
+            if self._sock_ino is not None and self.sock_path.exists() and self.sock_path.stat().st_ino == self._sock_ino:
+                self.sock_path.unlink()
+        except OSError:
+            pass
+        try:
+            if self._ready_ino is not None and self.ready_path.exists() and self.ready_path.stat().st_ino == self._ready_ino:
+                self.ready_path.unlink()
+        except OSError:
+            pass
+
+    def _release_pidfile(self) -> None:
+        try:
+            if self._pid_ino is not None and self.pidfile.exists() and self.pidfile.stat().st_ino == self._pid_ino:
+                self.pidfile.unlink()
+        except OSError:
+            pass
+        if self._lock_fh is not None:
+            try:
+                fcntl.flock(self._lock_fh.fileno(), fcntl.LOCK_UN)
+            except OSError:
+                pass
+            try:
+                self._lock_fh.close()
+            except OSError:
+                pass
+            self._lock_fh = None
 
     def request_stop(self) -> None:
         self._stop_event.set()
 
+    def _spawn_client_thread(self, conn: socket.socket, client_threads: list[threading.Thread]) -> None:
+        self.touch_activity()
+        th = threading.Thread(target=self._handle_client, args=(conn,), daemon=True)
+        client_threads.append(th)
+        th.start()
+
     def _handle_client(self, conn: socket.socket) -> None:
         sess: ClientSession | None = None
+        conn_id = 0
         try:
-            verify_peercred(conn)
-            sess = ClientSession(conn, self.engine, self.default_timeout_s)
+            peer_pid, _, _ = verify_peercred(conn)
             with self._sess_lock:
+                if len(self._sessions) >= self.max_clients:
+                    self.write_audit({"ev": "conn", "decision": "refuse", "reason": "max-clients"})
+                    try:
+                        conn.sendall((json.dumps(self.engine.jsonrpc_err(None, -32000, "Server busy: max clients reached")) + "\n").encode("utf-8"))
+                    except OSError:
+                        pass
+                    conn.close()
+                    return
+                conn_id = self._next_conn_id
+                self._next_conn_id += 1
+                sess = ClientSession(conn, self, conn_id, peer_pid)
                 self._sessions.add(sess)
+            self.write_audit({"ev": "conn", "decision": "open", "conn_id": conn_id, "peer_pid": peer_pid})
             sess.serve()
         except Refuse as exc:
             self.write_audit({"ev": "conn", "decision": "refuse", "reason": str(exc)})
@@ -286,77 +440,121 @@ class Hybrid2Daemon:
             if sess is not None:
                 with self._sess_lock:
                     self._sessions.discard(sess)
+                self.touch_activity()
+                self.write_audit({"ev": "conn", "decision": "close", "conn_id": conn_id})
+
+    def _drain_accept_backlog(self, client_threads: list[threading.Thread]) -> None:
+        """Accept any peers already queued in listen(64) before closing srv_sock."""
+        assert self._srv_sock is not None
+        self._srv_sock.setblocking(False)
+        while True:
+            try:
+                conn, _ = self._srv_sock.accept()
+            except BlockingIOError:
+                break
+            except OSError:
+                break
+            self._spawn_client_thread(conn, client_threads)
 
     def run(self) -> int:
         self._acquire_pidfile()
         self._bind_socket()
-        self.write_audit({"ev": "daemon", "action": "start", "pid": os.getpid(), "tracer_pid": read_tracer_pid()})
+        self._write_ready_marker()
+        self.touch_activity()
+        last_ino_check = time.monotonic()
+        self.write_audit(
+            {
+                "ev": "daemon",
+                "action": "start",
+                "pid": os.getpid(),
+                "tracer_pid": read_tracer_pid(),
+                "idle_timeout_s": self.idle_timeout_s,
+                "max_clients": self.max_clients,
+                "max_inflight": self.max_inflight,
+            }
+        )
         client_threads: list[threading.Thread] = []
+        stop_reason = "signal"
         try:
             assert self._srv_sock is not None
             while not self._stop_event.is_set():
+                client_threads = [t for t in client_threads if t.is_alive()]
                 try:
                     conn, _ = self._srv_sock.accept()
-                except socket.timeout:
-                    client_threads = [t for t in client_threads if t.is_alive()]
+                    self._spawn_client_thread(conn, client_threads)
                     continue
+                except socket.timeout:
+                    pass
                 except OSError:
                     break
-                th = threading.Thread(target=self._handle_client, args=(conn,), daemon=True)
-                client_threads.append(th)
-                th.start()
+
+                now = time.monotonic()
+                if now - last_ino_check >= 5.0:
+                    last_ino_check = now
+                    if not self._inodes_still_owned():
+                        stop_reason = "inode-replaced"
+                        self.write_audit({"ev": "daemon", "action": "inode-lost"})
+                        break
+
+                if self.idle_timeout_s > 0.0:
+                    with self._sess_lock:
+                        sess_cnt = len(self._sessions)
+                    with self._inflight_lock:
+                        inflight_cnt = self._inflight
+                    if sess_cnt == 0 and inflight_cnt == 0 and (now - self._last_active) >= self.idle_timeout_s:
+                        # Race-free idle exit: unlink sock+ready, drain backlog, immediately free pidfile
+                        # so concurrent ctl start can bind a new daemon with zero lock delay, then let
+                        # drained connections finish cleanly without hard cutoff!
+                        self._unlink_owned_files()
+                        self._drain_accept_backlog(client_threads)
+                        try:
+                            self._srv_sock.close()
+                        except OSError:
+                            pass
+                        self._srv_sock = None
+                        self._release_pidfile()
+                        stop_reason = "idle-timeout"
+                        self._idle_exiting = True
+                        while not self._stop_event.is_set() and any(t.is_alive() for t in client_threads):
+                            for th in list(client_threads):
+                                th.join(timeout=0.2)
+                            client_threads = [t for t in client_threads if t.is_alive()]
+                        break
         finally:
+            self._unlink_owned_files()
             if self._srv_sock is not None:
                 try:
                     self._srv_sock.close()
                 except OSError:
                     pass
-            with self._sess_lock:
-                sessions = list(self._sessions)
-            for sess in sessions:
-                sess.cancel_all()
-            for sess in sessions:
-                sess.join_workers(timeout_s=5.0)
+            if not self._idle_exiting and stop_reason != "idle-timeout":
+                with self._sess_lock:
+                    sessions = list(self._sessions)
+                for sess in sessions:
+                    sess.cancel_all()
+                for sess in sessions:
+                    sess.join_workers(timeout_s=5.0)
             for th in client_threads:
                 th.join(timeout=2.0)
-            try:
-                if self.sock_path.exists() or self.sock_path.is_symlink():
-                    self.sock_path.unlink()
-            except OSError:
-                pass
-            if self._lock_fh is not None:
-                try:
-                    fcntl.flock(self._lock_fh.fileno(), fcntl.LOCK_UN)
-                except OSError:
-                    pass
-                try:
-                    self._lock_fh.close()
-                except OSError:
-                    pass
-            try:
-                if self.pidfile.exists():
-                    self.pidfile.unlink()
-            except OSError:
-                pass
-            self.write_audit({"ev": "daemon", "action": "stop", "pid": os.getpid()})
+            self._release_pidfile()
+            self.write_audit({"ev": "daemon", "action": "stop", "pid": os.getpid(), "reason": stop_reason})
         return 0
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
-    ap = argparse.ArgumentParser(description="Stage 7.2 Native Hybrid 2.0 MCP UDS daemon")
-    ap.add_argument("--socket", required=True, help="AF_UNIX socket path (<=107 bytes)")
-    ap.add_argument(
-        "--map",
-        action="append",
-        required=True,
-        help="Path map GUEST_PREFIX=HOST_PREFIX (may repeat)",
-    )
+    ap = argparse.ArgumentParser(description="Stage 7.2 Native Hybrid 2.0 universal MCP UDS daemon")
+    ap.add_argument("--socket", default=DEFAULT_SOCK_PATH, help="AF_UNIX socket path (<=107 bytes)")
+    ap.add_argument("--map", action="append", default=[], help="Path map GUEST=HOST (repeatable)")
     ap.add_argument("--home", required=True, help="Clean HOME dir for native git subprocesses")
     ap.add_argument("--tmp", required=True, help="Clean TMPDIR for native git subprocesses")
-    ap.add_argument("--pidfile", required=True, help="Pidfile path for single-instance flock")
+    ap.add_argument("--pidfile", default=DEFAULT_PID_PATH, help="Pidfile path for single-instance flock")
+    ap.add_argument("--ready", default="", help="Ready marker path (defaults next to socket)")
     ap.add_argument("--log", default="", help="Optional sanitized audit JSONL log path")
     ap.add_argument("--git-bin", default="/data/data/com.termux/files/usr/bin/git", help="Native git binary path")
     ap.add_argument("--default-timeout", type=float, default=30.0, help="Default per-tool timeout (seconds)")
+    ap.add_argument("--idle-timeout", type=float, default=0.0, help="Idle auto-shutdown seconds (0 disables)")
+    ap.add_argument("--max-clients", type=int, default=32, help="Max concurrent UDS client sessions")
+    ap.add_argument("--max-inflight", type=int, default=16, help="Max concurrent inflight tool executions")
     ap.add_argument(
         "--skip-tracer-check",
         action="store_true",
@@ -379,19 +577,18 @@ def main(argv: list[str] | None = None) -> int:
             print(f"error: daemon requires native execution (TracerPid={tpid}, expected 0)", file=sys.stderr)
             return 5
 
-    maps: list[tuple[str, str]] = []
-    for item in args.map:
-        if "=" not in item:
-            print(f"error: invalid --map {item!r}, expected GUEST=HOST", file=sys.stderr)
-            return 2
-        g, h = item.split("=", 1)
-        maps.append((g, h))
+    if (sock_path.parent / "disabled.flag").exists():
+        print("error: global disabled.flag is active; refusing daemon start", file=sys.stderr)
+        return 6
 
+    maps = parse_map_specs(args.map, DEFAULT_DAEMON_MAPS)
     os.makedirs(args.home, exist_ok=True)
     os.makedirs(args.tmp, exist_ok=True)
     log_path = Path(args.log) if args.log else None
     if log_path is not None:
         log_path.parent.mkdir(parents=True, exist_ok=True)
+
+    ready_path = Path(args.ready) if args.ready else (sock_path.parent / Path(DEFAULT_READY_PATH).name)
 
     policy = Policy(maps=maps, home=args.home, tmp=args.tmp)
     daemon_holder: dict[str, Hybrid2Daemon] = {}
@@ -410,13 +607,17 @@ def main(argv: list[str] | None = None) -> int:
     daemon = Hybrid2Daemon(
         sock_path=sock_path,
         pidfile=Path(args.pidfile),
+        ready_path=ready_path,
         log_path=log_path,
         engine=engine,
         default_timeout_s=args.default_timeout,
+        idle_timeout_s=args.idle_timeout,
+        max_clients=args.max_clients,
+        max_inflight=args.max_inflight,
     )
     daemon_holder["d"] = daemon
 
-    def _on_sig(signum: int, _frame: Any) -> None:
+    def _on_sig(_signum: int, _frame: Any) -> None:
         daemon.request_stop()
 
     signal.signal(signal.SIGTERM, _on_sig)
