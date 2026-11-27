@@ -266,17 +266,23 @@ class ClientSession:
                         if not chunk:
                             read_eof = True
                             continue
+                        # The old buffer is a suffix with no LF. Check frame
+                        # lengths individually before copying a complete frame.
+                        scan_from = len(buf)
                         buf.extend(chunk)
-                        if len(buf) > MAX_LINE_BYTES:
-                            self.send_json(self.engine.jsonrpc_err(None, -32600, "Line buffer overflow"), wake=False)
-                            read_eof = True
-                            break
                         while True:
-                            nl = buf.find(b"\n")
+                            nl = buf.find(b"\n", scan_from)
+                            frame_len = len(buf) if nl < 0 else nl
+                            if frame_len > MAX_LINE_BYTES:
+                                self.send_json(self.engine.jsonrpc_err(None, -32600, "Line buffer overflow"), wake=False)
+                                buf.clear()
+                                read_eof = True
+                                break
                             if nl < 0:
                                 break
                             line = bytes(buf[:nl]).rstrip(b"\r")
                             del buf[: nl + 1]
+                            scan_from = 0
                             if line:
                                 self._handle_message(line)
         finally:

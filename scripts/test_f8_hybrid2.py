@@ -781,6 +781,19 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
     def _send(s: socket.socket, obj: dict) -> None:
         s.sendall((json.dumps(obj) + "\n").encode("utf-8"))
 
+    def test_max_legal_daemon_frame_followed_by_another_request(self) -> None:
+        from f8_hybrid2_daemon import MAX_LINE_BYTES
+
+        self.proc = self._start_daemon()
+        first = b'{"jsonrpc":"2.0","id":1,"method":"ping"}'
+        second = b'{"jsonrpc":"2.0","id":2,"method":"ping"}\n'
+        prefix = first + b" " * (MAX_LINE_BYTES - len(first))
+        sock, responses = self._uds_rpc(self.sock)
+        with sock, responses:
+            sock.sendall(prefix + b"\n" + second)
+            self.assertEqual(json.loads(responses.readline()), {"jsonrpc": "2.0", "id": 1, "result": {}})
+            self.assertEqual(json.loads(responses.readline()), {"jsonrpc": "2.0", "id": 2, "result": {}})
+
     def test_overlong_socket_single_instance_and_perms(self) -> None:
         long_dir = self.base / ("x" * 110)
         r = sp.run(
