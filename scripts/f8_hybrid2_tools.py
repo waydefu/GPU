@@ -49,6 +49,7 @@ MAX_JSONL_LINE_BYTES = 1024 * 1024
 MAX_SEARCH_FILE_BYTES = 2 * 1024 * 1024
 MAX_SEARCH_LINE_CHARS = 4096
 MAX_REGEX_CHARS = 512
+MAX_REQUEST_ID_BYTES = 1024
 
 TOOL_DEFS: list[dict[str, Any]] = [
     {
@@ -190,6 +191,14 @@ def canonical_req_key(req_id: Any) -> str | None:
     return f"{kind}:{req_id}"
 
 
+def request_key_fits(key: str | None) -> bool:
+    if key is None or len(key) > MAX_REQUEST_ID_BYTES:
+        return False
+    try:
+        return len(key.encode("utf-8")) <= MAX_REQUEST_ID_BYTES
+    except UnicodeError:
+        return False
+
 def cancellation_req_key(msg: Any) -> str | None:
     """Return the target only for a valid JSON-RPC cancellation notification."""
     if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0" or "id" in msg:
@@ -199,7 +208,8 @@ def cancellation_req_key(msg: Any) -> str | None:
     params = msg.get("params")
     if not isinstance(params, dict) or "requestId" not in params:
         return None
-    return canonical_req_key(params["requestId"])
+    key = canonical_req_key(params["requestId"])
+    return key if request_key_fits(key) else None
 
 
 def _strict_int_arg(args: dict[str, Any], key: str, default: int, lo: int, hi: int) -> int:
@@ -320,12 +330,12 @@ class MCPToolEngine:
         """Handle control JSON-RPC methods and enforce initialize gating."""
         if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0":
             raw_id = msg.get("id") if isinstance(msg, dict) else None
-            return self.jsonrpc_err(raw_id if canonical_req_key(raw_id) is not None else None, -32600, "Invalid Request"), None
+            return self.jsonrpc_err(raw_id if request_key_fits(canonical_req_key(raw_id)) else None, -32600, "Invalid Request"), None
 
         method = msg.get("method")
         has_id = "id" in msg
         req_id = msg.get("id")
-        if has_id and canonical_req_key(req_id) is None:
+        if has_id and not request_key_fits(canonical_req_key(req_id)):
             return self.jsonrpc_err(None, -32600, "Invalid Request id"), None
 
         if not isinstance(method, str) or not method:

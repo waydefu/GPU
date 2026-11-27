@@ -26,6 +26,7 @@ from typing import Any
 
 from f8_hybrid2_policy import (
     DEFAULT_DAEMON_MAPS,
+    acquire_budget_lease,
     DEFAULT_PID_PATH,
     DEFAULT_READY_PATH,
     DEFAULT_SOCK_PATH,
@@ -649,6 +650,23 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    directory = os.environ.get("F8_HYBRID2_BUDGET_DIR")
+    if not directory:
+        return _main(args)
+    try:
+        fd = acquire_budget_lease(directory, daemon=True)
+    except (OSError, ValueError) as exc:
+        print(f"error: daemon admission refused: {exc}", file=sys.stderr)
+        return 3
+    try:
+        args.max_clients = min(2, args.max_clients)
+        args.max_inflight = min(2, args.max_inflight)
+        return _main(args)
+    finally:
+        os.close(fd)
+
+
+def _main(args: argparse.Namespace) -> int:
     try:
         sock_path = validate_unix_sock_path(args.socket)
     except ValueError as exc:

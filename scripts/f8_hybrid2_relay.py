@@ -17,7 +17,6 @@ from __future__ import annotations
 
 import argparse
 import collections
-import fcntl
 import json
 import os
 import select
@@ -25,7 +24,6 @@ import selectors
 import shutil
 import signal
 import socket
-import stat
 import sys
 import tempfile
 import threading
@@ -34,13 +32,14 @@ from typing import Any
 
 from f8_hybrid2_policy import (
     DEFAULT_FALLBACK_MAPS,
+    acquire_budget_lease,
     DEFAULT_SOCK_PATH,
     Policy,
     parse_map_specs,
     read_tracer_pid,
     validate_unix_sock_path,
 )
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key
+from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key, request_key_fits
 
 MAX_FRAME_BYTES = 4 * 1024 * 1024
 # Daemon limits its serialized output buffer to 16 MiB. Its JSON response may
@@ -48,7 +47,6 @@ MAX_FRAME_BYTES = 4 * 1024 * 1024
 MAX_UDS_FRAME_BYTES = 16 * 1024 * 1024
 DEFAULT_MAX_LOCAL_INFLIGHT = 8
 MAX_NATIVE_PENDING = 16
-MAX_REQUEST_ID_BYTES = 1024
 
 
 def _check_uds_frame_size(size: int, limit: int = MAX_UDS_FRAME_BYTES) -> None:
@@ -228,8 +226,9 @@ def bridge_stdio_to_uds(
         finally:
             if raw_out is not None:
                 _queue_local_bytes(raw_out, rk, wake=False)
-            with local_active_lock:
-                local_active.pop(rk, None)
+            else:
+                with local_active_lock:
+                    local_active.pop(rk, None)
             _wake_local()
 
     def _start_local_call(req_id: Any, rk: str, params: Any) -> bool:
@@ -240,8 +239,12 @@ def bridge_stdio_to_uds(
             local_active[rk] = ctx
             workers[:] = [w for w in workers if w.is_alive()]
             th = threading.Thread(target=_local_worker, args=(req_id, rk, params, ctx), daemon=True)
+            try:
+                th.start()
+            except (RuntimeError, OSError):
+                del local_active[rk]
+                return False
             workers.append(th)
-        th.start()
         return True
 
     def _emit_local_err(req_id: Any, code: int, msg: str) -> None:
@@ -281,13 +284,13 @@ def bridge_stdio_to_uds(
         # Strict JSON-RPC 2.0 validation before routing either local or UDS.
         if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0":
             raw_id = msg.get("id") if isinstance(msg, dict) else None
-            _emit_local_err(raw_id if canonical_req_key(raw_id) is not None else None, -32600, "Invalid Request")
+            _emit_local_err(raw_id if request_key_fits(canonical_req_key(raw_id)) else None, -32600, "Invalid Request")
             return
 
         has_id = "id" in msg
         req_id = msg.get("id")
         rk = canonical_req_key(req_id) if has_id else None
-        if has_id and rk is not None and len(rk.encode("utf-8")) > MAX_REQUEST_ID_BYTES:
+        if has_id and rk is not None and not request_key_fits(rk):
             _emit_local_err(None, -32600, "Request id too large")
             return
         if has_id and rk is None:
@@ -457,6 +460,14 @@ def bridge_stdio_to_uds(
             del stdin_buf[: nl + 1]
             _handle_stdin_line(one)
         while not stop.is_set():
+            with local_out_lock:
+                while local_out_q and len(to_stdout) < MAX_FRAME_BYTES * 2:
+                    raw_resp, rk = local_out_q.popleft()
+                    with local_active_lock:
+                        ctx = local_active.pop(rk, None)
+                    if ctx is None or not ctx.cancel_event.is_set():
+                        to_stdout.extend(raw_resp)
+                        session_state["local_replies"] += 1
             # One complete UDS frame can arrive while stdout is below the
             # pause watermark, plus one bounded recv chunk of other frames.
             if len(to_stdout) > MAX_FRAME_BYTES * 2 + MAX_UDS_FRAME_BYTES + 65536:
@@ -487,11 +498,6 @@ def bridge_stdio_to_uds(
                         os.read(local_r, 4096)
                     except OSError:
                         pass
-                    with local_out_lock:
-                        while local_out_q:
-                            raw_resp, _rk = local_out_q.popleft()
-                            to_stdout.extend(raw_resp)
-                            session_state["local_replies"] += 1
                 elif tag == "stdin" and (mask & selectors.EVENT_READ):
                     if session_state["uds_closed"] or session_state["uds_write_closed"]:
                         continue
@@ -823,7 +829,7 @@ def run_local_fallback(
     policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"))
     engine = MCPToolEngine(policy=policy, git_bin=git_bin, default_timeout_s=default_timeout_s)
 
-    send_lock = threading.Lock()
+    send_lock = threading.Condition()
     active_lock = threading.Lock()
     active: dict[str, RequestContext] = {}
     workers: list[threading.Thread] = []
@@ -841,12 +847,14 @@ def run_local_fallback(
     def write_resp(obj: dict[str, Any], *, ctx: RequestContext | None = None) -> None:
         raw = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
         with send_lock:
-            if stop.is_set() or (ctx is not None and ctx.cancel_event.is_set()):
-                return
-            if len(out_buf) + len(raw) > MAX_FRAME_BYTES * 4:
+            if len(raw) > MAX_FRAME_BYTES * 4:
                 stop.set()
                 return
-            out_buf.extend(raw)
+            while not stop.is_set() and (ctx is None or not ctx.cancel_event.is_set()):
+                if len(out_buf) + len(raw) <= MAX_FRAME_BYTES * 4:
+                    out_buf.extend(raw)
+                    return
+                send_lock.wait(timeout=0.05)
 
     def output_worker() -> None:
         poller = select.poll()
@@ -868,6 +876,7 @@ def run_local_fallback(
                     try:
                         with send_lock:
                             del out_buf[:os.write(out_fd, out_buf)]
+                            send_lock.notify_all()
                     except BlockingIOError:
                         pass
                     except OSError:
@@ -937,8 +946,13 @@ def run_local_fallback(
                 active[rk] = ctx
                 th = threading.Thread(target=worker, args=(req_id, rk, msg.get("params"), ctx), daemon=True)
                 workers[:] = [w for w in workers if w.is_alive()]
+                try:
+                    th.start()
+                except (RuntimeError, OSError):
+                    del active[rk]
+                    write_resp(engine.jsonrpc_err(req_id, -32000, "Local worker unavailable"))
+                    return
                 workers.append(th)
-            th.start()
 
     def on_sig(_signum: int, _frame: Any) -> None:
         stop.set()
@@ -1087,37 +1101,6 @@ def _try_connect_with_optional_autostart(
         return s2
 
 
-def acquire_budget_lease(directory: str) -> int:
-    """Acquire one of two administrator-provisioned cooperative relay slots.
-
-    The directory and files must be private and stable for the lifetime of all
-    participants; unlinking or replacing a slot breaks cross-process accounting.
-    """
-    dfd = os.open(directory, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
-    try:
-        st = os.fstat(dfd)
-        if st.st_uid != os.getuid() or st.st_mode & 0o077:
-            raise ValueError("budget directory must be owned by the user and private")
-        for slot in range(2):
-            fd = os.open(f"slot-{slot}", os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW | os.O_NONBLOCK, 0o600, dir_fd=dfd)
-            try:
-                st = os.fstat(fd)
-                if not stat.S_ISREG(st.st_mode) or st.st_uid != os.getuid() or st.st_mode & 0o077 or st.st_nlink != 1:
-                    raise ValueError("invalid budget slot")
-                try:
-                    fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
-                except BlockingIOError:
-                    os.close(fd)
-                    continue
-                return fd
-            except BaseException:
-                os.close(fd)
-                raise
-        raise ValueError("budget exhausted")
-    finally:
-        os.close(dfd)
-
-
 def main(argv: list[str] | None = None) -> int:
     directory = os.environ.get("F8_HYBRID2_BUDGET_DIR")
     if not directory:
@@ -1135,6 +1118,11 @@ def main(argv: list[str] | None = None) -> int:
 
 def _main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    if os.environ.get("F8_HYBRID2_BUDGET_DIR"):
+        if args.auto_start:
+            print("[f8-hybrid2-relay] budget mode requires an independently started daemon", file=sys.stderr)
+            return 3
+        args.max_local_inflight = 1
     try:
         native_tools = parse_native_tools(args.native_tools)
     except ValueError as exc:
