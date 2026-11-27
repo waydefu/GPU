@@ -141,8 +141,8 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
         except OSError:
             pass
 
-    signal.signal(signal.SIGTERM, on_sig)
-    signal.signal(signal.SIGINT, on_sig)
+    prev_sigterm = signal.signal(signal.SIGTERM, on_sig)
+    prev_sigint = signal.signal(signal.SIGINT, on_sig)
 
     try:
         while not stop.is_set():
@@ -170,8 +170,8 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
                                 stop.set()
                         break
                     to_uds.extend(chunk)
-                    if len(sent_to_uds) < 65536:
-                        sent_to_uds.extend(chunk[: 65536 - len(sent_to_uds)])
+                    if len(sent_to_uds) < MAX_FRAME_BYTES:
+                        sent_to_uds.extend(chunk[: MAX_FRAME_BYTES - len(sent_to_uds)])
                     if len(to_uds) > MAX_FRAME_BYTES * 2:
                         stop.set()
                         break
@@ -229,6 +229,8 @@ def bridge_stdio_to_uds(sock: socket.socket) -> tuple[int, bool, bytes]:
                 except OSError:
                     break
     finally:
+        signal.signal(signal.SIGTERM, prev_sigterm)
+        signal.signal(signal.SIGINT, prev_sigint)
         sel.close()
         for fd in (sig_r, sig_w):
             try:

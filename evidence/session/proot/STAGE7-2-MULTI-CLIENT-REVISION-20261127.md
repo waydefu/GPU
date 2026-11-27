@@ -16,7 +16,7 @@
    - 控制器提供 `start / stop / restart / status / probe / enable / disable / ensure-running / client-config`。
    - 跨行程 `flock` single-flight 防驚群（thundering-herd）；正確處理 MCP 客戶端（如 Hermes `_SAFE_ENV_KEYS`、`mcp 2.0.0`、Codex、Claude）剝除 7 個 Android 環境變數的情境——未事前啟動且無法透過 `am` 跨界拉起時，**安全退回 PRoot 引擎而非以 `rc=4` 崩潰**。
    - Daemon 強制單例、支援 `--max-clients`／`--max-inflight` 背壓、Per-Connection 請求隔離、禁止重複活躍 `req_id`、`initialize` 狀態機驗證，及「先原子 `unlink(m.sock)` 再 drain `accept()` backlog」的無競態閒置自動停機（`--idle-timeout`）。
-   - 全域停用：`ctl disable`（寫入 `disabled.flag`）或 `F8_NO_HYBRID=1` 令所有客戶端透明回到 PRoot 本地執行路徑，停機零殘留。
+   - 全域停用：`ctl disable`（寫入 `disabled.flag` 並停機；停機逾時回非零碼，已連線 UDS 會話以 `EOF` 斷線結束而非透明熱切換，僅新連線／重連轉由 PRoot 本地執行）或 `F8_NO_HYBRID=1`，停機零殘留。
    - **安全強化（補齊 Stage 5 並修復 7.2 初版缺口）**：`validate_git_ro` 補齊路徑／`--no-index`／`-f` 檢查、`--no-textconv`、`GIT_OPTIONAL_LOCKS=0` 與完整 `GIT_BAD_CFG`／`worktree`／`commondir` 檢查；`map_path` 針對 `real_host` 反查 `PROTECTED`；所有讀檔採用 `O_NOFOLLOW`；`_tool_git_ro` 使用 `pidfd_open` + `select.poll()` 消除 `20 ms` 輪詢；限制檔案讀取／JSON 載入與單行正則長度防 OOM/ReDoS；JSON 回應按 UTF-8 位元組安全截斷。
 
 ---

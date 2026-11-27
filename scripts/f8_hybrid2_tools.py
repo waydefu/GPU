@@ -19,12 +19,20 @@ import re
 import select
 import signal
 import subprocess
+import sys
 import tempfile
 import threading
 import time
+from pathlib import Path
 from typing import Any, Callable
 
+_HERE = str(Path(__file__).resolve().parent)
+if _HERE not in sys.path:
+    sys.path.insert(0, _HERE)
+
 from f8_hybrid2_policy import Policy, Refuse, open_nofollow, pidfd_open
+
+_MAY_BACKTRACK_RE = re.compile(r"[*+?{|]")
 
 SUPPORTED_PROTOCOL_VERSIONS = (
     "2025-11-25",
@@ -453,22 +461,17 @@ class MCPToolEngine:
             "entries": entries,
         }
 
-    def _tool_text_search(self, args: dict[str, Any], ctx: RequestContext) -> dict[str, Any]:
-        guest_root = args.get("root")
-        pattern = args.get("pattern")
-        if not isinstance(guest_root, str) or not isinstance(pattern, str) or not pattern:
-            raise Refuse("bad-search-args")
-        if len(pattern) > MAX_REGEX_CHARS:
-            raise Refuse("pattern-too-long")
-        host_root = self.policy.map_path(guest_root, cwd="/", must_exist=True)
-        fixed = bool(args.get("fixed_string", False))
-        case_sensitive = bool(args.get("case_sensitive", True))
-        max_matches = _strict_int_arg(args, "max_matches", 200, 1, 5000)
-        raw_exts = args.get("include_ext")
-        exts: tuple[str, ...] | None = None
-        if isinstance(raw_exts, list) and raw_exts:
-            exts = tuple(str(x) for x in raw_exts if isinstance(x, str))
-
+    def _run_text_search_sync(
+        self,
+        host_root: str,
+        guest_root: str,
+        pattern: str,
+        fixed: bool,
+        case_sensitive: bool,
+        max_matches: int,
+        exts: tuple[str, ...] | None,
+        ctx: RequestContext,
+    ) -> dict[str, Any]:
         if fixed:
             needle = pattern if case_sensitive else pattern.lower()
             rx = None
@@ -546,43 +549,50 @@ class MCPToolEngine:
             "matches": matches,
         }
 
-    def _tool_git_ro(self, args: dict[str, Any], ctx: RequestContext) -> dict[str, Any]:
-        cwd_guest = args.get("cwd")
-        git_args = args.get("args")
-        if not isinstance(cwd_guest, str) or not isinstance(git_args, list):
-            raise Refuse("bad-git-args")
-        clean_args, host_cwd, env = self.policy.validate_git_ro(git_args, cwd_guest)
-
+    def _run_supervised_popen(
+        self,
+        cmd: list[str],
+        cwd: str,
+        env: dict[str, str],
+        ctx: RequestContext,
+        stdin_bytes: bytes | None = None,
+    ) -> tuple[int, bytes, bytes]:
+        """Run a child process under pidfd+wakeup-pipe supervision with SIGKILL on cancel/timeout."""
         wake_r, wake_w = os.pipe()
         os.set_blocking(wake_r, False)
         os.set_blocking(wake_w, False)
         ctx.attach_wake_fd(wake_w)
         pfd = -1
         rc: int | None = None
+        proc: subprocess.Popen[bytes] | None = None
 
         try:
             with (
                 tempfile.TemporaryFile(mode="w+b") as out_f,
                 tempfile.TemporaryFile(mode="w+b") as err_f,
+                tempfile.TemporaryFile(mode="w+b") as in_f,
             ):
+                if stdin_bytes is not None:
+                    in_f.write(stdin_bytes)
+                    in_f.seek(0)
                 proc = subprocess.Popen(
-                    [self.git_bin, *clean_args],
-                    cwd=host_cwd,
+                    cmd,
+                    cwd=cwd,
                     env=env,
-                    stdin=subprocess.DEVNULL,
+                    stdin=in_f if stdin_bytes is not None else subprocess.DEVNULL,
                     stdout=out_f,
                     stderr=err_f,
                     shell=False,
                     start_new_session=True,
                 )
                 ctx.set_proc(proc)
-                pfd = pidfd_open(proc.pid)
-                poller = select.poll()
-                poller.register(wake_r, select.POLLIN)
-                if pfd >= 0:
-                    poller.register(pfd, select.POLLIN)
-
                 try:
+                    pfd = pidfd_open(proc.pid)
+                    poller = select.poll()
+                    poller.register(wake_r, select.POLLIN)
+                    if pfd >= 0:
+                        poller.register(pfd, select.POLLIN)
+
                     while True:
                         ctx.check()
                         rc = proc.poll()
@@ -592,7 +602,7 @@ class MCPToolEngine:
                         rem_ms = max(1, int((ctx.deadline - time.monotonic()) * 1000.0))
                         wait_ms = rem_ms if pfd >= 0 else min(rem_ms, 10)
                         poller.poll(wait_ms)
-                except (RequestCancelled, RequestTimeout):
+                except BaseException:
                     ctx.set_proc(proc)
                     try:
                         os.killpg(proc.pid, signal.SIGKILL)
@@ -608,8 +618,7 @@ class MCPToolEngine:
 
                 out_f.seek(0)
                 err_f.seek(0)
-                stdout_b = out_f.read(MAX_OUTPUT_BYTES)
-                stderr_b = err_f.read(256 * 1024)
+                return int(rc or 0), out_f.read(MAX_OUTPUT_BYTES), err_f.read(256 * 1024)
         finally:
             ctx.attach_wake_fd(None)
             if pfd >= 0:
@@ -622,6 +631,65 @@ class MCPToolEngine:
                     os.close(fd)
                 except OSError:
                     pass
+
+    def _tool_text_search(self, args: dict[str, Any], ctx: RequestContext) -> dict[str, Any]:
+        guest_root = args.get("root")
+        pattern = args.get("pattern")
+        if not isinstance(guest_root, str) or not isinstance(pattern, str) or not pattern:
+            raise Refuse("bad-search-args")
+        if len(pattern) > MAX_REGEX_CHARS:
+            raise Refuse("pattern-too-long")
+        host_root = self.policy.map_path(guest_root, cwd="/", must_exist=True)
+        fixed = bool(args.get("fixed_string", False))
+        case_sensitive = bool(args.get("case_sensitive", True))
+        max_matches = _strict_int_arg(args, "max_matches", 200, 1, 5000)
+        raw_exts = args.get("include_ext")
+        exts: tuple[str, ...] | None = None
+        if isinstance(raw_exts, list) and raw_exts:
+            exts = tuple(str(x) for x in raw_exts if isinstance(x, str))
+
+        if not fixed:
+            try:
+                re.compile(pattern, 0 if case_sensitive else re.IGNORECASE)
+            except re.error as exc:
+                raise Refuse(f"bad-regex: {exc}") from exc
+
+        # Any regex with backtracking metacharacters runs in an isolated subprocess
+        # so ReDoS cannot stall the daemon GIL and is killpg'd cleanly on timeout/cancel.
+        if not fixed and _MAY_BACKTRACK_RE.search(pattern):
+            req_blob = json.dumps(
+                {
+                    "host_root": host_root,
+                    "guest_root": guest_root,
+                    "pattern": pattern,
+                    "case_sensitive": case_sensitive,
+                    "max_matches": max_matches,
+                    "exts": list(exts) if exts is not None else None,
+                }
+            ).encode("utf-8")
+            rc, stdout_b, _stderr_b = self._run_supervised_popen(
+                [sys.executable, str(Path(__file__).resolve()), "--regex-worker"],
+                cwd=self.policy.tmp,
+                env=self.policy.clean_env(),
+                ctx=ctx,
+                stdin_bytes=req_blob,
+            )
+            if rc != 0:
+                raise OSError(f"regex-worker-rc:{rc}")
+            try:
+                return json.loads(stdout_b.decode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                raise Refuse("regex-worker-invalid-output") from exc
+
+        return self._run_text_search_sync(host_root, guest_root, pattern, fixed, case_sensitive, max_matches, exts, ctx)
+
+    def _tool_git_ro(self, args: dict[str, Any], ctx: RequestContext) -> dict[str, Any]:
+        cwd_guest = args.get("cwd")
+        git_args = args.get("args")
+        if not isinstance(cwd_guest, str) or not isinstance(git_args, list):
+            raise Refuse("bad-git-args")
+        clean_args, host_cwd, env = self.policy.validate_git_ro(git_args, cwd_guest)
+        rc, stdout_b, stderr_b = self._run_supervised_popen([self.git_bin, *clean_args], cwd=host_cwd, env=env, ctx=ctx)
 
         return {
             "tool": "git_ro",
@@ -726,3 +794,28 @@ class MCPToolEngine:
             "keys_sample": keys_seen,
             "sha256": sha256_hex,
         }
+
+
+def _regex_worker_main() -> int:
+    cfg = json.loads(sys.stdin.read())
+    dummy_pol = Policy([("/", cfg["host_root"])], home=cfg["host_root"], tmp=tempfile.gettempdir())
+    eng = MCPToolEngine(dummy_pol)
+    exts = tuple(cfg["exts"]) if cfg.get("exts") is not None else None
+    res = eng._run_text_search_sync(
+        cfg["host_root"],
+        cfg["guest_root"],
+        cfg["pattern"],
+        False,
+        bool(cfg["case_sensitive"]),
+        int(cfg["max_matches"]),
+        exts,
+        RequestContext("worker", 3600.0),
+    )
+    sys.stdout.write(_fit_json_payload(res, MAX_TEXT_BYTES))
+    sys.stdout.flush()
+    return 0
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2 and sys.argv[1] == "--regex-worker":
+        raise SystemExit(_regex_worker_main())

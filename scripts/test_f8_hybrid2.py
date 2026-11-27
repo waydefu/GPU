@@ -146,10 +146,20 @@ class PolicyAndSecurityTests(unittest.TestCase):
             ["status", "--short"],
             ["log", "-n", "1"],
             ["rev-parse", "HEAD"],
+            ["rev-parse", "--abbrev-ref", "HEAD"],
             ["ls-files"],
             ["diff"],
             ["diff", "--", "/ws/repo/hello.txt"],
             ["-C", "/ws/repo", "show", "--stat", "HEAD"],
+            ["branch"],
+            ["branch", "--show-current"],
+            ["branch", "--list", "m*"],
+            ["tag"],
+            ["tag", "--list", "v*"],
+            ["symbolic-ref", "HEAD"],
+            ["symbolic-ref", "--short", "HEAD"],
+            ["for-each-ref", "--format=%(refname)", "refs/heads"],
+            ["count-objects", "-v"],
         )
         for cmd in ok_cmds:
             clean, hcwd, env = self.pol.validate_git_ro(cmd, "/ws/repo")
@@ -167,8 +177,23 @@ class PolicyAndSecurityTests(unittest.TestCase):
             ("git-subcmd-denied", ["checkout", "."]),
             ("git-subcmd-denied", ["reset", "--hard"]),
             ("git-subcmd-denied", ["config", "user.name", "x"]),
-            ("git-write-flag-denied", ["branch", "-D", "main"]),
-            ("git-write-flag-denied", ["tag", "-a", "v1", "-m", "x"]),
+            # Strict write/create prevention on branch, tag, symbolic-ref, for-each-ref, etc.
+            ("git-write-arg-denied", ["branch", "evil"]),
+            ("git-option-denied", ["branch", "-l", "evil"]),
+            ("git-option-denied", ["branch", "-D", "main"]),
+            ("git-option-denied", ["branch", "-f", "main"]),
+            ("git-option-denied", ["branch", "-m", "old", "new"]),
+            ("git-write-arg-denied", ["tag", "v1"]),
+            ("git-option-denied", ["tag", "-a", "v1", "-m", "x"]),
+            ("git-option-denied", ["tag", "-d", "v1"]),
+            ("git-option-denied", ["tag", "-l", "v1"]),
+            ("git-write-arg-denied", ["symbolic-ref", "HEAD", "refs/heads/evil"]),
+            ("git-write-arg-denied", ["symbolic-ref"]),
+            ("git-option-denied", ["symbolic-ref", "-d", "HEAD"]),
+            ("git-option-denied", ["symbolic-ref", "--delete", "HEAD"]),
+            ("git-option-denied", ["for-each-ref", "--shell"]),
+            ("git-option-denied", ["rev-parse", "--sq-quote", "x"]),
+            ("git-write-arg-denied", ["count-objects", "extra"]),
             ("git-pre-flag-denied", ["-c", "core.pager=cat", "status"]),
             ("git-pre-flag-denied", ["--git-dir=/etc", "status"]),
             ("git-option-denied", ["diff", "--ext-diff"]),
@@ -176,11 +201,25 @@ class PolicyAndSecurityTests(unittest.TestCase):
             ("git-option-denied", ["grep", "--no-index", "root", "/etc/passwd"]),
             ("git-option-denied", ["grep", "-f", "/etc/passwd", "x"]),
             ("git-option-denied", ["grep", "-f/etc/passwd", "x"]),
+            ("git-option-denied", ["grep", "-Ocat", "x"]),
             ("git-option-denied", ["log", "--output=/tmp/x"]),
+            ("git-option-denied", ["log", "--unknown-flag"]),
             ("git-option-denied", ["status", "--upload-pack=evil"]),
+            # Neon Round-3 OPTARG / `=`-only bypass PoCs MUST all be refused!
+            ("git-write-arg-denied", ["branch", "--abbrev", "evil"]),
+            ("git-option-denied", ["branch", "--abbrev", "-f", "--abbrev", "main"]),
+            ("git-option-denied", ["diff", "-U", "--output=/tmp/pwned"]),
+            ("git-option-denied", ["diff", "-U", "--ext-diff"]),
+            ("git-option-denied", ["diff", "-U", "--no-index", "escape/secret.txt", "hello.txt"]),
+            ("git-option-denied", ["log", "--pretty", "--output=/tmp/pwned", "-n1"]),
+            ("git-option-denied", ["show", "-U", "--output=/tmp/pwned", "HEAD"]),
+            ("protected-path", ["blame", "-M", "--contents=/etc/passwd", "hello.txt"]),
+            ("git-option-denied", ["status", "-u", "--output=/tmp/x"]),
             ("protected-path", ["log", "--", "/etc/passwd"]),
             ("path-outside-map", ["diff", "--", "../../outside/secret.txt"]),
             ("symlink-escape", ["blame", "--contents=escape/secret.txt", "HEAD", "--", "hello.txt"]),
+            ("symlink-escape", ["status", "--", "escape"]),
+            ("symlink-escape", ["log", "--", "escape/missing"]),
             ("l2s-path", ["log", "--", ".l2s.foo"]),
         )
         for reason, cmd in denied:
@@ -278,14 +317,32 @@ class PolicyAndSecurityTests(unittest.TestCase):
         self.assertGreaterEqual(d_srch["skipped_oversize"], 1)
         self.assertTrue(d_srch["truncated"])
 
+        # Neon Round-3 `--regex-worker` >2 MiB stdout truncation must NOT throw JSONDecodeError (-32603)
+        big_dir = self.ws / "many_matches"
+        big_dir.mkdir(exist_ok=True)
+        line_300 = ("Z" * 300) + "\n"
+        for fi in range(6):
+            (big_dir / f"m{fi}.txt").write_text(line_300 * 1000, encoding="utf-8")
+        r_big_rx = eng.call_tool(
+            31,
+            {"name": "repo_text_search", "arguments": {"root": "/ws/many_matches", "pattern": "Z{300}", "max_matches": 5000}},
+            RequestContext(31, 8.0),
+        )
+        self.assertFalse(r_big_rx["result"]["isError"])
+        d_big_rx = json.loads(r_big_rx["result"]["content"][0]["text"])
+        self.assertTrue(d_big_rx["truncated"])
+        self.assertLessEqual(len(r_big_rx["result"]["content"][0]["text"].encode("utf-8")), 1024 * 1024)
+
         # Oversize single line in .jsonl refused cleanly
         (self.ws / "longline.jsonl").write_bytes(b'{"a":"' + (b"x" * (MAX_JSONL_LINE_BYTES + 128)) + b'"}\n')
         r_jsonl = eng.call_tool(4, {"name": "python_json_summary", "arguments": {"path": "/ws/longline.jsonl"}}, RequestContext(4, 3.0))
         self.assertEqual(r_jsonl["error"]["code"], -32602)
         self.assertIn("jsonl-line-too-large", r_jsonl["error"]["message"])
 
-        # Verify ctl client-config outputs valid JSON for JSON clients
+        # Verify ctl client-config outputs --auto-start for every client & valid JSON for JSON clients
         snips = ctl.client_config_snippets("/tmp/test.sock")
+        for cname, snip in snips.items():
+            self.assertIn("--auto-start", snip, cname)
         for k in ("claude-desktop", "antigravity", "opencode"):
             obj = json.loads(snips[k])
             self.assertIsInstance(obj, dict)
@@ -470,7 +527,11 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
             self._send(sa, {"jsonrpc": "2.0", "id": 20, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree"}}})
             time.sleep(0.02)
             self._send(sa, {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 20}})
-            time.sleep(0.08)
+            for _ in range(50):
+                if self.log.exists() and '"req_id": 20' in self.log.read_text(encoding="utf-8"):
+                    break
+                time.sleep(0.02)
+            time.sleep(0.02)
 
             for idx, (sc, fc) in enumerate(clients):
                 self._send(sc, {"jsonrpc": "2.0", "id": 30 + idx, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}})
@@ -588,6 +649,118 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
         sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "enable"], check=True, stdout=sp.PIPE)
         r_soft = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "--daemon-py", str(DAEMON_PY), "--map", maps_arg, "--soft", "ensure-running"], capture_output=True, env=stripped_env, timeout=10)
         self.assertEqual(r_soft.returncode, 0)
+
+    def test_redos_timeout_disable_exitcode_and_connected_client_lifecycle(self) -> None:
+        # 1) ReDoS timeout isolation in repo_text_search (does not stall concurrent client B)
+        (self.ws / "redos.txt").write_text(("a" * 3500) + "c\n", encoding="utf-8")
+        self.proc = self._start_daemon()
+        sa, fa = self._uds_rpc(self.sock)
+        sb, fb = self._uds_rpc(self.sock)
+        try:
+            for s, f in ((sa, fa), (sb, fb)):
+                self._send(s, {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}})
+                json.loads(f.readline())
+            t0 = time.monotonic()
+            self._send(sa, {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws", "pattern": "(a+)+b", "timeout_s": 0.15}}})
+            self._send(sb, {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]}}})
+            rb = json.loads(fb.readline())
+            self.assertEqual(json.loads(rb["result"]["content"][0]["text"])["returncode"], 0)
+            ra = json.loads(fa.readline())
+            self.assertEqual(ra["error"]["code"], -32001)
+            self.assertLess(time.monotonic() - t0, 1.5)
+            time.sleep(0.1)
+            self.assertEqual(children_of(self.proc.pid), [])
+        finally:
+            fa.close(); sa.close(); fb.close(); sb.close()
+
+        # 2) Honest connected-client behavior on `ctl disable` and `ctl enable`:
+        # Connected UDS relay gets EOF disconnect (NOT hot-switched); new reconnect uses fallback.
+        c1 = sp.Popen([sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", f"/ws={self.ws}", "--git-bin", SYSTEM_GIT, "--no-fallback"],
+                      stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, start_new_session=True)
+        try:
+            assert c1.stdin is not None and c1.stdout is not None
+            c1.stdin.write((json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}) + "\n").encode())
+            c1.stdin.flush()
+            self.assertIn(b"f8-hybrid2", c1.stdout.readline())
+
+            # Run ctl disable while c1 is connected -> stops daemon; c1 observes EOF and exits!
+            r_dis = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "--wait", "4.0", "disable"], capture_output=True, text=True, timeout=10)
+            self.assertEqual(r_dis.returncode, 0, r_dis.stdout)
+            self.assertTrue(json.loads(r_dis.stdout)["ok"])
+            self.assertEqual(c1.stdout.readline(), b"")
+            c1.stdin.close()
+            c1.wait(timeout=3)
+        finally:
+            for p in (c1.stdin, c1.stdout, c1.stderr):
+                if p is not None:
+                    try:
+                        p.close()
+                    except OSError:
+                        pass
+
+        # Connected fallback client C2 stays in fallback even after `ctl enable` + `ctl start`;
+        # only a new connection C3 uses the native daemon!
+        c2 = sp.Popen([sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", f"/ws={self.ws}", "--git-bin", SYSTEM_GIT],
+                      stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE, start_new_session=True)
+        try:
+            assert c2.stdin is not None and c2.stdout is not None
+            c2.stdin.write((json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}) + "\n").encode())
+            c2.stdin.flush()
+            self.assertIn(b"f8-hybrid2", c2.stdout.readline())
+
+            skip_native = os.environ.get("F8_HYBRID2_NATIVE") != "1"
+            ctl.set_disabled(self.rdir, False)
+            res_up = ctl.ensure_running(self.rdir, daemon_py=str(DAEMON_PY), maps=[f"/ws={self.ws}"], idle_timeout=0.0, skip_tracer_check=skip_native)
+            self.assertTrue(res_up["ok"])
+
+            audit_before = self.log.read_text(encoding="utf-8")
+            c2.stdin.write((json.dumps({"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}}) + "\n").encode())
+            c2.stdin.flush()
+            self.assertEqual(json.loads(c2.stdout.readline())["id"], 2)
+            # C2 stayed in PRoot fallback -> daemon audit has NO new tool entry from C2!
+            tail_audit = self.log.read_text(encoding="utf-8")[len(audit_before) :]
+            self.assertNotIn('"ev": "tool"', tail_audit)
+
+            # New client C3 hits the newly started daemon!
+            c3_in = "\n".join([
+                json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+                json.dumps({"jsonrpc": "2.0", "id": 99, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}}),
+            ]) + "\n"
+            p_c3 = sp.run([sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--no-fallback"], input=c3_in.encode(), capture_output=True, timeout=10)
+            self.assertEqual(p_c3.returncode, 0, p_c3.stderr)
+            self.assertIn('"req_id": 99', self.log.read_text(encoding="utf-8"))
+
+            c2.stdin.close()
+            c2.wait(timeout=3)
+        finally:
+            for p in (c2.stdin, c2.stdout, c2.stderr):
+                if p is not None:
+                    try:
+                        p.close()
+                    except OSError:
+                        pass
+
+        # 3) `ctl disable` MUST return exit code 1 & ok=false if daemon ignores SIGTERM and fails to stop in time!
+        ctl.stop_daemon(self.rdir, timeout_s=3.0)
+        ctl.set_disabled(self.rdir, False)
+        stub = sp.Popen(
+            [sys.executable, "-c", "import signal, time; signal.signal(signal.SIGTERM, signal.SIG_IGN); time.sleep(30)", "f8_hybrid2_daemon.py"],
+            stdin=sp.DEVNULL, stdout=sp.DEVNULL, stderr=sp.DEVNULL,
+        )
+        try:
+            self.pidfile.write_text(f"{stub.pid}\n", encoding="utf-8")
+            self.sock.write_text("", encoding="utf-8")
+            r_fail = sp.run([sys.executable, str(CTL_PY), "--dir", str(self.rdir), "--wait", "0.2", "disable"], capture_output=True, text=True, timeout=10)
+            self.assertEqual(r_fail.returncode, 1)
+            payload = json.loads(r_fail.stdout)
+            self.assertFalse(payload["ok"])
+            self.assertTrue(payload["disabled"])
+            self.assertEqual(payload["stop"]["action"], "stop-timeout")
+        finally:
+            stub.kill()
+            stub.wait(timeout=3)
+            self.pidfile.unlink(missing_ok=True)
+            self.sock.unlink(missing_ok=True)
 
     def test_fallback_fast_sigterm_wakeup(self) -> None:
         p = sp.Popen(

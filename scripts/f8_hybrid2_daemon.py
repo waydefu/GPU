@@ -527,7 +527,7 @@ class Hybrid2Daemon:
                     self._srv_sock.close()
                 except OSError:
                     pass
-            if not self._idle_exiting and stop_reason != "idle-timeout":
+            if (not self._idle_exiting and stop_reason != "idle-timeout") or self._stop_event.is_set():
                 with self._sess_lock:
                     sessions = list(self._sessions)
                 for sess in sessions:

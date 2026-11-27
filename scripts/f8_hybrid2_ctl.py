@@ -343,36 +343,36 @@ def set_disabled(runtime_dir: Path, disabled: bool, timeout_s: float = 8.0) -> d
                     time.sleep(0.05)
             except OSError as exc:
                 stop_res = {"ok": False, "reason": f"kill-failed:{exc}"}
-        return {"ok": True, "disabled": True, "stop": stop_res}
+        return {"ok": bool(stop_res.get("ok")), "disabled": True, "stop": stop_res}
 
     return _with_ctl_lock(runtime_dir, _do)
 
 
 def client_config_snippets(sock_path: str, relay_path: str = RELAY_SCRIPT) -> dict[str, str]:
-    """Generate non-destructive copy-paste config snippets for all supported MCP clients."""
+    """Generate non-destructive copy-paste config snippets with --auto-start for all MCP clients."""
     return {
         "hermes": (
             f"# $HERMES_HOME/config.yaml\nmcp_servers:\n  hybrid2:\n"
-            f"    command: /usr/bin/python3\n    args: [{relay_path}, --socket, {sock_path}]\n    enabled: true\n"
+            f"    command: /usr/bin/python3\n    args: [{relay_path}, --socket, {sock_path}, --auto-start]\n    enabled: true\n"
         ),
         "codex": (
             f"# $CODEX_HOME/config.toml\n[mcp_servers.hybrid2]\n"
-            f'command = "/usr/bin/python3"\nargs = ["{relay_path}", "--socket", "{sock_path}"]\n'
+            f'command = "/usr/bin/python3"\nargs = ["{relay_path}", "--socket", "{sock_path}", "--auto-start"]\n'
         ),
         "claude-code": (
             f"# Isolated or project MCP registration:\n"
-            f"claude mcp add hybrid2 -- /usr/bin/python3 {relay_path} --socket {sock_path}\n"
+            f"claude mcp add hybrid2 -- /usr/bin/python3 {relay_path} --socket {sock_path} --auto-start\n"
         ),
         "claude-desktop": json.dumps(
-            {"mcpServers": {"hybrid2": {"command": "/usr/bin/python3", "args": [relay_path, "--socket", sock_path]}}},
+            {"mcpServers": {"hybrid2": {"command": "/usr/bin/python3", "args": [relay_path, "--socket", sock_path, "--auto-start"]}}},
             indent=2,
         ),
         "antigravity": json.dumps(
-            {"mcpServers": {"hybrid2": {"command": "/usr/bin/python3", "args": [relay_path, "--socket", sock_path]}}},
+            {"mcpServers": {"hybrid2": {"command": "/usr/bin/python3", "args": [relay_path, "--socket", sock_path, "--auto-start"]}}},
             indent=2,
         ),
         "opencode": json.dumps(
-            {"mcp": {"hybrid2": {"type": "local", "command": ["/usr/bin/python3", relay_path, "--socket", sock_path]}}},
+            {"mcp": {"hybrid2": {"type": "local", "command": ["/usr/bin/python3", relay_path, "--socket", sock_path, "--auto-start"]}}},
             indent=2,
         ),
     }
@@ -412,8 +412,9 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(set_disabled(rdir, False, timeout_s=args.wait)))
         return 0
     if args.action == "disable":
-        print(json.dumps(set_disabled(rdir, True, timeout_s=args.wait)))
-        return 0
+        res = set_disabled(rdir, True, timeout_s=args.wait)
+        print(json.dumps(res))
+        return 0 if res.get("ok") else 1
     if args.action == "stop":
         res = stop_daemon(rdir, timeout_s=args.wait)
         print(json.dumps(res))
@@ -421,17 +422,23 @@ def main(argv: list[str] | None = None) -> int:
     if args.action == "restart":
         def _restart(_paths):
             pid = _read_live_pid(_paths["pid"])
-            if pid is not None:
-                try:
-                    os.kill(pid, signal.SIGTERM)
-                    deadline = time.monotonic() + args.wait
-                    while time.monotonic() < deadline and (_read_live_pid(_paths["pid"]) is not None or _paths["sock"].exists()):
-                        time.sleep(0.05)
-                except OSError:
-                    pass
-            return None
+            if pid is None:
+                return {"ok": True}
+            try:
+                os.kill(pid, signal.SIGTERM)
+                deadline = time.monotonic() + args.wait
+                while time.monotonic() < deadline:
+                    if _read_live_pid(_paths["pid"]) is None and not _paths["sock"].exists():
+                        return {"ok": True}
+                    time.sleep(0.05)
+                return {"ok": False, "action": "stop-timeout", "pid": pid}
+            except OSError as exc:
+                return {"ok": False, "reason": f"kill-failed:{exc}", "pid": pid}
 
-        _with_ctl_lock(rdir, _restart)
+        stop_res = _with_ctl_lock(rdir, _restart)
+        if not stop_res.get("ok"):
+            print(json.dumps(stop_res))
+            return 1
         res = ensure_running(
             rdir,
             daemon_py=args.daemon_py,
