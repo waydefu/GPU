@@ -592,7 +592,7 @@ class Policy:
                         cfg_paths.append(sub / "config")
                         cfg_paths.append(sub / "config.worktree")
 
-        def check_metadata_path(path: Path) -> None:
+        def check_metadata_path(path: str | Path) -> None:
             resolved = os.path.realpath(path)
             roots = [root for root in allowed_roots if os.path.commonpath([root, resolved]) == root]
             if not roots:
@@ -605,11 +605,24 @@ class Policy:
             pack_dir = objects / "pack"
             for candidate in (metadata_dir, objects, objects / "info", pack_dir):
                 check_metadata_path(candidate)
-            # Validate the directory before enumerating pack files and their sidecars.
-            if pack_dir.is_dir():
-                for entry in pack_dir.iterdir():
-                    if entry.is_symlink():
-                        check_metadata_path(entry)
+            object_dirs = [pack_dir]
+            if objects.is_dir():
+                with os.scandir(objects) as entries:
+                    for entry in entries:
+                        if not re.fullmatch(r"[0-9a-fA-F]{2}", entry.name):
+                            continue
+                        # Validate a loose-object fan-out link before following it.
+                        if entry.is_symlink():
+                            check_metadata_path(entry.path)
+                        if entry.is_dir():
+                            object_dirs.append(Path(entry.path))
+            for object_dir in object_dirs:
+                if not object_dir.is_dir():
+                    continue
+                with os.scandir(object_dir) as entries:
+                    for entry in entries:
+                        if entry.is_symlink():
+                            check_metadata_path(entry.path)
             # Alternates can recursively redirect reads outside the map.
             if os.path.lexists(objects / "info/alternates"):
                 raise Refuse("git-alternates-unsupported")

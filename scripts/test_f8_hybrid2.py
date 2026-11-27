@@ -278,6 +278,40 @@ class PolicyAndSecurityTests(unittest.TestCase):
         self.assertEqual(reply["returncode"], 0, reply)
         self.assertEqual(reply["stdout"].strip(), "commit")
 
+    def test_git_loose_object_paths_stay_in_map(self) -> None:
+        engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        args = {"cwd": "/ws/repo", "args": ["cat-file", "-t", "HEAD"]}
+        head = engine._tool_git_ro(
+            {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]},
+            RequestContext(1, 5),
+        )
+        self.assertEqual(head["returncode"], 0, head)
+        oid = head["stdout"].strip()
+        fanout = self.repo / ".git/objects" / oid[:2]
+        loose_object = fanout / oid[2:]
+        self.assertTrue(loose_object.is_file())
+
+        # Use only fixture paths. Refused cases must never launch Git.
+        with mock.patch.object(engine, "_run_supervised_popen") as spawn:
+            external_dir = self.outside / "fanout"
+            fanout.rename(external_dir)
+            fanout.symlink_to(external_dir, target_is_directory=True)
+            self._refused("symlink-escape", engine._tool_git_ro, args, RequestContext(2, 5))
+            fanout.unlink()
+            external_dir.rename(fanout)
+
+            external_file = self.outside / "object"
+            loose_object.rename(external_file)
+            loose_object.symlink_to(external_file)
+            self._refused("symlink-escape", engine._tool_git_ro, args, RequestContext(3, 5))
+            loose_object.unlink()
+            external_file.rename(loose_object)
+            spawn.assert_not_called()
+
+        reply = engine._tool_git_ro(args, RequestContext(4, 5))
+        self.assertEqual(reply["returncode"], 0, reply)
+        self.assertEqual(reply["stdout"].strip(), "commit")
+
     def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
             ["status", "--short"],

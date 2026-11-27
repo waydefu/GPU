@@ -65,3 +65,4 @@
 - 整合程式提交 `0fa61e8` 通過 PRoot 23/23（24.596 s）與 Termux Native 23/23（18.255 s，`TracerPid: 0`）。PRoot 全庫 Python 55/55。必要治理 workflow 已增列 Hybrid 2.0 測試，[PR CI](https://github.com/waydefu/GPU/actions/runs/45983252510) 在 `bba350d` 實跑 23/23。
 
 - 後續補上 `git_ro` 對 `objects/pack` 及其直屬符號連結的邊界檢查。越界路徑在 Git 啟動前拒絕，映射內已打包物件仍可正常讀取。PRoot 24/24（24.213 s），Termux Native 24/24（18.468 s，`TracerPid: 0`）。
+- Loose object 檢查涵蓋兩位十六進位的 fan-out 目錄及其直屬物件。越界符號連結在 Git 啟動前拒絕，正常 loose object 可讀。PRoot 25/25（25.872 s），Termux Native 25/25（18.801 s，`TracerPid: 0`）。
