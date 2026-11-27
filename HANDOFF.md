@@ -19,17 +19,9 @@
 - **回退**：上一版 fast9+09b 備份 `/data/data/com.termux/files/home/build/proot-fast/backups/out8-previous-20261127-004529.KNBzD8mu`，雜湊 5/5。已驗證 fast8 備份與指標仍可用，相關方法詳見 [前版部署紀錄](evidence/session/proot/STAGE5-FAST9-LIVE-DEPLOYMENT-AND-SOAK30M-20261126.md)。
 - **同機效能對照**：各版 10 批，09b → 09c 批次中位數 2,490.57 → 2,495.91 ms（+0.21%），tracer CPU 中位數 860 ms、rAF p95 中位數 16.7 ms 均持平。
 - **效能基準凍結（2026-11-27）**：fast9+09c 為新的穩定效能基準，凍結副本 `/data/data/com.termux/files/home/build/proot-fast/baselines/fast9-09c-20261127/`（`out8/` 5 檔，`sha256sums.txt` 與現役 5/5 一致；權限無法設唯讀，只靠雜湊比對）。數值與比較規則見 [基準凍結](evidence/session/proot/FAST9-09C-BASELINE-FREEZE-20261127.md)。
-- **`termux-bg-run` 無回報（根因已證實並驗收）**：11-27 00:48 `restart-desktop.py` 以手寫 5 個變數重啟 Stable 桌面，遺失 `ANDROID_ART_ROOT`／`BOOTCLASSPATH` 等 7 個變數，桌面內 Termux `am` 靜默 exit 0、intent 不送出；TermuxService 本身正常，與 09b／09c 無關。修正已合併 [waydefu/GPU PR #43](https://github.com/waydefu/GPU/pull/43)（`9530c13`）：`termux-bg-run` 缺變數即 exit 4。目前桌面（03:14 重啟）已帶 7 個變數，`termux-bg-run` 不借變數 `rc=0`，見 [驗收紀錄](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)；調查見 [調查報告](evidence/session/proot/TERMUX-BG-RUN-REPORT-INVESTIGATION-20261127.md)。
+- **`termux-bg-run` 無回報（根因已證實並驗收）**：11-27 00:48 `restart-desktop.py` 以手寫 5 個變數重啟 Stable 桌面，遺失 `ANDROID_ART_ROOT`／`BOOTCLASSPATH` 等 7 個變數，桌面內 Termux `am` 靜默 exit 0、intent 不送出；TermuxService 本身正常，與 09b／09c 無關。修正已合併 [waydefu/GPU PR #43](https://github.com/waydefu/GPU/pull/43)（`9530c13`）：`termux-bg-run` 缺變數即 exit 4。後續已完成 [事後驗收](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)（調查見 [調查報告](evidence/session/proot/TERMUX-BG-RUN-REPORT-INVESTIGATION-20261127.md)），並於 11-27 10:06 由原生 Termux 實跑 `restart-stable-desktop.py --apply` 通過：`xserver=28218`／`x1_inode=812663` 不變、`new_xfce=20772`／`20766`、`survivors_gone=none`、`android_env_missing=none`，新桌面不借變數 `termux-bg-run` `rc=0`，見 [實戰驗收](evidence/session/proot/STABLE-RESTART-APPLY-20261127.md)。
 - **操作降級**：單次略過分流可設 `F8_NO_SHARD=1`，停用 enter-time stat 可設 `PROOT_STAT_AT_ENTER=0`。切換原版的操作紀錄見前版部署報告。
 - **Stage 6（Android 宿主最佳化）進行中**：2026-11-27 完成第一次 ADB 唯讀基線（均衡／效能／省電三份閒置快照，[說明](evidence/session/proot/stage6-audit-20261127/README.md)）。發現：`adb shell` 也讀不到 PSI 與 `zram0/mm_stat`（記 `null`）；`/proc/vmstat` 只有經 `adb shell` 才是真的（PRoot 內是假檔案）；省電模式把 cpu6／7 鎖在 768 MHz；頻率上限均衡 2.7456／2.88 GHz、效能 3.6288／4.608 GHz。**6.2 判定門檻已凍結並批准**：[STAGE6-2-POWER-MODE-FREEZE-20261127.md](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)，與舊計畫書衝突處以它為準。
-
-## 待辦（選做）：用 `restart-stable-desktop.py --apply` 實戰一次
-
-根因修正已由 03:14 的桌面重啟驗收（見上）；該次重啟**不是**由此腳本執行，所以 `--apply` 仍只有 `--dry-run` 與非破壞性測試的證據。下次正常維護時順便實跑即可，不阻擋其他工作。工具 `core-src/f8-proot-fast/scripts/restart-stable-desktop.py`（現場偵測 pid，只對舊 XFCE session 與其 tracer 送訊號，不碰 X server／socket／其他 shard），手機副本在 `~/build/proot-fast/tools/`。一次一條，確認輸出再做下一條：
-
-1. 預檢（不送任何訊號）：`termux-bg-run --timeout 120 /data/data/com.termux/files/home/build/proot-fast/tools/restart-stable-desktop.dryrun.sh`，須見 `STABLE_RESTART_DRYRUN_PASS`。若回 exit 4（桌面缺變數），先向 `shard-daemon.sh` 借：`mapfile -t V < <(tr '\0' '\n' < /proc/$(pgrep -f 'shard2/shard-daemon.sh' | head -1)/environ | grep -E '^(ANDROID_|BOOTCLASSPATH|DEX2OAT)'); env "${V[@]}" termux-bg-run ...`。
-2. 存檔並關閉桌面開的程式（舊 tracer 底下有數十個 tracee，會被關掉）後，把第 1 條的 `dryrun.sh` 換成 `apply.sh`、`--timeout 180`。須見 `STABLE_DESKTOP_RESTART_PASS` 與 `ANDROID_ENV_IN_NEW_TRACER PASS`；若 `FAIL old tracees remain`，依訊息關掉列出的程式後執行訊息中的手動啟動指令。
-3. 新桌面再跑一次第 1 條（不借變數，須 `rc=0`），把 `$PREFIX/tmp/stable-restart-*/stable-runtime.txt` 與輸出寫成 `evidence/session/proot/STABLE-RESTART-APPLY-<日期>.md`，經 PR 同步。
 
 ## 待辦：Stage 6.2 接手清單
 
@@ -55,7 +47,7 @@
 - **Stage 6.2 電源模式對照凍結（已批准）**：[`STAGE6-2-POWER-MODE-FREEZE-20261127.md`](evidence/session/proot/STAGE6-2-POWER-MODE-FREEZE-20261127.md)；基線快照見 [`stage6-audit-20261127/`](evidence/session/proot/stage6-audit-20261127/README.md)
 - Stage 5 隔離驗證與 Phase 2 紀錄：[`STAGE5-ISOLATED-20261126.md`](evidence/session/proot/STAGE5-ISOLATED-20261126.md)、[`STAGE5-PHASE2-ACCEPTANCE-20261126.md`](evidence/session/proot/STAGE5-PHASE2-ACCEPTANCE-20261126.md)
 - 歷史測試矩陣：[`TEST-MATRIX.md`](TEST-MATRIX.md)
-- Stable 桌面端到端驗收（2026-11-27）：[`STABLE-RESTART-E2E-20261127.md`](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)
+- Stable 桌面驗收（2026-11-27）：事後查驗 [`STABLE-RESTART-E2E-20261127.md`](evidence/session/proot/STABLE-RESTART-E2E-20261127.md)；`--apply` 實戰 [`STABLE-RESTART-APPLY-20261127.md`](evidence/session/proot/STABLE-RESTART-APPLY-20261127.md)
 - GPU 管線剩餘槓桿唯讀盤點（2026-11-27）：[`GPU-PIPELINE-LEVER-INVENTORY-20261127.md`](docs/GPU-PIPELINE-LEVER-INVENTORY-20261127.md)
 - 主線 #3 可行性結論：[`evidence/session/gl/X3-DIRECT-FEAS-RESULT.md`](evidence/session/gl/X3-DIRECT-FEAS-RESULT.md)
 - `shard-daemon` fix 3/4 紀錄：手機本機 `evidence/session/proot/SHARD-DAEMON-FIX3-20260927.md`（含私有 ADB 端點，治理掃描會擋，不推送 GitHub）
