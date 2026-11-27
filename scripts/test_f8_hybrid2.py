@@ -200,7 +200,8 @@ class PolicyAndSecurityTests(unittest.TestCase):
         git_run(["add", "hello.txt"], self.repo)
         git_run(["commit", "-q", "-m", "init"], self.repo)
 
-        self.pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp))
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]'}):
+            self.pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp))
 
     def tearDown(self) -> None:
         shutil.rmtree(self.tmp_root, ignore_errors=True)
@@ -209,6 +210,13 @@ class PolicyAndSecurityTests(unittest.TestCase):
         with self.assertRaises(Refuse) as cm:
             fn(*args, **kwargs)
         self.assertIn(expected, str(cm.exception))
+
+    def test_git_requires_exact_checkout_trust(self) -> None:
+        for config in ('[]', '"/ws/repo"', '["/ws"]', '["/ws/repo", 1]'):
+            with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": config}):
+                pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp))
+            self._refused("git-checkout-not-trusted", pol.validate_git_ro, ["status"], "/ws/repo")
+        self.assertEqual(self.pol.validate_git_ro(["status"], "/ws/repo")[1], str(self.repo.resolve()))
 
     def test_supervised_git_and_regex_worker_compatibility(self) -> None:
         engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
@@ -447,18 +455,20 @@ class PolicyAndSecurityTests(unittest.TestCase):
 
         wt = self.ws / "wt"
         wt.mkdir(exist_ok=True)
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/wt"]'}):
+            worktree_policy = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp))
         (wt / ".git").write_text("gitdir: /root/projects/x/.git/worktrees/wt\n", encoding="utf-8")
-        self._refused("gitfile-absolute", self.pol.validate_git_ro, ["status"], "/ws/wt")
+        self._refused("gitfile-absolute", worktree_policy.validate_git_ro, ["status"], "/ws/wt")
         (wt / ".git").write_text("garbage\n", encoding="utf-8")
-        self._refused("gitfile-malformed", self.pol.validate_git_ro, ["status"], "/ws/wt")
+        self._refused("gitfile-malformed", worktree_policy.validate_git_ro, ["status"], "/ws/wt")
         (wt / ".git").write_text("gitdir: ../escape/.git\n", encoding="utf-8")
-        self._refused("symlink-escape", self.pol.validate_git_ro, ["status"], "/ws/wt")
+        self._refused("symlink-escape", worktree_policy.validate_git_ro, ["status"], "/ws/wt")
 
         real_gd = self.ws / "real_gd"
         real_gd.mkdir()
         (real_gd / "commondir").write_text("/etc/git\n", encoding="utf-8")
         (wt / ".git").write_text("gitdir: ../real_gd\n", encoding="utf-8")
-        self._refused("gitfile-absolute", self.pol.validate_git_ro, ["status"], "/ws/wt")
+        self._refused("gitfile-absolute", worktree_policy.validate_git_ro, ["status"], "/ws/wt")
 
     def test_env_utf8_fit_fifo_jsonl_limits_and_client_config(self) -> None:
         os.environ["LANG"] = "en_US.UTF-8"
@@ -590,6 +600,7 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
             "".join(json.dumps({"i": i, "ok": True}) + "\n" for i in range(500)),
             encoding="utf-8",
         )
+        self.enterContext(mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]'}))
         self.proc: sp.Popen[bytes] | None = None
 
     def tearDown(self) -> None:
@@ -821,7 +832,10 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
                 json.dumps({"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo", "max_entries": None}}}),
             ]
         ) + "\n"
-        stripped_env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": str(self.base / "h"), "TMPDIR": str(self.base / "t")}
+        stripped_env = {
+            "PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": str(self.base / "h"),
+            "TMPDIR": str(self.base / "t"), "F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]',
+        }
 
         p1 = sp.run([sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT], input=reqs.encode(), capture_output=True, env=stripped_env, timeout=15)
         self.assertEqual(p1.returncode, 0, p1.stderr)
@@ -977,6 +991,29 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
                         pipe.close()
                     except OSError:
                         pass
+
+    def test_git_declines_unregistered_checkout_on_both_routes(self) -> None:
+        batch = "".join(json.dumps(message) + "\n" for message in (
+            {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}},
+            {"jsonrpc": "2.0", "method": "notifications/initialized"},
+            {"jsonrpc": "2.0", "id": 2, "method": "tools/call", "params": {
+                "name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]},
+            }},
+        ))
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": "[]"}):
+            self.proc = self._start_daemon()
+            for local in (False, True):
+                env = {**os.environ, "F8_NO_HYBRID": "1" if local else "0"}
+                cmd = [sys.executable, str(RELAY_PY), "--socket", str(self.sock),
+                       "--map", f"/ws={self.ws}", "--git-bin", SYSTEM_GIT]
+                if not local:
+                    cmd.append("--no-fallback")
+                reply = sp.run(cmd, input=batch, capture_output=True, text=True, timeout=10, env=env)
+                self.assertEqual(reply.returncode, 0, reply.stderr)
+                messages = {r["id"]: r for r in map(json.loads, reply.stdout.splitlines())}
+                self.assertIn("git-checkout-not-trusted", messages[2]["error"]["message"])
+            audit = [json.loads(line) for line in self.log.read_text().splitlines()]
+            self.assertEqual([row["decision"] for row in audit if row.get("tool") == "git_ro"], ["refuse"])
 
     def test_selective_tool_routing_stage74(self) -> None:
         maps_arg = f"/ws={self.ws}"

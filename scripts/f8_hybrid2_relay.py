@@ -1112,6 +1112,20 @@ def main(argv: list[str] | None = None) -> int:
         route_log_path=route_log_path,
     )
     if early_eof:
+        # Once Git may have run, a lost response leaves its execution unconfirmed.
+        # Refuse to replay partial or truncated input whose contents are uncertain.
+        if len(initial_bytes) >= MAX_FRAME_BYTES or (initial_bytes and not initial_bytes.endswith(b"\n")):
+            return 2
+        for line in initial_bytes.splitlines():
+            try:
+                request = json.loads(line)
+            except (ValueError, RecursionError):
+                continue
+            if isinstance(request, dict) and request.get("method") == "tools/call":
+                params = request.get("params")
+                if isinstance(params, dict) and params.get("name") == "git_ro":
+                    print("[f8-hybrid2-relay] Git execution unconfirmed after early EOF", file=sys.stderr)
+                    return 2
         # Idle-exit or transient close before any reply arrived: retry connect once or fall back.
         try:
             s_retry = _try_connect_with_optional_autostart(sock_path, args.connect_timeout, args.auto_start, autostart_maps)

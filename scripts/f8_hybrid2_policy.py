@@ -13,6 +13,7 @@ Stage 5 `f8-hybrid-daemon.py`, upgraded per Stage 7.2 universal MCP audit:
 from __future__ import annotations
 
 import ctypes
+import json
 import os
 import posixpath
 import re
@@ -22,6 +23,7 @@ from pathlib import Path
 from typing import BinaryIO
 
 AF_UNIX_PATH_MAX = 107
+TRUSTED_GIT_ROOTS_ENV = "F8_HYBRID2_TRUSTED_GIT_ROOTS"
 
 TERMUX_HOME = "/data/data/com.termux/files/home"
 DEFAULT_RUNTIME_DIR = f"{TERMUX_HOME}/.f8hyb2"
@@ -458,6 +460,23 @@ class Policy:
                 prot_hosts.append(os.path.realpath(_ROOTFS_PREFIX + p))
         self._protected_real: tuple[str, ...] = tuple(dict.fromkeys(prot_hosts))
 
+        # Configuration comes from the launcher, outside the checkout.
+        try:
+            roots = json.loads(os.environ.get(TRUSTED_GIT_ROOTS_ENV, "[]"))
+        except (ValueError, RecursionError):
+            roots = []
+        guest_roots = tuple(roots) if isinstance(roots, list) and all(
+            isinstance(root, str) and root.startswith("/") and "\x00" not in root
+            for root in roots
+        ) else ()
+
+        self.trusted_git_roots: set[str] = set()
+        for root in guest_roots:
+            try:
+                self.trusted_git_roots.add(self.map_path(root, must_exist=True))
+            except Refuse:
+                continue
+
     def _is_protected_host(self, real_host: str, h_root: str) -> bool:
         for p in self._protected_real:
             # Never let a protected ancestor of an explicitly mapped root poison the whole mapped root.
@@ -539,6 +558,8 @@ class Policy:
             raise Refuse("git-repository-unidentified")
         cfg_paths: list[Path] = []
         allowed_roots = [h_root for _, h_root in self.maps]
+        if repo_root not in self.trusted_git_roots:
+            raise Refuse("git-checkout-not-trusted")
         dg = Path(dot_git)
         real_dg = os.path.realpath(dot_git)
         if not any(os.path.commonpath([r, real_dg]) == r for r in allowed_roots):
@@ -644,6 +665,9 @@ class Policy:
                 raise Refuse("git-config-unsafe")
             if GIT_BAD_CFG.search(content):
                 raise Refuse("git-config-unsafe")
+
+        if dg.is_file() or dg.is_symlink():
+            raise Refuse("git-worktree-not-supported")
 
     def clean_env(self, extra: dict[str, str] | None = None) -> dict[str, str]:
         """Build a scrubbed deterministic environment for native/fallback child execution."""

@@ -20,6 +20,7 @@ import shlex
 import signal
 import subprocess as sp
 import sys
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -27,6 +28,7 @@ from typing import Any
 from f8_hybrid2_policy import (
     DEFAULT_DAEMON_MAPS,
     DEFAULT_RUNTIME_DIR,
+    TRUSTED_GIT_ROOTS_ENV,
     parse_map_specs,
     proc_matches_cmdline,
     read_tracer_pid,
@@ -175,7 +177,9 @@ def _start_native_direct(
     if skip_tracer_check:
         cmd.append("--skip-tracer-check")
     with open(paths["out"], "ab") as out_fh:
-        sp.Popen(cmd, stdin=sp.DEVNULL, stdout=out_fh, stderr=out_fh, start_new_session=True)
+        child = sp.Popen(cmd, stdin=sp.DEVNULL, stdout=out_fh, stderr=out_fh, start_new_session=True)
+    # Hold the child handle and reap it if this controller outlives the daemon.
+    threading.Thread(target=child.wait, daemon=True).start()
 
 
 def _start_via_termux_service(
@@ -205,6 +209,7 @@ def _start_via_termux_service(
         "export PATH=/data/data/com.termux/files/usr/bin\n"
         "export HOME=/data/data/com.termux/files/home\n"
         "export TMPDIR=/data/data/com.termux/files/usr/tmp\n"
+        f"export {TRUSTED_GIT_ROOTS_ENV}={shlex.quote(os.environ.get(TRUSTED_GIT_ROOTS_ENV, '[]'))}\n"
         f"{shlex.quote(TERMUX_PYTHON)} {shlex.quote(host_daemon_py)} "
         f"--socket {shlex.quote(str(paths['sock']))} {map_flags} "
         f"--home {shlex.quote(str(paths['home']))} --tmp {shlex.quote(str(paths['tmp']))} "
