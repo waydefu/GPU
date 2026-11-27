@@ -15,7 +15,7 @@
 | Fast9 | 現役 `out8/` 對凍結清單 5/5，tracer SHA-256 `4a6bc67723d9517771ea602e61caa98a4ac7cb7cf75f932d85fa1a5038ae7660`。本輪讀取程序的實際 tracer 經 /proc/PID/exe 驗得相同完整雜湊；Stable X1 socket 身份與同日驗收紀錄相符。 | 檔案身份本輪重驗。514/514 批、1,805.76 秒、Vulkan 7/7 是已記錄的 09c 驗收。09b→09c 中位 +0.21%，rAF p95 同為 16.7 ms。 |
 | GitHub | main `40edf9127968a4f7a768cdebbf19015f4742a0f4`；PR #53 OPEN，候選 `abe9fefdac4dfb61fb63493010d6fbb1d350a7f2`。該 SHA 的 pull_request CI 實跑 Hybrid、敏感內容、凍結證據三個步驟。 | 7.3 已合併。7.4 候選 PRoot/Native 各 25/25 為既有隔離紀錄。7.5 待驗。 |
 | 實際工具副本 | 對 policy、relay、daemon、tools 四檔逐檔 SHA-256。工作站 `scripts/` 與 Termux `build/proot-fast/tools/hybrid2/` 互相相同，**四檔均不同於 PR HEAD**。例如 policy 為 `3cb8e9ff99b9…`，PR 是 `abf63d766695…`。 | 從預設路徑啟動不能當成驗證候選。這是檔案身份的差異，沒有據此推定正在運行哪份 daemon。 |
-| 試算表 | 讀取六張表；總進度第 8–50 列 43 項、外部研究第 5–73 列 69 項、深度裁決第 5–38 列 34 項、候選索引 1,046 資料列。 | 32 項「已部署＋已驗證」合併兩種狀態。索引中 997 筆屬未確認 parent 的 fork 搜尋結果。此次逐項裁決的分母是 34。 |
+| 試算表（原審快照） | 讀取當時六張表；總進度第 8–50 列 43 項、外部研究第 5–73 列 69 項、深度裁決第 5–38 列 34 項、候選索引 1,046 資料列。 | 32 項「已部署＋已驗證」合併兩種狀態。索引中 997 筆屬未確認 parent 的 fork 搜尋結果。原審獨立裁決的分母是 34；雲端增補見第二節。 |
 | 原始資料 | 7.3 公開 ABBA JSON 的 SHA-256 `6f495bb8fcbf41d640638fb4a6328d8e4351c286669ed453ba12387dc7dbfa34` 與清單相符；重算 15 種單路工作負載 × 10 對的中位倍率與配對結果。另查 Stage 5 convergence、6.2 判決、GPU 驗收、PR 安全實作及外部原始檔。 | 150 對的工具結果摘要全部相符。這是重算舊原始資料。本輪沒有新增裝置跑分、功耗、熱態或攻防測試。 |
 
 工作表《深度研究｜移植裁決》的 R01–R34 及對應原始來源列於第二節。部分 Stage 5 逐步量測檔只保存在工作站，公開連結指向倉庫內的 Phase 3 結案報告。
@@ -63,7 +63,7 @@ Stage 5 的重型掃描已勘誤為 1.89×，與 7.3 的 5.738× 對應不同測
 - **GPU/NPU 運算。** OpenCL 上游列出 A840，HTP 後端有 v81 等建置與 operator 路由；裝置、ABI、vendor linker namespace、FastRPC 和 SELinux 決定 Termux app UID 真正能使用多少。模型權重、KV cache、host staging 及 offload 分界可佔共享 DRAM；多搬一次中間 tensor 或退回 CPU 就可能抵銷局部 kernel 速度。推理的 prefill、decode、首 token 延遲、桌面卡頓、持續功耗各自驗收。純文字掃描、一般 Git、XFCE 合成缺乏交給 NPU 的理由。[OpenCL backend](https://github.com/ggml-org/llama.cpp/blob/master/docs/backend/OPENCL.md)、[Snapdragon backend](https://github.com/ggml-org/llama.cpp/blob/master/docs/backend/snapdragon/README.md)。
 - **宿主。** Stage 6 電源模式前 30 秒 +6.39%／+6.45%，90–180 秒兩次越過專案 CPU 85°C 門檻，其中一次大核降至 2.23 GHz。均衡為基準。Antigravity 547.6/711.9 MB UID PSS，4→2 任務以 +43.4% 牆鐘換 −39.5% 峰值 PSS；512 MB V8 heap cap 已有 OOM。應先調可並行的工作量、閒置 daemon 與冷啟動策略，保持 Android 前背景生命週期可重連；不建議固定大核、調 governor、調 Phantom 或擴全域 heap。PSI/zram 詳情在 app UID 的權限缺口應保留 null。RSS 加總有共享頁重複計數；整機 pgmajfault 含背景程序。CPU 時間下降也無法單獨推算電池續航。[Stage 6 熱態](../evidence/session/proot/STAGE6-2-POWER-MODE-RESULT-20261127.md)、[PSS 與 OOM](../evidence/session/proot/STAGE6-3-4-CLOSURE-20261127.md)、[Android 記憶體管理](https://developer.android.com/topic/performance/memory-management)。
 
-## 二、34 項研究裁決的逐項核對
+## 二、原審 R01–R34 與雲端增補 R35–R40
 
 GO 表示已有理由投入指定的工作；CONDITIONAL GO 僅限表列前提的隔離試驗；HOLD 要等具體需求或先決證據；NO-GO 停止表列方案。代號沿用原表，維持原分母。「源」指作者原始實作、文件或具體 PR。表中的收益數字僅在標出的載具內成立。
 
@@ -104,6 +104,21 @@ GO 表示已有理由投入指定的工作；CONDITIONAL GO 僅限表列前提�
 | R33 GPU 顯示 · 剩餘上屏收益界線 | NO-GO（既有顯示戰線重開） | 本機 60 fps 估算即使消除整段 copy 也只省 0.05–0.11 核；GPU copy 還花 1.19 ms。支持目前場景繼續暫停。EGL 未呈現屬功能缺口；有獨立需求才立項，不能從 GL 離屏分數推論。 [源](https://github.com/waydefu/GPU/blob/abe9fefdac4dfb61fb63493010d6fbb1d350a7f2/docs/GPU-PIPELINE-LEVER-INVENTORY-20261127.md) |
 | R34 顯示／輸入 · unbuffered dispatch | HOLD | patch 呼叫 unbuffered dispatch，可能改變觸控事件批次與喚醒率。只在可重現的 input-to-photon 瓶頸下量事件→合成→呈現、掉事件及 CPU 成本。無理由替換 Stable APK。 [源](https://github.com/PietroCav501/termux_on_dex/blob/v2/x11/patch/termux-x11-mouse.smali.patch) |
 
+### 雲端版本差異與施工對照
+
+2026-11-27 合併前核對。《深度研究｜移植裁決》目前第 5–44 列有連續的 R01–R40；原審快照為第 5–38 列 R01–R34。第 39–44 列是雲端依 Astra 複審增列的六項；另新增《Astra｜7.3 樣本重算》。以下保留各項證據的版本與驗收缺口。重算 7.3 的 15×10 對單路與 5 對並發樣本，不能替 7.4 候選新增一次裝置驗收。
+
+| 雲端新增 ID | 決策來源與適用範圍 | 對應施工順序及完成證據 |
+|---|---|---|
+| R35 候選身份 | 既有工作站複審記錄四個副本與候選的差異。雲端更新未重新量測裝置。 | 1：六檔 SHA、程序身份與每請求實際路由一致後才計入樣本。 |
+| R36 選擇性 relay 入站 frame | 固定候選的未完成 frame 缺少累積上限，峰值代價待量。 | 2：合法邊界可完成，超限有界拒絕，排空後回收。 |
+| R37 daemon 准入 | 候選在登記 session 前已建立 thread，准入期也消耗 FD。 | 2：建立 thread 前預留名額，啟動失敗、拒絕及關閉都歸還。 |
+| R38 Git 信任與預檢成本 | 靜態 pack/loose 回歸通過，執行前快照仍有競態；大型 repo 成本未知。 | 3：依信任矩陣決定路由，分列 metadata 預檢與 Git 執行時間。 |
+| R39 掃描、配置與序列化 | 7.3 有工具級收益及 PSS 代價。分段歸因與新版實測待做。 | 5：相同輸出下比較配置、峰值 PSS 與尾延遲。 |
+| R40 Fast9 殘餘熱點 | 沿用 Fast9+09c 凍結基線與舊 Fast10 反證。 | 6：在仍走 PRoot 的實際操作估可消除時間，再裁決單一 shim。 |
+
+資源預算、Git 三類路由、驗收指令及 GPU 重新立案條件見[施工計畫](../planning/F8-WORKSTATION-VALIDATION-PLAN-20261127.md)。
+
 ### 額外更正兩條工作表中的待辦
 
 - 「再確認 Sprout 原始版本」已落後於本機 Phase 2／3 驗收。Sprout 0.6.1 有真 Adreno Vulkan 通過紀錄，同一矩陣的 Node v24 出現 `uv__close` SIGABRT、Chromium 153 headless 逾時。判為 **NO-GO 整工作站替換**；保留成功/失敗組合，不因上游版本或同名專案而抹除歷史。[Phase 2 相容性矩陣](../evidence/session/proot/STAGE5-PHASE2-ACCEPTANCE-20261126.md)、[Phase 3 結案](../evidence/session/proot/STAGE5-PHASE3-CONVERGENCE-ACCEPTANCE-20261126.md)。
@@ -111,7 +126,7 @@ GO 表示已有理由投入指定的工作；CONDITIONAL GO 僅限表列前提�
 
 其他關鍵核對來源：[DroidDeck 長 UDS issue #839](https://github.com/Droid-Deck/DroidDeck/issues/839)、[Mesa fence 變更 #96](https://github.com/lfdevs/mesa-for-android-container/pull/96)、[A830 回歸 #111](https://github.com/lfdevs/mesa-for-android-container/issues/111)、[Pons 診斷補丁固定提交](https://github.com/tedin7/pons/blob/77369df51d3fc98b19ddb2385ebf6d5b7c620053/tools/proot/0002-syscall-stats.patch)、[XFCE telemetry 關閉的裁決](../evidence/session/xfce-v6/XFCE-NOTEL-01-FREEZE.md)。
 
-## 三、34 項之外，值得施工的增量
+## 三、原審提出的施工方向
 
 **把成本歸給真正付費的階段。** 同一請求分出 guest 編解碼、relay 排隊、policy、Git 啟動/執行、回覆排隊、客戶端消費。優先記單調時鐘、進出 bytes、實際 route 和少量直方圖；只在抽樣請求打點。舊版 syscall 計數器曾有 −5.04% 到 +21.84% 的配對波動，X server telemetry 也曾吃掉 0.18 核。用無追蹤配對估計觀測負擔，超過預設噪聲門檻就停用該探針。
 
