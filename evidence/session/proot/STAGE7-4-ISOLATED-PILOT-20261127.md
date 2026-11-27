@@ -57,3 +57,9 @@
 - `git_ro` 拒絕無法辨識的倉庫、裸倉庫、`core.worktree`、物件庫 alternates，並驗證 Git 設定與物件庫的路徑邊界。Linked worktree 的 metadata 必須解析到允許映射且未受保護的路徑。檢查採執行前快照，並行替換 metadata 仍是已知限制。
 - 同一裝置重新驗證既有候選版時，PRoot 13/13，Termux Native 12/13（分流測試於 EOF 漏回應）。安全複審候選版通過 PRoot 15/15（21.645 s）與 Termux Native 15/15（16.336 s，`TracerPid: 0`），包含原失敗的分流測試與新增的 Git／worker 例外清理回歸。PRoot 的 fallback 使用滿管線進行驗證，延遲讀取後仍可取得完整回應，未讀取時送出 SIGTERM 於 0.120 s 結束。
 - 新版尚待 Neon 複審與 GitHub CI。既有多客戶端試點結果沿用其原測試版本與限制。
+
+### 六、接手複審修補與隔離驗證
+
+- 兩位 GPT-6.1 Terra 分別修補直通傳輸、子程序輸出與取消驗證。直通模式的兩個傳輸佇列各限 8 MiB。正常 UDS EOF 後排空已收到的回應。收到終止訊號時最多再等 1 秒，接收端持續阻塞時可能仍有未送出的資料。
+- Git 與正則工作的共用子程序監督器改用有界非阻塞 pipe，stdout 2 MiB、stderr 256 KiB。超限時終止與回收子程序，回報 `subprocess-output-limit`。Daemon、選擇性分流與本地回退共用取消通知驗證。
+- 整合程式提交 `0fa61e8` 通過 PRoot 23/23（24.596 s）與 Termux Native 23/23（18.255 s，`TracerPid: 0`）。PRoot 全庫 Python 55/55。必要治理 workflow 已增列 Hybrid 2.0 測試，待推送後取得新版 GitHub CI。
