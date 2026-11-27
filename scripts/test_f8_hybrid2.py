@@ -1402,5 +1402,73 @@ class RawRelayDrainTests(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, err)
 
 
+
+class ClientAdmissionTests(unittest.TestCase):
+    def make_daemon(self):
+        from f8_hybrid2_daemon import Hybrid2Daemon
+        engine = SimpleNamespace(jsonrpc_err=lambda rid, code, message: {
+            "jsonrpc": "2.0", "id": rid, "error": {"code": code, "message": message}})
+        return Hybrid2Daemon(sock_path=Path('/tmp/unused-socket'), pidfile=Path('/tmp/unused-pid'),
+                             ready_path=Path('/tmp/unused-ready'), log_path=None, engine=engine,
+                             default_timeout_s=1, max_clients=1)
+
+    def test_live_thread_counts_and_rejection_is_bounded(self):
+        daemon = self.make_daemon()
+        conn, peer = socket.socketpair()
+        live = mock.Mock()
+        live.is_alive.return_value = True
+        try:
+            with mock.patch('f8_hybrid2_daemon.threading.Thread') as factory:
+                daemon._spawn_client_thread(conn, [live])
+                factory.assert_not_called()
+            peer.settimeout(1)
+            self.assertEqual(json.loads(peer.recv(4096))['error']['code'], -32000)
+            self.assertEqual(conn.fileno(), -1)
+        finally:
+            peer.close()
+
+    def test_start_failure_closes_and_does_not_consume_capacity(self):
+        daemon = self.make_daemon()
+        conn, peer = socket.socketpair()
+        threads = []
+        try:
+            with mock.patch('f8_hybrid2_daemon.threading.Thread.start', side_effect=RuntimeError('start failed')):
+                daemon._spawn_client_thread(conn, threads)
+            self.assertEqual(conn.fileno(), -1)
+            self.assertEqual(threads, [])
+        finally:
+            peer.close()
+
+    def test_backlog_uses_same_admission(self):
+        daemon = self.make_daemon()
+        conn, peer = socket.socketpair()
+        server = mock.Mock()
+        server.accept.side_effect = [(conn, None), BlockingIOError()]
+        daemon._srv_sock = server
+        try:
+            with mock.patch.object(daemon, '_spawn_client_thread') as spawn:
+                threads = []
+                daemon._drain_accept_backlog(threads)
+                spawn.assert_called_once_with(conn, threads)
+        finally:
+            conn.close()
+            peer.close()
+
+    def test_exited_thread_is_reaped_before_admission(self):
+        daemon = self.make_daemon()
+        conn, peer = socket.socketpair()
+        exited = mock.Mock()
+        exited.is_alive.return_value = False
+        threads = [exited]
+        try:
+            with mock.patch('f8_hybrid2_daemon.threading.Thread') as factory:
+                daemon._spawn_client_thread(conn, threads)
+                factory.return_value.start.assert_called_once()
+                self.assertEqual(threads, [factory.return_value])
+        finally:
+            conn.close()
+            peer.close()
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2, failfast=False)

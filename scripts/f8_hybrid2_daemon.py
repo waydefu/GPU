@@ -479,9 +479,26 @@ class Hybrid2Daemon:
 
     def _spawn_client_thread(self, conn: socket.socket, client_threads: list[threading.Thread]) -> None:
         self.touch_activity()
-        th = threading.Thread(target=self._handle_client, args=(conn,), daemon=True)
+        # Only the accept loop mutates this list, including during backlog drain.
+        client_threads[:] = [thread for thread in client_threads if thread.is_alive()]
+        if len(client_threads) >= self.max_clients:
+            self.write_audit({"ev": "conn", "decision": "refuse", "reason": "max-clients"})
+            try:
+                conn.setblocking(False)
+                conn.send((json.dumps(self.engine.jsonrpc_err(None, -32000, "Server busy: max clients reached")) + "\n").encode("utf-8"))
+            except OSError:
+                pass
+            finally:
+                conn.close()
+            return
+        try:
+            th = threading.Thread(target=self._handle_client, args=(conn,), daemon=True)
+            th.start()
+        except (RuntimeError, OSError):
+            conn.close()
+            self.write_audit({"ev": "conn", "decision": "refuse", "reason": "thread-start-failed"})
+            return
         client_threads.append(th)
-        th.start()
 
     def _handle_client(self, conn: socket.socket) -> None:
         sess: ClientSession | None = None
@@ -489,14 +506,6 @@ class Hybrid2Daemon:
         try:
             peer_pid, _, _ = verify_peercred(conn)
             with self._sess_lock:
-                if len(self._sessions) >= self.max_clients:
-                    self.write_audit({"ev": "conn", "decision": "refuse", "reason": "max-clients"})
-                    try:
-                        conn.sendall((json.dumps(self.engine.jsonrpc_err(None, -32000, "Server busy: max clients reached")) + "\n").encode("utf-8"))
-                    except OSError:
-                        pass
-                    conn.close()
-                    return
                 conn_id = self._next_conn_id
                 self._next_conn_id += 1
                 sess = ClientSession(conn, self, conn_id, peer_pid)
@@ -505,16 +514,13 @@ class Hybrid2Daemon:
             sess.serve()
         except Refuse as exc:
             self.write_audit({"ev": "conn", "decision": "refuse", "reason": str(exc)})
-            try:
-                conn.close()
-            except OSError:
-                pass
         except OSError:
+            pass
+        finally:
             try:
                 conn.close()
             except OSError:
                 pass
-        finally:
             if sess is not None:
                 with self._sess_lock:
                     self._sessions.discard(sess)
