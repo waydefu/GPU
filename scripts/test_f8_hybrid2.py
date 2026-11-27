@@ -151,6 +151,18 @@ def proc_count_fds(pid: int) -> int:
     return len(os.listdir(f"/proc/{pid}/fd"))
 
 
+def settled_fds(pid: int) -> int:
+    """FD count once two reads 0.1 s apart agree (the start audit line opens the log briefly)."""
+    prev = proc_count_fds(pid)
+    for _ in range(30):
+        time.sleep(0.1)
+        cur = proc_count_fds(pid)
+        if cur == prev:
+            return cur
+        prev = cur
+    return prev
+
+
 def children_of(pid: int) -> list[int]:
     kids: list[int] = []
     for d in Path("/proc").iterdir():
@@ -828,7 +840,7 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
 
     def test_4clients_max_clients_max_inflight_cancel_and_strict_fd(self) -> None:
         self.proc = self._start_daemon(["--max-clients", "4", "--max-inflight", "1"])
-        base_fds = proc_count_fds(self.proc.pid)
+        base_fds = settled_fds(self.proc.pid)
 
         clients = [self._uds_rpc(self.sock) for _ in range(4)]
         try:
@@ -1340,7 +1352,7 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
         # C) Real daemon: jsonrpc="1.0" MUST be rejected (-32600), native cancel clears native_inflight,
         # bounded --max-local-inflight rejects burst with -32000, and SIGTERM kills active local relay fast
         self.proc = self._start_daemon(["--max-inflight", "1"])
-        base_fds = proc_count_fds(self.proc.pid)
+        base_fds = settled_fds(self.proc.pid)
         bad_and_cancel = "\n".join([
             json.dumps({"jsonrpc": "1.0", "id": 101, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
             json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),

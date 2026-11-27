@@ -1,6 +1,17 @@
 # Stage 7.5 tiered governance — architecture, audit and fixes
 
-Code candidate `f538cb4b7781d9e4cdda85f6659efcc6e1b4021f` (scripts `f8_hybrid2_*`; later commits change only test tooling and docs). Acceptance rules: [freeze](F8-HYBRID2-STAGE75-TIERED-FREEZE-20261128.md). Device results: see the Stage 7.5 tiered report in the evidence tree (results table below).
+Code candidate: scripts `f8_hybrid2_*` as of `125eef8` (device runs at branch heads `40486566` / `ee7bf72`, identical governed scripts). Acceptance rules: [freeze](F8-HYBRID2-STAGE75-TIERED-FREEZE-20261128.md). Device report: [`evidence/session/proot/STAGE7-5-TIERED-GOVERNANCE-20261128.md`](../evidence/session/proot/STAGE7-5-TIERED-GOVERNANCE-20261128.md).
+
+## Results (same candidate, isolated device runs)
+
+| Mode | Theoretical PSS / threads / FDs | Measured peak PSS / threads / FDs | Verdict |
+|---|---|---|---|
+| 2 | 166.4 MiB / 13 / 63 | 98.7 MiB / 7 / 43 | GO |
+| 4 | 229.3 MiB / 21 / 87 | 130.3 MiB / 15 / 65 (+600 s soak) | GO |
+| 6 | 255.3 MiB / 27 / 95 | 170.9 MiB / 20 / 82 | GO (0.7 MiB theoretical margin) |
+| 8 | 318.2 MiB / 35 / 119 | 201.3 MiB / 26 / 105 | HOLD (G3; original RSS gate fails on reclaim) |
+
+Ceilings: 256 MiB PSS, 64 threads, 192 FDs. Theoretical = enforced byte limits plus measured idle PSS plus per-slot max(26 MiB in-process, native regex-worker 35.7 MiB + 2.25 MiB capture). GO is isolated qualification only; deployment and merge are separate decisions.
 
 ## One governor, four modes
 
