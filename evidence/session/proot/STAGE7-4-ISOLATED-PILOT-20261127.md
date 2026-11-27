@@ -62,4 +62,6 @@
 
 - 兩位 GPT-6.1 Terra 分別修補直通傳輸、子程序輸出與取消驗證。直通模式的兩個傳輸佇列各限 8 MiB。正常 UDS EOF 後排空已收到的回應。收到終止訊號時最多再等 1 秒，接收端持續阻塞時可能仍有未送出的資料。
 - Git 與正則工作的共用子程序監督器改用有界非阻塞 pipe，stdout 2 MiB、stderr 256 KiB。超限時終止與回收子程序，回報 `subprocess-output-limit`。Daemon、選擇性分流與本地回退共用取消通知驗證。
-- 整合程式提交 `0fa61e8` 通過 PRoot 23/23（24.596 s）與 Termux Native 23/23（18.255 s，`TracerPid: 0`）。PRoot 全庫 Python 55/55。必要治理 workflow 已增列 Hybrid 2.0 測試，待推送後取得新版 GitHub CI。
+- 整合程式提交 `0fa61e8` 通過 PRoot 23/23（24.596 s）與 Termux Native 23/23（18.255 s，`TracerPid: 0`）。PRoot 全庫 Python 55/55。必要治理 workflow 已增列 Hybrid 2.0 測試，[PR CI](https://github.com/waydefu/GPU/actions/runs/45983252510) 在 `bba350d` 實跑 23/23。
+
+- 後續補上 `git_ro` 對 `objects/pack` 及其直屬符號連結的邊界檢查。越界路徑在 Git 啟動前拒絕，映射內已打包物件仍可正常讀取。PRoot 24/24（24.213 s），Termux Native 24/24（18.468 s，`TracerPid: 0`）。

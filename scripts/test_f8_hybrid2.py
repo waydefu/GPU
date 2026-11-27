@@ -256,6 +256,28 @@ class PolicyAndSecurityTests(unittest.TestCase):
         alternates.unlink()
         self.pol.validate_git_ro(["status"], "/ws/repo")
 
+    def test_git_pack_paths_stay_in_map(self) -> None:
+        pack_dir = self.repo / ".git/objects/pack"
+        pack_dir.rmdir()
+        pack_dir.symlink_to(self.outside, target_is_directory=True)
+        self._refused("symlink-escape", self.pol.validate_git_ro, ["status"], "/ws/repo")
+
+        pack_dir.unlink()
+        pack_dir.mkdir()
+        pack_entry = pack_dir / "fixture.pack"
+        pack_entry.symlink_to(self.outside / "placeholder")
+        self._refused("symlink-escape", self.pol.validate_git_ro, ["status"], "/ws/repo")
+        pack_entry.unlink()
+
+        git_run(["gc", "--quiet"], self.repo)
+        engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        reply = engine._tool_git_ro(
+            {"cwd": "/ws/repo", "args": ["cat-file", "-t", "HEAD"]},
+            RequestContext(1, 5),
+        )
+        self.assertEqual(reply["returncode"], 0, reply)
+        self.assertEqual(reply["stdout"].strip(), "commit")
+
     def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
             ["status", "--short"],

@@ -592,23 +592,29 @@ class Policy:
                         cfg_paths.append(sub / "config")
                         cfg_paths.append(sub / "config.worktree")
 
-        # Git object alternates can redirect reads (including recursively) outside the map.
-        # Refuse them rather than attempting to validate a mutable graph.
+        def check_metadata_path(path: Path) -> None:
+            resolved = os.path.realpath(path)
+            roots = [root for root in allowed_roots if os.path.commonpath([root, resolved]) == root]
+            if not roots:
+                raise Refuse("symlink-escape")
+            if any(self._is_protected_host(resolved, root) for root in roots):
+                raise Refuse("protected-path")
+
         for metadata_dir in {cfg.parent for cfg in cfg_paths}:
-            for candidate in (metadata_dir, metadata_dir / "objects", metadata_dir / "objects/info"):
-                resolved = os.path.realpath(candidate)
-                if not any(os.path.commonpath([r, resolved]) == r for r in allowed_roots):
-                    raise Refuse("symlink-escape")
-                if any(self._is_protected_host(resolved, r) for r in allowed_roots if os.path.commonpath([r, resolved]) == r):
-                    raise Refuse("protected-path")
-            if os.path.lexists(metadata_dir / "objects/info/alternates"):
+            objects = metadata_dir / "objects"
+            pack_dir = objects / "pack"
+            for candidate in (metadata_dir, objects, objects / "info", pack_dir):
+                check_metadata_path(candidate)
+            # Validate the directory before enumerating pack files and their sidecars.
+            if pack_dir.is_dir():
+                for entry in pack_dir.iterdir():
+                    if entry.is_symlink():
+                        check_metadata_path(entry)
+            # Alternates can recursively redirect reads outside the map.
+            if os.path.lexists(objects / "info/alternates"):
                 raise Refuse("git-alternates-unsupported")
         for cfg in cfg_paths:
-            resolved = os.path.realpath(cfg)
-            if not any(os.path.commonpath([r, resolved]) == r for r in allowed_roots):
-                raise Refuse("symlink-escape")
-            if any(self._is_protected_host(resolved, r) for r in allowed_roots if os.path.commonpath([r, resolved]) == r):
-                raise Refuse("protected-path")
+            check_metadata_path(cfg)
             if not cfg.is_file():
                 continue
             try:
