@@ -1850,10 +1850,14 @@ class RelayGovernanceTests(unittest.TestCase):
                 out, err = proc.communicate(timeout=20)
                 self.assertEqual(proc.returncode, 0, err)
                 errors = [m["error"]["message"] for m in map(json.loads, out.splitlines()) if m["id"] is None]
-                # Depth 100000 raises RecursionError on CPython 3.12/3.14; budget mode rejects it unparsed.
-                expected = (["Parse error", "Frame too complex", "Frame too complex"] if limits_name == "GOVERNED"
-                            else ["Parse error", "Parse error"])
-                self.assertEqual(errors, expected)
+                if limits_name == "GOVERNED":
+                    self.assertEqual(errors, ["Parse error", "Frame too complex", "Frame too complex"])
+                else:
+                    # Whether depth 100000 raises RecursionError depends on the CPython build;
+                    # either way the relay must answer it and keep serving (id 9 above).
+                    self.assertEqual(errors[0], "Parse error")
+                    self.assertIn(errors[1], ("Parse error", "Invalid Request"))
+                    self.assertEqual(len(errors), 2)
             finally:
                 peer.close()
                 if proc.poll() is None:
