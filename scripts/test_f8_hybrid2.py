@@ -517,8 +517,8 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
             # Uninitialized check on fresh reconnect tested separately; test duplicate req_id + deterministic max-inflight=1
             sa, fa = clients[0]
             sb, fb = clients[1]
-            self._send(sa, {"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree"}}})
-            time.sleep(0.02)
+            self._send(sa, {"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/bigtree", "pattern": "zzznomatch", "fixed_string": True}}})
+            time.sleep(0.01)
             # While sa holds the sole inflight slot, sb MUST deterministically receive -32000
             self._send(sb, {"jsonrpc": "2.0", "id": 11, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["rev-parse", "HEAD"]}}})
             r_b_busy = json.loads(fb.readline())
@@ -528,19 +528,22 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
             self.assertEqual(r_a10["id"], 10)
 
             # Concurrent 4-client isolation: cancel on client A does not affect client B..D
-            self._send(sa, {"jsonrpc": "2.0", "id": 20, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/bigtree"}}})
-            time.sleep(0.02)
+            self._send(sa, {"jsonrpc": "2.0", "id": 20, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/bigtree", "pattern": "zzznomatch", "fixed_string": True}}})
+            time.sleep(0.01)
             self._send(sa, {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 20}})
-            for _ in range(50):
+            for _ in range(100):
                 if self.log.exists() and '"req_id": 20' in self.log.read_text(encoding="utf-8"):
                     break
                 time.sleep(0.02)
-            time.sleep(0.02)
+            self.assertIn('"req_id": 20', self.log.read_text(encoding="utf-8"))
+            self.assertIn("cancelled", [json.loads(ln).get("decision") for ln in self.log.read_text(encoding="utf-8").splitlines() if '"req_id": 20' in ln])
+            time.sleep(0.05)
 
             for idx, (sc, fc) in enumerate(clients):
                 self._send(sc, {"jsonrpc": "2.0", "id": 30 + idx, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}})
                 rc = json.loads(fc.readline())
-                self.assertEqual(rc["id"], 30 + idx)
+                self.assertEqual(rc["id"], 30 + idx, rc)
+                self.assertIn("result", rc, rc)
                 self.assertEqual(json.loads(rc["result"]["content"][0]["text"])["returncode"], 0)
 
             # git_ro 1ms timeout -> -32001 & children==0
@@ -790,6 +793,93 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
                         pipe.close()
                     except OSError:
                         pass
+
+    def test_selective_tool_routing_stage74(self) -> None:
+        maps_arg = f"/ws={self.ws}"
+        route_log = self.rdir / "routes.jsonl"
+        self.proc = self._start_daemon()
+
+        # 1) Pre-init python_json_summary must return -32002 without touching daemon
+        pre_req = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}) + "\n"
+        p_pre = sp.run(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--map", maps_arg, "--git-bin", SYSTEM_GIT, "--no-fallback"],
+            input=pre_req.encode(),
+            capture_output=True,
+            timeout=10,
+        )
+        self.assertEqual(p_pre.returncode, 0, p_pre.stderr)
+        pre_resp = json.loads(p_pre.stdout.decode().strip())
+        self.assertEqual(pre_resp["error"]["code"], -32002)
+
+        # 2) Pipelined default selective routing: 3 native tools -> UDS, python_json_summary -> local
+        batch = "\n".join([
+            json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+            json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}),
+            json.dumps({"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo"}}}),
+            json.dumps({"jsonrpc": "2.0", "id": 11, "method": "tools/call", "params": {"name": "repo_text_search", "arguments": {"root": "/ws/repo", "pattern": "needle"}}}),
+            json.dumps({"jsonrpc": "2.0", "id": 12, "method": "tools/call", "params": {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status", "--short"]}}}),
+            json.dumps({"jsonrpc": "2.0", "id": 13, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+            json.dumps({"jsonrpc": "2.0", "id": 13, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+        ]) + "\n"
+        p_mix = sp.run(
+            [
+                sys.executable,
+                str(RELAY_PY),
+                "--socket",
+                str(self.sock),
+                "--map",
+                maps_arg,
+                "--git-bin",
+                SYSTEM_GIT,
+                "--route-log",
+                str(route_log),
+                "--no-fallback",
+            ],
+            input=batch.encode(),
+            capture_output=True,
+            timeout=15,
+        )
+        self.assertEqual(p_mix.returncode, 0, p_mix.stderr)
+        resps = [json.loads(ln) for ln in p_mix.stdout.decode().splitlines() if ln.strip()]
+        ok_ids = {r["id"] for r in resps if "result" in r and not r["result"].get("isError")}
+        err_codes = [r["error"]["code"] for r in resps if "error" in r]
+        self.assertTrue({1, 10, 11, 12, 13}.issubset(ok_ids), resps)
+        self.assertIn(-32600, err_codes)
+
+        audit_lines = [json.loads(ln) for ln in self.log.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        daemon_tools = [e.get("tool") for e in audit_lines if e.get("ev") == "tool"]
+        self.assertIn("repo_tree_scan", daemon_tools)
+        self.assertIn("repo_text_search", daemon_tools)
+        self.assertIn("git_ro", daemon_tools)
+        self.assertNotIn("python_json_summary", daemon_tools)
+
+        route_entries = [json.loads(ln) for ln in route_log.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        by_tool = {e["tool"]: e["target"] for e in route_entries}
+        self.assertEqual(by_tool["repo_tree_scan"], "native_uds")
+        self.assertEqual(by_tool["repo_text_search"], "native_uds")
+        self.assertEqual(by_tool["git_ro"], "native_uds")
+        self.assertEqual(by_tool["python_json_summary"], "proot_local")
+
+        # 3) Explicit --native-tools all override still sends python_json_summary to UDS daemon
+        all_req = "\n".join([
+            json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
+            json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"}),
+            json.dumps({"jsonrpc": "2.0", "id": 21, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
+        ]) + "\n"
+        p_all = sp.run(
+            [sys.executable, str(RELAY_PY), "--socket", str(self.sock), "--native-tools", "all", "--no-fallback"],
+            input=all_req.encode(),
+            capture_output=True,
+            timeout=10,
+        )
+        self.assertEqual(p_all.returncode, 0, p_all.stderr)
+        audit_after = [json.loads(ln) for ln in self.log.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        self.assertTrue(any(e.get("tool") == "python_json_summary" and e.get("req_id") == 21 for e in audit_after))
+
+        # 4) Guest /root/projects daemon path translates cleanly to Termux host path via DEFAULT_DAEMON_MAPS
+        mapped_host = ctl.resolve_host_daemon_py("/root/projects/GPU加速/scripts/f8_hybrid2_daemon.py")
+        self.assertTrue(mapped_host.startswith("/data/data/com.termux/"))
+        self.assertTrue(mapped_host.endswith("/root/projects/GPU加速/scripts/f8_hybrid2_daemon.py"))
 
 
 if __name__ == "__main__":

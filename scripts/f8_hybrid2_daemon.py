@@ -99,21 +99,20 @@ class ClientSession:
             th.join(timeout=rem)
 
     def _run_tool_worker(self, req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
+        resp_to_send: dict[str, Any] | None = None
         try:
-            resp = self.engine.call_tool(req_id, params, ctx)
-            self.send_json(resp, ctx=ctx)
+            resp_to_send = self.engine.call_tool(req_id, params, ctx)
         except RequestCancelled:
             pass
         except Exception as exc:
-            self.send_json(
-                self.engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}"),
-                ctx=ctx,
-            )
+            resp_to_send = self.engine.jsonrpc_err(req_id, -32603, f"Internal error: {type(exc).__name__}")
         finally:
             self.daemon.release_inflight()
             with self._active_lock:
                 self._active.pop(rk, None)
             self.daemon.touch_activity()
+        if resp_to_send is not None:
+            self.send_json(resp_to_send, ctx=ctx)
 
     def _handle_message(self, raw_line: bytes) -> None:
         self.daemon.touch_activity()
