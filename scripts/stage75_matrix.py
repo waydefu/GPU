@@ -583,17 +583,15 @@ class Matrix:
             finally:
                 for fd in held:
                     os.close(fd)
+            daemon_down = self.daemon
+            self.daemon = 0
             for c in cs:
                 r = c.recv(30)
                 assert r["id"] == 1 and r["error"]["code"] == -32000 and "disconnected" in r["error"]["message"], r
-                c.send(call(2, *NORMAL[0]))
-                assert c.recv(30)["error"]["message"] == "Native daemon disconnected"
-                c.send(call(3, *NORMAL[3]))
-                self.check(c.recv(60), *NORMAL[3])
+                # Stage 7.4 design: with nothing outstanding the relay drains and exits 0.
+                assert c.p.wait(timeout=30) == 0
                 c.close()
             self.relays = []
-            daemon_down = self.daemon
-            self.daemon = 0
             fb = self.start_relays(self.mode, fallback=True, tag="fallback")
             extra = self.spawn(fallback=True, tag="extra")
             assert extra.p.wait(timeout=20) == 3
