@@ -211,49 +211,72 @@ def _strict_int_arg(args: dict[str, Any], key: str, default: int, lo: int, hi: i
     return max(lo, min(val, hi))
 
 
+def _json_within(value: Any, limit_bytes: int) -> str | None:
+    """Return JSON only when its encoded width fits the caller's budget."""
+    output = bytearray()
+    for fragment in json.JSONEncoder(ensure_ascii=False).iterencode(value):
+        remaining = limit_bytes - len(output)
+        if len(fragment) > remaining:
+            return None
+        encoded = fragment.encode("utf-8")
+        if len(encoded) > remaining:
+            return None
+        output.extend(encoded)
+    return output.decode("utf-8")
+
+
+class _ResultPrefix:
+    """Retain at most the prefix that can fit in the serialized result."""
+
+    def __init__(self, limit_bytes: int = MAX_TEXT_BYTES) -> None:
+        self.items: list[Any] = []
+        self.remaining = limit_bytes - 2  # array brackets
+        self.full = False
+
+    def append(self, item: Any) -> None:
+        if self.full:
+            return
+        separator = 2 if self.items else 0
+        entry = _json_within(item, self.remaining - separator)
+        if entry is None:
+            self.full = True
+            return
+        self.remaining -= len(entry.encode("utf-8")) + separator
+        self.items.append(item)
+
+
 def _fit_json_payload(payload: dict[str, Any], limit_bytes: int = MAX_TEXT_BYTES) -> str:
-    """Serialize payload cleanly within UTF-8 byte budget without breaking JSON syntax."""
-    text = json.dumps(payload, ensure_ascii=False)
-    if len(text.encode("utf-8")) <= limit_bytes:
+    """Serialize a bounded result, keeping valid JSON if the payload must be trimmed."""
+    text = _json_within(payload, limit_bytes)
+    if text is not None:
         return text
 
-    trimmed = dict(payload)
-    trimmed["truncated"] = True
+    trimmed = {**payload, "truncated": True}
     for list_key in ("entries", "matches"):
-        if list_key in trimmed and isinstance(trimmed[list_key], list):
-            items = trimmed[list_key]
-            lo, hi = 0, len(items)
-            best = 0
-            while lo <= hi:
-                mid = (lo + hi) // 2
-                trimmed[list_key] = items[:mid]
-                cand = json.dumps(trimmed, ensure_ascii=False)
-                if len(cand.encode("utf-8")) <= limit_bytes:
-                    best = mid
-                    lo = mid + 1
-                else:
-                    hi = mid - 1
-            trimmed[list_key] = items[:best]
-            return json.dumps(trimmed, ensure_ascii=False)
+        items = payload.get(list_key)
+        if not isinstance(items, list):
+            continue
+        trimmed[list_key] = []
+        shell = _json_within(trimmed, limit_bytes)
+        if shell is None:
+            break
+        prefix = _ResultPrefix(limit_bytes - len(shell.encode("utf-8")) + 2)
+        for item in items:
+            prefix.append(item)
+            if prefix.full:
+                break
+        trimmed[list_key] = prefix.items
+        result = _json_within(trimmed, limit_bytes)
+        if result is not None:
+            return result
+        break
 
-    if any(k in trimmed and isinstance(trimmed[k], str) for k in ("stdout", "stderr")):
-        for str_key in ("stdout", "stderr"):
-            if str_key in trimmed and isinstance(trimmed[str_key], str):
-                other_key = "stderr" if str_key == "stdout" else "stdout"
-                saved_other = trimmed.get(other_key, "")
-                # Iteratively halve whichever string fields exceed budget until combined JSON fits.
-                cand = json.dumps(trimmed, ensure_ascii=False)
-                while len(cand.encode("utf-8")) > limit_bytes and trimmed[str_key]:
-                    cur = trimmed[str_key]
-                    trimmed[str_key] = cur[: len(cur) // 2]
-                    cand = json.dumps(trimmed, ensure_ascii=False)
-                if len(cand.encode("utf-8")) <= limit_bytes:
-                    return cand
-                if isinstance(saved_other, str) and not trimmed.get(other_key):
-                    continue
-        cand = json.dumps(trimmed, ensure_ascii=False)
-        if len(cand.encode("utf-8")) <= limit_bytes:
-            return cand
+    for str_key in ("stdout", "stderr"):
+        while isinstance(trimmed.get(str_key), str) and trimmed[str_key]:
+            trimmed[str_key] = trimmed[str_key][: len(trimmed[str_key]) // 2]
+            result = _json_within(trimmed, limit_bytes)
+            if result is not None:
+                return result
 
     return json.dumps({"tool": payload.get("tool"), "truncated": True, "error": "output-too-large"})
 
@@ -424,8 +447,7 @@ class MCPToolEngine:
         file_count = 0
         total_bytes = 0
         digest = hashlib.sha256() if compute_sha else None
-        entries: list[dict[str, Any]] = []
-        truncated = False
+        entries = _ResultPrefix()
 
         for dirpath, dirnames, filenames in os.walk(host_root, followlinks=False):
             ctx.check()
@@ -458,10 +480,8 @@ class MCPToolEngine:
                     continue
                 file_count += 1
                 total_bytes += size
-                if len(entries) < max_entries:
+                if len(entries.items) < max_entries:
                     entries.append({"rel": rel, "size": size})
-                else:
-                    truncated = True
 
         return {
             "tool": "repo_tree_scan",
@@ -469,8 +489,8 @@ class MCPToolEngine:
             "file_count": file_count,
             "total_bytes": total_bytes,
             "digest_sha256": digest.hexdigest() if digest is not None else None,
-            "truncated": truncated,
-            "entries": entries,
+            "truncated": len(entries.items) < file_count,
+            "entries": entries.items,
         }
 
     def _run_text_search_sync(
@@ -495,13 +515,14 @@ class MCPToolEngine:
                 raise Refuse(f"bad-regex: {exc}") from exc
             needle = ""
 
-        matches: list[dict[str, Any]] = []
+        matches = _ResultPrefix()
+        matched_count = 0
         files_scanned = 0
         skipped_oversize = 0
         truncated = False
 
         def scan_file(fpath: str, rel: str) -> None:
-            nonlocal files_scanned, skipped_oversize, truncated
+            nonlocal matched_count, files_scanned, skipped_oversize, truncated
             ctx.check()
             if exts is not None and not any(rel.endswith(e) for e in exts):
                 return
@@ -528,9 +549,10 @@ class MCPToolEngine:
                     else bool(rx.search(slice_line))
                 )
                 if hit:
-                    if len(matches) >= max_matches:
+                    if matched_count >= max_matches:
                         truncated = True
                         return
+                    matched_count += 1
                     matches.append({"file": rel, "line": lineno, "text": slice_line[:300]})
 
         if os.path.isfile(host_root):
@@ -546,9 +568,9 @@ class MCPToolEngine:
                     if os.path.islink(full):
                         continue
                     scan_file(full, os.path.relpath(full, host_root))
-                    if truncated and len(matches) >= max_matches:
+                    if truncated and matched_count >= max_matches:
                         break
-                if truncated and len(matches) >= max_matches:
+                if truncated and matched_count >= max_matches:
                     break
 
         return {
@@ -556,9 +578,9 @@ class MCPToolEngine:
             "root": guest_root,
             "files_scanned": files_scanned,
             "skipped_oversize": skipped_oversize,
-            "match_count": len(matches),
-            "truncated": truncated,
-            "matches": matches,
+            "match_count": matched_count,
+            "truncated": truncated or matches.full,
+            "matches": matches.items,
         }
 
     def _run_supervised_popen(

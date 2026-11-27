@@ -298,6 +298,43 @@ class PolicyAndSecurityTests(unittest.TestCase):
             self._refused("git-checkout-not-trusted", pol.validate_git_ro, ["status"], "/ws/repo")
         self.assertEqual(self.pol.validate_git_ro(["status"], "/ws/repo")[1], str(self.repo.resolve()))
 
+    def test_result_prefix_keeps_scan_and_search_counts(self) -> None:
+        from f8_hybrid2_tools import _ResultPrefix
+
+        # Force the result retention limit below the size of one row. Traversal
+        # aggregates still describe all fixture files/hits.
+        with mock.patch("f8_hybrid2_tools._ResultPrefix", side_effect=lambda: _ResultPrefix(8)):
+            engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+            tree = engine._tool_tree_scan({"root": "/ws/repo"}, RequestContext(1, 5))
+            matches = engine._tool_text_search(
+                {"root": "/ws/repo", "pattern": "needle", "fixed_string": True}, RequestContext(2, 5),
+            )
+        self.assertEqual(tree["file_count"], 1)
+        self.assertEqual(tree["entries"], [])
+        self.assertTrue(tree["truncated"])
+        self.assertEqual(matches["match_count"], 1)
+        self.assertEqual(matches["matches"], [])
+        self.assertTrue(matches["truncated"])
+
+    def test_result_payload_fits_utf8_budget_exactly(self) -> None:
+        from f8_hybrid2_tools import _ResultPrefix
+
+        first = {"text": "世界\n"}
+        second = {"text": "more"}
+        empty = {"tool": "repo_text_search", "matches": [], "truncated": True}
+        prefix_bytes = len(json.dumps([first], ensure_ascii=False).encode("utf-8"))
+        prefix = _ResultPrefix(prefix_bytes)
+        prefix.append(first)
+        prefix.append(second)
+        self.assertEqual(prefix.items, [first])
+        self.assertTrue(prefix.full)
+
+        result = {**empty, "matches": [first]}
+        available = len(json.dumps(result, ensure_ascii=False).encode("utf-8"))
+        trimmed = _fit_json_payload({**empty, "matches": [first, second]}, available)
+        self.assertEqual(json.loads(trimmed), result)
+        self.assertEqual(len(trimmed.encode("utf-8")), available)
+
     def test_supervised_git_and_regex_worker_compatibility(self) -> None:
         engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
         git_result = engine._tool_git_ro({"cwd": "/ws/repo", "args": ["status", "--short"]}, RequestContext(1, 5))
