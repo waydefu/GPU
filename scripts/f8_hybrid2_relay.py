@@ -38,7 +38,7 @@ from f8_hybrid2_policy import (
     read_tracer_pid,
     validate_unix_sock_path,
 )
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, canonical_req_key
+from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key
 
 MAX_FRAME_BYTES = 4 * 1024 * 1024
 DEFAULT_MAX_LOCAL_INFLIGHT = 8
@@ -282,20 +282,21 @@ def bridge_stdio_to_uds(
             return
 
         if method == "notifications/cancelled":
-            params = msg.get("params") if isinstance(msg.get("params"), dict) else {}
-            if "requestId" in params:
-                cancel_rk = canonical_req_key(params["requestId"])
-                if cancel_rk is not None:
-                    with local_active_lock:
-                        ctx = local_active.get(cancel_rk)
-                    if ctx is not None:
-                        ctx.cancel()
-                        return
-                    for idx, (_rid, drk, _dp) in enumerate(deferred_local):
-                        if drk == cancel_rk:
-                            deferred_local.pop(idx)
-                            return
-                    native_inflight.discard(cancel_rk)
+            cancel_rk = cancellation_req_key(msg)
+            if cancel_rk is None:
+                if has_id:
+                    _emit_local_err(req_id, -32600, "Invalid cancellation")
+                return
+            with local_active_lock:
+                ctx = local_active.get(cancel_rk)
+            if ctx is not None:
+                ctx.cancel()
+                return
+            for idx, (_rid, drk, _dp) in enumerate(deferred_local):
+                if drk == cancel_rk:
+                    deferred_local.pop(idx)
+                    return
+            native_inflight.discard(cancel_rk)
             if not session_state["uds_closed"]:
                 to_uds.extend(stripped + b"\n")
             return
@@ -850,14 +851,14 @@ def run_local_fallback(
             return
 
         if isinstance(msg, dict) and msg.get("method") == "notifications/cancelled":
-            params = msg.get("params") if isinstance(msg.get("params"), dict) else {}
-            if "requestId" in params:
-                rk = canonical_req_key(params["requestId"])
-                if rk is not None:
-                    with active_lock:
-                        ctx = active.get(rk)
-                    if ctx is not None:
-                        ctx.cancel()
+            rk = cancellation_req_key(msg)
+            if rk is not None:
+                with active_lock:
+                    ctx = active.get(rk)
+                if ctx is not None:
+                    ctx.cancel()
+            elif "id" in msg:
+                write_resp(engine.jsonrpc_err(None, -32600, "Invalid cancellation"))
             return
 
         sync_resp, action = engine.handle_sync_control(msg, initialized=state["initialized"])

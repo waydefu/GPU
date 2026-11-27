@@ -36,7 +36,7 @@ from f8_hybrid2_policy import (
     validate_unix_sock_path,
     verify_peercred,
 )
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, canonical_req_key
+from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, cancellation_req_key, canonical_req_key
 
 MAX_LINE_BYTES = 4 * 1024 * 1024
 MAX_OUTBUF_BYTES = 4 * 1024 * 1024
@@ -144,14 +144,14 @@ class ClientSession:
             return
 
         if isinstance(msg, dict) and msg.get("method") == "notifications/cancelled":
-            params = msg.get("params") if isinstance(msg.get("params"), dict) else {}
-            if "requestId" in params:
-                rk = canonical_req_key(params["requestId"])
-                if rk is not None:
-                    with self._active_lock:
-                        ctx = self._active.get(rk)
-                    if ctx is not None:
-                        ctx.cancel()
+            rk = cancellation_req_key(msg)
+            if rk is not None:
+                with self._active_lock:
+                    ctx = self._active.get(rk)
+                if ctx is not None:
+                    ctx.cancel()
+            elif "id" in msg:
+                self.send_json(self.engine.jsonrpc_err(None, -32600, "Invalid cancellation"))
             return
 
         sync_resp, action = self.engine.handle_sync_control(msg, initialized=self.initialized)

@@ -105,6 +105,67 @@ class WorkerCleanupTests(unittest.TestCase):
             os.close(session._wake_w)
 
 
+class SupervisionAndCancellationTests(unittest.TestCase):
+    def test_bounded_child_output_and_final_drain(self) -> None:
+        engine = MCPToolEngine.__new__(MCPToolEngine)
+        run = lambda code: engine._run_supervised_popen(
+            [sys.executable, "-c", code], cwd="/tmp", env=dict(os.environ), ctx=RequestContext(1, 5))
+        rc, out, err = run("import sys; sys.stdout.write('a' * 200000); sys.stderr.write('b' * 200000)")
+        self.assertEqual((rc, len(out), len(err)), (0, 200000, 200000))
+        for stream, size in (("stdout", 2 * 1024 * 1024 + 1), ("stderr", 256 * 1024 + 1)):
+            with self.subTest(stream=stream), self.assertRaisesRegex(Refuse, "subprocess-output-limit"):
+                run(f"import sys; sys.{stream}.write('x' * {size})")
+
+    def test_supervised_timeout_and_cancellation(self) -> None:
+        from f8_hybrid2_tools import RequestCancelled, RequestTimeout
+        import threading
+        engine = MCPToolEngine.__new__(MCPToolEngine)
+        def run(ctx):
+            return engine._run_supervised_popen([sys.executable, "-c", "import time; time.sleep(5)"],
+                                                cwd="/tmp", env=dict(os.environ), ctx=ctx)
+        with self.assertRaises(RequestTimeout):
+            run(RequestContext(1, 0.05))
+        ctx = RequestContext(2, 5)
+        timer = threading.Timer(0.05, ctx.cancel)
+        timer.start()
+        try:
+            with self.assertRaises(RequestCancelled):
+                run(ctx)
+        finally:
+            timer.cancel()
+            timer.join()
+
+    def test_cancel_validation_and_session_isolation(self) -> None:
+        from f8_hybrid2_daemon import ClientSession
+        from f8_hybrid2_tools import cancellation_req_key, canonical_req_key
+        good = {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 7}}
+        bad = [dict(good, jsonrpc="1.0"), dict(good, id=9),
+               dict(good, params={"requestId": True}), dict(good, params={}),
+               dict(good, params={"requestId": None})]
+        self.assertEqual(cancellation_req_key(good), canonical_req_key(7))
+        self.assertTrue(all(cancellation_req_key(x) is None for x in bad))
+        sockets = [socket.socketpair(), socket.socketpair()]
+        daemon = SimpleNamespace(engine=MCPToolEngine.__new__(MCPToolEngine), default_timeout_s=1,
+                                 touch_activity=mock.Mock())
+        sessions = [ClientSession(pair[0], daemon, i, i) for i, pair in enumerate(sockets)]
+        contexts = [RequestContext(7, 5), RequestContext(7, 5)]
+        try:
+            for session, ctx in zip(sessions, contexts):
+                session._active[canonical_req_key(7)] = ctx
+            for msg in bad:
+                sessions[0]._handle_message(json.dumps(msg).encode())
+                self.assertFalse(contexts[0].cancel_event.is_set())
+            sessions[0]._handle_message(json.dumps(good).encode())
+            self.assertTrue(contexts[0].cancel_event.is_set())
+            self.assertFalse(contexts[1].cancel_event.is_set())
+        finally:
+            for session, pair in zip(sessions, sockets):
+                for sock in pair:
+                    sock.close()
+                os.close(session._wake_r)
+                os.close(session._wake_w)
+
+
 class PolicyAndSecurityTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp_root = Path(tempfile.mkdtemp(prefix="hyb2_pol_"))
@@ -135,6 +196,18 @@ class PolicyAndSecurityTests(unittest.TestCase):
         with self.assertRaises(Refuse) as cm:
             fn(*args, **kwargs)
         self.assertIn(expected, str(cm.exception))
+
+    def test_supervised_git_and_regex_worker_compatibility(self) -> None:
+        engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        git_result = engine._tool_git_ro({"cwd": "/ws/repo", "args": ["status", "--short"]}, RequestContext(1, 5))
+        self.assertEqual(git_result["returncode"], 0)
+        self.assertIn("escape", git_result["stdout"])
+        search = engine._tool_text_search({"root": "/ws/repo", "pattern": "needle.+"}, RequestContext(2, 5))
+        self.assertEqual(search["match_count"], 1)
+        with mock.patch.object(engine, "_run_supervised_popen", side_effect=Refuse("subprocess-output-limit")):
+            response = engine.call_tool(3, {"name": "git_ro", "arguments": {"cwd": "/ws/repo", "args": ["status"]}}, RequestContext(3, 5))
+        self.assertEqual(response["error"]["code"], -32602)
+        self.assertIn("subprocess-output-limit", response["error"]["message"])
 
     def test_protected_double_slash_l2s_and_symlink_to_protected(self) -> None:
         self._refused("protected-path", self.pol.map_path, "/etc/passwd")
