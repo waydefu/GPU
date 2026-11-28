@@ -9,7 +9,7 @@ for mode in "$@"; do
   echo "mode=$mode run=$run fixture_l2s=$(cat "$run/fixture-l2s-links")"
   /usr/local/bin/termux-bg-run --timeout 900 --tail 5 "$run/run-native" > "$run/native-launcher.log" 2>&1
   tail -3 "$run/native-suite.log"
-  python3 -B "$run/scripts/stage75_envelope.py" "$run/ws2" /usr/bin/git "$run/r" > "$run/envelope-proot.json"
+  F8_HYBRID2_TRUSTED_GIT_ROOTS='["/fixture"]' python3 -B "$run/scripts/stage75_envelope.py" "$run/ws2" /usr/bin/git "$run/r" > "$run/envelope-proot.json"
   soak=0; [ "$mode" = 4 ] && soak=600
   python3 -B "$run/scripts/stage75_matrix.py" --run "$run" --mode "$mode" --soak "$soak" > "$run/matrix.out" 2>&1 || {
     echo "mode=$mode matrix aborted"; tail -5 "$run/matrix.out"; exit 1; }

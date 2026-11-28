@@ -35,6 +35,7 @@ PRoot 以 link2symlink 模擬硬連結：git 在 PRoot 內寫入的 loose object
 - 同時最多 4 個 Claude Code 會話能拿到 `hybrid2`；第 5 個在該會話顯示 MCP 連線失敗，其他工具不受影響。
 - daemon 不隨 Termux／手機重啟自動啟動；不在時 relay 自動走 PRoot（較慢、結果相同），重跑 `stage75_pilot.sh` 即恢復。
 - `audit.jsonl` 不輪替，試點期間需留意大小。
+  - **勘誤（2026-11-28，Stage 7.6 稽核）**：上句錯誤。daemon 的 `audit.jsonl` 原本就在 5 MiB 時輪替為 `.1`（`AUDIT_ROTATE_BYTES`）；真正沒有輪替的是 relay 的 `--route-log` 與直接啟動時的 `daemon.out`，已在 7.6 修補（試點版本尚未替換）。
 
 ## 回退
 
