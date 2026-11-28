@@ -31,7 +31,7 @@ if _HERE not in sys.path:
     sys.path.insert(0, _HERE)
 
 from f8_hybrid2_budget import parse_cost, parse_cost_parts, parse_cost_total
-from f8_hybrid2_policy import Policy, Refuse, is_link, open_nofollow, pidfd_open
+from f8_hybrid2_policy import Policy, Refuse, dirent_links, open_nofollow, pidfd_open
 
 _MAY_BACKTRACK_RE = re.compile(r"[*+?{|]")
 
@@ -478,18 +478,18 @@ class MCPToolEngine:
 
         for dirpath, dirnames, filenames in os.walk(host_root, followlinks=False):
             ctx.check()
-            # os.walk(followlinks=False) tests links with lstat(), which PRoot can fail (F14).
+            # os.walk(followlinks=False) tests links with lstat(), which PRoot can fail or hide (F14).
+            links = dirent_links(dirpath)
             dirnames[:] = sorted(
                 d for d in dirnames
-                if not d.startswith(".l2s.") and not (exclude_git and d == ".git")
-                and not is_link(os.path.join(dirpath, d))
+                if not d.startswith(".l2s.") and not (exclude_git and d == ".git") and d not in links
             )
             for fname in sorted(filenames):
                 ctx.check()
                 if fname.startswith(".l2s."):
                     continue
                 full = os.path.join(dirpath, fname)
-                if is_link(full):
+                if fname in links:
                     continue
                 rel = os.path.relpath(full, host_root)
                 try:
@@ -589,13 +589,13 @@ class MCPToolEngine:
         else:
             for dirpath, dirnames, filenames in os.walk(host_root, followlinks=False):
                 ctx.check()
-                dirnames[:] = sorted(d for d in dirnames if not d.startswith(".l2s.") and d != ".git"
-                                     and not is_link(os.path.join(dirpath, d)))
+                links = dirent_links(dirpath)
+                dirnames[:] = sorted(d for d in dirnames if not d.startswith(".l2s.") and d != ".git" and d not in links)
                 for fname in sorted(filenames):
                     if fname.startswith(".l2s."):
                         continue
                     full = os.path.join(dirpath, fname)
-                    if is_link(full):
+                    if fname in links:
                         continue
                     scan_file(full, os.path.relpath(full, host_root))
                     if truncated and matched_count >= max_matches:

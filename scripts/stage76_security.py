@@ -270,8 +270,8 @@ def s1(run: Run) -> dict:
             cells.append({"args": a[:3], "same": same, "native": git_view(rn) if not same else {"returncode": rn.get("returncode"), "error": rn.get("error")},
                           "fallback_error": rf.get("error"), "native_ms": round(tn, 1), "fallback_ms": round(tf, 1)})
         ok_kind = all(c["same"] for c in cells) and (kind == "worktree" or all(c["native"].get("error") is None for c in cells))
-        if kind == "worktree":
-            ok_kind = all(c["same"] and "git-worktree-not-supported" in str(c["native"].get("error")) for c in cells)
+        if kind == "worktree":  # erratum E1: any policy refusal, identical on both routes
+            ok_kind = all(c["same"] and str(c["native"].get("error") or "").startswith("Policy refused:") for c in cells)
         row = {"gate": "S1", "repo": root, "kind": kind, "l2s_links": len(links), "pass": ok_kind, "cells": cells}
         run.log(row)
         repos.append(row)

@@ -614,6 +614,61 @@ class PolicyAndSecurityTests(unittest.TestCase):
         search = engine._tool_text_search({"root": "/ws", "pattern": "TOPSECRET", "fixed_string": True}, RequestContext(5, 5))
         self.assertEqual(search["match_count"], 0)
 
+    def _hidden(self, *paths: Path):
+        """Simulate PRoot hiding link -> `.l2s.*` chains: readlink EINVAL, entry type still DT_LNK."""
+        real = os.readlink
+        hidden = {str(p) for p in paths}
+
+        def fake(p, *a, **kw):
+            if os.fspath(p) in hidden:
+                raise OSError(errno.EINVAL, "hidden by link2symlink")
+            return real(p, *a, **kw)
+        return mock.patch("f8_hybrid2_policy.os.readlink", side_effect=fake)
+
+    def test_proot_hidden_links_are_refused_or_skipped(self) -> None:
+        (self.outside / "secret.json").write_text('{"token": "TOPSECRET"}\n', encoding="utf-8")
+        os.symlink(str(self.outside), str(self.ws / ".l2s.h0001"))
+        os.symlink(str(self.ws / ".l2s.h0001"), str(self.ws / "hidden-dir"))
+        os.symlink(str(self.outside / "secret.json"), str(self.ws / "hidden-file"))
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]'}):
+            pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp), check_hidden=True)
+        engine = MCPToolEngine(pol, git_bin=SYSTEM_GIT)
+        with self._hidden(self.ws / "hidden-dir", self.ws / "hidden-file"):
+            for guest in ("/ws/hidden-dir", "/ws/hidden-dir/secret.json", "/ws/hidden-file"):
+                with self.subTest(guest):
+                    self._refused("hidden-link", pol.map_path, guest, must_exist=True)
+            search = engine._tool_text_search({"root": "/ws", "pattern": "TOPSECRET", "fixed_string": True},
+                                              RequestContext(1, 5))
+            self.assertEqual(search["match_count"], 0)
+            scan = engine._tool_tree_scan({"root": "/ws", "compute_sha256": False}, RequestContext(2, 5))
+            self.assertFalse({"hidden-file"} & {e["rel"] for e in scan["entries"]})
+        # Without PRoot (check_hidden=False) nothing changes for ordinary paths.
+        self.assertEqual(self.pol.map_path("/ws/a.py", must_exist=True), str(self.ws / "a.py"))
+
+    def test_proot_hidden_object_files_keep_fallback_working(self) -> None:
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]'}):
+            pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp), check_hidden=True,
+                         l2s_dir=None)
+        engine = MCPToolEngine(pol, git_bin=SYSTEM_GIT)
+        obj = self._head_object(self.repo)
+        store = self.tmp_root / "store"
+        store.mkdir()
+        obj.rename(store / obj.name)
+        obj.symlink_to(store / obj.name)
+        args = {"cwd": "/ws/repo", "args": ["cat-file", "-t", "HEAD"]}
+        with self._hidden(obj):  # PRoot's own hard link: hidden last component of an object entry
+            reply = engine._tool_git_ro(args, RequestContext(1, 5))
+        self.assertEqual((reply["returncode"], reply["stdout"].strip()), (0, "commit"), reply)
+        fanout = obj.parent
+        moved = self.tmp_root / "fan"
+        obj.unlink()
+        (store / obj.name).rename(obj)
+        fanout.rename(moved)
+        fanout.symlink_to(moved, target_is_directory=True)
+        with self._hidden(fanout), mock.patch.object(engine, "_run_supervised_popen") as spawn:
+            self._refused("hidden-link", engine._tool_git_ro, args, RequestContext(2, 5))
+            spawn.assert_not_called()
+
     def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
             ["status", "--short"],

@@ -422,7 +422,29 @@ def parse_map_specs(items: list[str] | None, default_maps: tuple[tuple[str, str]
     return out
 
 
-def resolve_path(path: str) -> str:
+def _dirent_links(parent: str, cache: dict[str, frozenset[str]] | None) -> frozenset[str]:
+    """Names in ``parent`` whose directory entry type is a symlink (d_type; PRoot keeps DT_LNK)."""
+    if cache is not None and parent in cache:
+        return cache[parent]
+    names: set[str] = set()
+    try:
+        with os.scandir(parent) as entries:
+            for entry in entries:
+                try:
+                    if entry.is_symlink():
+                        names.add(entry.name)
+                except OSError:
+                    continue
+    except OSError:
+        pass
+    found = frozenset(names)
+    if cache is not None:
+        cache[parent] = found
+    return found
+
+
+def resolve_path(path: str, *, check_hidden: bool = False, allow_hidden_last: bool = False,
+                 cache: dict[str, frozenset[str]] | None = None) -> str:
     """os.path.realpath that detects links with readlink() instead of lstat() (F14).
 
     PRoot's link2symlink reports a symlink whose target name starts with ``.l2s.`` as a
@@ -449,6 +471,11 @@ def resolve_path(path: str) -> str:
         try:
             target = os.readlink(candidate)
         except OSError:
+            # PRoot hides a link -> `.l2s.*` symlink chain completely (readlink EINVAL, lstat of the
+            # final target) but keeps DT_LNK. Its destination cannot be checked, so refuse it.
+            if check_hidden and name in _dirent_links(resolved, cache):
+                if not (allow_hidden_last and all(p in ("", ".") for p in pending)):
+                    raise Refuse("hidden-link")
             resolved = candidate
             continue
         if not target:
@@ -468,7 +495,13 @@ def is_link(path: str) -> bool:
     try:
         return bool(os.readlink(path))
     except OSError:
-        return False
+        parent, name = posixpath.split(posixpath.normpath(os.fspath(path)))
+        return name in _dirent_links(parent or ".", None)
+
+
+def dirent_links(directory: str) -> frozenset[str]:
+    """Entries of ``directory`` that are links by entry type, for tool walks (F14)."""
+    return _dirent_links(directory, None)
 
 
 def append_rotating(path: Path, line: str, max_bytes: int) -> None:
@@ -523,8 +556,11 @@ class Policy:
         path_env: str = "/data/data/com.termux/files/usr/bin:/usr/bin:/bin",
         single_thread_git: bool = False,
         l2s_dir: str | None = DEFAULT_L2S_DIR,
+        check_hidden: bool | None = None,
     ) -> None:
         self.single_thread_git = single_thread_git
+        # Hidden link2symlink chains exist only under PRoot emulation (traced process).
+        self.check_hidden = (read_tracer_pid() != 0) if check_hidden is None else check_hidden
         # Literal and resolved spellings of the l2s store; None disables the F13 allowance.
         self._l2s_dirs: frozenset[str] | None = None
         if l2s_dir and os.path.isdir(l2s_dir):
@@ -630,7 +666,7 @@ class Policy:
         g_prefix, h_root = matched
         rel = "" if norm == g_prefix else norm[len(g_prefix) :].lstrip("/")
         candidate = os.path.join(h_root, rel) if rel else h_root
-        real_host = resolve_path(candidate)
+        real_host = resolve_path(candidate, check_hidden=self.check_hidden)
         if _has_l2s_component(real_host):
             raise Refuse("l2s-path")
         try:
@@ -648,7 +684,7 @@ class Policy:
 
     def _find_git_root(self, host_dir: str) -> tuple[str | None, str | None]:
         """Walk upward inside mapped root to find nearest .git directory/file."""
-        cur = resolve_path(host_dir)
+        cur = resolve_path(host_dir, check_hidden=self.check_hidden)
         allowed_roots = [h_root for _, h_root in self.maps]
         while True:
             if not any(os.path.commonpath([r, cur]) == r for r in allowed_roots):
@@ -668,6 +704,7 @@ class Policy:
             cur = parent
 
     def git_cfg_scan(self, host_dir: str) -> None:
+        scan_cache: dict[str, frozenset[str]] = {}
         """Scan .git directory, config.worktree, and .git file; refuse unsafe directives."""
         repo_root, dot_git = self._find_git_root(host_dir)
         if dot_git is None or repo_root is None:
@@ -677,7 +714,7 @@ class Policy:
         if repo_root not in self.trusted_git_roots:
             raise Refuse("git-checkout-not-trusted")
         dg = Path(dot_git)
-        real_dg = resolve_path(dot_git)
+        real_dg = resolve_path(dot_git, check_hidden=self.check_hidden, cache=scan_cache)
         if not any(os.path.commonpath([r, real_dg]) == r for r in allowed_roots):
             raise Refuse("symlink-escape")
         if any(self._is_protected_host(real_dg, r) for r in allowed_roots if os.path.commonpath([r, real_dg]) == r):
@@ -693,7 +730,8 @@ class Policy:
             target = raw[len("gitdir:") :].strip()
             if not target or os.path.isabs(target):
                 raise Refuse("gitfile-absolute")
-            resolved_gitdir = resolve_path(os.path.join(repo_root, target))
+            resolved_gitdir = resolve_path(os.path.join(repo_root, target), check_hidden=self.check_hidden,
+                                           cache=scan_cache)
             if not any(os.path.commonpath([r, resolved_gitdir]) == r for r in allowed_roots):
                 raise Refuse("symlink-escape")
             if not os.path.isdir(resolved_gitdir):
@@ -709,7 +747,8 @@ class Policy:
                     raise Refuse("gitfile-unreadable") from exc
                 if not rel_c or os.path.isabs(rel_c):
                     raise Refuse("gitfile-absolute")
-                cdir = resolve_path(os.path.join(resolved_gitdir, rel_c))
+                cdir = resolve_path(os.path.join(resolved_gitdir, rel_c), check_hidden=self.check_hidden,
+                                    cache=scan_cache)
                 if not any(os.path.commonpath([r, cdir]) == r for r in allowed_roots):
                     raise Refuse("symlink-escape")
                 if not os.path.isdir(cdir):
@@ -729,8 +768,10 @@ class Policy:
                         cfg_paths.append(sub / "config")
                         cfg_paths.append(sub / "config.worktree")
 
-        def check_metadata_path(path: str | Path) -> None:
-            resolved = resolve_path(path)
+        def check_metadata_path(path: str | Path, object_file: bool = False) -> None:
+            # PRoot shows its own Git object hard links as hidden links; only git's object parser reads them.
+            resolved = resolve_path(path, check_hidden=self.check_hidden, allow_hidden_last=object_file,
+                                    cache=scan_cache)
             roots = [root for root in allowed_roots if os.path.commonpath([root, resolved]) == root]
             if not roots:
                 raise Refuse("symlink-escape")
@@ -767,7 +808,7 @@ class Policy:
                             kind = "obj" if _LOOSE_OBJECT_NAME.fullmatch(entry.name) else None
                         if kind is not None and self._is_l2s_object_link(entry.path, kind):
                             continue
-                        check_metadata_path(entry.path)
+                        check_metadata_path(entry.path, object_file=kind is not None)
             # Alternates can recursively redirect reads outside the map.
             if os.path.lexists(objects / "info/alternates"):
                 raise Refuse("git-alternates-unsupported")

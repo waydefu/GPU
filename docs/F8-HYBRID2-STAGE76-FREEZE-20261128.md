@@ -29,3 +29,8 @@ Mid-session daemon loss keeps the 7.4 fail-closed behaviour (relay exits; outsta
 | Red lines | Stable `X1` inode, Fast9+09c `deployed.sha256`, pilot `tools/hybrid2/DEPLOYED.sha256`, pilot daemon pid, and `~/.claude.json` unchanged from start to end. |
 
 F13 is GO only if S1, S2, S4 and S5 pass and the matrix keeps its verdicts. Otherwise `git_ro` stays on the PRoot route in the pilot.
+
+## Errata and amendments (before the judged run)
+
+- **E1 (after DRY-1, tooling expectation).** S1 named `git-worktree-not-supported` as the worktree refusal. The policy refuses these checkouts earlier with `gitfile-absolute` (their `.git` file holds an absolute `gitdir:`), identically on both routes, as before 7.6. The S1 condition for worktrees is therefore "refused by the policy, identical on both routes". No threshold changes.
+- **F15 (found by DRY-1 S3, code change).** Under the Termux home bind, PRoot hides a link → `.l2s.*` symlink chain completely (`readlink` EINVAL, `lstat` of the final target) while the directory entry stays `DT_LNK`. `resolve_path` now refuses such a component as `hidden-link` when running under PRoot, except as the last component of a Git object entry (PRoot's own object hard links, consumed only by git's object parser, as before 7.6). Tool walks decide links from the entry type. S3 accepts `hidden-link` as a refusal reason. The candidate SHA moves; DRY-1 is kept as recorded and is not judged.
