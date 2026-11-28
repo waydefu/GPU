@@ -431,7 +431,11 @@ def resolve_path(path: str) -> str:
     emulation returns EINVAL (a genuine hard link, which is not a path redirect).
     Non-strict like realpath(): missing components are kept literally.
     """
-    pending = posixpath.abspath(path).split("/")[::-1]
+    path = os.fspath(path)
+    if not path.startswith("/"):
+        path = os.getcwd() + "/" + path
+    # No abspath()/normpath(): `link/../x` must take the parent of link's target, as the kernel does.
+    pending = path.split("/")[::-1]
     resolved = "/"
     hops = 0
     while pending:
@@ -452,7 +456,7 @@ def resolve_path(path: str) -> str:
             continue
         hops += 1
         if hops > 40:  # loop: like realpath(), return the unresolved remainder (open() will fail ELOOP)
-            return posixpath.join(candidate, *pending[::-1])
+            return posixpath.normpath(posixpath.join(candidate, *pending[::-1]))
         if target.startswith("/"):
             resolved = "/"
         pending.extend(target.split("/")[::-1])
@@ -488,10 +492,13 @@ def append_rotating(path: Path, line: str, max_bytes: int) -> None:
             if st.st_size >= max_bytes:
                 os.replace(path, str(path) + ".1")
                 continue
-            os.write(fd, line.encode("utf-8"))
+            data = memoryview(line.encode("utf-8"))
+            while data:
+                data = data[os.write(fd, data):]
             return
         finally:
             os.close(fd)
+    raise OSError(f"append_rotating: {path} kept changing under the lock")
 
 
 def _has_l2s_component(path_str: str) -> bool:
@@ -830,7 +837,8 @@ class Policy:
         if ".." in arg.split("/"):
             return self.map_path(arg, cwd=cwd_guest, must_exist=False)
         # Check bare symlink name (no `/`) and any symlinked prefix (catches `escape/missing`).
-        if os.path.lexists(os.path.join(host_cwd, arg)):
+        joined = os.path.join(host_cwd, arg)
+        if is_link(joined) or os.path.lexists(joined):
             return self.map_path(arg, cwd=cwd_guest, must_exist=False)
         if "/" in arg:
             cur = host_cwd
@@ -838,7 +846,7 @@ class Policy:
                 if not comp:
                     continue
                 cur = os.path.join(cur, comp)
-                if os.path.islink(cur):
+                if is_link(cur):
                     return self.map_path(arg, cwd=cwd_guest, must_exist=False)
         return arg
 

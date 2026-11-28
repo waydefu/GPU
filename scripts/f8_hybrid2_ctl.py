@@ -18,6 +18,7 @@ import json
 import os
 import shlex
 import signal
+import stat
 import subprocess as sp
 import sys
 import threading
@@ -35,6 +36,7 @@ from f8_hybrid2_policy import (
     validate_unix_sock_path,
 )
 from f8_hybrid2_budget import BUDGET_DIR_ENV
+ROOTFS_PREFIX = "/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs"
 from f8_hybrid2_relay import probe_daemon
 
 AM_REQUIRED_ENV = (
@@ -71,6 +73,14 @@ def budget_env_line() -> str:
     if (not value.startswith("/data/data/com.termux/") or os.path.normpath(value) != value
             or any(c in value for c in "\0\n\r")):
         raise ValueError("budget-dir-invalid")
+    if value.startswith(ROOTFS_PREFIX + "/") or value == ROOTFS_PREFIX:
+        raise ValueError("budget-dir-invalid")  # guest-writable tree
+    try:
+        st = os.lstat(value)
+    except OSError:
+        raise ValueError("budget-dir-uninitialised") from None
+    if not stat.S_ISDIR(st.st_mode) or st.st_uid != os.getuid() or stat.S_IMODE(st.st_mode) & 0o077:
+        raise ValueError("budget-dir-unsafe")
     if not os.path.isfile(os.path.join(value, "profile")):
         raise ValueError("budget-dir-uninitialised")
     return f"export {BUDGET_DIR_ENV}={shlex.quote(value)}\n"

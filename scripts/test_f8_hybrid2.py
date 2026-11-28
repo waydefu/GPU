@@ -19,6 +19,7 @@ Covers all Neon + Hydrogen review gates:
 
 from __future__ import annotations
 
+import errno
 import json
 import os
 import random
@@ -2166,6 +2167,52 @@ class Stage76OpsTests(unittest.TestCase):
     def tearDown(self) -> None:
         shutil.rmtree(self.tmp, ignore_errors=True)
 
+    def test_resolve_path_matches_realpath_on_random_link_trees(self) -> None:
+        from f8_hybrid2_policy import resolve_path
+        rng = random.Random(76)
+        root = self.tmp / "tree"
+        names = ["a", "b", "c", "d"]
+        for _ in range(30):
+            shutil.rmtree(root, ignore_errors=True)
+            root.mkdir()
+            dirs = [root]
+            for i in range(6):
+                d = rng.choice(dirs) / rng.choice(names)
+                d.mkdir(exist_ok=True)
+                dirs.append(d)
+            for i in range(8):
+                link = rng.choice(dirs) / f"l{i}"
+                if link.exists() or link.is_symlink():
+                    continue
+                target = rng.choice([str(rng.choice(dirs)), os.path.relpath(rng.choice(dirs), link.parent),
+                                     "../" + rng.choice(names), f"l{rng.randrange(8)}", "missing/x", str(link)])
+                os.symlink(target, link)
+            for _ in range(40):
+                parts = [rng.choice(names + [f"l{i}" for i in range(8)] + ["..", ".", "", "zz"]) for _ in range(rng.randrange(1, 6))]
+                probe = str(rng.choice(dirs)) + "/" + "/".join(parts)
+                try:
+                    os.path.realpath(probe, strict=True)
+                except OSError as exc:
+                    if exc.errno == errno.ELOOP:  # unresolvable either way; open() fails with ELOOP
+                        self.assertIsInstance(resolve_path(probe), str)
+                        continue
+                self.assertEqual(resolve_path(probe), os.path.realpath(probe), probe)
+
+    def test_gitdir_dotdot_after_symlink_is_not_collapsed(self) -> None:
+        ws, out = self.tmp / "ws", self.tmp / "outside"
+        repo = ws / "repo2"
+        (out / "a/b").mkdir(parents=True)
+        (out / "a/x").mkdir()
+        (repo / "x").mkdir(parents=True)  # decoy the lexical reading would check instead
+        os.symlink(out / "a/b", repo / "esc")
+        (repo / ".git").write_text("gitdir: esc/../x\n")
+        (self.tmp / "h").mkdir()
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo2"]'}):
+            pol = Policy([("/ws", str(ws))], home=str(self.tmp / "h"), tmp=str(self.tmp / "h"))
+        with self.assertRaises(Refuse) as cm:
+            pol.validate_git_ro(["status"], "/ws/repo2")
+        self.assertIn("symlink-escape", str(cm.exception))
+
     def test_append_rotating_keeps_one_bounded_generation(self) -> None:
         from f8_hybrid2_policy import append_rotating
         log = self.tmp / "a.jsonl"
@@ -2214,7 +2261,9 @@ class Stage76OpsTests(unittest.TestCase):
         rdir = self.tmp / "rt"
         paths = ctl.runtime_paths(rdir)
         am_env = {k: "x" for k in ctl.AM_REQUIRED_ENV}
+        safe = SimpleNamespace(st_mode=stat.S_IFDIR | 0o700, st_uid=os.getuid())
         with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bdir}), \
+                mock.patch.object(ctl.os, "lstat", return_value=safe), \
                 mock.patch.object(ctl.os.path, "isfile", side_effect=lambda p: p == os.path.join(bdir, "profile")), \
                 mock.patch.object(ctl, "resolve_host_daemon_py", return_value="/data/data/com.termux/x/d.py"), \
                 mock.patch.object(ctl.sp, "run", return_value=SimpleNamespace(returncode=0)):
@@ -2229,6 +2278,15 @@ class Stage76OpsTests(unittest.TestCase):
                             ("/data/data/com.termux/files/home/none", "budget-dir-uninitialised")):
             with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bad}):
                 self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, reason))
+        rootfs_dir = ctl.ROOTFS_PREFIX + "/root/budget"
+        with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: rootfs_dir}):
+            self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, "budget-dir-invalid"))
+        for st in (SimpleNamespace(st_mode=stat.S_IFDIR | 0o755, st_uid=os.getuid()),
+                   SimpleNamespace(st_mode=stat.S_IFDIR | 0o700, st_uid=os.getuid() + 1),
+                   SimpleNamespace(st_mode=stat.S_IFLNK | 0o777, st_uid=os.getuid())):
+            with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bdir}), \
+                    mock.patch.object(ctl.os, "lstat", return_value=st):
+                self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, "budget-dir-unsafe"))
         with mock.patch.dict(os.environ, am_env):
             os.environ.pop(budget.BUDGET_DIR_ENV, None)
             self.assertEqual(ctl.budget_env_line(), "")
