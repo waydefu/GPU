@@ -19,6 +19,7 @@ Covers all Neon + Hydrogen review gates:
 
 from __future__ import annotations
 
+import errno
 import json
 import os
 import random
@@ -40,6 +41,7 @@ HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
+import f8_hybrid2_budget as budget
 import f8_hybrid2_ctl as ctl
 from f8_hybrid2_policy import Policy, Refuse, read_tracer_pid
 from f8_hybrid2_tools import MAX_JSONL_LINE_BYTES, MCPToolEngine, RequestContext, _fit_json_payload
@@ -49,6 +51,88 @@ RELAY_PY = HERE / "f8_hybrid2_relay.py"
 CTL_PY = HERE / "f8_hybrid2_ctl.py"
 DEFAULT_TERMUX_GIT = "/data/data/com.termux/files/usr/bin/git"
 SYSTEM_GIT = DEFAULT_TERMUX_GIT if os.path.exists(DEFAULT_TERMUX_GIT) else shutil.which("git") or "git"
+
+
+class CooperativeBudgetTests(unittest.TestCase):
+    def test_selective_native_pending_limit_and_id_limit(self) -> None:
+        import f8_hybrid2_relay as relay
+        peer, child = socket.socketpair()
+        code = ("import socket, sys; from f8_hybrid2_relay import bridge_stdio_to_uds; "
+                "bridge_stdio_to_uds(socket.socket(fileno=int(sys.argv[1])))")
+        proc = sp.Popen([sys.executable, "-B", "-c", code, str(child.fileno())],
+                        cwd=HERE, pass_fds=(child.fileno(),), stdin=sp.PIPE,
+                        stdout=sp.PIPE, stderr=sp.PIPE)
+        child.close()
+        peer.settimeout(5)
+        try:
+            messages = [{"jsonrpc": "2.0", "id": i, "method": "ping"}
+                        for i in range(relay.MAX_NATIVE_PENDING + 1)]
+            messages.append({"jsonrpc": "2.0", "id": "x" * 1100, "method": "ping"})
+            assert proc.stdin is not None
+            proc.stdin.write(b"".join((json.dumps(m) + "\n").encode() for m in messages))
+            proc.stdin.close()
+            proc.stdin = None
+            with peer.makefile("rb") as stream:
+                forwarded = [json.loads(stream.readline()) for _ in range(relay.MAX_NATIVE_PENDING)]
+                self.assertEqual([m["id"] for m in forwarded], list(range(relay.MAX_NATIVE_PENDING)))
+            peer.close()
+            out, err = proc.communicate(timeout=5)
+            self.assertEqual(proc.returncode, 0, err)
+            responses = [json.loads(line) for line in out.splitlines()]
+            self.assertTrue(any(m.get("id") == relay.MAX_NATIVE_PENDING and m["error"]["code"] == -32000 for m in responses))
+            self.assertTrue(any(m.get("id") is None and m["error"]["message"] == "Request id too large" for m in responses))
+        finally:
+            peer.close()
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait()
+
+    def test_lease_reclaimed_after_process_killed(self) -> None:
+        import f8_hybrid2_relay as relay
+        with tempfile.TemporaryDirectory() as tmp:
+            budget.init_budget_dir(tmp, 2)
+            code = ("import sys,time; from f8_hybrid2_relay import acquire_budget_lease; "
+                    "fd=acquire_budget_lease(sys.argv[1]); print('ready',flush=True); time.sleep(30)")
+            holder = sp.Popen([sys.executable, "-B", "-c", code, tmp], cwd=HERE,
+                              stdout=sp.PIPE, stderr=sp.PIPE, text=True)
+            second = None
+            try:
+                assert holder.stdout is not None
+                self.assertEqual(holder.stdout.readline().strip(), "ready")
+                second = relay.acquire_budget_lease(tmp)
+                with self.assertRaisesRegex(ValueError, "exhausted"):
+                    relay.acquire_budget_lease(tmp)
+                holder.kill()
+                holder.wait(timeout=5)
+                reclaimed = relay.acquire_budget_lease(tmp)
+                os.close(reclaimed)
+            finally:
+                if second is not None:
+                    os.close(second)
+                if holder.poll() is None:
+                    holder.kill()
+                    holder.wait()
+                holder.communicate()
+
+    def test_two_process_slots_release_on_exit_and_reject_insecure_directory(self) -> None:
+        import f8_hybrid2_relay as relay
+        with tempfile.TemporaryDirectory() as tmp:
+            budget.init_budget_dir(tmp, 2)
+            first = relay.acquire_budget_lease(tmp)
+            second = relay.acquire_budget_lease(tmp)
+            try:
+                env = dict(os.environ, F8_HYBRID2_BUDGET_DIR=tmp, F8_NO_HYBRID="1")
+                denied = sp.run([sys.executable, str(RELAY_PY)], env=env, input=b"", capture_output=True, timeout=5)
+                self.assertEqual(denied.returncode, 3)
+                self.assertIn(b"budget exhausted", denied.stderr)
+            finally:
+                os.close(first)
+                os.close(second)
+            admitted = relay.acquire_budget_lease(tmp)
+            os.close(admitted)
+            os.chmod(tmp, 0o755)
+            with self.assertRaises(ValueError):
+                relay.acquire_budget_lease(tmp)
 
 
 class UdsFrameLimitTests(unittest.TestCase):
@@ -68,6 +152,18 @@ def proc_count_fds(pid: int) -> int:
     return len(os.listdir(f"/proc/{pid}/fd"))
 
 
+def settled_fds(pid: int) -> int:
+    """FD count once two reads 0.1 s apart agree (the start audit line opens the log briefly)."""
+    prev = proc_count_fds(pid)
+    for _ in range(30):
+        time.sleep(0.1)
+        cur = proc_count_fds(pid)
+        if cur == prev:
+            return cur
+        prev = cur
+    return prev
+
+
 def children_of(pid: int) -> list[int]:
     kids: list[int] = []
     for d in Path("/proc").iterdir():
@@ -82,7 +178,7 @@ def children_of(pid: int) -> list[int]:
     return kids
 
 
-def git_run(args: list[str], cwd: Path) -> None:
+def git_run(args: list[str], cwd: Path) -> sp.CompletedProcess:
     env = {
         "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
         "HOME": str(cwd),
@@ -93,7 +189,7 @@ def git_run(args: list[str], cwd: Path) -> None:
         "GIT_COMMITTER_NAME": "Test",
         "GIT_COMMITTER_EMAIL": "test@example.com",
     }
-    sp.run([SYSTEM_GIT, *args], cwd=cwd, env=env, check=True, stdout=sp.PIPE, stderr=sp.PIPE)
+    return sp.run([SYSTEM_GIT, *args], cwd=cwd, env=env, check=True, stdout=sp.PIPE, stderr=sp.PIPE, text=True)
 
 
 class WorkerCleanupTests(unittest.TestCase):
@@ -102,13 +198,14 @@ class WorkerCleanupTests(unittest.TestCase):
         left, right = socket.socketpair()
         daemon = SimpleNamespace(engine=SimpleNamespace(call_tool=lambda *_: {"result": object()}),
                                  default_timeout_s=1, release_inflight=mock.Mock(),
-                                 touch_activity=mock.Mock())
+                                 touch_activity=mock.Mock(), limits=budget.LEGACY, governed=False,
+                                 pump=mock.Mock())
         session = ClientSession(left, daemon, 1, 1)
         ctx = RequestContext(1, 1)
         session._active["key"] = ctx
         try:
             with self.assertRaises(TypeError):
-                session._run_tool_worker(1, "key", {}, ctx)
+                session._run_tool_worker(1, "key", {}, ctx, -1)
             daemon.release_inflight.assert_called_once()
             self.assertNotIn("key", session._active)
         finally:
@@ -159,7 +256,7 @@ class SupervisionAndCancellationTests(unittest.TestCase):
         self.assertTrue(all(cancellation_req_key(x) is None for x in bad))
         sockets = [socket.socketpair(), socket.socketpair()]
         daemon = SimpleNamespace(engine=MCPToolEngine.__new__(MCPToolEngine), default_timeout_s=1,
-                                 touch_activity=mock.Mock())
+                                 touch_activity=mock.Mock(), limits=budget.LEGACY, governed=False)
         sessions = [ClientSession(pair[0], daemon, i, i) for i, pair in enumerate(sockets)]
         contexts = [RequestContext(7, 5), RequestContext(7, 5)]
         try:
@@ -217,6 +314,43 @@ class PolicyAndSecurityTests(unittest.TestCase):
                 pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp))
             self._refused("git-checkout-not-trusted", pol.validate_git_ro, ["status"], "/ws/repo")
         self.assertEqual(self.pol.validate_git_ro(["status"], "/ws/repo")[1], str(self.repo.resolve()))
+
+    def test_result_prefix_keeps_scan_and_search_counts(self) -> None:
+        from f8_hybrid2_tools import _ResultPrefix
+
+        # Force the result retention limit below the size of one row. Traversal
+        # aggregates still describe all fixture files/hits.
+        with mock.patch("f8_hybrid2_tools._ResultPrefix", side_effect=lambda: _ResultPrefix(8)):
+            engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+            tree = engine._tool_tree_scan({"root": "/ws/repo"}, RequestContext(1, 5))
+            matches = engine._tool_text_search(
+                {"root": "/ws/repo", "pattern": "needle", "fixed_string": True}, RequestContext(2, 5),
+            )
+        self.assertEqual(tree["file_count"], 1)
+        self.assertEqual(tree["entries"], [])
+        self.assertTrue(tree["truncated"])
+        self.assertEqual(matches["match_count"], 1)
+        self.assertEqual(matches["matches"], [])
+        self.assertTrue(matches["truncated"])
+
+    def test_result_payload_fits_utf8_budget_exactly(self) -> None:
+        from f8_hybrid2_tools import _ResultPrefix
+
+        first = {"text": "世界\n"}
+        second = {"text": "more"}
+        empty = {"tool": "repo_text_search", "matches": [], "truncated": True}
+        prefix_bytes = len(json.dumps([first], ensure_ascii=False).encode("utf-8"))
+        prefix = _ResultPrefix(prefix_bytes)
+        prefix.append(first)
+        prefix.append(second)
+        self.assertEqual(prefix.items, [first])
+        self.assertTrue(prefix.full)
+
+        result = {**empty, "matches": [first]}
+        available = len(json.dumps(result, ensure_ascii=False).encode("utf-8"))
+        trimmed = _fit_json_payload({**empty, "matches": [first, second]}, available)
+        self.assertEqual(json.loads(trimmed), result)
+        self.assertEqual(len(trimmed.encode("utf-8")), available)
 
     def test_supervised_git_and_regex_worker_compatibility(self) -> None:
         engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
@@ -332,6 +466,208 @@ class PolicyAndSecurityTests(unittest.TestCase):
         reply = engine._tool_git_ro(args, RequestContext(4, 5))
         self.assertEqual(reply["returncode"], 0, reply)
         self.assertEqual(reply["stdout"].strip(), "commit")
+
+    def _l2s_policy(self, l2s_dir: str | None, repo: str = "/ws/repo") -> Policy:
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": json.dumps([repo])}):
+            return Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp), l2s_dir=l2s_dir)
+
+    @staticmethod
+    def _to_l2s(path: Path, l2s: Path, kind: str, tag: str = "AbC123") -> tuple[Path, Path]:
+        """Rewrite one object file into PRoot link2symlink's two-hop layout (F13)."""
+        hop1 = l2s / f".l2s.tmp_{kind}_{tag}0001"
+        hop2 = l2s / f".l2s.tmp_{kind}_{tag}0001.0001"
+        path.rename(hop2)
+        hop1.symlink_to(hop2)
+        path.symlink_to(hop1)
+        return hop1, hop2
+
+    @staticmethod
+    def _head_object(repo: Path) -> Path:
+        oid = git_run(["rev-parse", "HEAD"], repo).stdout.strip()
+        return repo / ".git/objects" / oid[:2] / oid[2:]
+
+    def _fresh_repo(self, label: str) -> tuple[Path, Path]:
+        """New committed repo under /ws and an empty l2s store; PRoot's own .l2s handling
+        makes resetting a fake layout unreliable, so every case starts fresh."""
+        repo = self.ws / f"r-{label}"
+        repo.mkdir()
+        git_run(["init", "-q"], repo)
+        (repo / "hello.txt").write_text("hello world\n", encoding="utf-8")
+        git_run(["add", "hello.txt"], repo)
+        git_run(["commit", "-q", "-m", "init"], repo)
+        l2s = self.tmp_root / f"rootfs-{label}/.l2s"
+        (l2s / "sub").mkdir(parents=True)
+        return repo, l2s
+
+    def test_git_l2s_object_links_accepted(self) -> None:
+        repo, l2s = self._fresh_repo("ok")
+        engine = MCPToolEngine(self._l2s_policy(str(l2s), f"/ws/{repo.name}"), git_bin=SYSTEM_GIT)
+        args = {"cwd": f"/ws/{repo.name}", "args": ["cat-file", "-p", "HEAD"]}
+        expected = git_run(["cat-file", "-p", "HEAD"], repo).stdout
+
+        self._to_l2s(self._head_object(repo), l2s, "obj")
+        reply = engine._tool_git_ro(args, RequestContext(1, 5))
+        self.assertEqual((reply["returncode"], reply["stdout"]), (0, expected), reply)
+
+        git_run(["gc", "--quiet"], repo)
+        pack_dir = repo / ".git/objects/pack"
+        packs = sorted(p for p in pack_dir.iterdir() if p.suffix in (".pack", ".idx", ".rev"))
+        self.assertTrue({".pack", ".idx"} <= {p.suffix for p in packs})
+        for i, pack_file in enumerate(packs):
+            self._to_l2s(pack_file, l2s, pack_file.suffix[1:], tag=f"Pk{i:04d}")
+        reply = engine._tool_git_ro(args, RequestContext(2, 5))
+        self.assertEqual((reply["returncode"], reply["stdout"]), (0, expected), reply)
+
+    def test_git_l2s_lookalike_links_refused(self) -> None:
+        name = "tmp_obj_AbC1230001"
+
+        def two_hop(obj: Path, hop1: Path, hop2_dir: Path, link_text: str | None = None, hop2_dir_kind: bool = False):
+            hop2 = hop2_dir / (hop1.name + ".0001")
+            payload = obj.read_bytes()
+            obj.unlink()
+            if hop2_dir_kind:
+                hop2.mkdir()
+            else:
+                hop2.write_bytes(payload)
+            hop1.symlink_to(hop2)
+            obj.symlink_to(link_text or str(hop1))
+
+        def one_hop(obj: Path, l2s: Path) -> None:
+            target = l2s / f".l2s.{name}"
+            obj.rename(target)
+            obj.symlink_to(target)
+
+        def three_hops(obj: Path, l2s: Path) -> None:
+            final = l2s / ".l2s.final"
+            obj.rename(final)
+            (l2s / f".l2s.{name}.0001").symlink_to(final)
+            (l2s / f".l2s.{name}").symlink_to(l2s / f".l2s.{name}.0001")
+            obj.symlink_to(l2s / f".l2s.{name}")
+
+        def stray_name(obj: Path, l2s: Path) -> None:
+            stray = obj.parent / "notanobject"
+            stray.write_bytes(obj.read_bytes())
+            self._to_l2s(stray, l2s, "obj")
+
+        def fanout_dir(obj: Path, l2s: Path) -> None:
+            moved = l2s / ".l2s.tmp_obj_Fan0000001"
+            obj.parent.rename(moved)
+            obj.parent.symlink_to(moved, target_is_directory=True)
+
+        cases = {
+            "non-git-name": lambda o, l: two_hop(o, l / ".l2s.secret.txt0001", l),
+            "kind-mismatch": lambda o, l: two_hop(o, l / ".l2s.tmp_pack_AbC1230001", l),
+            "hop1-outside-l2s": lambda o, l: two_hop(o, self.outside / f".l2s.{name}", self.outside),
+            "hop1-in-subdir": lambda o, l: two_hop(o, l / "sub" / f".l2s.{name}", l / "sub"),
+            "relative-hop1": lambda o, l: two_hop(o, l / f".l2s.{name}", l,
+                                                  link_text=os.path.relpath(l / f".l2s.{name}", o.parent)),
+            "one-hop": one_hop,
+            "three-hops": three_hops,
+            "hop2-directory": lambda o, l: two_hop(o, l / f".l2s.{name}", l, hop2_dir_kind=True),
+            "non-object-name": stray_name,
+            "fanout-dir-link": fanout_dir,
+        }
+        for label, build in cases.items():
+            with self.subTest(label):
+                repo, l2s = self._fresh_repo(label)
+                engine = MCPToolEngine(self._l2s_policy(str(l2s), f"/ws/{repo.name}"), git_bin=SYSTEM_GIT)
+                build(self._head_object(repo), l2s)
+                with mock.patch.object(engine, "_run_supervised_popen") as spawn:
+                    self._refused("symlink-escape", engine._tool_git_ro,
+                                  {"cwd": f"/ws/{repo.name}", "args": ["cat-file", "-t", "HEAD"]}, RequestContext(1, 5))
+                    spawn.assert_not_called()
+
+        # The exact layout is refused when no l2s store is configured.
+        repo, l2s = self._fresh_repo("unconfigured")
+        obj = self._head_object(repo)
+        self._to_l2s(obj, l2s, "obj")
+        engine = MCPToolEngine(self._l2s_policy(None, f"/ws/{repo.name}"), git_bin=SYSTEM_GIT)
+        with mock.patch.object(engine, "_run_supervised_popen") as spawn:
+            self._refused("symlink-escape", engine._tool_git_ro,
+                          {"cwd": f"/ws/{repo.name}", "args": ["cat-file", "-t", "HEAD"]}, RequestContext(1, 5))
+            spawn.assert_not_called()
+
+        # Real path must equal hop 2 (not constructible on a static filesystem; checked directly).
+        pol = self._l2s_policy(str(l2s), f"/ws/{repo.name}")
+        self.assertTrue(pol._is_l2s_object_link(str(obj), "obj"))
+        with mock.patch("f8_hybrid2_policy.resolve_path", side_effect=lambda p: "/elsewhere"):
+            self.assertFalse(pol._is_l2s_object_link(str(obj), "obj"))
+
+    def test_l2s_named_links_cannot_hide_an_escape(self) -> None:
+        """F14: PRoot's lstat treats links to `.l2s.*` names as regular files; resolution must not."""
+        (self.outside / "secret.json").write_text('{"token": "TOPSECRET"}\n', encoding="utf-8")
+        (self.outside / ".l2s.a0001").write_text("TOPSECRET\n", encoding="utf-8")
+        os.symlink(str(self.outside / ".l2s.a0001"), str(self.ws / "evil-file"))
+        os.symlink(str(self.outside), str(self.ws / ".l2s.d0001"))
+        os.symlink(str(self.ws / ".l2s.d0001"), str(self.ws / "evil-dir"))
+        engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        for guest, reason in (("/ws/evil-file", "l2s-path"), ("/ws/evil-dir/secret.json", "symlink-escape"),
+                              ("/ws/evil-dir", "symlink-escape")):
+            with self.subTest(guest):
+                self._refused(reason, self.pol.map_path, guest, must_exist=True)
+                self._refused(reason, engine._tool_text_search,
+                              {"root": guest, "pattern": "TOPSECRET", "fixed_string": True}, RequestContext(1, 5))
+        self._refused("symlink-escape", engine._tool_json_summary, {"path": "/ws/evil-dir/secret.json"}, RequestContext(2, 5))
+        self._refused("symlink-escape", engine._tool_tree_scan, {"root": "/ws/evil-dir"}, RequestContext(3, 5))
+        scan = engine._tool_tree_scan({"root": "/ws", "compute_sha256": False}, RequestContext(4, 5))
+        self.assertNotIn("evil-file", [e["rel"] for e in scan["entries"]])
+        search = engine._tool_text_search({"root": "/ws", "pattern": "TOPSECRET", "fixed_string": True}, RequestContext(5, 5))
+        self.assertEqual(search["match_count"], 0)
+
+    def _hidden(self, *paths: Path):
+        """Simulate PRoot hiding link -> `.l2s.*` chains: readlink EINVAL, entry type still DT_LNK."""
+        real = os.readlink
+        hidden = {str(p) for p in paths}
+
+        def fake(p, *a, **kw):
+            if os.fspath(p) in hidden:
+                raise OSError(errno.EINVAL, "hidden by link2symlink")
+            return real(p, *a, **kw)
+        return mock.patch("f8_hybrid2_policy.os.readlink", side_effect=fake)
+
+    def test_proot_hidden_links_are_refused_or_skipped(self) -> None:
+        (self.outside / "secret.json").write_text('{"token": "TOPSECRET"}\n', encoding="utf-8")
+        os.symlink(str(self.outside), str(self.ws / ".l2s.h0001"))
+        os.symlink(str(self.ws / ".l2s.h0001"), str(self.ws / "hidden-dir"))
+        os.symlink(str(self.outside / "secret.json"), str(self.ws / "hidden-file"))
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]'}):
+            pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp), check_hidden=True)
+        engine = MCPToolEngine(pol, git_bin=SYSTEM_GIT)
+        with self._hidden(self.ws / "hidden-dir", self.ws / "hidden-file"):
+            for guest in ("/ws/hidden-dir", "/ws/hidden-dir/secret.json", "/ws/hidden-file"):
+                with self.subTest(guest):
+                    self._refused("hidden-link", pol.map_path, guest, must_exist=True)
+            search = engine._tool_text_search({"root": "/ws", "pattern": "TOPSECRET", "fixed_string": True},
+                                              RequestContext(1, 5))
+            self.assertEqual(search["match_count"], 0)
+            scan = engine._tool_tree_scan({"root": "/ws", "compute_sha256": False}, RequestContext(2, 5))
+            self.assertFalse({"hidden-file"} & {e["rel"] for e in scan["entries"]})
+        # Without PRoot (check_hidden=False) nothing changes for ordinary paths.
+        self.assertEqual(self.pol.map_path("/ws/a.py", must_exist=True), str(self.ws / "a.py"))
+
+    def test_proot_hidden_object_files_keep_fallback_working(self) -> None:
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo"]'}):
+            pol = Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp), check_hidden=True,
+                         l2s_dir=None)
+        engine = MCPToolEngine(pol, git_bin=SYSTEM_GIT)
+        obj = self._head_object(self.repo)
+        store = self.tmp_root / "store"
+        store.mkdir()
+        obj.rename(store / obj.name)
+        obj.symlink_to(store / obj.name)
+        args = {"cwd": "/ws/repo", "args": ["cat-file", "-t", "HEAD"]}
+        with self._hidden(obj):  # PRoot's own hard link: hidden last component of an object entry
+            reply = engine._tool_git_ro(args, RequestContext(1, 5))
+        self.assertEqual((reply["returncode"], reply["stdout"].strip()), (0, "commit"), reply)
+        fanout = obj.parent
+        moved = self.tmp_root / "fan"
+        obj.unlink()
+        (store / obj.name).rename(obj)
+        fanout.rename(moved)
+        fanout.symlink_to(moved, target_is_directory=True)
+        with self._hidden(fanout), mock.patch.object(engine, "_run_supervised_popen") as spawn:
+            self._refused("hidden-link", engine._tool_git_ro, args, RequestContext(2, 5))
+            spawn.assert_not_called()
 
     def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
@@ -664,6 +1000,19 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
     def _send(s: socket.socket, obj: dict) -> None:
         s.sendall((json.dumps(obj) + "\n").encode("utf-8"))
 
+    def test_max_legal_daemon_frame_followed_by_another_request(self) -> None:
+        from f8_hybrid2_daemon import MAX_LINE_BYTES
+
+        self.proc = self._start_daemon()
+        first = b'{"jsonrpc":"2.0","id":1,"method":"ping"}'
+        second = b'{"jsonrpc":"2.0","id":2,"method":"ping"}\n'
+        prefix = first + b" " * (MAX_LINE_BYTES - len(first))
+        sock, responses = self._uds_rpc(self.sock)
+        with sock, responses:
+            sock.sendall(prefix + b"\n" + second)
+            self.assertEqual(json.loads(responses.readline()), {"jsonrpc": "2.0", "id": 1, "result": {}})
+            self.assertEqual(json.loads(responses.readline()), {"jsonrpc": "2.0", "id": 2, "result": {}})
+
     def test_overlong_socket_single_instance_and_perms(self) -> None:
         long_dir = self.base / ("x" * 110)
         r = sp.run(
@@ -694,7 +1043,7 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
 
     def test_4clients_max_clients_max_inflight_cancel_and_strict_fd(self) -> None:
         self.proc = self._start_daemon(["--max-clients", "4", "--max-inflight", "1"])
-        base_fds = proc_count_fds(self.proc.pid)
+        base_fds = settled_fds(self.proc.pid)
 
         clients = [self._uds_rpc(self.sock) for _ in range(4)]
         try:
@@ -1206,7 +1555,7 @@ class UniversalDaemonAndCtlTests(unittest.TestCase):
         # C) Real daemon: jsonrpc="1.0" MUST be rejected (-32600), native cancel clears native_inflight,
         # bounded --max-local-inflight rejects burst with -32000, and SIGTERM kills active local relay fast
         self.proc = self._start_daemon(["--max-inflight", "1"])
-        base_fds = proc_count_fds(self.proc.pid)
+        base_fds = settled_fds(self.proc.pid)
         bad_and_cancel = "\n".join([
             json.dumps({"jsonrpc": "1.0", "id": 101, "method": "tools/call", "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}),
             json.dumps({"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2025-03-26"}}),
@@ -1569,6 +1918,464 @@ class ClientAdmissionTests(unittest.TestCase):
         finally:
             conn.close()
             peer.close()
+
+
+
+def _hold_all_exec(directory: str, slots: int) -> list[int]:
+    pool = budget.ExecPool(directory, slots)
+    held = [pool.try_acquire() for _ in range(slots)]
+    assert all(fd is not None for fd in held) and pool.try_acquire() is None
+    return held
+
+
+class TieredGovernanceUnitTests(unittest.TestCase):
+    def test_profile_slots_reinit_and_capacity_table(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaisesRegex(ValueError, "profile missing"):
+                budget.acquire_lease(tmp)
+            for mode in (2, 4, 6, 8):
+                budget.init_budget_dir(tmp, mode)
+                leases = [budget.acquire_lease(tmp) for _ in range(mode)]
+                self.assertTrue(all(prof.mode == mode for _, prof in leases))
+                with self.assertRaisesRegex(ValueError, "exhausted"):
+                    budget.acquire_lease(tmp)
+                with self.assertRaisesRegex(ValueError, "in use"):
+                    budget.init_budget_dir(tmp, 2)
+                daemon_fd, _ = budget.acquire_lease(tmp, daemon=True)
+                with self.assertRaisesRegex(ValueError, "exhausted"):
+                    budget.acquire_lease(tmp, daemon=True)
+                for fd in [daemon_fd, *(fd for fd, _ in leases)]:
+                    os.close(fd)
+            with self.assertRaises(ValueError):
+                budget.init_budget_dir(tmp, 3)
+        from f8_hybrid2_tools import MAX_OUTPUT_BYTES
+        self.assertEqual(budget.CHILD_CAPTURE_BYTES, MAX_OUTPUT_BYTES + 256 * 1024)
+        for mode in budget.PROFILES:
+            row = budget.budget_report(mode, daemon_idle_kib=1, relay_idle_kib=1, exec_envelope_kib=1,
+                                       child_envelope_kib=1, child_threads=1, child_fds=8)
+            self.assertLessEqual(row["threads_total"], 64)
+            self.assertLessEqual(row["fds_total"], 192)
+
+    def test_iter_lines_matches_splitlines(self) -> None:
+        from f8_hybrid2_tools import _iter_lines
+        rng = random.Random(75)
+        alphabet = ["a", "b", "\n", "\r", "\r\n", "\x0b", "\x1c", " ", "\x85", "中", ""]
+        for _ in range(300):
+            text = "".join(rng.choice(alphabet) for _ in range(rng.randint(0, 400)))
+            self.assertEqual(list(_iter_lines(text, chunk_chars=rng.randint(1, 16))), text.splitlines())
+
+    def test_parse_cost_bounds_and_tool_parse_budget(self) -> None:
+        dense = b"[" + b"{}," * 20000 + b"{}]"
+        self.assertGreater(budget.parse_cost(dense), budget.parse_cost(b'"' + b"a" * len(dense) + b'"'))
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, "dense.json").write_bytes(dense)
+            Path(tmp, "small.json").write_text(json.dumps([{"k": 1}]), encoding="utf-8")
+            Path(tmp, "dense.jsonl").write_bytes(dense + b"\n")
+            pol = Policy([("/w", tmp)], home=tmp, tmp=tmp)
+            plain = MCPToolEngine(pol)
+            capped = MCPToolEngine(pol, parse_budget=1024 * 1024)
+            for name in ("small.json",):
+                args = {"name": "python_json_summary", "arguments": {"path": f"/w/{name}"}}
+                self.assertEqual(plain.call_tool(1, args, RequestContext(1, 5)), capped.call_tool(1, args, RequestContext(1, 5)))
+            for name in ("dense.json", "dense.jsonl"):
+                resp = capped.call_tool(1, {"name": "python_json_summary", "arguments": {"path": f"/w/{name}"}}, RequestContext(1, 5))
+                self.assertEqual(resp["error"]["message"], "Policy refused: json-parse-budget")
+                self.assertNotIn("error", plain.call_tool(1, {"name": "python_json_summary", "arguments": {"path": f"/w/{name}"}}, RequestContext(1, 5)))
+
+    def test_single_thread_git_env_only_when_governed(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            env = Policy([("/w", tmp)], home=tmp, tmp=tmp, single_thread_git=True).clean_env()
+            keys = {env[f"GIT_CONFIG_KEY_{i}"]: env[f"GIT_CONFIG_VALUE_{i}"] for i in range(int(env["GIT_CONFIG_COUNT"]))}
+            self.assertEqual(keys["safe.bareRepository"], "explicit")
+            self.assertEqual((keys["grep.threads"], keys["core.preloadIndex"]), ("1", "false"))
+            self.assertEqual(Policy([("/w", tmp)], home=tmp, tmp=tmp).clean_env()["GIT_CONFIG_COUNT"], "1")
+
+    def test_worker_thread_start_failure_answers_and_releases(self) -> None:
+        from f8_hybrid2_daemon import ClientSession
+        left, right = socket.socketpair()
+        daemon = SimpleNamespace(engine=MCPToolEngine.__new__(MCPToolEngine), default_timeout_s=1,
+                                 release_inflight=mock.Mock(), write_audit=mock.Mock(),
+                                 limits=budget.LEGACY, governed=False)
+        session = ClientSession(left, daemon, 1, 1)
+        ctx = RequestContext(5, 1)
+        session._active["i:5"] = ctx
+        try:
+            with mock.patch("threading.Thread.start", side_effect=RuntimeError("can't start new thread")):
+                session.start_worker((5, "i:5", {}, ctx), 7)
+            daemon.release_inflight.assert_called_once_with(7)
+            self.assertNotIn("i:5", session._active)
+            self.assertEqual(json.loads(bytes(session._out_buf))["error"]["code"], -32000)
+        finally:
+            left.close()
+            right.close()
+            os.close(session._wake_r)
+            os.close(session._wake_w)
+
+
+class RelayGovernanceTests(unittest.TestCase):
+    def _bridge(self, limits_name: str = "LEGACY") -> tuple[sp.Popen[bytes], socket.socket]:
+        peer, child = socket.socketpair()
+        code = ("import socket, sys, f8_hybrid2_budget as b; from f8_hybrid2_relay import bridge_stdio_to_uds; "
+                f"bridge_stdio_to_uds(socket.socket(fileno=int(sys.argv[1])), limits=b.{limits_name})")
+        proc = sp.Popen([sys.executable, "-B", "-c", code, str(child.fileno())], cwd=HERE,
+                        pass_fds=(child.fileno(),), stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+        child.close()
+        peer.settimeout(20)
+        return proc, peer
+
+    def test_forwarded_bytes_backpressure_instead_of_silent_stop(self) -> None:
+        proc, peer = self._bridge()
+        try:
+            pad = "x" * (3 * 1024 * 1024)
+            frames = [json.dumps({"jsonrpc": "2.0", "id": i, "method": "ping", "params": {"pad": pad}}).encode() + b"\n"
+                      for i in range(3)]
+            writer = __import__("threading").Thread(target=lambda: (proc.stdin.write(b"".join(frames)), proc.stdin.close()))
+            writer.start()
+            time.sleep(1.5)  # daemon side not reading: the relay must pause, not exit
+            self.assertIsNone(proc.poll())
+            with peer.makefile("rb") as stream:
+                got = [stream.readline() for _ in range(3)]
+            writer.join(timeout=20)
+            self.assertEqual(got, frames)
+            peer.close()
+            proc.stdin = None
+            _, err = proc.communicate(timeout=20)
+            self.assertEqual(proc.returncode, 0, err)
+        finally:
+            peer.close()
+            if proc.poll() is None:
+                proc.kill()
+                proc.wait()
+
+    def test_valid_json_value_errors_and_complex_frames_are_answered(self) -> None:
+        for limits_name in ("LEGACY", "GOVERNED"):
+            proc, peer = self._bridge(limits_name)
+            try:
+                lines = [b'{"jsonrpc":"2.0","id":1,"method":"ping","params":{"n":' + b"1" * 5000 + b"}}",
+                         b"[" * 100000 + b"]" * 100000]
+                if limits_name == "GOVERNED":
+                    lines.append(b'{"jsonrpc":"2.0","id":3,"method":"ping","params":[' + b"{}," * 100000 + b"{}]}")
+                lines.append(b'{"jsonrpc":"2.0","id":9,"method":"ping"}')
+                proc.stdin.write(b"\n".join(lines) + b"\n")
+                proc.stdin.close()
+                proc.stdin = None
+                with peer.makefile("rb") as stream:
+                    self.assertEqual(json.loads(stream.readline())["id"], 9)
+                peer.close()
+                out, err = proc.communicate(timeout=20)
+                self.assertEqual(proc.returncode, 0, err)
+                errors = [m["error"]["message"] for m in map(json.loads, out.splitlines()) if m["id"] is None]
+                if limits_name == "GOVERNED":
+                    self.assertEqual(errors, ["Parse error", "Frame too complex", "Frame too complex"])
+                else:
+                    # Whether depth 100000 raises RecursionError depends on the CPython build;
+                    # either way the relay must answer it and keep serving (id 9 above).
+                    self.assertEqual(errors[0], "Parse error")
+                    self.assertIn(errors[1], ("Parse error", "Invalid Request"))
+                    self.assertEqual(len(errors), 2)
+            finally:
+                peer.close()
+                if proc.poll() is None:
+                    proc.kill()
+                    proc.wait()
+
+
+    def test_selective_sigterm_while_stdout_paused(self) -> None:
+        # Old code waited up to one 0.5 s select timeout; three trials under 0.15 s rule that out.
+        for _ in range(3):
+            proc, peer = self._bridge("GOVERNED")
+            try:
+                proc.stdin.write(b'{"jsonrpc":"2.0","id":1,"method":"ping"}\n')
+                proc.stdin.flush()
+                with peer.makefile("rb") as stream:
+                    stream.readline()
+                peer.sendall(json.dumps({"jsonrpc": "2.0", "id": 1, "result": {"pad": "y" * 600000}}).encode() + b"\n")
+                time.sleep(0.7)  # stdout is not read: the relay pauses at its watermark
+                t0 = time.monotonic()
+                proc.send_signal(signal.SIGTERM)
+                proc.wait(timeout=5)
+                self.assertLess(time.monotonic() - t0, 0.15)
+            finally:
+                peer.close()
+                if proc.poll() is None:
+                    proc.kill()
+                    proc.wait()
+                for stream in (proc.stdin, proc.stdout, proc.stderr):
+                    if stream is not None:
+                        stream.close()
+
+
+class GovernedDaemonTests(unittest.TestCase):
+    setUp = UniversalDaemonAndCtlTests.setUp
+    tearDown = UniversalDaemonAndCtlTests.tearDown
+    _start_daemon = UniversalDaemonAndCtlTests._start_daemon
+    _uds_rpc = staticmethod(UniversalDaemonAndCtlTests._uds_rpc)
+    _send = staticmethod(UniversalDaemonAndCtlTests._send)
+
+    def _governed(self, mode: int, extra: list[str] | None = None) -> str:
+        bdir = str(self.base / "budget")
+        budget.init_budget_dir(bdir, mode)
+        self.enterContext(mock.patch.dict(os.environ, {"F8_HYBRID2_BUDGET_DIR": bdir}))
+        self.proc = self._start_daemon(extra)
+        return bdir
+
+    def _session(self):
+        s, f = self._uds_rpc(self.sock)
+        self._send(s, {"jsonrpc": "2.0", "id": "i", "method": "initialize", "params": {}})
+        self.assertIn("result", json.loads(f.readline()))
+        self._send(s, {"jsonrpc": "2.0", "method": "notifications/initialized"})
+        return s, f
+
+    @staticmethod
+    def _scan(i: int) -> dict:
+        return {"jsonrpc": "2.0", "id": i, "method": "tools/call",
+                "params": {"name": "repo_tree_scan", "arguments": {"root": "/ws/repo", "max_entries": 5}}}
+
+    def test_exec_slots_shared_queue_fairness_timeout_cancel_and_limit(self) -> None:
+        bdir = self._governed(8, ["--default-timeout", "3"])
+        prof = budget.PROFILES[8]
+        held = _hold_all_exec(bdir, prof.exec_slots)
+        (a, fa), (b, fb) = self._session(), self._session()
+        try:
+            for i in range(prof.session_queue):
+                self._send(a, self._scan(100 + i))
+            self._send(a, self._scan(199))
+            self.assertEqual(json.loads(fa.readline())["error"]["message"], "Server busy: max queued requests reached")
+            self._send(b, self._scan(200))
+            self._send(a, {"jsonrpc": "2.0", "method": "notifications/cancelled", "params": {"requestId": 101}})
+            time.sleep(0.3)
+            for fd in held:
+                os.close(fd)
+            held = []
+            got_a = [json.loads(fa.readline()) for _ in range(prof.session_queue - 1)]
+            self.assertEqual(sorted(r["id"] for r in got_a), [100, 102, 103])
+            self.assertTrue(all("result" in r for r in got_a))
+            self.assertEqual(json.loads(fb.readline())["id"], 200)
+            audit = [json.loads(x) for x in self.log.read_text().splitlines()]
+            ok_order = [e["req_id"] for e in audit if e.get("ev") == "tool" and e.get("decision") == "ok"]
+            self.assertLess(ok_order.index(200), ok_order.index(103))  # round-robin, not FIFO by session
+            held = _hold_all_exec(bdir, prof.exec_slots)
+            self._send(b, self._scan(300))
+            self.assertEqual(json.loads(fb.readline())["error"],
+                             {"code": -32001, "message": "Request timed out before execution"})
+        finally:
+            for fd in held:
+                os.close(fd)
+            for sock in (a, b):
+                sock.close()
+
+    def test_governed_daemon_caps_sessions_and_parse_errors(self) -> None:
+        self._governed(2)
+        socks = [self._uds_rpc(self.sock) for _ in range(3)]
+        try:
+            line = json.loads(socks[2][1].readline())
+            self.assertEqual(line["error"]["message"], "Server busy: max clients reached")
+            s, f = socks[0]
+            s.sendall(b'{"jsonrpc":"2.0","id":1,"method":"ping","params":{"n":' + b"1" * 5000 + b"}}\n")
+            self.assertEqual(json.loads(f.readline())["error"]["code"], -32700)
+            s.sendall(b"[" * 100000 + b"]" * 100000 + b"\n")
+            self.assertEqual(json.loads(f.readline())["error"]["message"], "Frame too complex")
+            s.sendall(b'{"jsonrpc":"2.0","id":2,"method":"ping","params":[' + b"{}," * 100000 + b"{}]}\n")
+            self.assertEqual(json.loads(f.readline())["error"]["message"], "Frame too complex")
+            self._send(s, {"jsonrpc": "2.0", "id": 3, "method": "ping"})
+            self.assertEqual(json.loads(f.readline())["id"], 3)
+        finally:
+            for sock, stream in socks:
+                stream.close()
+                sock.close()
+
+    def test_governed_fallback_waits_for_group_slot(self) -> None:
+        bdir = str(self.base / "budget")
+        budget.init_budget_dir(bdir, 4)
+        held = _hold_all_exec(bdir, budget.PROFILES[4].exec_slots)
+        env = dict(os.environ, F8_HYBRID2_BUDGET_DIR=bdir, F8_NO_HYBRID="1")
+        cmd = [sys.executable, "-B", str(RELAY_PY), "--map", f"/ws={self.ws}", "--git-bin", SYSTEM_GIT,
+               "--default-timeout", "4"]
+        proc = sp.Popen(cmd, env=env, stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+        try:
+            for msg in ({"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}},
+                        {"jsonrpc": "2.0", "method": "notifications/initialized"},
+                        {"jsonrpc": "2.0", "id": 1, "method": "tools/call",
+                         "params": {"name": "python_json_summary", "arguments": {"path": "/ws/sample.jsonl"}}}):
+                proc.stdin.write((json.dumps(msg) + "\n").encode())
+            proc.stdin.flush()
+            self.assertIn("result", json.loads(proc.stdout.readline()))
+            time.sleep(0.5)
+            self.assertIsNone(proc.poll())
+            os.close(held.pop())
+            self.assertIn("result", json.loads(proc.stdout.readline()))
+        finally:
+            for fd in held:
+                os.close(fd)
+            proc.stdin.close()
+            proc.wait(timeout=10)
+            proc.stdout.close()
+            proc.stderr.close()
+
+
+class Stage76OpsTests(unittest.TestCase):
+    """Stage 7.6: log rotation and governed auto-start environment hand-off."""
+
+    def setUp(self) -> None:
+        self.tmp = Path(tempfile.mkdtemp(prefix="hyb2_s76_"))
+
+    def tearDown(self) -> None:
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_resolve_path_matches_realpath_on_random_link_trees(self) -> None:
+        from f8_hybrid2_policy import resolve_path
+        rng = random.Random(76)
+        root = self.tmp / "tree"
+        names = ["a", "b", "c", "d"]
+        for _ in range(30):
+            shutil.rmtree(root, ignore_errors=True)
+            root.mkdir()
+            dirs = [root]
+            for i in range(6):
+                d = rng.choice(dirs) / rng.choice(names)
+                d.mkdir(exist_ok=True)
+                dirs.append(d)
+            for i in range(8):
+                link = rng.choice(dirs) / f"l{i}"
+                if link.exists() or link.is_symlink():
+                    continue
+                target = rng.choice([str(rng.choice(dirs)), os.path.relpath(rng.choice(dirs), link.parent),
+                                     "../" + rng.choice(names), f"l{rng.randrange(8)}", "missing/x", str(link)])
+                os.symlink(target, link)
+            for _ in range(40):
+                parts = [rng.choice(names + [f"l{i}" for i in range(8)] + ["..", ".", "", "zz"]) for _ in range(rng.randrange(1, 6))]
+                probe = str(rng.choice(dirs)) + "/" + "/".join(parts)
+                try:
+                    os.path.realpath(probe, strict=True)
+                except OSError as exc:
+                    if exc.errno == errno.ELOOP:  # unresolvable either way; open() fails with ELOOP
+                        self.assertIsInstance(resolve_path(probe), str)
+                        continue
+                self.assertEqual(resolve_path(probe), os.path.realpath(probe), probe)
+
+    def test_gitdir_dotdot_after_symlink_is_not_collapsed(self) -> None:
+        ws, out = self.tmp / "ws", self.tmp / "outside"
+        repo = ws / "repo2"
+        (out / "a/b").mkdir(parents=True)
+        (out / "a/x").mkdir()
+        (repo / "x").mkdir(parents=True)  # decoy the lexical reading would check instead
+        os.symlink(out / "a/b", repo / "esc")
+        (repo / ".git").write_text("gitdir: esc/../x\n")
+        (self.tmp / "h").mkdir()
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": '["/ws/repo2"]'}):
+            pol = Policy([("/ws", str(ws))], home=str(self.tmp / "h"), tmp=str(self.tmp / "h"))
+        with self.assertRaises(Refuse) as cm:
+            pol.validate_git_ro(["status"], "/ws/repo2")
+        self.assertIn("symlink-escape", str(cm.exception))
+
+    def test_append_rotating_keeps_one_bounded_generation(self) -> None:
+        from f8_hybrid2_policy import append_rotating
+        log = self.tmp / "a.jsonl"
+        for i in range(200):
+            append_rotating(log, json.dumps({"i": i}) + "\n", 1000)
+        cur = log.read_text().splitlines()
+        old = Path(str(log) + ".1").read_text().splitlines()
+        self.assertLessEqual(log.stat().st_size, 1000 + 20)
+        self.assertEqual([json.loads(x)["i"] for x in old + cur], list(range(200 - len(old) - len(cur), 200)))
+        self.assertFalse(Path(str(log) + ".2").exists())
+        log.unlink()
+        log.symlink_to(self.tmp / "elsewhere")
+        with self.assertRaises(OSError):
+            append_rotating(log, "x\n", 1000)  # never follows a planted link
+        self.assertFalse((self.tmp / "elsewhere").exists())
+
+    def test_append_rotating_concurrent_writers_never_tear_lines(self) -> None:
+        log = self.tmp / "c.jsonl"
+        code = ("import json, sys; from f8_hybrid2_policy import append_rotating\n"
+                "for i in range(400): append_rotating(__import__('pathlib').Path(sys.argv[1]), "
+                "json.dumps({'w': sys.argv[2], 'i': i, 'pad': 'x' * 40}) + '\\n', 8192)\n")
+        procs = [sp.Popen([sys.executable, "-B", "-c", code, str(log), str(w)], cwd=HERE) for w in range(4)]
+        for proc in procs:
+            self.assertEqual(proc.wait(timeout=120), 0)
+        lines = Path(str(log) + ".1").read_text().splitlines() + log.read_text().splitlines()
+        rows = [json.loads(x) for x in lines]  # a torn or interleaved line fails here
+        self.assertTrue(rows)
+        self.assertLessEqual(log.stat().st_size, 8192 + 100)
+        self.assertLessEqual(Path(str(log) + ".1").stat().st_size, 8192 + 100)
+        for w in map(str, range(4)):
+            seq = [r["i"] for r in rows if r["w"] == w]
+            self.assertEqual(seq, sorted(seq))
+
+    def test_daemon_audit_log_rotates(self) -> None:
+        import f8_hybrid2_daemon as d
+        log = self.tmp / "audit.jsonl"
+        daemon = SimpleNamespace(log_path=log, _log_lock=__import__("threading").Lock())
+        with mock.patch.object(d, "AUDIT_ROTATE_BYTES", 2000):
+            for i in range(100):
+                d.Hybrid2Daemon.write_audit(daemon, {"ev": "tool", "i": i})
+        self.assertTrue(Path(str(log) + ".1").exists())
+        self.assertLessEqual(log.stat().st_size, 2000 + 200)
+
+    def test_termux_bootstrap_exports_budget_dir(self) -> None:
+        bdir = "/data/data/com.termux/files/home/.hyb2-unit-budget dir"
+        rdir = self.tmp / "rt"
+        paths = ctl.runtime_paths(rdir)
+        am_env = {k: "x" for k in ctl.AM_REQUIRED_ENV}
+        safe = SimpleNamespace(st_mode=stat.S_IFDIR | 0o700, st_uid=os.getuid())
+        with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bdir}), \
+                mock.patch.object(ctl.os, "lstat", return_value=safe), \
+                mock.patch.object(ctl.os.path, "isfile", side_effect=lambda p: p == os.path.join(bdir, "profile")), \
+                mock.patch.object(ctl, "resolve_host_daemon_py", return_value="/data/data/com.termux/x/d.py"), \
+                mock.patch.object(ctl.sp, "run", return_value=SimpleNamespace(returncode=0)):
+            paths["dir"] = Path("/data/data/com.termux/files/home/.never-used")
+            with mock.patch.object(Path, "mkdir"), mock.patch.object(ctl.os, "chmod"), \
+                    mock.patch.object(Path, "write_text") as wt:
+                ok, why = ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16)
+        self.assertEqual((ok, why), (True, "launched"))
+        script = wt.call_args.args[0]
+        self.assertIn(f"export {budget.BUDGET_DIR_ENV}='{bdir}'\n", script)
+        for bad, reason in (("/tmp/elsewhere", "budget-dir-invalid"), ("/data/data/com.termux/a/../b", "budget-dir-invalid"),
+                            ("/data/data/com.termux/files/home/none", "budget-dir-uninitialised")):
+            with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bad}):
+                self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, reason))
+        rootfs_dir = ctl.ROOTFS_PREFIX + "/root/budget"
+        with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: rootfs_dir}):
+            self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, "budget-dir-invalid"))
+        for st in (SimpleNamespace(st_mode=stat.S_IFDIR | 0o755, st_uid=os.getuid()),
+                   SimpleNamespace(st_mode=stat.S_IFDIR | 0o700, st_uid=os.getuid() + 1),
+                   SimpleNamespace(st_mode=stat.S_IFLNK | 0o777, st_uid=os.getuid())):
+            with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bdir}), \
+                    mock.patch.object(ctl.os, "lstat", return_value=st):
+                self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, "budget-dir-unsafe"))
+        with mock.patch.dict(os.environ, am_env):
+            os.environ.pop(budget.BUDGET_DIR_ENV, None)
+            self.assertEqual(ctl.budget_env_line(), "")
+
+    def test_governed_relay_accepts_auto_start_and_falls_back(self) -> None:
+        bdir = self.tmp / "budget"
+        budget.init_budget_dir(str(bdir), 2)
+        env = {**os.environ, budget.BUDGET_DIR_ENV: str(bdir), "PYTHONDONTWRITEBYTECODE": "1"}
+        env.pop("F8_NO_HYBRID", None)
+        req = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}) + "\n"
+        (self.tmp / "rt").mkdir()
+        (self.tmp / "rt/disabled.flag").touch()  # deterministic: never launches a real daemon
+        proc = sp.run([sys.executable, "-B", str(RELAY_PY), "--socket", str(self.tmp / "rt/m.sock"), "--auto-start"],
+                      input=req.encode(), capture_output=True, env=env, timeout=60)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertNotIn(b"independently started daemon", proc.stderr)
+        self.assertIn(b"fallback=proot", proc.stderr)
+        self.assertEqual(json.loads(proc.stdout.splitlines()[0])["id"], 1)
+
+
+class ClientLauncherTests(unittest.TestCase):
+    def test_launcher_fixes_governance_env_and_borrows_only_missing_android_vars(self) -> None:
+        import f8_hybrid2_launch as launch
+        termux = {k: f"/apex/{k.lower()}" for k in launch.AM_REQUIRED_ENV}
+        termux.update({"SECRET_TOKEN": "x", "PATH": "/termux/bin"})
+        env = launch.prepare_env({"PATH": "/usr/bin", "ANDROID_ROOT": "/system-own",
+                                  "F8_HYBRID2_BUDGET_DIR": "/elsewhere"}, termux, '["/r"]')
+        self.assertEqual(env["F8_HYBRID2_BUDGET_DIR"], launch.BUDGET_DIR)
+        self.assertEqual(env["F8_HYBRID2_TRUSTED_GIT_ROOTS"], '["/r"]')
+        self.assertEqual(env["ANDROID_ROOT"], "/system-own")  # present values are kept
+        self.assertEqual(env["BOOTCLASSPATH"], termux["BOOTCLASSPATH"])
+        self.assertEqual(env["PATH"], "/usr/bin")
+        self.assertNotIn("SECRET_TOKEN", env)
+        self.assertNotIn("DEX2OATBOOTCLASSPATH", launch.prepare_env({}, {}, "[]"))
 
 
 if __name__ == "__main__":

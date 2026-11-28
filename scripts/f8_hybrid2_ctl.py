@@ -18,6 +18,7 @@ import json
 import os
 import shlex
 import signal
+import stat
 import subprocess as sp
 import sys
 import threading
@@ -34,6 +35,8 @@ from f8_hybrid2_policy import (
     read_tracer_pid,
     validate_unix_sock_path,
 )
+from f8_hybrid2_budget import BUDGET_DIR_ENV
+ROOTFS_PREFIX = "/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs"
 from f8_hybrid2_relay import probe_daemon
 
 AM_REQUIRED_ENV = (
@@ -53,6 +56,42 @@ TERMUX_GIT = "/data/data/com.termux/files/usr/bin/git"
 DAEMON_SCRIPT = str(Path(__file__).resolve().parent / "f8_hybrid2_daemon.py")
 RELAY_SCRIPT = str(Path(__file__).resolve().parent / "f8_hybrid2_relay.py")
 DEPLOYED_TOOLS_RELAY = "/data/data/com.termux/files/home/build/proot-fast/tools/hybrid2/f8_hybrid2_relay.py"
+
+
+DAEMON_OUT_ROTATE_BYTES = 1024 * 1024
+
+
+def budget_env_line() -> str:
+    """Shell export that hands the caller's budget directory to a TermuxService-launched daemon.
+
+    Without it the daemon would start ungoverned while relays enforce budgets.
+    Raises ValueError for a directory the native side cannot or must not use.
+    """
+    value = os.environ.get(BUDGET_DIR_ENV)
+    if not value:
+        return ""
+    if (not value.startswith("/data/data/com.termux/") or os.path.normpath(value) != value
+            or any(c in value for c in "\0\n\r")):
+        raise ValueError("budget-dir-invalid")
+    if value.startswith(ROOTFS_PREFIX + "/") or value == ROOTFS_PREFIX:
+        raise ValueError("budget-dir-invalid")  # guest-writable tree
+    try:
+        st = os.lstat(value)
+    except OSError:
+        raise ValueError("budget-dir-uninitialised") from None
+    if not stat.S_ISDIR(st.st_mode) or st.st_uid != os.getuid() or stat.S_IMODE(st.st_mode) & 0o077:
+        raise ValueError("budget-dir-unsafe")
+    if not os.path.isfile(os.path.join(value, "profile")):
+        raise ValueError("budget-dir-uninitialised")
+    return f"export {BUDGET_DIR_ENV}={shlex.quote(value)}\n"
+
+
+def _rotate_daemon_out(path: Path) -> None:
+    try:
+        if path.stat().st_size >= DAEMON_OUT_ROTATE_BYTES:
+            os.replace(path, str(path) + ".1")
+    except OSError:
+        pass
 
 
 def resolve_host_daemon_py(daemon_py: str) -> str:
@@ -176,6 +215,7 @@ def _start_native_direct(
         cmd.extend(["--map", f"{g}={h}"])
     if skip_tracer_check:
         cmd.append("--skip-tracer-check")
+    _rotate_daemon_out(paths["out"])
     with open(paths["out"], "ab") as out_fh:
         child = sp.Popen(cmd, stdin=sp.DEVNULL, stdout=out_fh, stderr=out_fh, start_new_session=True)
     # Hold the child handle and reap it if this controller outlives the daemon.
@@ -193,6 +233,10 @@ def _start_via_termux_service(
     missing = missing_am_env()
     if missing:
         return False, "auto-start-env-stripped"
+    try:
+        budget_line = budget_env_line()
+    except ValueError as exc:
+        return False, str(exc)
     if not str(paths["dir"]).startswith("/data/data/com.termux/"):
         return False, "runtime-dir-outside-termux"
     host_daemon_py = resolve_host_daemon_py(daemon_py)
@@ -209,6 +253,8 @@ def _start_via_termux_service(
         "export PATH=/data/data/com.termux/files/usr/bin\n"
         "export HOME=/data/data/com.termux/files/home\n"
         "export TMPDIR=/data/data/com.termux/files/usr/tmp\n"
+        "export PYTHONDONTWRITEBYTECODE=1\n"
+        f"{budget_line}"
         f"export {TRUSTED_GIT_ROOTS_ENV}={shlex.quote(os.environ.get(TRUSTED_GIT_ROOTS_ENV, '[]'))}\n"
         f"{shlex.quote(TERMUX_PYTHON)} {shlex.quote(host_daemon_py)} "
         f"--socket {shlex.quote(str(paths['sock']))} {map_flags} "

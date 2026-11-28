@@ -1,0 +1,41 @@
+{
+ "gates": {
+  "S1": {
+   "gate": "S1",
+   "pass": true,
+   "repos_with_l2s": 9,
+   "repos": 21
+  },
+  "S2": {
+   "gate": "S2",
+   "pass": true,
+   "restored_equal": true
+  },
+  "S3": {
+   "gate": "S3",
+   "pass": true,
+   "control_red": true
+  },
+  "S4": {
+   "gate": "S4",
+   "pass": true,
+   "daemon_alive": true
+  },
+  "S5": {
+   "gate": "S5",
+   "pass": true,
+   "group_peak_pss_kib": 62425
+  },
+  "S6": {
+   "gate": "S6",
+   "pass": true
+  },
+  "S7": {
+   "gate": "S7",
+   "pass": null,
+   "informational": true
+  }
+ },
+ "redlines_unchanged": true,
+ "candidate": "c583002b558457b18df3dc27084aef451271cb1e"
+}

@@ -1,0 +1,70 @@
+{
+ "G1": "PASS",
+ "G2": "PASS",
+ "G3": "PASS",
+ "G4": "PASS",
+ "G5": "PASS",
+ "attempts": {
+  "C1-normal-1": 1,
+  "C1-normal-2": 1,
+  "C1-normal-3": 1,
+  "C2-maxload": 1,
+  "C3-overload": 1,
+  "C4-slowread": 1,
+  "C5-lifecycle": 1,
+  "C6-restart-fallback": 1,
+  "SOAK": 1
+ },
+ "candidate": "40486566704ed73013df208881a5c641220d6419",
+ "g3_inputs": {
+  "child_envelope_kib": 35662,
+  "daemon_idle_pss_kib": 25750,
+  "exec_envelope_kib": 26624,
+  "exec_fixture_peak_kib": 5177,
+  "relay_idle_pss_kib": 16259.0
+ },
+ "measured_peak": {
+  "fds": 65,
+  "private_dirty_kib": 120756,
+  "pss_kib": 133399,
+  "rss_kib": 164860,
+  "swap_pss_kib": 0,
+  "threads": 15
+ },
+ "mode": 4,
+ "rss": {
+  "drift_pct": [
+   2.45,
+   4.7,
+   2.9
+  ],
+  "idle_retained_kib": 25750,
+  "idle_rss_kib": 28876,
+  "retained_kib": [
+   26334,
+   26555,
+   26367
+  ]
+ },
+ "run": "/data/data/com.termux/files/home/.hyb2verify.XeHE9hQd/s75g-m4.qqbcvr",
+ "soak_thermal": "PASS",
+ "theory": {
+  "fds_total": 87,
+  "memory_kib": {
+   "daemon_sessions": 27136,
+   "executions": 75932,
+   "idle_daemon": 25750,
+   "idle_relays": 65036,
+   "relay_buffers": 40960
+  },
+  "memory_total_kib": 234814,
+  "mode": 4,
+  "profile": {
+   "exec_slots": 2,
+   "mode": 4,
+   "session_queue": 4
+  },
+  "threads_total": 21
+ },
+ "verdict": "GO"
+}

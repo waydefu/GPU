@@ -1,0 +1,69 @@
+{
+ "G1": "PASS",
+ "G2": "PASS",
+ "G3": "PASS",
+ "G4": "PASS",
+ "G5": "PASS",
+ "attempts": {
+  "C1-normal-1": 1,
+  "C1-normal-2": 1,
+  "C1-normal-3": 1,
+  "C2-maxload": 1,
+  "C3-overload": 1,
+  "C4-slowread": 1,
+  "C5-lifecycle": 1,
+  "C6-restart-fallback": 1
+ },
+ "candidate": "ee7bf72c7984e9391f74b248b495e70a482009d8",
+ "g3_inputs": {
+  "child_envelope_kib": 35662,
+  "daemon_idle_pss_kib": 26113,
+  "exec_envelope_kib": 26624,
+  "exec_fixture_peak_kib": 5177,
+  "relay_idle_pss_kib": 15872.666666666666
+ },
+ "measured_peak": {
+  "fds": 82,
+  "private_dirty_kib": 161864,
+  "pss_kib": 174987,
+  "rss_kib": 222140,
+  "swap_pss_kib": 0,
+  "threads": 20
+ },
+ "mode": 6,
+ "rss": {
+  "drift_pct": [
+   3.13,
+   3.97,
+   4.05
+  ],
+  "idle_retained_kib": 26113,
+  "idle_rss_kib": 29528,
+  "retained_kib": [
+   27277,
+   27189,
+   27201
+  ]
+ },
+ "run": "/data/data/com.termux/files/home/.hyb2verify.XeHE9hQd/s75g-m6.JqH8qN",
+ "soak_thermal": null,
+ "theory": {
+  "fds_total": 95,
+  "memory_kib": {
+   "daemon_sessions": 40704,
+   "executions": 37966,
+   "idle_daemon": 26113,
+   "idle_relays": 95232,
+   "relay_buffers": 61440
+  },
+  "memory_total_kib": 261455,
+  "mode": 6,
+  "profile": {
+   "exec_slots": 1,
+   "mode": 6,
+   "session_queue": 4
+  },
+  "threads_total": 27
+ },
+ "verdict": "GO"
+}

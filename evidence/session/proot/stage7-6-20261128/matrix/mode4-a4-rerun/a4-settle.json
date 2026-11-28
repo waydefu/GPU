@@ -1,0 +1,41 @@
+{
+ "settled": true,
+ "windows": [
+  {
+   "t": 61,
+   "cpu_median": 27800.0,
+   "cpu_max": 85700,
+   "battery": 19900
+  },
+  {
+   "t": 121,
+   "cpu_median": 25400.0,
+   "cpu_max": 61700,
+   "battery": 20400
+  },
+  {
+   "t": 182,
+   "cpu_median": 24300.0,
+   "cpu_max": 47100,
+   "battery": 20700
+  },
+  {
+   "t": 243,
+   "cpu_median": 24300.0,
+   "cpu_max": 34300,
+   "battery": 21100
+  },
+  {
+   "t": 303,
+   "cpu_median": 24300.0,
+   "cpu_max": 65600,
+   "battery": 21300
+  },
+  {
+   "t": 364,
+   "cpu_median": 24300.0,
+   "cpu_max": 47100,
+   "battery": 21600
+  }
+ ]
+}

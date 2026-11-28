@@ -1,0 +1,11 @@
+{
+ "gates": {
+  "S5": {
+   "gate": "S5",
+   "pass": true,
+   "group_peak_pss_kib": 66860
+  }
+ },
+ "redlines_unchanged": true,
+ "candidate": "771bd506aa52fb9c1bdc1ca26381ef7d929584b2"
+}

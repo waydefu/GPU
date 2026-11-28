@@ -27,10 +27,13 @@ import socket
 import sys
 import tempfile
 import threading
+import time
 from pathlib import Path
 from typing import Any
 
+from f8_hybrid2_budget import LEGACY, ExecPool, Governance, Limits, acquire_lease, governance_from_env, parse_cost
 from f8_hybrid2_policy import (
+    append_rotating,
     DEFAULT_FALLBACK_MAPS,
     DEFAULT_SOCK_PATH,
     Policy,
@@ -38,13 +41,55 @@ from f8_hybrid2_policy import (
     read_tracer_pid,
     validate_unix_sock_path,
 )
-from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key
+from f8_hybrid2_tools import MCPToolEngine, RequestCancelled, RequestContext, TOOL_DEFS, cancellation_req_key, canonical_req_key, request_key_fits
 
-MAX_FRAME_BYTES = 4 * 1024 * 1024
+MAX_FRAME_BYTES = LEGACY.request_frame
 # Daemon limits its serialized output buffer to 16 MiB. Its JSON response may
 # be larger than the input limit because the result text is JSON-escaped again.
-MAX_UDS_FRAME_BYTES = 16 * 1024 * 1024
+MAX_UDS_FRAME_BYTES = LEGACY.response_frame
 DEFAULT_MAX_LOCAL_INFLIGHT = 8
+ROUTE_LOG_ROTATE_BYTES = 5 * 1024 * 1024
+MAX_NATIVE_PENDING = LEGACY.native_pending
+
+
+def acquire_budget_lease(directory: str) -> int:
+    """Relay slot lease (kept for callers of the Stage 7.5 draft API)."""
+    return acquire_lease(directory)[0]
+
+
+def _decode_frame(raw: bytes, limits: Limits) -> Any:
+    """Parse one JSON frame; ValueError covers JSON, UTF-8 and over-long integers."""
+    if limits.parse_budget is not None and parse_cost(raw) > limits.parse_budget:
+        raise OverflowError("Frame too complex")
+    return json.loads(raw.decode("utf-8"))
+
+
+def _wait_exec_slot(pool: ExecPool | None, ctx: RequestContext, stop: threading.Event) -> int | None:
+    """Hold a group execution slot before local work; -1 when ungoverned, None on deadline."""
+    if pool is None:
+        return -1
+    while True:
+        try:
+            fd = pool.try_acquire()
+        except (OSError, ValueError):
+            fd = None
+        if fd is not None:
+            return fd
+        if stop.is_set() or ctx.cancel_event.wait(0.02):
+            raise RequestCancelled("cancelled")
+        if time.monotonic() > ctx.deadline:
+            return None
+
+
+def _call_local(engine: MCPToolEngine, pool: ExecPool | None, stop: threading.Event,
+                req_id: Any, params: Any, ctx: RequestContext) -> dict[str, Any]:
+    token = _wait_exec_slot(pool, ctx, stop)
+    if token is None:
+        return engine.jsonrpc_err(req_id, -32001, "Request timed out before execution")
+    try:
+        return engine.call_tool(req_id, params, ctx)
+    finally:
+        ExecPool.release(token)
 
 
 def _check_uds_frame_size(size: int, limit: int = MAX_UDS_FRAME_BYTES) -> None:
@@ -130,17 +175,22 @@ def bridge_stdio_to_uds(
     max_local_inflight: int = DEFAULT_MAX_LOCAL_INFLIGHT,
     route_log_path: Path | None = None,
     prebuffered: bytes = b"",
+    limits: Limits = LEGACY,
+    exec_pool: ExecPool | None = None,
 ) -> tuple[int, bool, bytes]:
     """Bridge stdio <-> UDS with selective Stage 7.4 tool routing (native UDS vs PRoot local)."""
     if native_tools >= ALL_TOOL_NAMES:
-        return _bridge_raw_passthrough(sock, prebuffered=prebuffered)
+        return _bridge_raw_passthrough(sock, prebuffered=prebuffered, limits=limits)
 
     max_local = max(1, min(16, int(max_local_inflight)))
     home_dir = os.environ.get("HOME", tempfile.gettempdir())
     tmp_dir = os.environ.get("TMPDIR", tempfile.gettempdir())
     maps = list(local_maps) if local_maps is not None else list(DEFAULT_FALLBACK_MAPS)
-    policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"))
-    local_engine = MCPToolEngine(policy=policy, git_bin=git_bin, default_timeout_s=default_timeout_s)
+    policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"),
+                    single_thread_git=exec_pool is not None)
+    local_engine = MCPToolEngine(policy=policy, git_bin=git_bin, default_timeout_s=default_timeout_s,
+                                 parse_budget=limits.tool_parse_budget)
+    out_wm = limits.out_watermark
 
     stop = threading.Event()
     in_fd = sys.stdin.fileno()
@@ -158,7 +208,7 @@ def bridge_stdio_to_uds(
     uds_buf = bytearray()
     to_uds = bytearray()
     to_stdout = bytearray()
-    sent_to_uds = bytearray(prebuffered[:MAX_FRAME_BYTES])
+    sent_to_uds = bytearray(prebuffered[:limits.replay_bytes])
 
     session_state: dict[str, Any] = {
         "init_seen": False,
@@ -180,11 +230,11 @@ def bridge_stdio_to_uds(
     local_out_lock = threading.Lock()
     local_out_q: collections.deque[tuple[bytes, str | None]] = collections.deque()
 
-    sig_r, sig_w = os.pipe()
+    # One wake pipe serves signals and finished local work; ``stop`` tells them apart.
     local_r, local_w = os.pipe()
-    for pfd in (sig_r, sig_w, local_r, local_w):
+    sig_w = local_w
+    for pfd in (local_r, local_w):
         os.set_blocking(pfd, False)
-    sel.register(sig_r, selectors.EVENT_READ, "sig")
     sel.register(local_r, selectors.EVENT_READ, "local")
 
     def _record_route(tool_name: str, target: str) -> None:
@@ -192,8 +242,8 @@ def bridge_stdio_to_uds(
             return
         try:
             route_log_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(route_log_path, "a", encoding="utf-8") as fh:
-                fh.write(json.dumps({"ev": "route", "tool": tool_name, "target": target}, separators=(",", ":")) + "\n")
+            append_rotating(route_log_path, json.dumps({"ev": "route", "tool": tool_name, "target": target},
+                                                       separators=(",", ":")) + "\n", ROUTE_LOG_ROTATE_BYTES)
         except OSError:
             pass
 
@@ -212,7 +262,7 @@ def bridge_stdio_to_uds(
     def _local_worker(req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
         raw_out: bytes | None = None
         try:
-            resp = local_engine.call_tool(req_id, params, ctx)
+            resp = _call_local(local_engine, exec_pool, stop, req_id, params, ctx)
             if not stop.is_set() and not ctx.cancel_event.is_set():
                 raw_out = (json.dumps(resp, ensure_ascii=False) + "\n").encode("utf-8")
         except RequestCancelled:
@@ -224,8 +274,9 @@ def bridge_stdio_to_uds(
         finally:
             if raw_out is not None:
                 _queue_local_bytes(raw_out, rk, wake=False)
-            with local_active_lock:
-                local_active.pop(rk, None)
+            else:
+                with local_active_lock:
+                    local_active.pop(rk, None)
             _wake_local()
 
     def _start_local_call(req_id: Any, rk: str, params: Any) -> bool:
@@ -236,8 +287,12 @@ def bridge_stdio_to_uds(
             local_active[rk] = ctx
             workers[:] = [w for w in workers if w.is_alive()]
             th = threading.Thread(target=_local_worker, args=(req_id, rk, params, ctx), daemon=True)
+            try:
+                th.start()
+            except (RuntimeError, OSError):
+                del local_active[rk]
+                return False
             workers.append(th)
-        th.start()
         return True
 
     def _emit_local_err(req_id: Any, code: int, msg: str) -> None:
@@ -262,27 +317,33 @@ def bridge_stdio_to_uds(
             _fail_deferred_uninitialized()
 
     def _handle_stdin_line(raw_line: bytes) -> None:
-        if len(raw_line) > MAX_FRAME_BYTES:
+        if len(raw_line) > limits.request_frame:
             _emit_local_err(None, -32600, "Frame too large")
             return
         stripped = raw_line.strip()
         if not stripped:
             return
         try:
-            msg = json.loads(stripped.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError):
+            msg = _decode_frame(stripped, limits)
+        except OverflowError:
+            _emit_local_err(None, -32600, "Frame too complex")
+            return
+        except (ValueError, RecursionError):
             _emit_local_err(None, -32700, "Parse error")
             return
 
         # Strict JSON-RPC 2.0 validation before routing either local or UDS.
         if not isinstance(msg, dict) or msg.get("jsonrpc") != "2.0":
             raw_id = msg.get("id") if isinstance(msg, dict) else None
-            _emit_local_err(raw_id if canonical_req_key(raw_id) is not None else None, -32600, "Invalid Request")
+            _emit_local_err(raw_id if request_key_fits(canonical_req_key(raw_id)) else None, -32600, "Invalid Request")
             return
 
         has_id = "id" in msg
         req_id = msg.get("id")
         rk = canonical_req_key(req_id) if has_id else None
+        if has_id and rk is not None and not request_key_fits(rk):
+            _emit_local_err(None, -32600, "Request id too large")
+            return
         if has_id and rk is None:
             _emit_local_err(None, -32600, "Invalid Request id")
             return
@@ -335,6 +396,9 @@ def bridge_stdio_to_uds(
                 if session_state["uds_closed"]:
                     _emit_local_err(req_id, -32000, "Native daemon disconnected")
                     return
+                if len(native_inflight) >= limits.native_pending:
+                    _emit_local_err(req_id, -32000, "Server busy: max native pending requests reached")
+                    return
                 native_inflight[rk] = req_id
                 _record_route(tool_name, "native_uds")
                 to_uds.extend(stripped + b"\n")
@@ -369,6 +433,9 @@ def bridge_stdio_to_uds(
         if has_id and rk is not None:
             if session_state["uds_closed"]:
                 _emit_local_err(req_id, -32000, "Native daemon disconnected")
+                return
+            if len(native_inflight) >= limits.native_pending:
+                _emit_local_err(req_id, -32000, "Server busy: max native pending requests reached")
                 return
             native_inflight[rk] = req_id
         if not session_state["uds_closed"]:
@@ -413,10 +480,12 @@ def bridge_stdio_to_uds(
             sel.modify(fd_or_sock, desired_events, tag)
 
     def _refresh_sel() -> None:
-        out_paused = len(to_stdout) >= MAX_FRAME_BYTES * 2
-        accept_input = not (stdin_eof or out_paused or session_state["uds_closed"] or session_state["uds_write_closed"])
+        out_paused = len(to_stdout) >= out_wm
+        # Stop reading stdin while forwarded bytes wait for the daemon (backpressure, not abort).
+        accept_input = not (stdin_eof or out_paused or len(to_uds) >= limits.to_uds_watermark
+                            or session_state["uds_closed"] or session_state["uds_write_closed"])
         _set_interest(in_fd, selectors.EVENT_READ if accept_input else None, "stdin")
-        _set_interest(local_r, None if out_paused else selectors.EVENT_READ, "local")
+        # The wake pipe stays registered so a signal is seen even while stdout is paused.
         if session_state["uds_closed"]:
             _set_interest(sock, None, "uds")
         else:
@@ -444,9 +513,17 @@ def bridge_stdio_to_uds(
             del stdin_buf[: nl + 1]
             _handle_stdin_line(one)
         while not stop.is_set():
+            with local_out_lock:
+                while local_out_q and len(to_stdout) < out_wm:
+                    raw_resp, rk = local_out_q.popleft()
+                    with local_active_lock:
+                        ctx = local_active.pop(rk, None)
+                    if ctx is None or not ctx.cancel_event.is_set():
+                        to_stdout.extend(raw_resp)
+                        session_state["local_replies"] += 1
             # One complete UDS frame can arrive while stdout is below the
             # pause watermark, plus one bounded recv chunk of other frames.
-            if len(to_stdout) > MAX_FRAME_BYTES * 2 + MAX_UDS_FRAME_BYTES + 65536:
+            if len(to_stdout) > out_wm + limits.response_frame + 65536:
                 session_state["sig_abort"] = True
                 stop.set()
                 break
@@ -457,7 +534,7 @@ def bridge_stdio_to_uds(
             if session_state["uds_closed"]:
                 # Queue disconnect errors behind complete responses. Respect the
                 # stdout water mark even when many requests still need answers.
-                while native_inflight and len(to_stdout) < MAX_FRAME_BYTES * 2:
+                while native_inflight and len(to_stdout) < out_wm:
                     _, req_id = native_inflight.popitem()
                     _emit_local_err(req_id, -32000, "Native daemon disconnected before replying; execution unconfirmed")
                 if not (native_inflight or local_busy_now or deferred_local or local_queued or to_stdout):
@@ -465,20 +542,13 @@ def bridge_stdio_to_uds(
             _refresh_sel()
             for key, mask in sel.select(timeout=0.5):
                 tag = key.data
-                if tag == "sig":
-                    session_state["sig_abort"] = True
-                    stop.set()
-                    break
                 if tag == "local":
                     try:
                         os.read(local_r, 4096)
                     except OSError:
                         pass
-                    with local_out_lock:
-                        while local_out_q:
-                            raw_resp, _rk = local_out_q.popleft()
-                            to_stdout.extend(raw_resp)
-                            session_state["local_replies"] += 1
+                    if stop.is_set():
+                        break
                 elif tag == "stdin" and (mask & selectors.EVENT_READ):
                     if session_state["uds_closed"] or session_state["uds_write_closed"]:
                         continue
@@ -512,9 +582,9 @@ def bridge_stdio_to_uds(
                     if (
                         session_state["received_from_uds"] == 0
                         and session_state["local_replies"] == 0
-                        and len(sent_to_uds) < MAX_FRAME_BYTES
+                        and len(sent_to_uds) < limits.replay_bytes
                     ):
-                        sent_to_uds.extend(chunk[: MAX_FRAME_BYTES - len(sent_to_uds)])
+                        sent_to_uds.extend(chunk[: limits.replay_bytes - len(sent_to_uds)])
                     stdin_buf.extend(chunk)
                     while True:
                         nl = stdin_buf.find(b"\n")
@@ -523,11 +593,12 @@ def bridge_stdio_to_uds(
                         one = bytes(stdin_buf[:nl]).rstrip(b"\r")
                         del stdin_buf[: nl + 1]
                         _handle_stdin_line(one)
-                    if len(stdin_buf) > MAX_FRAME_BYTES * 2:
+                    if len(stdin_buf) > limits.input_buffer:
                         _emit_local_err(None, -32600, "Line buffer overflow")
                         stop.set()
                         break
-                    if len(to_uds) > MAX_FRAME_BYTES * 2:
+                    # Unreachable with stdin gating: watermark + one frame + one read.
+                    if len(to_uds) > limits.to_uds_watermark + limits.request_frame + 65536:
                         stop.set()
                         break
                 elif tag == "uds":
@@ -564,13 +635,13 @@ def bridge_stdio_to_uds(
                             nl = uds_buf.find(b"\n")
                             if nl < 0:
                                 try:
-                                    _check_uds_frame_size(len(uds_buf))
+                                    _check_uds_frame_size(len(uds_buf), limits.response_frame)
                                 except ValueError:
                                     session_state["uds_frame_error"] = True
                                     stop.set()
                                 break
                             try:
-                                _check_uds_frame_size(nl)
+                                _check_uds_frame_size(nl, limits.response_frame)
                             except ValueError:
                                 session_state["uds_frame_error"] = True
                                 stop.set()
@@ -602,7 +673,7 @@ def bridge_stdio_to_uds(
         for w in workers:
             w.join(timeout=max(default_timeout_s + 2.0, 10.0))
         sel.close()
-        for fd in (sig_r, sig_w, local_r, local_w):
+        for fd in (local_r, local_w):
             try:
                 os.close(fd)
             except OSError:
@@ -630,10 +701,8 @@ def bridge_stdio_to_uds(
     )
 
 
-def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") -> tuple[int, bool, bytes]:
+def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"", limits: Limits = LEGACY) -> tuple[int, bool, bytes]:
     """Raw passthrough stdio <-> UDS (used only when --native-tools all)."""
-    import time
-
     in_fd = sys.stdin.fileno()
     out_fd = sys.stdout.fileno()
     in_was_blocking = os.get_blocking(in_fd)
@@ -648,11 +717,11 @@ def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") ->
     uds_write_closed = False
     to_uds = bytearray(prebuffered)
     to_stdout = bytearray()
-    sent_to_uds = bytearray(prebuffered[:MAX_FRAME_BYTES])
+    sent_to_uds = bytearray(prebuffered[:limits.replay_bytes])
     received_from_uds = 0
     uds_closed_early = False
     interrupted_at = None
-    buffer_limit = MAX_FRAME_BYTES * 2
+    buffer_limit = limits.raw_buffer
     sig_r, sig_w = os.pipe()
     os.set_blocking(sig_r, False)
     os.set_blocking(sig_w, False)
@@ -727,8 +796,8 @@ def _bridge_raw_passthrough(sock: socket.socket, *, prebuffered: bytes = b"") ->
                         stdin_eof = True
                     else:
                         to_uds.extend(chunk)
-                        if len(sent_to_uds) < MAX_FRAME_BYTES:
-                            sent_to_uds.extend(chunk[:MAX_FRAME_BYTES - len(sent_to_uds)])
+                        if len(sent_to_uds) < limits.replay_bytes:
+                            sent_to_uds.extend(chunk[:limits.replay_bytes - len(sent_to_uds)])
                 elif tag == "uds" and not uds_eof:
                     if mask & selectors.EVENT_WRITE and to_uds:
                         try:
@@ -802,15 +871,20 @@ def run_local_fallback(
     default_timeout_s: float,
     prebuffered: bytes = b"",
     max_inflight: int = DEFAULT_MAX_LOCAL_INFLIGHT,
+    limits: Limits = LEGACY,
+    exec_pool: ExecPool | None = None,
 ) -> int:
     """Execute the same read-only MCP engine locally inside PRoot with fast SIGTERM wakeup."""
     max_local = max(1, min(16, int(max_inflight)))
     home_dir = os.environ.get("HOME", tempfile.gettempdir())
     tmp_dir = os.environ.get("TMPDIR", tempfile.gettempdir())
-    policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"))
-    engine = MCPToolEngine(policy=policy, git_bin=git_bin, default_timeout_s=default_timeout_s)
+    policy = Policy(maps=maps, home=home_dir, tmp=tmp_dir, path_env=os.environ.get("PATH", "/usr/bin:/bin"),
+                    single_thread_git=exec_pool is not None)
+    engine = MCPToolEngine(policy=policy, git_bin=git_bin, default_timeout_s=default_timeout_s,
+                           parse_budget=limits.tool_parse_budget)
+    out_cap = MAX_FRAME_BYTES * 4 if limits is LEGACY else limits.response_frame
 
-    send_lock = threading.Lock()
+    send_lock = threading.Condition()
     active_lock = threading.Lock()
     active: dict[str, RequestContext] = {}
     workers: list[threading.Thread] = []
@@ -828,12 +902,14 @@ def run_local_fallback(
     def write_resp(obj: dict[str, Any], *, ctx: RequestContext | None = None) -> None:
         raw = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
         with send_lock:
-            if stop.is_set() or (ctx is not None and ctx.cancel_event.is_set()):
-                return
-            if len(out_buf) + len(raw) > MAX_FRAME_BYTES * 4:
+            if len(raw) > out_cap:
                 stop.set()
                 return
-            out_buf.extend(raw)
+            while not stop.is_set() and (ctx is None or not ctx.cancel_event.is_set()):
+                if len(out_buf) + len(raw) <= out_cap:
+                    out_buf.extend(raw)
+                    return
+                send_lock.wait(timeout=0.05)
 
     def output_worker() -> None:
         poller = select.poll()
@@ -855,6 +931,7 @@ def run_local_fallback(
                     try:
                         with send_lock:
                             del out_buf[:os.write(out_fd, out_buf)]
+                            send_lock.notify_all()
                     except BlockingIOError:
                         pass
                     except OSError:
@@ -866,7 +943,7 @@ def run_local_fallback(
 
     def worker(req_id: Any, rk: str, params: Any, ctx: RequestContext) -> None:
         try:
-            resp = engine.call_tool(req_id, params, ctx)
+            resp = _call_local(engine, exec_pool, stop, req_id, params, ctx)
             if not stop.is_set():
                 write_resp(resp, ctx=ctx)
         except RequestCancelled:
@@ -879,15 +956,18 @@ def run_local_fallback(
                 active.pop(rk, None)
 
     def handle_line(raw: bytes) -> None:
-        if len(raw) > MAX_FRAME_BYTES:
+        if len(raw) > limits.request_frame:
             write_resp(engine.jsonrpc_err(None, -32600, "Frame too large"))
             return
         line = raw.strip()
         if not line:
             return
         try:
-            msg = json.loads(line.decode("utf-8"))
-        except (UnicodeDecodeError, json.JSONDecodeError):
+            msg = _decode_frame(line, limits)
+        except OverflowError:
+            write_resp(engine.jsonrpc_err(None, -32600, "Frame too complex"))
+            return
+        except (ValueError, RecursionError):
             write_resp(engine.jsonrpc_err(None, -32700, "Parse error"))
             return
 
@@ -924,8 +1004,13 @@ def run_local_fallback(
                 active[rk] = ctx
                 th = threading.Thread(target=worker, args=(req_id, rk, msg.get("params"), ctx), daemon=True)
                 workers[:] = [w for w in workers if w.is_alive()]
+                try:
+                    th.start()
+                except (RuntimeError, OSError):
+                    del active[rk]
+                    write_resp(engine.jsonrpc_err(req_id, -32000, "Local worker unavailable"))
+                    return
                 workers.append(th)
-            th.start()
 
     def on_sig(_signum: int, _frame: Any) -> None:
         stop.set()
@@ -967,7 +1052,7 @@ def run_local_fallback(
                         eof_hit = True
                         break
                     buf.extend(chunk)
-                    if len(buf) > MAX_FRAME_BYTES * 2:
+                    if len(buf) > limits.input_buffer:
                         write_resp(engine.jsonrpc_err(None, -32600, "Line buffer overflow"))
                         stop.set()
                         break
@@ -1075,7 +1160,25 @@ def _try_connect_with_optional_autostart(
 
 
 def main(argv: list[str] | None = None) -> int:
+    try:
+        governance = governance_from_env()
+    except (OSError, ValueError) as exc:
+        print(f"[f8-hybrid2-relay] admission refused: {exc}", file=sys.stderr, flush=True)
+        return 3
+    try:
+        return _main(argv, governance)
+    finally:
+        if governance is not None:
+            os.close(governance.lease_fd)
+
+
+def _main(argv: list[str] | None = None, governance: Governance | None = None) -> int:
     args = parse_args(argv)
+    limits = governance.limits if governance is not None else LEGACY
+    pool = governance.pool if governance is not None else None
+    if governance is not None:
+        # --auto-start hands F8_HYBRID2_BUDGET_DIR to the daemon (f8_hybrid2_ctl.budget_env_line).
+        args.max_local_inflight = 1
     try:
         native_tools = parse_native_tools(args.native_tools)
     except ValueError as exc:
@@ -1099,13 +1202,15 @@ def main(argv: list[str] | None = None) -> int:
         print("[f8-hybrid2-relay] fallback=proot reason=F8_NO_HYBRID=1", file=sys.stderr, flush=True)
         if args.no_fallback:
             return 3
-        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight)
+        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight,
+                                  limits=limits, exec_pool=pool)
 
     if disabled_flag.exists():
         print("[f8-hybrid2-relay] fallback=proot reason=global-disabled", file=sys.stderr, flush=True)
         if args.no_fallback:
             return 3
-        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight)
+        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight,
+                                  limits=limits, exec_pool=pool)
 
     try:
         s = _try_connect_with_optional_autostart(sock_path, args.connect_timeout, args.auto_start, autostart_maps)
@@ -1114,7 +1219,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"[f8-hybrid2-relay] daemon-unavailable reason={exc}", file=sys.stderr, flush=True)
             return 2
         print(f"[f8-hybrid2-relay] fallback=proot reason=daemon-unavailable ({exc})", file=sys.stderr, flush=True)
-        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight)
+        return run_local_fallback(local_maps, args.git_bin, args.default_timeout, max_inflight=args.max_local_inflight,
+                                  limits=limits, exec_pool=pool)
 
     rc, early_eof, initial_bytes = bridge_stdio_to_uds(
         s,
@@ -1124,11 +1230,13 @@ def main(argv: list[str] | None = None) -> int:
         default_timeout_s=args.default_timeout,
         max_local_inflight=args.max_local_inflight,
         route_log_path=route_log_path,
+        limits=limits,
+        exec_pool=pool,
     )
     if early_eof:
         # Once Git may have run, a lost response leaves its execution unconfirmed.
         # Refuse to replay partial or truncated input whose contents are uncertain.
-        if len(initial_bytes) >= MAX_FRAME_BYTES or (initial_bytes and not initial_bytes.endswith(b"\n")):
+        if len(initial_bytes) >= limits.replay_bytes or (initial_bytes and not initial_bytes.endswith(b"\n")):
             return 2
         for line in initial_bytes.splitlines():
             try:
@@ -1152,6 +1260,8 @@ def main(argv: list[str] | None = None) -> int:
                 max_local_inflight=args.max_local_inflight,
                 route_log_path=route_log_path,
                 prebuffered=initial_bytes,
+                limits=limits,
+                exec_pool=pool,
             )
             if not early2:
                 return rc2
@@ -1166,6 +1276,8 @@ def main(argv: list[str] | None = None) -> int:
             args.default_timeout,
             prebuffered=initial_bytes,
             max_inflight=args.max_local_inflight,
+            limits=limits,
+            exec_pool=pool,
         )
     return rc
 
