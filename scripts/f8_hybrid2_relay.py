@@ -33,6 +33,7 @@ from typing import Any
 
 from f8_hybrid2_budget import LEGACY, ExecPool, Governance, Limits, acquire_lease, governance_from_env, parse_cost
 from f8_hybrid2_policy import (
+    append_rotating,
     DEFAULT_FALLBACK_MAPS,
     DEFAULT_SOCK_PATH,
     Policy,
@@ -47,6 +48,7 @@ MAX_FRAME_BYTES = LEGACY.request_frame
 # be larger than the input limit because the result text is JSON-escaped again.
 MAX_UDS_FRAME_BYTES = LEGACY.response_frame
 DEFAULT_MAX_LOCAL_INFLIGHT = 8
+ROUTE_LOG_ROTATE_BYTES = 5 * 1024 * 1024
 MAX_NATIVE_PENDING = LEGACY.native_pending
 
 
@@ -240,8 +242,8 @@ def bridge_stdio_to_uds(
             return
         try:
             route_log_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(route_log_path, "a", encoding="utf-8") as fh:
-                fh.write(json.dumps({"ev": "route", "tool": tool_name, "target": target}, separators=(",", ":")) + "\n")
+            append_rotating(route_log_path, json.dumps({"ev": "route", "tool": tool_name, "target": target},
+                                                       separators=(",", ":")) + "\n", ROUTE_LOG_ROTATE_BYTES)
         except OSError:
             pass
 
@@ -1175,9 +1177,7 @@ def _main(argv: list[str] | None = None, governance: Governance | None = None) -
     limits = governance.limits if governance is not None else LEGACY
     pool = governance.pool if governance is not None else None
     if governance is not None:
-        if args.auto_start:
-            print("[f8-hybrid2-relay] budget mode requires an independently started daemon", file=sys.stderr)
-            return 3
+        # --auto-start hands F8_HYBRID2_BUDGET_DIR to the daemon (f8_hybrid2_ctl.budget_env_line).
         args.max_local_inflight = 1
     try:
         native_tools = parse_native_tools(args.native_tools)

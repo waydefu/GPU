@@ -27,6 +27,7 @@ from typing import Any
 
 from f8_hybrid2_budget import LEGACY, ExecPool, Governance, Limits, governance_from_env, parse_cost
 from f8_hybrid2_policy import (
+    append_rotating,
     DEFAULT_DAEMON_MAPS,
     DEFAULT_PID_PATH,
     DEFAULT_READY_PATH,
@@ -543,11 +544,7 @@ class Hybrid2Daemon:
         line = json.dumps(payload, ensure_ascii=False) + "\n"
         with self._log_lock:
             try:
-                if self.log_path.exists() and self.log_path.stat().st_size >= AUDIT_ROTATE_BYTES:
-                    backup = Path(str(self.log_path) + ".1")
-                    os.replace(self.log_path, backup)
-                with open(self.log_path, "a", encoding="utf-8") as fh:
-                    fh.write(line)
+                append_rotating(self.log_path, line, AUDIT_ROTATE_BYTES)
             except OSError:
                 pass
 

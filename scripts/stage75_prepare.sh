@@ -29,6 +29,13 @@ for d in range(24):
     for i in range(500):
         (sub / f"f{i:03d}").touch()
 PY
+# Stage 7.6: the fixture repo is written by PRoot git, so its objects are link2symlink links (F13 path).
+git -C "$run/ws2" init -q
+git -C "$run/ws2" add -- sample.jsonl sample.txt corpus.txt
+git -C "$run/ws2" -c user.name=Fixture -c user.email=fixture@example.invalid commit -qm fixture
+l2s=$(find "$run/ws2/.git/objects" -type l | wc -l)
+printf '%s\n' "$l2s" > "$run/fixture-l2s-links"
+[ "$l2s" -gt 0 ] || { echo "fixture has no l2s objects" >&2; exit 1; }
 python3 -B "$run/scripts/f8_hybrid2_budget.py" init "$run/budget" --mode "$mode" > "$run/budget-init.json"
 cat > "$run/run-daemon" <<'EOF'
 #!/data/data/com.termux/files/usr/bin/bash

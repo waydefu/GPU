@@ -13,11 +13,13 @@ Stage 5 `f8-hybrid-daemon.py`, upgraded per Stage 7.2 universal MCP audit:
 from __future__ import annotations
 
 import ctypes
+import fcntl
 import json
 import os
 import posixpath
 import re
 import socket
+import stat
 import struct
 from pathlib import Path
 from typing import BinaryIO
@@ -77,6 +79,10 @@ PROTECTED: tuple[str, ...] = (
 )
 
 _ROOTFS_PREFIX = "/data/data/com.termux/files/usr/var/lib/proot-distro/containers/ubuntu/rootfs"
+# PRoot link2symlink store: Git objects written inside PRoot are symlinks into it (F13).
+DEFAULT_L2S_DIR = _ROOTFS_PREFIX + "/.l2s"
+_LOOSE_OBJECT_NAME = re.compile(r"[0-9a-f]{38}|[0-9a-f]{62}")
+_PACK_FILE_NAME = re.compile(r"pack-(?:[0-9a-f]{40}|[0-9a-f]{64})\.(pack|idx|rev)")
 
 GIT_PRE_FLAGS: dict[str, bool] = {
     "-C": True,
@@ -416,6 +422,78 @@ def parse_map_specs(items: list[str] | None, default_maps: tuple[tuple[str, str]
     return out
 
 
+def resolve_path(path: str) -> str:
+    """os.path.realpath that detects links with readlink() instead of lstat() (F14).
+
+    PRoot's link2symlink reports a symlink whose target name starts with ``.l2s.`` as a
+    regular file to lstat(), so realpath() stops at it and an escaping link looks
+    contained. readlink() still returns such a link's target, while PRoot's own hard-link
+    emulation returns EINVAL (a genuine hard link, which is not a path redirect).
+    Non-strict like realpath(): missing components are kept literally.
+    """
+    pending = posixpath.abspath(path).split("/")[::-1]
+    resolved = "/"
+    hops = 0
+    while pending:
+        name = pending.pop()
+        if name in ("", "."):
+            continue
+        if name == "..":
+            resolved = posixpath.dirname(resolved)
+            continue
+        candidate = posixpath.join(resolved, name)
+        try:
+            target = os.readlink(candidate)
+        except OSError:
+            resolved = candidate
+            continue
+        if not target:
+            resolved = candidate
+            continue
+        hops += 1
+        if hops > 40:  # loop: like realpath(), return the unresolved remainder (open() will fail ELOOP)
+            return posixpath.join(candidate, *pending[::-1])
+        if target.startswith("/"):
+            resolved = "/"
+        pending.extend(target.split("/")[::-1])
+    return resolved
+
+
+def is_link(path: str) -> bool:
+    """os.path.islink() that PRoot's ``.l2s.`` lstat rewriting cannot hide (F14)."""
+    try:
+        return bool(os.readlink(path))
+    except OSError:
+        return False
+
+
+def append_rotating(path: Path, line: str, max_bytes: int) -> None:
+    """Append one line; past max_bytes move the file to ``<path>.1`` (one generation).
+
+    Safe across processes: the writer holds flock on the file it appends to and re-checks
+    that the path still names that file, so concurrent writers never rotate twice and
+    overwrite the previous generation.
+    """
+    for _ in range(4):
+        fd = os.open(str(path), os.O_WRONLY | os.O_APPEND | os.O_CREAT | os.O_NOFOLLOW | os.O_CLOEXEC, 0o600)
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX)
+            st = os.fstat(fd)
+            try:
+                current = os.stat(path)
+            except FileNotFoundError:
+                continue
+            if (current.st_dev, current.st_ino) != (st.st_dev, st.st_ino):
+                continue  # rotated by another writer while we waited for the lock
+            if st.st_size >= max_bytes:
+                os.replace(path, str(path) + ".1")
+                continue
+            os.write(fd, line.encode("utf-8"))
+            return
+        finally:
+            os.close(fd)
+
+
 def _has_l2s_component(path_str: str) -> bool:
     return any(part.startswith(".l2s.") for part in path_str.split("/") if part)
 
@@ -437,29 +515,34 @@ class Policy:
         tmp: str,
         path_env: str = "/data/data/com.termux/files/usr/bin:/usr/bin:/bin",
         single_thread_git: bool = False,
+        l2s_dir: str | None = DEFAULT_L2S_DIR,
     ) -> None:
         self.single_thread_git = single_thread_git
+        # Literal and resolved spellings of the l2s store; None disables the F13 allowance.
+        self._l2s_dirs: frozenset[str] | None = None
+        if l2s_dir and os.path.isdir(l2s_dir):
+            self._l2s_dirs = frozenset({posixpath.normpath(l2s_dir), resolve_path(l2s_dir)})
         cleaned: list[tuple[str, str]] = []
         for g_prefix, h_prefix in maps:
             gn = posixpath.normpath(g_prefix)
             if not gn.startswith("/"):
                 raise ValueError(f"guest map must be absolute: {g_prefix!r}")
-            hr = os.path.realpath(h_prefix)
+            hr = resolve_path(h_prefix)
             cleaned.append((gn, hr))
         cleaned.sort(key=lambda kv: len(kv[0]), reverse=True)
         self.maps = cleaned
-        self.home = os.path.realpath(home)
-        self.tmp = os.path.realpath(tmp)
+        self.home = resolve_path(home)
+        self.tmp = resolve_path(tmp)
         self.path_env = path_env
 
         # Real host equivalents of PROTECTED so symlinks inside mapped roots cannot bypass PROTECTED.
         prot_hosts: list[str] = []
         for p in PROTECTED:
             prot_hosts.append(posixpath.normpath(p))
-            prot_hosts.append(os.path.realpath(p))
+            prot_hosts.append(resolve_path(p))
             if not p.startswith("/data/"):
                 prot_hosts.append(posixpath.normpath(_ROOTFS_PREFIX + p))
-                prot_hosts.append(os.path.realpath(_ROOTFS_PREFIX + p))
+                prot_hosts.append(resolve_path(_ROOTFS_PREFIX + p))
         self._protected_real: tuple[str, ...] = tuple(dict.fromkeys(prot_hosts))
 
         # Configuration comes from the launcher, outside the checkout.
@@ -478,6 +561,30 @@ class Policy:
                 self.trusted_git_roots.add(self.map_path(root, must_exist=True))
             except Refuse:
                 continue
+
+    def _is_l2s_object_link(self, path: str, kind: str) -> bool:
+        """True only for PRoot's exact two-hop link2symlink layout of one Git object file."""
+        if self._l2s_dirs is None:
+            return False
+        try:
+            hop1 = os.readlink(path)
+            if not (hop1.startswith("/") and posixpath.normpath(hop1) == hop1):
+                return False
+            l2s_dir, name1 = posixpath.split(hop1)
+            if l2s_dir not in self._l2s_dirs or not re.fullmatch(rf"\.l2s\.tmp_{kind}_[A-Za-z0-9]{{6}}[0-9]{{4}}", name1):
+                return False
+            hop2 = os.readlink(hop1)
+            if not (hop2.startswith("/") and posixpath.normpath(hop2) == hop2):
+                return False
+            dir2, name2 = posixpath.split(hop2)
+            if dir2 not in self._l2s_dirs or not re.fullmatch(re.escape(name1) + r"\.[0-9]{4}", name2):
+                return False
+            st = os.lstat(hop2)
+        except OSError:
+            return False
+        if not stat.S_ISREG(st.st_mode):
+            return False
+        return resolve_path(path) == os.path.join(resolve_path(dir2), name2)
 
     def _is_protected_host(self, real_host: str, h_root: str) -> bool:
         for p in self._protected_real:
@@ -516,7 +623,7 @@ class Policy:
         g_prefix, h_root = matched
         rel = "" if norm == g_prefix else norm[len(g_prefix) :].lstrip("/")
         candidate = os.path.join(h_root, rel) if rel else h_root
-        real_host = os.path.realpath(candidate)
+        real_host = resolve_path(candidate)
         if _has_l2s_component(real_host):
             raise Refuse("l2s-path")
         try:
@@ -534,7 +641,7 @@ class Policy:
 
     def _find_git_root(self, host_dir: str) -> tuple[str | None, str | None]:
         """Walk upward inside mapped root to find nearest .git directory/file."""
-        cur = os.path.realpath(host_dir)
+        cur = resolve_path(host_dir)
         allowed_roots = [h_root for _, h_root in self.maps]
         while True:
             if not any(os.path.commonpath([r, cur]) == r for r in allowed_roots):
@@ -563,7 +670,7 @@ class Policy:
         if repo_root not in self.trusted_git_roots:
             raise Refuse("git-checkout-not-trusted")
         dg = Path(dot_git)
-        real_dg = os.path.realpath(dot_git)
+        real_dg = resolve_path(dot_git)
         if not any(os.path.commonpath([r, real_dg]) == r for r in allowed_roots):
             raise Refuse("symlink-escape")
         if any(self._is_protected_host(real_dg, r) for r in allowed_roots if os.path.commonpath([r, real_dg]) == r):
@@ -579,7 +686,7 @@ class Policy:
             target = raw[len("gitdir:") :].strip()
             if not target or os.path.isabs(target):
                 raise Refuse("gitfile-absolute")
-            resolved_gitdir = os.path.realpath(os.path.join(repo_root, target))
+            resolved_gitdir = resolve_path(os.path.join(repo_root, target))
             if not any(os.path.commonpath([r, resolved_gitdir]) == r for r in allowed_roots):
                 raise Refuse("symlink-escape")
             if not os.path.isdir(resolved_gitdir):
@@ -595,7 +702,7 @@ class Policy:
                     raise Refuse("gitfile-unreadable") from exc
                 if not rel_c or os.path.isabs(rel_c):
                     raise Refuse("gitfile-absolute")
-                cdir = os.path.realpath(os.path.join(resolved_gitdir, rel_c))
+                cdir = resolve_path(os.path.join(resolved_gitdir, rel_c))
                 if not any(os.path.commonpath([r, cdir]) == r for r in allowed_roots):
                     raise Refuse("symlink-escape")
                 if not os.path.isdir(cdir):
@@ -616,7 +723,7 @@ class Policy:
                         cfg_paths.append(sub / "config.worktree")
 
         def check_metadata_path(path: str | Path) -> None:
-            resolved = os.path.realpath(path)
+            resolved = resolve_path(path)
             roots = [root for root in allowed_roots if os.path.commonpath([root, resolved]) == root]
             if not roots:
                 raise Refuse("symlink-escape")
@@ -644,8 +751,16 @@ class Policy:
                     continue
                 with os.scandir(object_dir) as entries:
                     for entry in entries:
-                        if entry.is_symlink():
-                            check_metadata_path(entry.path)
+                        if not entry.is_symlink():
+                            continue
+                        if object_dir == pack_dir:
+                            m = _PACK_FILE_NAME.fullmatch(entry.name)
+                            kind = m.group(1) if m else None
+                        else:
+                            kind = "obj" if _LOOSE_OBJECT_NAME.fullmatch(entry.name) else None
+                        if kind is not None and self._is_l2s_object_link(entry.path, kind):
+                            continue
+                        check_metadata_path(entry.path)
             # Alternates can recursively redirect reads outside the map.
             if os.path.lexists(objects / "info/alternates"):
                 raise Refuse("git-alternates-unsupported")

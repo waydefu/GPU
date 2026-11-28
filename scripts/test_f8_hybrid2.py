@@ -177,7 +177,7 @@ def children_of(pid: int) -> list[int]:
     return kids
 
 
-def git_run(args: list[str], cwd: Path) -> None:
+def git_run(args: list[str], cwd: Path) -> sp.CompletedProcess:
     env = {
         "PATH": os.environ.get("PATH", "/usr/bin:/bin"),
         "HOME": str(cwd),
@@ -188,7 +188,7 @@ def git_run(args: list[str], cwd: Path) -> None:
         "GIT_COMMITTER_NAME": "Test",
         "GIT_COMMITTER_EMAIL": "test@example.com",
     }
-    sp.run([SYSTEM_GIT, *args], cwd=cwd, env=env, check=True, stdout=sp.PIPE, stderr=sp.PIPE)
+    return sp.run([SYSTEM_GIT, *args], cwd=cwd, env=env, check=True, stdout=sp.PIPE, stderr=sp.PIPE, text=True)
 
 
 class WorkerCleanupTests(unittest.TestCase):
@@ -465,6 +465,153 @@ class PolicyAndSecurityTests(unittest.TestCase):
         reply = engine._tool_git_ro(args, RequestContext(4, 5))
         self.assertEqual(reply["returncode"], 0, reply)
         self.assertEqual(reply["stdout"].strip(), "commit")
+
+    def _l2s_policy(self, l2s_dir: str | None, repo: str = "/ws/repo") -> Policy:
+        with mock.patch.dict(os.environ, {"F8_HYBRID2_TRUSTED_GIT_ROOTS": json.dumps([repo])}):
+            return Policy([("/ws", str(self.ws))], home=str(self.home), tmp=str(self.htmp), l2s_dir=l2s_dir)
+
+    @staticmethod
+    def _to_l2s(path: Path, l2s: Path, kind: str, tag: str = "AbC123") -> tuple[Path, Path]:
+        """Rewrite one object file into PRoot link2symlink's two-hop layout (F13)."""
+        hop1 = l2s / f".l2s.tmp_{kind}_{tag}0001"
+        hop2 = l2s / f".l2s.tmp_{kind}_{tag}0001.0001"
+        path.rename(hop2)
+        hop1.symlink_to(hop2)
+        path.symlink_to(hop1)
+        return hop1, hop2
+
+    @staticmethod
+    def _head_object(repo: Path) -> Path:
+        oid = git_run(["rev-parse", "HEAD"], repo).stdout.strip()
+        return repo / ".git/objects" / oid[:2] / oid[2:]
+
+    def _fresh_repo(self, label: str) -> tuple[Path, Path]:
+        """New committed repo under /ws and an empty l2s store; PRoot's own .l2s handling
+        makes resetting a fake layout unreliable, so every case starts fresh."""
+        repo = self.ws / f"r-{label}"
+        repo.mkdir()
+        git_run(["init", "-q"], repo)
+        (repo / "hello.txt").write_text("hello world\n", encoding="utf-8")
+        git_run(["add", "hello.txt"], repo)
+        git_run(["commit", "-q", "-m", "init"], repo)
+        l2s = self.tmp_root / f"rootfs-{label}/.l2s"
+        (l2s / "sub").mkdir(parents=True)
+        return repo, l2s
+
+    def test_git_l2s_object_links_accepted(self) -> None:
+        repo, l2s = self._fresh_repo("ok")
+        engine = MCPToolEngine(self._l2s_policy(str(l2s), f"/ws/{repo.name}"), git_bin=SYSTEM_GIT)
+        args = {"cwd": f"/ws/{repo.name}", "args": ["cat-file", "-p", "HEAD"]}
+        expected = git_run(["cat-file", "-p", "HEAD"], repo).stdout
+
+        self._to_l2s(self._head_object(repo), l2s, "obj")
+        reply = engine._tool_git_ro(args, RequestContext(1, 5))
+        self.assertEqual((reply["returncode"], reply["stdout"]), (0, expected), reply)
+
+        git_run(["gc", "--quiet"], repo)
+        pack_dir = repo / ".git/objects/pack"
+        packs = sorted(p for p in pack_dir.iterdir() if p.suffix in (".pack", ".idx", ".rev"))
+        self.assertTrue({".pack", ".idx"} <= {p.suffix for p in packs})
+        for i, pack_file in enumerate(packs):
+            self._to_l2s(pack_file, l2s, pack_file.suffix[1:], tag=f"Pk{i:04d}")
+        reply = engine._tool_git_ro(args, RequestContext(2, 5))
+        self.assertEqual((reply["returncode"], reply["stdout"]), (0, expected), reply)
+
+    def test_git_l2s_lookalike_links_refused(self) -> None:
+        name = "tmp_obj_AbC1230001"
+
+        def two_hop(obj: Path, hop1: Path, hop2_dir: Path, link_text: str | None = None, hop2_dir_kind: bool = False):
+            hop2 = hop2_dir / (hop1.name + ".0001")
+            payload = obj.read_bytes()
+            obj.unlink()
+            if hop2_dir_kind:
+                hop2.mkdir()
+            else:
+                hop2.write_bytes(payload)
+            hop1.symlink_to(hop2)
+            obj.symlink_to(link_text or str(hop1))
+
+        def one_hop(obj: Path, l2s: Path) -> None:
+            target = l2s / f".l2s.{name}"
+            obj.rename(target)
+            obj.symlink_to(target)
+
+        def three_hops(obj: Path, l2s: Path) -> None:
+            final = l2s / ".l2s.final"
+            obj.rename(final)
+            (l2s / f".l2s.{name}.0001").symlink_to(final)
+            (l2s / f".l2s.{name}").symlink_to(l2s / f".l2s.{name}.0001")
+            obj.symlink_to(l2s / f".l2s.{name}")
+
+        def stray_name(obj: Path, l2s: Path) -> None:
+            stray = obj.parent / "notanobject"
+            stray.write_bytes(obj.read_bytes())
+            self._to_l2s(stray, l2s, "obj")
+
+        def fanout_dir(obj: Path, l2s: Path) -> None:
+            moved = l2s / ".l2s.tmp_obj_Fan0000001"
+            obj.parent.rename(moved)
+            obj.parent.symlink_to(moved, target_is_directory=True)
+
+        cases = {
+            "non-git-name": lambda o, l: two_hop(o, l / ".l2s.secret.txt0001", l),
+            "kind-mismatch": lambda o, l: two_hop(o, l / ".l2s.tmp_pack_AbC1230001", l),
+            "hop1-outside-l2s": lambda o, l: two_hop(o, self.outside / f".l2s.{name}", self.outside),
+            "hop1-in-subdir": lambda o, l: two_hop(o, l / "sub" / f".l2s.{name}", l / "sub"),
+            "relative-hop1": lambda o, l: two_hop(o, l / f".l2s.{name}", l,
+                                                  link_text=os.path.relpath(l / f".l2s.{name}", o.parent)),
+            "one-hop": one_hop,
+            "three-hops": three_hops,
+            "hop2-directory": lambda o, l: two_hop(o, l / f".l2s.{name}", l, hop2_dir_kind=True),
+            "non-object-name": stray_name,
+            "fanout-dir-link": fanout_dir,
+        }
+        for label, build in cases.items():
+            with self.subTest(label):
+                repo, l2s = self._fresh_repo(label)
+                engine = MCPToolEngine(self._l2s_policy(str(l2s), f"/ws/{repo.name}"), git_bin=SYSTEM_GIT)
+                build(self._head_object(repo), l2s)
+                with mock.patch.object(engine, "_run_supervised_popen") as spawn:
+                    self._refused("symlink-escape", engine._tool_git_ro,
+                                  {"cwd": f"/ws/{repo.name}", "args": ["cat-file", "-t", "HEAD"]}, RequestContext(1, 5))
+                    spawn.assert_not_called()
+
+        # The exact layout is refused when no l2s store is configured.
+        repo, l2s = self._fresh_repo("unconfigured")
+        obj = self._head_object(repo)
+        self._to_l2s(obj, l2s, "obj")
+        engine = MCPToolEngine(self._l2s_policy(None, f"/ws/{repo.name}"), git_bin=SYSTEM_GIT)
+        with mock.patch.object(engine, "_run_supervised_popen") as spawn:
+            self._refused("symlink-escape", engine._tool_git_ro,
+                          {"cwd": f"/ws/{repo.name}", "args": ["cat-file", "-t", "HEAD"]}, RequestContext(1, 5))
+            spawn.assert_not_called()
+
+        # Real path must equal hop 2 (not constructible on a static filesystem; checked directly).
+        pol = self._l2s_policy(str(l2s), f"/ws/{repo.name}")
+        self.assertTrue(pol._is_l2s_object_link(str(obj), "obj"))
+        with mock.patch("f8_hybrid2_policy.resolve_path", side_effect=lambda p: "/elsewhere"):
+            self.assertFalse(pol._is_l2s_object_link(str(obj), "obj"))
+
+    def test_l2s_named_links_cannot_hide_an_escape(self) -> None:
+        """F14: PRoot's lstat treats links to `.l2s.*` names as regular files; resolution must not."""
+        (self.outside / "secret.json").write_text('{"token": "TOPSECRET"}\n', encoding="utf-8")
+        (self.outside / ".l2s.a0001").write_text("TOPSECRET\n", encoding="utf-8")
+        os.symlink(str(self.outside / ".l2s.a0001"), str(self.ws / "evil-file"))
+        os.symlink(str(self.outside), str(self.ws / ".l2s.d0001"))
+        os.symlink(str(self.ws / ".l2s.d0001"), str(self.ws / "evil-dir"))
+        engine = MCPToolEngine(self.pol, git_bin=SYSTEM_GIT)
+        for guest, reason in (("/ws/evil-file", "l2s-path"), ("/ws/evil-dir/secret.json", "symlink-escape"),
+                              ("/ws/evil-dir", "symlink-escape")):
+            with self.subTest(guest):
+                self._refused(reason, self.pol.map_path, guest, must_exist=True)
+                self._refused(reason, engine._tool_text_search,
+                              {"root": guest, "pattern": "TOPSECRET", "fixed_string": True}, RequestContext(1, 5))
+        self._refused("symlink-escape", engine._tool_json_summary, {"path": "/ws/evil-dir/secret.json"}, RequestContext(2, 5))
+        self._refused("symlink-escape", engine._tool_tree_scan, {"root": "/ws/evil-dir"}, RequestContext(3, 5))
+        scan = engine._tool_tree_scan({"root": "/ws", "compute_sha256": False}, RequestContext(4, 5))
+        self.assertNotIn("evil-file", [e["rel"] for e in scan["entries"]])
+        search = engine._tool_text_search({"root": "/ws", "pattern": "TOPSECRET", "fixed_string": True}, RequestContext(5, 5))
+        self.assertEqual(search["match_count"], 0)
 
     def test_git_readonly_allowlist_and_bypass_denies(self) -> None:
         ok_cmds = (
@@ -2008,6 +2155,98 @@ class GovernedDaemonTests(unittest.TestCase):
             proc.wait(timeout=10)
             proc.stdout.close()
             proc.stderr.close()
+
+
+class Stage76OpsTests(unittest.TestCase):
+    """Stage 7.6: log rotation and governed auto-start environment hand-off."""
+
+    def setUp(self) -> None:
+        self.tmp = Path(tempfile.mkdtemp(prefix="hyb2_s76_"))
+
+    def tearDown(self) -> None:
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_append_rotating_keeps_one_bounded_generation(self) -> None:
+        from f8_hybrid2_policy import append_rotating
+        log = self.tmp / "a.jsonl"
+        for i in range(200):
+            append_rotating(log, json.dumps({"i": i}) + "\n", 1000)
+        cur = log.read_text().splitlines()
+        old = Path(str(log) + ".1").read_text().splitlines()
+        self.assertLessEqual(log.stat().st_size, 1000 + 20)
+        self.assertEqual([json.loads(x)["i"] for x in old + cur], list(range(200 - len(old) - len(cur), 200)))
+        self.assertFalse(Path(str(log) + ".2").exists())
+        log.unlink()
+        log.symlink_to(self.tmp / "elsewhere")
+        with self.assertRaises(OSError):
+            append_rotating(log, "x\n", 1000)  # never follows a planted link
+        self.assertFalse((self.tmp / "elsewhere").exists())
+
+    def test_append_rotating_concurrent_writers_never_tear_lines(self) -> None:
+        log = self.tmp / "c.jsonl"
+        code = ("import json, sys; from f8_hybrid2_policy import append_rotating\n"
+                "for i in range(400): append_rotating(__import__('pathlib').Path(sys.argv[1]), "
+                "json.dumps({'w': sys.argv[2], 'i': i, 'pad': 'x' * 40}) + '\\n', 8192)\n")
+        procs = [sp.Popen([sys.executable, "-B", "-c", code, str(log), str(w)], cwd=HERE) for w in range(4)]
+        for proc in procs:
+            self.assertEqual(proc.wait(timeout=120), 0)
+        lines = Path(str(log) + ".1").read_text().splitlines() + log.read_text().splitlines()
+        rows = [json.loads(x) for x in lines]  # a torn or interleaved line fails here
+        self.assertTrue(rows)
+        self.assertLessEqual(log.stat().st_size, 8192 + 100)
+        self.assertLessEqual(Path(str(log) + ".1").stat().st_size, 8192 + 100)
+        for w in map(str, range(4)):
+            seq = [r["i"] for r in rows if r["w"] == w]
+            self.assertEqual(seq, sorted(seq))
+
+    def test_daemon_audit_log_rotates(self) -> None:
+        import f8_hybrid2_daemon as d
+        log = self.tmp / "audit.jsonl"
+        daemon = SimpleNamespace(log_path=log, _log_lock=__import__("threading").Lock())
+        with mock.patch.object(d, "AUDIT_ROTATE_BYTES", 2000):
+            for i in range(100):
+                d.Hybrid2Daemon.write_audit(daemon, {"ev": "tool", "i": i})
+        self.assertTrue(Path(str(log) + ".1").exists())
+        self.assertLessEqual(log.stat().st_size, 2000 + 200)
+
+    def test_termux_bootstrap_exports_budget_dir(self) -> None:
+        bdir = "/data/data/com.termux/files/home/.hyb2-unit-budget dir"
+        rdir = self.tmp / "rt"
+        paths = ctl.runtime_paths(rdir)
+        am_env = {k: "x" for k in ctl.AM_REQUIRED_ENV}
+        with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bdir}), \
+                mock.patch.object(ctl.os.path, "isfile", side_effect=lambda p: p == os.path.join(bdir, "profile")), \
+                mock.patch.object(ctl, "resolve_host_daemon_py", return_value="/data/data/com.termux/x/d.py"), \
+                mock.patch.object(ctl.sp, "run", return_value=SimpleNamespace(returncode=0)):
+            paths["dir"] = Path("/data/data/com.termux/files/home/.never-used")
+            with mock.patch.object(Path, "mkdir"), mock.patch.object(ctl.os, "chmod"), \
+                    mock.patch.object(Path, "write_text") as wt:
+                ok, why = ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16)
+        self.assertEqual((ok, why), (True, "launched"))
+        script = wt.call_args.args[0]
+        self.assertIn(f"export {budget.BUDGET_DIR_ENV}='{bdir}'\n", script)
+        for bad, reason in (("/tmp/elsewhere", "budget-dir-invalid"), ("/data/data/com.termux/a/../b", "budget-dir-invalid"),
+                            ("/data/data/com.termux/files/home/none", "budget-dir-uninitialised")):
+            with mock.patch.dict(os.environ, {**am_env, budget.BUDGET_DIR_ENV: bad}):
+                self.assertEqual(ctl._start_via_termux_service(paths, "/x/d.py", [], 300.0, 32, 16), (False, reason))
+        with mock.patch.dict(os.environ, am_env):
+            os.environ.pop(budget.BUDGET_DIR_ENV, None)
+            self.assertEqual(ctl.budget_env_line(), "")
+
+    def test_governed_relay_accepts_auto_start_and_falls_back(self) -> None:
+        bdir = self.tmp / "budget"
+        budget.init_budget_dir(str(bdir), 2)
+        env = {**os.environ, budget.BUDGET_DIR_ENV: str(bdir), "PYTHONDONTWRITEBYTECODE": "1"}
+        env.pop("F8_NO_HYBRID", None)
+        req = json.dumps({"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}) + "\n"
+        (self.tmp / "rt").mkdir()
+        (self.tmp / "rt/disabled.flag").touch()  # deterministic: never launches a real daemon
+        proc = sp.run([sys.executable, "-B", str(RELAY_PY), "--socket", str(self.tmp / "rt/m.sock"), "--auto-start"],
+                      input=req.encode(), capture_output=True, env=env, timeout=60)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertNotIn(b"independently started daemon", proc.stderr)
+        self.assertIn(b"fallback=proot", proc.stderr)
+        self.assertEqual(json.loads(proc.stdout.splitlines()[0])["id"], 1)
 
 
 if __name__ == "__main__":
