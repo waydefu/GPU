@@ -2362,5 +2362,21 @@ class Stage76OpsTests(unittest.TestCase):
         self.assertEqual(json.loads(proc.stdout.splitlines()[0])["id"], 1)
 
 
+class ClientLauncherTests(unittest.TestCase):
+    def test_launcher_fixes_governance_env_and_borrows_only_missing_android_vars(self) -> None:
+        import f8_hybrid2_launch as launch
+        termux = {k: f"/apex/{k.lower()}" for k in launch.AM_REQUIRED_ENV}
+        termux.update({"SECRET_TOKEN": "x", "PATH": "/termux/bin"})
+        env = launch.prepare_env({"PATH": "/usr/bin", "ANDROID_ROOT": "/system-own",
+                                  "F8_HYBRID2_BUDGET_DIR": "/elsewhere"}, termux, '["/r"]')
+        self.assertEqual(env["F8_HYBRID2_BUDGET_DIR"], launch.BUDGET_DIR)
+        self.assertEqual(env["F8_HYBRID2_TRUSTED_GIT_ROOTS"], '["/r"]')
+        self.assertEqual(env["ANDROID_ROOT"], "/system-own")  # present values are kept
+        self.assertEqual(env["BOOTCLASSPATH"], termux["BOOTCLASSPATH"])
+        self.assertEqual(env["PATH"], "/usr/bin")
+        self.assertNotIn("SECRET_TOKEN", env)
+        self.assertNotIn("DEX2OATBOOTCLASSPATH", launch.prepare_env({}, {}, "[]"))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2, failfast=False)
