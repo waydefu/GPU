@@ -74,6 +74,20 @@ elif act == "race":
     finally:
         swap(args["path"], args["targets"][0])
     out["swaps"] = n; out["restored"] = os.readlink(args["path"])
+elif act == "pollkids":
+    dpid = open(args["pidfile"]).read().strip(); open(args["started"], "w").write("1")
+    best = {"pss_kib": None, "samples": 0, "seen": 0}; end = time.monotonic() + args["seconds"]
+    while time.monotonic() < end and not os.path.exists(args["stop"]):
+        for pid in os.listdir("/proc"):
+            if not pid.isdigit(): continue
+            try:
+                if open(f"/proc/{pid}/stat").read().rsplit(")", 1)[1].split()[1] != dpid: continue
+                roll = open(f"/proc/{pid}/smaps_rollup").read().split("\n")
+                pss = int(next(l for l in roll if l.startswith("Pss:")).split()[1])
+            except (OSError, StopIteration, ValueError, IndexError): continue
+            best["seen"] += 1; best["pss_kib"] = max(best["pss_kib"] or 0, pss)
+        best["samples"] += 1; time.sleep(0.001)
+    out.update(best)
 elif act == "policy_scan":
     sys.path.insert(0, args["scripts"])
     os.environ["F8_HYBRID2_TRUSTED_GIT_ROOTS"] = json.dumps(args["roots"])
@@ -453,6 +467,14 @@ def s5(run: Run) -> dict:
     nat = run.relay(False)
     dpid = int((run.dir / "r/d.pid").read_text())
     rows = {}
+    # Amendment A3: git children live < 50 ms; measure them natively at 1 ms, daemon children only.
+    kstart, kstop = run.dir / "s5-kids.started", run.dir / "s5-kids.stop"
+    nh = run.nhelp + 1
+    kids = run.native("pollkids", background=True, timeout=120, pidfile=str(run.dir / "r/d.pid"),
+                      started=str(kstart), stop=str(kstop), seconds=90)
+    t0 = time.monotonic()
+    while not kstart.exists() and time.monotonic() - t0 < 30:
+        time.sleep(0.05)
     with FastPeak([dpid, nat.proc.pid]) as fp:
         for label, a in (("corrupt", ["cat-file", "-p", bad_oid]), ("bomb-size", ["cat-file", "-s", bomb_oid]),
                          ("bomb-content", ["cat-file", "-p", bomb_oid]), ("bomb-show", ["show", bomb_oid])):
@@ -460,16 +482,24 @@ def s5(run: Run) -> dict:
             v = git_view(r)
             rows[label] = {"error": v.get("error"), "returncode": v.get("returncode"), "stdout_len": len(v.get("stdout") or ""),
                            "truncated": v.get("truncated"), "ms": round(ms, 1)}
+    kstop.write_text("1")
+    kids.wait(60)
+    kid = json.loads((run.dir / f"helper-{nh}.result.json").read_text())
     alive = Path(f"/proc/{dpid}").exists()
     ping = nat.rpc("ping", {})
     nat.close()
-    res = {"rows": rows, "l2s_shaped": shaped, "group_peak_pss_kib": fp.peak, "child_peak_pss_kib": fp.child_peak,
+    child = kid["pss_kib"] if kid["seen"] else None  # null, never 0, when no child was observed
+    res = {"rows": rows, "l2s_shaped": shaped, "daemon_relay_peak_pss_kib": fp.peak, "child_poll": kid,
+           "child_peak_pss_kib": child, "group_peak_pss_kib": None if child is None else fp.peak + child,
            "daemon_alive": alive, "ping": "result" in ping}
     run.log({"gate": "S5", **res})
     bounded = all((r["error"] or r["returncode"] not in (0, None) or r["stdout_len"] <= 2 * 1024 * 1024)
                   for k, r in rows.items() if k != "bomb-size")
-    ok = shaped and alive and res["ping"] and bounded and fp.peak <= 256 * 1024 and rows["bomb-size"]["returncode"] == 0
-    return {"gate": "S5", "pass": ok, "group_peak_pss_kib": fp.peak}
+    if child is None:
+        return {"gate": "S5", "pass": None, "verdict": "INVALID", "reason": "no git child observed"}
+    ok = shaped and alive and res["ping"] and bounded and res["group_peak_pss_kib"] <= 256 * 1024 \
+        and rows["bomb-size"]["returncode"] == 0
+    return {"gate": "S5", "pass": ok, "group_peak_pss_kib": res["group_peak_pss_kib"]}
 
 
 def s6(run: Run) -> dict:
